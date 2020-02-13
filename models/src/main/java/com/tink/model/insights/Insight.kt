@@ -3,6 +3,7 @@ package com.tink.model.insights
 import com.tink.model.budget.Budget
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
+import com.tink.model.time.YearWeek
 import org.threeten.bp.Instant
 import org.threeten.bp.YearMonth
 
@@ -144,12 +145,12 @@ sealed class InsightData {
     ) : InsightData()
 
     data class WeeklyExpensesByCategoryData(
-        val week: YearMonth,
+        val week: YearWeek,
         val expenses: List<AmountByCategory>
     ) : InsightData()
 
     data class WeeklyUncategorizedTransactionsData(
-        val week: Instant,
+        val week: YearWeek,
         val transactionIds: List<String>
     ) : InsightData()
 }
