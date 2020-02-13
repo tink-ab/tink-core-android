@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion(Versions.minSdk)
         targetSdkVersion(Versions.targetSdk)
-        versionCode = TinkLinkVersion.code
-        versionName = TinkLinkVersion.name
+        versionCode = Version.code
+        versionName = Version.name
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

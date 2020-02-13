@@ -2,7 +2,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group GROUP   // Maven Group ID for the artifact
-version TinkLinkVersion.name
+version Version.name
 
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
