@@ -8,17 +8,16 @@ buildscript {
         }
     }
     dependencies {
-        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.6")
+        classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.8")
     }
 }
 
-def grpcVersion = "1.24.2"
-def protoVersion = "3.9.0"
+def grpcVersion = "1.27.0"
+def protoVersion = "3.11.0"
 
 dependencies {
-    api("com.google.protobuf:protobuf-java:$protoVersion")
     api("io.grpc:grpc-okhttp:$grpcVersion")
-    api("io.grpc:grpc-protobuf:$grpcVersion")
+    api("io.grpc:grpc-protobuf-lite:$grpcVersion")
     api("io.grpc:grpc-stub:$grpcVersion")
 
     api("com.google.api.grpc:proto-google-common-protos:1.16.0")
@@ -36,8 +35,16 @@ protobuf {
         }
     }
     generateProtoTasks {
-        all()*.plugins {
-            grpc {}
+        all().each { task ->
+            task.builtins {
+                java { option 'lite' }
+            }
+            task.plugins {
+                grpc {
+                    // Options added to --grpc_out
+                    option 'lite'
+                }
+            }
         }
     }
 }
@@ -49,9 +56,6 @@ sourceSets {
         }
     }
 }
-
-targetCompatibility = "1.7"
-sourceCompatibility = "1.7"
 
 clean {
     delete("$projectDir/generated")
