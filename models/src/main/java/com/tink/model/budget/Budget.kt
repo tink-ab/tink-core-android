@@ -44,13 +44,6 @@ class Budget {
         val filter: Filter
     ) {
 
-        fun updateName(name: String) = copy(name = name)
-        fun updateDescription(description: String) = copy(description = description)
-        fun updateAmount(amount: Amount) = copy(amount = amount)
-        fun updatePeriodicity(periodicity: Periodicity) = copy(periodicity = periodicity)
-        fun updateFilter(filter: Filter) = copy(filter = filter)
-
-
         @Parcelize
         data class Filter(
             val accounts: List<Account>,
