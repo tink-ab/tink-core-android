@@ -32,7 +32,9 @@ object Tink {
     fun providerRepository(): ProviderRepository =
         requireComponent().providerRepository
 
-    private fun requireComponent() = requireNotNull(component) { "Tink is not initialized" }
+    private fun requireComponent() = checkNotNull(component) { "Tink is not initialized" }
+
+
 
 }
 
