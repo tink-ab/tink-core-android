@@ -131,15 +131,15 @@ sealed class InsightData : Parcelable {
 
     @Parcelize
     data class BudgetSummaryAchievedData(
-        val achievedBudgets: List<BudgetSummary>,
-        val overspentBudgets: List<BudgetSummary>,
+        val achievedBudgets: List<BudgetIdToPeriod>,
+        val overspentBudgets: List<BudgetIdToPeriod>,
         val savedAmount: Amount
     ) : InsightData()
 
     @Parcelize
     data class BudgetSummaryOverspentData(
-        val achievedBudgets: List<BudgetSummary>,
-        val overspentBudgets: List<BudgetSummary>,
+        val achievedBudgets: List<BudgetIdToPeriod>,
+        val overspentBudgets: List<BudgetIdToPeriod>,
         val overspentAmount: Amount
     ) : InsightData()
 
@@ -150,11 +150,6 @@ sealed class InsightData : Parcelable {
         val currentTime: Instant
     ) : InsightData()
 
-    @Parcelize
-    data class BudgetSummary(
-        val budgetId: String,
-        val budgetPeriod: Budget.Period
-    ) : Parcelable
 
     @Parcelize
     data class UncategorizedTransactionData(
@@ -182,4 +177,13 @@ sealed class InsightData : Parcelable {
         val week: YearWeek,
         val transactionIds: List<String>
     ) : InsightData()
+
+
+    // Simple data holders
+
+    @Parcelize
+    data class BudgetIdToPeriod(
+        val budgetId: String,
+        val budgetPeriod: Budget.Period
+    ) : Parcelable
 }
