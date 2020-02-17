@@ -15,15 +15,19 @@ typealias OneOffPeriodicity = Budget.Periodicity.OneOff
 
 class Budget {
 
-    data class Summary(val budgetSpecification: Specification, val budgetPeriod: Period)
+    @Parcelize
+    data class Summary(val budgetSpecification: Specification, val budgetPeriod: Period) :
+        Parcelable
 
+    @Parcelize
     data class Period(
         val start: Instant,
         val end: Instant,
         val spentAmount: Amount,
         val budgetAmount: Amount
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Transaction(
         val id: String,
         val accountId: String,
@@ -32,8 +36,9 @@ class Budget {
         val categoryCode: String,
         val description: String,
         val date: Instant
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Specification(
         val id: String,
         val name: String,
@@ -42,7 +47,7 @@ class Budget {
         val periodicity: Periodicity,
         val archived: Boolean,
         val filter: Filter
-    ) {
+    ) : Parcelable {
 
         @Parcelize
         data class Filter(
@@ -84,6 +89,7 @@ class Budget {
  * Descriptor for creating or updating a budget.
  * If we have an id, it means we're updating an already existing budget.
  */
+@Parcelize
 data class BudgetCreateOrUpdateDescriptor(
     val id: String? = null,
     val name: String,
@@ -91,6 +97,6 @@ data class BudgetCreateOrUpdateDescriptor(
     val filter: Budget.Specification.Filter,
     val description: String? = null,
     val periodicity: Budget.Periodicity
-)
+) : Parcelable
 
 
