@@ -49,6 +49,10 @@ protobuf {
     }
 }
 
+configurations {
+    jar.archiveName = 'rpc.jar'
+}
+
 sourceSets {
     main {
         java {
