@@ -1,10 +1,12 @@
 package com.tink.model.credential
 
+import android.os.Parcelable
 import org.threeten.bp.Instant
 import org.threeten.bp.temporal.ChronoUnit
 import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
+import kotlinx.android.parcel.Parcelize
 
 /**
  * This model represents how users are connected to a [Provider] to access their financial data.
@@ -21,6 +23,7 @@ import com.tink.model.provider.Provider
  * @property sessionExpiryDate The session expiration time of the credential for a [Provider] with [Provider.accessType] set to [Provider.AccessType.OPEN_BANKING]
  * @property thirdPartyAppAuthentication The [ThirdPartyAppAuthentication] object containing information about the third party authentication flow
  */
+@Parcelize
 data class Credential(
     val providerName: String,
     val type: Type,
@@ -33,7 +36,7 @@ data class Credential(
     val updated: Instant = Instant.EPOCH,
     val sessionExpiryDate: Instant? = null,
     val thirdPartyAppAuthentication: ThirdPartyAppAuthentication? = null
-) : Comparable<Credential> {
+) : Comparable<Credential>, Parcelable {
 
     /**
      * Represents the type of authentication used for the credential.
