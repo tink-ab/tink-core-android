@@ -17,11 +17,11 @@ class NetworkModule {
     @Provides
     @Singleton
     internal fun provideInterceptor(
-        tinkLinkConfig: TinkLinkConfiguration,
+        tinkConfig: TinkConfiguration,
         accessTokenEventBus: AccessTokenEventBus
     ): HeaderClientInterceptor {
         return HeaderClientInterceptor(
-            tinkLinkConfig.oAuthClientId,
+            tinkConfig.oAuthClientId,
             accessTokenEventBus
         )
     }
@@ -29,15 +29,15 @@ class NetworkModule {
     @Provides
     @Singleton
     internal fun provideChannel(
-        tinkLinkConfig: TinkLinkConfiguration,
+        tinkConfig: TinkConfiguration,
         interceptor: HeaderClientInterceptor,
         applicationContext: Context
     ): Channel {
         val channel =
             OkHttpChannelBuilder
-                .forAddress(tinkLinkConfig.environment.grpcUrl, tinkLinkConfig.environment.port)
+                .forAddress(tinkConfig.environment.grpcUrl, tinkConfig.environment.port)
                 .apply {
-                    tinkLinkConfig.environment.grpcSSLKey?.let { sslKey ->
+                    tinkConfig.environment.grpcSSLKey?.let { sslKey ->
                         sslSocketFactory(
                             TLSHelper.getSslSocketFactory(
                                 ByteArrayInputStream(
@@ -63,7 +63,7 @@ class NetworkModule {
  * @param redirectUri The URI to redirect back to your app from a browser or third party app.
  * Refer to the [third party authorization guide][https://github.com/tink-ab/tink-link-sdk-android/blob/master/third-party-authentication.md] for details.
  */
-data class TinkLinkConfiguration(
+data class TinkConfiguration(
     val environment: Environment,
     val oAuthClientId: String,
     val redirectUri: Uri

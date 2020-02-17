@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.tink.service.authentication.AccessTokenEventBus
 import com.tink.service.handler.ResultHandler
 import com.tink.service.network.TLSHelper
-import com.tink.service.network.TinkLinkConfiguration
+import com.tink.service.network.TinkConfiguration
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -39,11 +39,11 @@ private interface RetrofitUserService {
 
     companion object {
 
-        fun create(tinkLinkConfiguration: TinkLinkConfiguration): RetrofitUserService {
+        fun create(tinkConfiguration: TinkConfiguration): RetrofitUserService {
 
             val client = OkHttpClient.Builder()
                 .apply {
-                    tinkLinkConfiguration.environment.restSSLKey?.let {
+                    tinkConfiguration.environment.restSSLKey?.let {
                         sslSocketFactory(
                             TLSHelper.getSslSocketFactory(
                                 ByteArrayInputStream(it.toByteArray())
@@ -54,7 +54,7 @@ private interface RetrofitUserService {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(tinkLinkConfiguration.environment.restUrl)
+                .baseUrl(tinkConfiguration.environment.restUrl)
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -85,7 +85,7 @@ private interface RetrofitUserService {
 
 @Singleton
 internal class UserServiceImpl @Inject constructor(
-    private val tinkLinkConfiguration: TinkLinkConfiguration,
+    private val tinkConfiguration: TinkConfiguration,
     accessTokenEventBus: AccessTokenEventBus
 ) : UserService {
 
@@ -96,7 +96,7 @@ internal class UserServiceImpl @Inject constructor(
     }
 
     private val retrofitService =
-        RetrofitUserService.create(tinkLinkConfiguration)
+        RetrofitUserService.create(tinkConfiguration)
 
 
     @SuppressLint("CheckResult")
@@ -111,8 +111,8 @@ internal class UserServiceImpl @Inject constructor(
             .authorize(
                 "Bearer $accessToken",
                 RetrofitUserService.AuthorizationRequest(
-                    tinkLinkConfiguration.oAuthClientId,
-                    tinkLinkConfiguration.redirectUri.toString(),
+                    tinkConfiguration.oAuthClientId,
+                    tinkConfiguration.redirectUri.toString(),
                     scopes.joinToString(",")
                 )
             )
