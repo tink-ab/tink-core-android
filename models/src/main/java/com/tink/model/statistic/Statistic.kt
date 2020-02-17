@@ -9,15 +9,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Statistic(
     val period: Period,
-    val statisticValue: StatisticValue,
+    val value: Amount,
     val children: Map<String, Statistic>
 ) : Parcelable
-
-sealed class StatisticValue : Parcelable
-
-@Parcelize
-data class AmountStatisticValue(val amount: Amount) : StatisticValue()
-
-@Parcelize
-data class ExactNumberStatisticValue(val exactNumber: ExactNumber) : StatisticValue()
-
