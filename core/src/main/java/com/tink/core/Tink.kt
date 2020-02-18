@@ -4,6 +4,8 @@ import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.service.ServiceModule
 import com.tink.service.authentication.AccessTokenEventBus
+import com.tink.service.authorization.UserService
+import com.tink.service.credential.CredentialService
 import com.tink.service.network.NetworkModule
 import com.tink.service.network.TinkConfiguration
 import dagger.BindsInstance
@@ -32,17 +34,21 @@ object Tink {
     fun providerRepository(): ProviderRepository =
         requireComponent().providerRepository
 
-    private fun requireComponent() = checkNotNull(component) { "Tink is not initialized" }
-
-
+    fun requireComponent() = checkNotNull(component) { "Tink is not initialized" }
 
 }
 
 @Component(modules = [NetworkModule::class, ServiceModule::class])
 @Singleton
-internal abstract class TinkComponent {
+abstract class TinkComponent {
 
     abstract val providerRepository: ProviderRepository
+
+    abstract val credentialService: CredentialService
+
+    abstract val userService: UserService
+
+    abstract val tinkConfiguration: TinkConfiguration
 
     abstract val accessTokenEventBus: AccessTokenEventBus
 
