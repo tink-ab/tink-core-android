@@ -17,7 +17,7 @@ def protoVersion = "3.11.0"
 
 dependencies {
     api("io.grpc:grpc-okhttp:$grpcVersion")
-    api("io.grpc:grpc-protobuf-lite:$grpcVersion")
+    api("io.grpc:grpc-protobuf:$grpcVersion")
     api("io.grpc:grpc-stub:$grpcVersion")
 
     api("com.google.api.grpc:proto-google-common-protos:1.16.0")
@@ -47,6 +47,10 @@ protobuf {
             }
         }
     }
+}
+
+configurations {
+    jar.archiveName = 'rpc.jar'
 }
 
 sourceSets {

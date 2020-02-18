@@ -1,9 +1,10 @@
-package com.tink.core
+package com.tink.app
 
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.tink.core.Tink
 import com.tink.service.handler.ResultHandler
 import com.tink.service.network.TinkConfiguration
 
