@@ -18,6 +18,7 @@ object Tink {
 
     private var component: TinkComponent? = null
 
+    @JvmStatic
     fun init(config: TinkConfiguration, context: Context) {
 
         component = DaggerTinkComponent
@@ -28,12 +29,15 @@ object Tink {
     }
 
     fun setUser(accessToken: AccessToken) {
+    @JvmStatic
         requireComponent().accessTokenEventBus.postAccessToken(accessToken)
     }
 
+    @JvmStatic
     fun providerRepository(): ProviderRepository =
         requireComponent().providerRepository
 
+    @JvmStatic
     fun requireComponent() = checkNotNull(component) { "Tink is not initialized" }
 
 }
