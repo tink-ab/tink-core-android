@@ -28,8 +28,8 @@ object Tink {
             .build()
     }
 
-    fun setUser(accessToken: AccessToken) {
     @JvmStatic
+    fun setUser(accessToken: AccessToken) {
         requireComponent().accessTokenEventBus.postAccessToken(accessToken)
     }
 
