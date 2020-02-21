@@ -4,7 +4,7 @@ import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.service.authentication.user.User
 import com.tink.service.ServiceModule
-import com.tink.service.authentication.AccessTokenEventBus
+import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
 import com.tink.service.credential.CredentialService
 import com.tink.service.network.NetworkModule
@@ -32,7 +32,7 @@ object Tink {
     @JvmStatic
     fun setUser(user: User) {
         currentUser = user
-        requireComponent().accessTokenEventBus.postAccessToken(user.accessToken)
+        requireComponent().userEventBus.postUser(user)
     }
 
     @JvmStatic
@@ -61,7 +61,7 @@ abstract class TinkComponent {
 
     abstract val tinkConfiguration: TinkConfiguration
 
-    abstract val accessTokenEventBus: AccessTokenEventBus
+    abstract val userEventBus: UserEventBus
 
     @Component.Builder
     internal interface Builder {

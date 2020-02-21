@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.tink.core.Tink
+import com.tink.service.authentication.user.User
 import com.tink.service.handler.ResultHandler
 import com.tink.service.network.TinkConfiguration
 
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         Tink.setUser(
-            "" //TODO
+            User("") //TODO
         )
 
         Tink.providerRepository().listProviders(ResultHandler({

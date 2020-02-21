@@ -7,7 +7,7 @@ import dagger.Provides
 import io.grpc.Channel
 import io.grpc.ClientInterceptors
 import io.grpc.okhttp.OkHttpChannelBuilder
-import com.tink.service.authentication.AccessTokenEventBus
+import com.tink.service.authentication.UserEventBus
 import java.io.ByteArrayInputStream
 import javax.inject.Singleton
 
@@ -18,11 +18,11 @@ class NetworkModule {
     @Singleton
     internal fun provideInterceptor(
         tinkConfig: TinkConfiguration,
-        accessTokenEventBus: AccessTokenEventBus
+        userEventBus: UserEventBus
     ): HeaderClientInterceptor {
         return HeaderClientInterceptor(
             tinkConfig.oAuthClientId,
-            accessTokenEventBus
+            userEventBus
         )
     }
 
