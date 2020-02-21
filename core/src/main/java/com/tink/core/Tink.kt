@@ -17,6 +17,8 @@ object Tink {
 
     private var component: TinkComponent? = null
 
+    private var currentUser: User? = null
+
     @JvmStatic
     fun init(config: TinkConfiguration, context: Context) {
 
@@ -29,7 +31,13 @@ object Tink {
 
     @JvmStatic
     fun setUser(user: User) {
+        currentUser = user
         requireComponent().accessTokenEventBus.postAccessToken(user.accessToken)
+    }
+
+    @JvmStatic
+    fun getUser(): User? {
+        return currentUser
     }
 
     @JvmStatic
