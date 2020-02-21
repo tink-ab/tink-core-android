@@ -2,6 +2,7 @@ package com.tink.core
 
 import android.content.Context
 import com.tink.core.provider.ProviderRepository
+import com.tink.core.user.User
 import com.tink.service.ServiceModule
 import com.tink.service.authentication.AccessTokenEventBus
 import com.tink.service.authorization.UserService
@@ -11,8 +12,6 @@ import com.tink.service.network.TinkConfiguration
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
-
-typealias AccessToken = String
 
 object Tink {
 
@@ -29,8 +28,8 @@ object Tink {
     }
 
     @JvmStatic
-    fun setUser(accessToken: AccessToken) {
-        requireComponent().accessTokenEventBus.postAccessToken(accessToken)
+    fun setUser(user: User) {
+        requireComponent().accessTokenEventBus.postAccessToken(user.accessToken)
     }
 
     @JvmStatic
