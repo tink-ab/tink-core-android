@@ -2,6 +2,7 @@ package com.tink.service.network
 
 import com.tink.service.BuildConfig
 import com.tink.service.authentication.UserEventBus
+import com.tink.service.authentication.user.Authorization
 import com.tink.service.authentication.user.User
 import io.grpc.CallOptions
 import io.grpc.Channel
@@ -37,6 +38,14 @@ internal class HeaderClientInterceptor(
         userEventBus.subscribe { user = it }
     }
 
+    private fun getAuthorization() : String? {
+        return when(val authorization = user?.authorization) {
+            is Authorization.AccessToken -> "Bearer $authorization"
+            is Authorization.SessionId -> "Session $authorization"
+            else -> null
+        }
+    }
+
     override fun <ReqT : Any?, RespT : Any?> interceptCall(
         method: MethodDescriptor<ReqT, RespT>,
         callOptions: CallOptions, next: Channel
@@ -51,7 +60,7 @@ internal class HeaderClientInterceptor(
                 }
 
                 deviceId?.putAsHeader(DEVICE_ID_HEADER_NAME)
-                user?.accessToken?.let { "Bearer $it" }?.putAsHeader(AUTHORIZATION)
+                getAuthorization()?.let { "Bearer $it" }?.putAsHeader(AUTHORIZATION)
                 oAuthClientId.putAsHeader(OAUTH_CLIENT_ID_HEADER_NAME)
 
                 SDK_NAME_HEADER_VALUE.putAsHeader(SDK_NAME_HEADER_NAME)

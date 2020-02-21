@@ -3,6 +3,7 @@ package com.tink.service.authorization
 import android.annotation.SuppressLint
 import com.google.gson.annotations.SerializedName
 import com.tink.service.authentication.UserEventBus
+import com.tink.service.authentication.user.Authorization
 import com.tink.service.authentication.user.User
 import com.tink.service.handler.ResultHandler
 import com.tink.service.network.TLSHelper
@@ -106,7 +107,9 @@ internal class UserServiceImpl @Inject constructor(
         resultHandler: ResultHandler<String>
     ) {
 
-        val accessToken = requireNotNull(user?.accessToken) { "User token not set" }
+        val accessToken = requireNotNull(
+            (user?.authorization as? Authorization.AccessToken)?.accessToken
+        ) { "User token not set" }
 
         retrofitService
             .authorize(
