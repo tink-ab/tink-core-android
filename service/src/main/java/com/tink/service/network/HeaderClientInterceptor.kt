@@ -40,8 +40,8 @@ internal class HeaderClientInterceptor(
 
     private fun getAuthorization() : String? {
         return when(val authorization = user?.authorization) {
-            is Authorization.AccessToken -> "Bearer $authorization"
-            is Authorization.SessionId -> "Session $authorization"
+            is Authorization.AccessToken -> "Bearer ${authorization.accessToken}"
+            is Authorization.SessionId -> "Session ${authorization.sessionId}"
             else -> null
         }
     }
@@ -60,7 +60,7 @@ internal class HeaderClientInterceptor(
                 }
 
                 deviceId?.putAsHeader(DEVICE_ID_HEADER_NAME)
-                getAuthorization()?.let { "Bearer $it" }?.putAsHeader(AUTHORIZATION)
+                getAuthorization()?.putAsHeader(AUTHORIZATION)
                 oAuthClientId.putAsHeader(OAUTH_CLIENT_ID_HEADER_NAME)
 
                 SDK_NAME_HEADER_VALUE.putAsHeader(SDK_NAME_HEADER_NAME)
