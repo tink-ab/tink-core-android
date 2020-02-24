@@ -1,7 +1,9 @@
 package com.tink.service.network
 
 import com.tink.service.BuildConfig
-import com.tink.service.authentication.AccessTokenEventBus
+import com.tink.service.authentication.UserEventBus
+import com.tink.service.authentication.user.Authorization
+import com.tink.service.authentication.user.User
 import io.grpc.CallOptions
 import io.grpc.Channel
 import io.grpc.ClientCall
@@ -26,14 +28,22 @@ private const val SDK_NAME_HEADER_VALUE = "Tink Link Android"
 
 internal class HeaderClientInterceptor(
     private val oAuthClientId: String,
-    accessTokenEventBus: AccessTokenEventBus,
+    userEventBus: UserEventBus,
     private val deviceId: String? = null
 ) : ClientInterceptor {
 
-    var token: String? = null
+    var user: User? = null
 
     init {
-        accessTokenEventBus.subscribe { token = it }
+        userEventBus.subscribe { user = it }
+    }
+
+    private fun getAuthorization() : String? {
+        return when(val authorization = user?.authorization) {
+            is Authorization.AccessToken -> "Bearer ${authorization.accessToken}"
+            is Authorization.SessionId -> "Session ${authorization.sessionId}"
+            else -> null
+        }
     }
 
     override fun <ReqT : Any?, RespT : Any?> interceptCall(
@@ -50,7 +60,7 @@ internal class HeaderClientInterceptor(
                 }
 
                 deviceId?.putAsHeader(DEVICE_ID_HEADER_NAME)
-                token?.let { "Bearer $it" }?.putAsHeader(AUTHORIZATION)
+                getAuthorization()?.putAsHeader(AUTHORIZATION)
                 oAuthClientId.putAsHeader(OAUTH_CLIENT_ID_HEADER_NAME)
 
                 SDK_NAME_HEADER_VALUE.putAsHeader(SDK_NAME_HEADER_NAME)
