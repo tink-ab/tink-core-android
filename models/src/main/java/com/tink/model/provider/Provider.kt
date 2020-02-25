@@ -79,7 +79,6 @@ data class Provider(
         OTHER
     }
 
-
     /**
      * Indicates which financial institution a provider belongs to. This can be used for grouping providers together:
      * the [id] should be used as a selector, whereas the [name] should be used as the label for the group.

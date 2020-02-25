@@ -6,7 +6,7 @@ data class User(val authorization: Authorization) {
 
         @JvmStatic
         fun fromAccessToken(accessToken: String) = User(Authorization.AccessToken(accessToken))
-       
+
         @JvmStatic
         fun fromSessionId(sessionId: String) = User(Authorization.AccessToken(sessionId))
     }

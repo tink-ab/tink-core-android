@@ -5,7 +5,6 @@ import com.tink.model.misc.Amount
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.Instant
 
-
 typealias BudgetSummary = Budget.Summary
 typealias BudgetPeriod = Budget.Period
 typealias BudgetTransaction = Budget.Transaction
@@ -98,5 +97,3 @@ data class BudgetCreateOrUpdateDescriptor(
     val description: String? = null,
     val periodicity: Budget.Periodicity
 ) : Parcelable
-
-

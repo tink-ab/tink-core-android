@@ -14,7 +14,6 @@ interface StreamObserver<T> {
     fun onCompleted() {}
 }
 
-
 fun <A, B> StreamObserver<A>.toGrpcStreamObserver(
     converter: (B) -> A
 ): io.grpc.stub.StreamObserver<B> =

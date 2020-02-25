@@ -30,5 +30,4 @@ fun <T> ResultHandler<Unit>.toStreamObserver() =
         }
 
         override fun onCompleted() {}
-
     }

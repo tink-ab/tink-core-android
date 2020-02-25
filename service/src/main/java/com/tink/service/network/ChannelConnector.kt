@@ -32,7 +32,6 @@ class ChannelConnector(private val context: Context, channel: ManagedChannel) {
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
         fun onStop(owner: LifecycleOwner) =
             context.unregisterReceiver(networkChangeReceiver)
-
     }
 }
 

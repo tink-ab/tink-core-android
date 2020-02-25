@@ -47,7 +47,6 @@ object Tink {
 
     @JvmStatic
     fun requireComponent() = checkNotNull(component) { "Tink is not initialized" }
-
 }
 
 @Component(modules = [NetworkModule::class, ServiceModule::class])

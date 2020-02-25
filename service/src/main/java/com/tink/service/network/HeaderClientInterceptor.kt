@@ -38,8 +38,8 @@ internal class HeaderClientInterceptor(
         userEventBus.subscribe { user = it }
     }
 
-    private fun getAuthorization() : String? {
-        return when(val authorization = user?.authorization) {
+    private fun getAuthorization(): String? {
+        return when (val authorization = user?.authorization) {
             is Authorization.AccessToken -> "Bearer ${authorization.accessToken}"
             is Authorization.SessionId -> "Session ${authorization.sessionId}"
             else -> null
@@ -48,7 +48,8 @@ internal class HeaderClientInterceptor(
 
     override fun <ReqT : Any?, RespT : Any?> interceptCall(
         method: MethodDescriptor<ReqT, RespT>,
-        callOptions: CallOptions, next: Channel
+        callOptions: CallOptions,
+        next: Channel
     ): ClientCall<ReqT, RespT> {
         return object : SimpleForwardingClientCall<ReqT, RespT>(next.newCall(method, callOptions)) {
 
@@ -79,6 +80,5 @@ internal class HeaderClientInterceptor(
                 }, headers)
             }
         }
-
     }
 }

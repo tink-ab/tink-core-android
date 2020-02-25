@@ -100,7 +100,6 @@ internal class UserServiceImpl @Inject constructor(
     private val retrofitService =
         RetrofitUserService.create(tinkConfiguration)
 
-
     @SuppressLint("CheckResult")
     override fun authorize(
         scopes: Set<Scope>,

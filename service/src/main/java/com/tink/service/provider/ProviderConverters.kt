@@ -41,7 +41,6 @@ internal fun ProviderStatusDTO.toProviderStatus(): Provider.Status =
         ProviderStatusDTO.STATUS_TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
     }
 
-
 internal fun ProviderTypeDTO.toProviderType(): Provider.Type =
     when (this) {
         ProviderTypeDTO.UNRECOGNIZED,

@@ -70,7 +70,6 @@ internal fun ThirdPartyAppAuthenticationDTO.toThirdPartyAppAuthentication() =
         android = android.toThirdPartyAndroid()
     )
 
-
 internal fun ThirdPartyAppAuthenticationAndroidDTO.toThirdPartyAndroid() =
     ThirdPartyAppAuthentication.Android(
         intent = intent,

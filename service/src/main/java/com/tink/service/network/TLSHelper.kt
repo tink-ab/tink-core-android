@@ -36,5 +36,4 @@ object TLSHelper {
         context.init(null, getTrustManagers(ca), null)
         return context.socketFactory
     }
-
 }

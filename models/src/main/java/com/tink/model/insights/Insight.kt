@@ -150,7 +150,6 @@ sealed class InsightData : Parcelable {
         val currentTime: Instant
     ) : InsightData()
 
-
     @Parcelize
     data class UncategorizedTransactionData(
         val transactionId: String
@@ -177,7 +176,6 @@ sealed class InsightData : Parcelable {
         val week: YearWeek,
         val transactionIds: List<String>
     ) : InsightData()
-
 
     // Simple data holders
 
