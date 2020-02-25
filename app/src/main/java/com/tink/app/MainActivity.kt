@@ -25,12 +25,11 @@ class MainActivity : AppCompatActivity() {
         )
 
         Tink.setUser(
-            User.fromAccessToken("") //TODO
+            User.fromAccessToken("") // TODO
         )
 
         Tink.providerRepository().listProviders(ResultHandler({
             Log.d("MainActivity", "providers: $it")
         }, {}))
-
     }
 }

@@ -41,4 +41,3 @@ data class DayPeriod(
         require(monthOfYear in 1..12)
     }
 }
-

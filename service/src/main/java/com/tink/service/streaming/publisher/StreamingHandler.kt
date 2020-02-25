@@ -22,7 +22,7 @@ interface StreamingHandler {
     fun onNext(value: StreamingEvent)
 }
 
-class StreamingHandlerImpl: StreamingHandler {
+class StreamingHandlerImpl : StreamingHandler {
 
     private var providers: List<Provider> by Delegates.observable(emptyList()) { _, old, new ->
         if (old != new) {
@@ -106,7 +106,6 @@ class StreamingHandlerImpl: StreamingHandler {
             is StreamingEvent.CredentialEvent -> updateCredentialsFromEvent(value)
         }
 
-
     override fun subscribeForProviders(onNext: (List<Provider>) -> Unit): StreamSubscription {
         return SubscriptionFromDisposable(providersStream.subscribe(onNext))
     }
@@ -119,7 +118,6 @@ class StreamingHandlerImpl: StreamingHandler {
         return SubscriptionFromDisposable(accountsStream.subscribe(onNext))
     }
 }
-
 
 private class SubscriptionFromDisposable(private val disposable: Disposable) : StreamSubscription {
     override fun unsubscribe() {
