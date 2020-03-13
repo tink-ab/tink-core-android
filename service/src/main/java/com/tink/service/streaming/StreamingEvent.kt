@@ -26,7 +26,7 @@ sealed class StreamingEvent {
         override val type: Type
     ) : StreamingEvent()
 
-    data class CredentialEvent(
+    data class CredentialsEvent(
         val credentials: List<Credentials>,
         override val type: Type
     ) : StreamingEvent()

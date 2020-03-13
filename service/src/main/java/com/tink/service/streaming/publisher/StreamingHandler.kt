@@ -60,7 +60,7 @@ class StreamingHandlerImpl : StreamingHandler {
         )
     }
 
-    private fun updateCredentialsFromEvent(event: StreamingEvent.CredentialEvent) {
+    private fun updateCredentialsFromEvent(event: StreamingEvent.CredentialsEvent) {
         updateListFromEvent(
             currentList = ::credentials,
             eventList = event.credentials,
@@ -103,7 +103,7 @@ class StreamingHandlerImpl : StreamingHandler {
         when (value) {
             is StreamingEvent.ProviderEvent -> updateProvidersFromEvent(value)
             is StreamingEvent.AccountEvent -> updateAccountsFromEvent(value)
-            is StreamingEvent.CredentialEvent -> updateCredentialsFromEvent(value)
+            is StreamingEvent.CredentialsEvent -> updateCredentialsFromEvent(value)
         }
 
     override fun subscribeForProviders(onNext: (List<Provider>) -> Unit): StreamSubscription {
