@@ -157,7 +157,7 @@ internal class ProviderTreeNodeTest {
     )
 
     @Test
-    fun `test credential types grouping`() {
+    fun `test credentials types grouping`() {
         val providers = listOf(nordeaBankId, nordeaPassword)
         val groups = providers.toProviderTree()
         assertThat(groups).hasSize(1)

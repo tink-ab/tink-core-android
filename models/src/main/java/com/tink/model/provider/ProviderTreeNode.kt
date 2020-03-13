@@ -131,13 +131,13 @@ private fun List<Provider>.groupByCredentialType(): List<CredentialTypeNode> =
     groupBy { it.credentialsType }
         .flatMap { (type, providers) ->
             /*
-             * Group the credential type internally by displayDescription as a first step.
-             * This is necessary since we sometimes have providers with same credential type that
+             * Group the credentials type internally by displayDescription as a first step.
+             * This is necessary since we sometimes have providers with same credentials type that
              * have different descriptions, for example PASSWORD is used for multiple purposes,
              * and we might have "Pin" and "Password" as two different descriptions.
              *
              * This lets the CredentialTypeNode allow for a better UI where the providers with the
-             * same credential type can use different names.
+             * same credentials type can use different names.
              */
             providers
                 .groupBy { it.displayDescription }

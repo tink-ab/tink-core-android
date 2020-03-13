@@ -20,7 +20,7 @@ import kotlinx.android.parcel.Parcelize
  * @property supplementalInformation The list of [Field] objects representing additional information required for the authentication flow
  * @property statusUpdated Indicates when the credentials' status was last updated
  * @property updated Indicates the last time when the [status] was [Status.UPDATED]
- * @property sessionExpiryDate The session expiration time of the credential for a [Provider] with [Provider.accessType] set to [Provider.AccessType.OPEN_BANKING]
+ * @property sessionExpiryDate The session expiration time of the credentials for a [Provider] with [Provider.accessType] set to [Provider.AccessType.OPEN_BANKING]
  * @property thirdPartyAppAuthentication The [ThirdPartyAppAuthentication] object containing information about the third party authentication flow
  */
 @Parcelize
@@ -53,7 +53,7 @@ data class Credentials(
     /**
      * Represents the status of the credential.
      *
-     * When data is being fetched/updated from a [Provider], the status of the credential can change to indicate the current state of the flow.
+     * When data is being fetched/updated from a [Provider], the status of the credentials can change to indicate the current state of the flow.
      * You can observe the credentials and act upon changes in the status if the [statusUpdated] value is greater than what it was previously.
      */
     enum class Status {
