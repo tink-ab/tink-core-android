@@ -173,7 +173,7 @@ internal class ProviderTreeNodeTest {
         val accessTypes = financialInstitutions.first().accessTypes
         assertThat(accessTypes).hasSize(1)
 
-        val credentialTypes = accessTypes.first().credentialTypes
+        val credentialTypes = accessTypes.first().credentialsTypes
         assertThat(credentialTypes)
             .hasSize(2)
             .anySatisfy { assertThat(it.type).isEqualTo(Credentials.Type.MOBILE_BANKID) }
