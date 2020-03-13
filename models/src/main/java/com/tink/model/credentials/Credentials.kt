@@ -12,10 +12,10 @@ import kotlinx.android.parcel.Parcelize
  * This model represents how users are connected to a [Provider] to access their financial data.
  *
  * @property providerName Identifier for the [Provider]. See [Provider.name]
- * @property type The authentication type used for the credential.
+ * @property type The authentication type used for the credentials.
  * @property fields The map of [Field] name and value pairs for the [Provider].
- * @property id The unique identifier of the credential
- * @property status The current status of the credential.
+ * @property id The unique identifier of the credentials.
+ * @property status The current status of the credentials.
  * @property statusPayload A user-friendly text connected to the [Status]
  * @property supplementalInformation The list of [Field] objects representing additional information required for the authentication flow
  * @property statusUpdated Indicates when the credentials' status was last updated
@@ -39,7 +39,7 @@ data class Credentials(
 ) : Comparable<Credentials>, Parcelable {
 
     /**
-     * Represents the type of authentication used for the credential.
+     * Represents the type of authentication used for the credentials.
      */
     enum class Type {
         UNKNOWN,
@@ -51,7 +51,7 @@ data class Credentials(
     }
 
     /**
-     * Represents the status of the credential.
+     * Represents the status of the credentials.
      *
      * When data is being fetched/updated from a [Provider], the status of the credentials can change to indicate the current state of the flow.
      * You can observe the credentials and act upon changes in the status if the [statusUpdated] value is greater than what it was previously.
