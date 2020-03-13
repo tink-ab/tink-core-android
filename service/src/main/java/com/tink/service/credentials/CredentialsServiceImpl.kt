@@ -41,10 +41,10 @@ class CredentialsServiceImpl @Inject constructor(
         it.credential.toCredentials()
     })
 
-    override fun delete(credentialId: String, handler: ResultHandler<Unit>) =
+    override fun delete(credentialsId: String, handler: ResultHandler<Unit>) =
         DeleteCredentialRequest
             .newBuilder()
-            .setCredentialId(credentialId)
+            .setCredentialId(credentialsId)
             .build()
             .let {
                 stub.deleteCredential(it, handler.toStreamObserver())
@@ -57,51 +57,51 @@ class CredentialsServiceImpl @Inject constructor(
         response.credential.toCredentials()
     })
 
-    override fun refresh(credentialIds: List<String>, handler: ResultHandler<Unit>) =
+    override fun refresh(credentialsIds: List<String>, handler: ResultHandler<Unit>) =
         RefreshCredentialsRequest
             .newBuilder()
-            .addAllCredentialIds(credentialIds)
+            .addAllCredentialIds(credentialsIds)
             .build()
             .let {
                 stub.refreshCredentials(it, handler.toStreamObserver())
             }
 
-    override fun enable(credentialId: String, handler: ResultHandler<Unit>) =
+    override fun enable(credentialsId: String, handler: ResultHandler<Unit>) =
         EnableCredentialRequest
             .newBuilder()
-            .setCredentialId(credentialId)
+            .setCredentialId(credentialsId)
             .build()
             .let {
                 stub.enableCredential(it, handler.toStreamObserver())
             }
 
-    override fun disable(credentialId: String, handler: ResultHandler<Unit>) =
+    override fun disable(credentialsId: String, handler: ResultHandler<Unit>) =
         DisableCredentialRequest
             .newBuilder()
-            .setCredentialId(credentialId)
+            .setCredentialId(credentialsId)
             .build()
             .let {
                 stub.disableCredential(it, handler.toStreamObserver())
             }
 
     override fun supplementInformation(
-        credentialId: String,
+        credentialsId: String,
         information: Map<String, String>,
         handler: ResultHandler<Unit>
     ) =
         SupplementInformationRequest
             .newBuilder()
-            .setCredentialId(credentialId)
+            .setCredentialId(credentialsId)
             .putAllSupplementalInformationFields(information)
             .build()
             .let {
                 stub.supplementInformation(it, handler.toStreamObserver())
             }
 
-    override fun cancelSupplementalInformation(credentialId: String, handler: ResultHandler<Unit>) =
+    override fun cancelSupplementalInformation(credentialsId: String, handler: ResultHandler<Unit>) =
         CancelSupplementInformationRequest
             .newBuilder()
-            .setCredentialId(credentialId)
+            .setCredentialId(credentialsId)
             .build()
             .let {
                 stub.cancelSupplementInformation(it, handler.toStreamObserver())
