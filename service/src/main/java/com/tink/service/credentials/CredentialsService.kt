@@ -1,6 +1,6 @@
-package com.tink.service.credential
+package com.tink.service.credentials
 
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 import com.tink.service.handler.ResultHandler
 import com.tink.service.streaming.publisher.Stream
 

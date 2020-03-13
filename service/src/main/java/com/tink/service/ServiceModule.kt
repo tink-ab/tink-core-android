@@ -6,8 +6,8 @@ import com.tink.service.authorization.UserService
 import com.tink.service.authorization.UserServiceImpl
 import com.tink.service.consent.ConsentService
 import com.tink.service.consent.ConsentServiceImpl
-import com.tink.service.credential.CredentialsService
-import com.tink.service.credential.CredentialsServiceImpl
+import com.tink.service.credentials.CredentialsService
+import com.tink.service.credentials.CredentialsServiceImpl
 import com.tink.service.provider.ProviderService
 import com.tink.service.provider.ProviderServiceImpl
 import dagger.Binds

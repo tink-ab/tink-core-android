@@ -1,7 +1,7 @@
-package com.tink.service.credential
+package com.tink.service.credentials
 
 import com.tink.model.authentication.ThirdPartyAppAuthentication
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 import com.tink.service.misc.toField
 import com.tink.service.misc.toInstant
 import se.tink.grpc.v1.rpc.CreateCredentialRequest

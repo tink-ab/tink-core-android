@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import com.tink.model.account.Account
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.Provider
 import com.tink.service.streaming.StreamingEvent
 import kotlin.properties.Delegates

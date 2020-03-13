@@ -1,4 +1,4 @@
-package com.tink.model.credential
+package com.tink.model.credentials
 
 import android.os.Parcelable
 import org.threeten.bp.Instant

@@ -1,6 +1,6 @@
 package com.tink.model.provider
 
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionNode
 import org.assertj.core.api.Assertions.assertThat

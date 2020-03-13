@@ -1,7 +1,7 @@
 package com.tink.service.streaming
 
 import com.tink.model.account.Account
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.Provider
 
 sealed class StreamingEvent {

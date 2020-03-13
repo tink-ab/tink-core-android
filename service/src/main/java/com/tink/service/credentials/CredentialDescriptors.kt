@@ -1,7 +1,7 @@
-package com.tink.service.credential
+package com.tink.service.credentials
 
 import android.net.Uri
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 
 data class CredentialsCreationDescriptor(
     val providerName: String,

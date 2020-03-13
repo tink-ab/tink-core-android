@@ -7,7 +7,7 @@ import com.tink.service.ServiceModule
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
 import com.tink.service.consent.ConsentService
-import com.tink.service.credential.CredentialsService
+import com.tink.service.credentials.CredentialsService
 import com.tink.service.network.NetworkModule
 import com.tink.service.network.TinkConfiguration
 import dagger.BindsInstance

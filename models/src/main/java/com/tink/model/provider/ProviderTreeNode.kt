@@ -3,7 +3,7 @@ package com.tink.model.provider
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import com.tink.model.credential.Credentials
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.ProviderTreeNode.AccessTypeNode
 import com.tink.model.provider.ProviderTreeNode.CredentialsTypeNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
