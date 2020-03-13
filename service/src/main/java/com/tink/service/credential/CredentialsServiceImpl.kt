@@ -29,7 +29,7 @@ class CredentialsServiceImpl @Inject constructor(
                 stub.listCredentials(
                     ListCredentialsRequest.getDefaultInstance(),
                     observer.toGrpcStreamObserver { value ->
-                        value.credentialsList.map { it.toCredential() }
+                        value.credentialsList.map { it.toCredentials() }
                     })
             }
     }
@@ -38,7 +38,7 @@ class CredentialsServiceImpl @Inject constructor(
         descriptor: CredentialsCreationDescriptor,
         handler: ResultHandler<Credentials>
     ) = stub.createCredential(descriptor.toRequest(), handler.toStreamObserver {
-        it.credential.toCredential()
+        it.credential.toCredentials()
     })
 
     override fun delete(credentialId: String, handler: ResultHandler<Unit>) =
@@ -54,7 +54,7 @@ class CredentialsServiceImpl @Inject constructor(
         descriptor: CredentialsUpdateDescriptor,
         handler: ResultHandler<Credentials>
     ) = stub.updateCredential(descriptor.toRequest(), handler.toStreamObserver { response ->
-        response.credential.toCredential()
+        response.credential.toCredentials()
     })
 
     override fun refresh(credentialIds: List<String>, handler: ResultHandler<Unit>) =

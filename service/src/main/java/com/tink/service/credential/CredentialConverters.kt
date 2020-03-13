@@ -13,14 +13,14 @@ internal typealias CredentialsStatusDTO = se.tink.grpc.v1.models.Credential.Stat
 internal typealias ThirdPartyAppAuthenticationDTO = se.tink.grpc.v1.models.ThirdPartyAppAuthentication
 internal typealias ThirdPartyAppAuthenticationAndroidDTO = se.tink.grpc.v1.models.ThirdPartyAppAuthentication.Android
 
-internal fun CredentialsDTO.toCredential() =
+internal fun CredentialsDTO.toCredentials() =
     Credentials(
         providerName = providerName,
         type = type.toCredentialsType(),
         id = id,
         updated = updated.toInstant(),
         statusUpdated = statusUpdated.toInstant(),
-        status = status.toCredentialStatus(),
+        status = status.toCredentialsStatus(),
         statusPayload = statusPayload,
         fields = fieldsMap,
         supplementalInformation = supplementalInformationFieldsList.map { it.toField() },
@@ -43,7 +43,7 @@ internal fun CredentialsTypeDTO.toCredentialsType() =
         CredentialsTypeDTO.TYPE_THIRD_PARTY_AUTHENTICATION -> Credentials.Type.THIRD_PARTY_AUTHENTICATION
     }
 
-internal fun CredentialsStatusDTO.toCredentialStatus() =
+internal fun CredentialsStatusDTO.toCredentialsStatus() =
     when (this) {
         CredentialsStatusDTO.UNRECOGNIZED,
         CredentialsStatusDTO.STATUS_UNKNOWN -> Credentials.Status.UNKNOWN
