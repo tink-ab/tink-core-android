@@ -18,9 +18,9 @@ import se.tink.grpc.v1.rpc.ThirdPartyCallbackRequest
 import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
 
-class CredentialServiceImpl @Inject constructor(
+class CredentialsServiceImpl @Inject constructor(
     channel: Channel
-) : CredentialService {
+) : CredentialsService {
 
     private val stub = CredentialServiceGrpc.newStub(channel)
 
