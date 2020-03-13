@@ -35,7 +35,7 @@ class CredentialsServiceImpl @Inject constructor(
     }
 
     override fun create(
-        descriptor: CredentialCreationDescriptor,
+        descriptor: CredentialsCreationDescriptor,
         handler: ResultHandler<Credentials>
     ) = stub.createCredential(descriptor.toRequest(), handler.toStreamObserver {
         it.credential.toCredential()
@@ -51,7 +51,7 @@ class CredentialsServiceImpl @Inject constructor(
             }
 
     override fun update(
-        descriptor: CredentialUpdateDescriptor,
+        descriptor: CredentialsUpdateDescriptor,
         handler: ResultHandler<Credentials>
     ) = stub.updateCredential(descriptor.toRequest(), handler.toStreamObserver { response ->
         response.credential.toCredential()

@@ -77,7 +77,7 @@ internal fun ThirdPartyAppAuthenticationAndroidDTO.toThirdPartyAndroid() =
         requiredMinimumVersion = requiredMinimumVersion
     )
 
-internal fun CredentialCreationDescriptor.toRequest() =
+internal fun CredentialsCreationDescriptor.toRequest() =
     CreateCredentialRequest
         .newBuilder()
         .setProviderName(providerName)
@@ -86,7 +86,7 @@ internal fun CredentialCreationDescriptor.toRequest() =
         .setAppUri(appUri.toString())
         .build()
 
-internal fun CredentialUpdateDescriptor.toRequest() =
+internal fun CredentialsUpdateDescriptor.toRequest() =
     UpdateCredentialRequest
         .newBuilder()
         .setCredentialId(id)
