@@ -1,6 +1,6 @@
 package com.tink.service.credential
 
-import com.tink.model.credential.Credential
+import com.tink.model.credential.Credentials
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
@@ -24,7 +24,7 @@ class CredentialServiceImpl @Inject constructor(
 
     private val stub = CredentialServiceGrpc.newStub(channel)
 
-    override fun list(): Stream<List<Credential>> {
+    override fun list(): Stream<List<Credentials>> {
         return PollingHandler { observer ->
                 stub.listCredentials(
                     ListCredentialsRequest.getDefaultInstance(),
@@ -36,7 +36,7 @@ class CredentialServiceImpl @Inject constructor(
 
     override fun create(
         descriptor: CredentialCreationDescriptor,
-        handler: ResultHandler<Credential>
+        handler: ResultHandler<Credentials>
     ) = stub.createCredential(descriptor.toRequest(), handler.toStreamObserver {
         it.credential.toCredential()
     })
@@ -52,7 +52,7 @@ class CredentialServiceImpl @Inject constructor(
 
     override fun update(
         descriptor: CredentialUpdateDescriptor,
-        handler: ResultHandler<Credential>
+        handler: ResultHandler<Credentials>
     ) = stub.updateCredential(descriptor.toRequest(), handler.toStreamObserver { response ->
         response.credential.toCredential()
     })

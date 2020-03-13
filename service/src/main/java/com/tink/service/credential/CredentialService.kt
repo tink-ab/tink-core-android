@@ -1,14 +1,14 @@
 package com.tink.service.credential
 
-import com.tink.model.credential.Credential
+import com.tink.model.credential.Credentials
 import com.tink.service.handler.ResultHandler
 import com.tink.service.streaming.publisher.Stream
 
 interface CredentialService {
-    fun list(): Stream<List<Credential>>
-    fun create(descriptor: CredentialCreationDescriptor, handler: ResultHandler<Credential>)
+    fun list(): Stream<List<Credentials>>
+    fun create(descriptor: CredentialCreationDescriptor, handler: ResultHandler<Credentials>)
     fun delete(credentialId: String, handler: ResultHandler<Unit>)
-    fun update(descriptor: CredentialUpdateDescriptor, handler: ResultHandler<Credential>)
+    fun update(descriptor: CredentialUpdateDescriptor, handler: ResultHandler<Credentials>)
     fun refresh(credentialIds: List<String>, handler: ResultHandler<Unit>)
     fun enable(credentialId: String, handler: ResultHandler<Unit>)
     fun disable(credentialId: String, handler: ResultHandler<Unit>)

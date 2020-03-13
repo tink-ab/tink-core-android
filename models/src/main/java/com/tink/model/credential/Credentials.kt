@@ -24,7 +24,7 @@ import kotlinx.android.parcel.Parcelize
  * @property thirdPartyAppAuthentication The [ThirdPartyAppAuthentication] object containing information about the third party authentication flow
  */
 @Parcelize
-data class Credential(
+data class Credentials(
     val providerName: String,
     val type: Type,
     val fields: Map<String, String>,
@@ -36,7 +36,7 @@ data class Credential(
     val updated: Instant = Instant.EPOCH,
     val sessionExpiryDate: Instant? = null,
     val thirdPartyAppAuthentication: ThirdPartyAppAuthentication? = null
-) : Comparable<Credential>, Parcelable {
+) : Comparable<Credentials>, Parcelable {
 
     /**
      * Represents the type of authentication used for the credential.
@@ -95,5 +95,5 @@ data class Credential(
             else -> false
         }
 
-    override fun compareTo(other: Credential): Int = providerName.compareTo(other.providerName)
+    override fun compareTo(other: Credentials): Int = providerName.compareTo(other.providerName)
 }

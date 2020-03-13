@@ -1,7 +1,7 @@
 package com.tink.service.streaming
 
 import com.tink.model.account.Account
-import com.tink.model.credential.Credential
+import com.tink.model.credential.Credentials
 import com.tink.model.provider.Provider
 
 sealed class StreamingEvent {
@@ -27,7 +27,7 @@ sealed class StreamingEvent {
     ) : StreamingEvent()
 
     data class CredentialEvent(
-        val credentials: List<Credential>,
+        val credentials: List<Credentials>,
         override val type: Type
     ) : StreamingEvent()
 }

@@ -1,7 +1,7 @@
 package com.tink.service.credential
 
 import com.tink.model.authentication.ThirdPartyAppAuthentication
-import com.tink.model.credential.Credential
+import com.tink.model.credential.Credentials
 import com.tink.service.misc.toField
 import com.tink.service.misc.toInstant
 import se.tink.grpc.v1.rpc.CreateCredentialRequest
@@ -14,7 +14,7 @@ internal typealias ThirdPartyAppAuthenticationDTO = se.tink.grpc.v1.models.Third
 internal typealias ThirdPartyAppAuthenticationAndroidDTO = se.tink.grpc.v1.models.ThirdPartyAppAuthentication.Android
 
 internal fun CredentialDTO.toCredential() =
-    Credential(
+    Credentials(
         providerName = providerName,
         type = type.toCredentialType(),
         id = id,
@@ -35,30 +35,30 @@ internal fun CredentialDTO.toCredential() =
 internal fun CredentialTypeDTO.toCredentialType() =
     when (this) {
         CredentialTypeDTO.UNRECOGNIZED,
-        CredentialTypeDTO.TYPE_UNKNOWN -> Credential.Type.UNKNOWN
-        CredentialTypeDTO.TYPE_PASSWORD -> Credential.Type.PASSWORD
-        CredentialTypeDTO.TYPE_MOBILE_BANKID -> Credential.Type.MOBILE_BANKID
-        CredentialTypeDTO.TYPE_KEYFOB -> Credential.Type.KEYFOB
-        CredentialTypeDTO.TYPE_FRAUD -> Credential.Type.FRAUD
-        CredentialTypeDTO.TYPE_THIRD_PARTY_AUTHENTICATION -> Credential.Type.THIRD_PARTY_AUTHENTICATION
+        CredentialTypeDTO.TYPE_UNKNOWN -> Credentials.Type.UNKNOWN
+        CredentialTypeDTO.TYPE_PASSWORD -> Credentials.Type.PASSWORD
+        CredentialTypeDTO.TYPE_MOBILE_BANKID -> Credentials.Type.MOBILE_BANKID
+        CredentialTypeDTO.TYPE_KEYFOB -> Credentials.Type.KEYFOB
+        CredentialTypeDTO.TYPE_FRAUD -> Credentials.Type.FRAUD
+        CredentialTypeDTO.TYPE_THIRD_PARTY_AUTHENTICATION -> Credentials.Type.THIRD_PARTY_AUTHENTICATION
     }
 
 internal fun CredentialStatusDTO.toCredentialStatus() =
     when (this) {
         CredentialStatusDTO.UNRECOGNIZED,
-        CredentialStatusDTO.STATUS_UNKNOWN -> Credential.Status.UNKNOWN
-        CredentialStatusDTO.STATUS_CREATED -> Credential.Status.CREATED
-        CredentialStatusDTO.STATUS_AUTHENTICATING -> Credential.Status.AUTHENTICATING
-        CredentialStatusDTO.STATUS_UPDATING -> Credential.Status.UPDATING
-        CredentialStatusDTO.STATUS_UPDATED -> Credential.Status.UPDATED
-        CredentialStatusDTO.STATUS_TEMPORARY_ERROR -> Credential.Status.TEMPORARY_ERROR
-        CredentialStatusDTO.STATUS_AUTHENTICATION_ERROR -> Credential.Status.AUTHENTICATION_ERROR
-        CredentialStatusDTO.STATUS_PERMANENT_ERROR -> Credential.Status.PERMANENT_ERROR
-        CredentialStatusDTO.STATUS_AWAITING_MOBILE_BANKID_AUTHENTICATION -> Credential.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION
-        CredentialStatusDTO.STATUS_AWAITING_SUPPLEMENTAL_INFORMATION -> Credential.Status.AWAITING_SUPPLEMENTAL_INFORMATION
-        CredentialStatusDTO.STATUS_DISABLED -> Credential.Status.DISABLED
-        CredentialStatusDTO.STATUS_AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> Credential.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION
-        CredentialStatusDTO.STATUS_SESSION_EXPIRED -> Credential.Status.SESSION_EXPIRED
+        CredentialStatusDTO.STATUS_UNKNOWN -> Credentials.Status.UNKNOWN
+        CredentialStatusDTO.STATUS_CREATED -> Credentials.Status.CREATED
+        CredentialStatusDTO.STATUS_AUTHENTICATING -> Credentials.Status.AUTHENTICATING
+        CredentialStatusDTO.STATUS_UPDATING -> Credentials.Status.UPDATING
+        CredentialStatusDTO.STATUS_UPDATED -> Credentials.Status.UPDATED
+        CredentialStatusDTO.STATUS_TEMPORARY_ERROR -> Credentials.Status.TEMPORARY_ERROR
+        CredentialStatusDTO.STATUS_AUTHENTICATION_ERROR -> Credentials.Status.AUTHENTICATION_ERROR
+        CredentialStatusDTO.STATUS_PERMANENT_ERROR -> Credentials.Status.PERMANENT_ERROR
+        CredentialStatusDTO.STATUS_AWAITING_MOBILE_BANKID_AUTHENTICATION -> Credentials.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION
+        CredentialStatusDTO.STATUS_AWAITING_SUPPLEMENTAL_INFORMATION -> Credentials.Status.AWAITING_SUPPLEMENTAL_INFORMATION
+        CredentialStatusDTO.STATUS_DISABLED -> Credentials.Status.DISABLED
+        CredentialStatusDTO.STATUS_AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION
+        CredentialStatusDTO.STATUS_SESSION_EXPIRED -> Credentials.Status.SESSION_EXPIRED
     }
 
 internal fun ThirdPartyAppAuthenticationDTO.toThirdPartyAppAuthentication() =
@@ -94,12 +94,12 @@ internal fun CredentialUpdateDescriptor.toRequest() =
         .setAppUri(appUri.toString())
         .build()
 
-internal fun Credential.Type.toDTO() =
+internal fun Credentials.Type.toDTO() =
     when (this) {
-        Credential.Type.UNKNOWN -> CredentialTypeDTO.TYPE_UNKNOWN
-        Credential.Type.PASSWORD -> CredentialTypeDTO.TYPE_PASSWORD
-        Credential.Type.MOBILE_BANKID -> CredentialTypeDTO.TYPE_MOBILE_BANKID
-        Credential.Type.KEYFOB -> CredentialTypeDTO.TYPE_KEYFOB
-        Credential.Type.FRAUD -> CredentialTypeDTO.TYPE_FRAUD
-        Credential.Type.THIRD_PARTY_AUTHENTICATION -> CredentialTypeDTO.TYPE_THIRD_PARTY_AUTHENTICATION
+        Credentials.Type.UNKNOWN -> CredentialTypeDTO.TYPE_UNKNOWN
+        Credentials.Type.PASSWORD -> CredentialTypeDTO.TYPE_PASSWORD
+        Credentials.Type.MOBILE_BANKID -> CredentialTypeDTO.TYPE_MOBILE_BANKID
+        Credentials.Type.KEYFOB -> CredentialTypeDTO.TYPE_KEYFOB
+        Credentials.Type.FRAUD -> CredentialTypeDTO.TYPE_FRAUD
+        Credentials.Type.THIRD_PARTY_AUTHENTICATION -> CredentialTypeDTO.TYPE_THIRD_PARTY_AUTHENTICATION
     }

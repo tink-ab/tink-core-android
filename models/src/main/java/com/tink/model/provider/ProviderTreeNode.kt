@@ -3,7 +3,7 @@ package com.tink.model.provider
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import com.tink.model.credential.Credential
+import com.tink.model.credential.Credentials
 import com.tink.model.provider.ProviderTreeNode.AccessTypeNode
 import com.tink.model.provider.ProviderTreeNode.CredentialTypeNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
@@ -72,12 +72,12 @@ sealed class ProviderTreeNode : Parcelable {
     /**
      * A parent node of the tree structure, with a list of [ProviderNode] children.
      *
-     * @param type Grouping identifier. See [Credential.Type]
+     * @param type Grouping identifier. See [Credentials.Type]
      */
     @Parcelize
     data class CredentialTypeNode(
         override val name: String?,
-        val type: Credential.Type,
+        val type: Credentials.Type,
         val providers: List<ProviderNode>
     ) : ProviderTreeNode() {
         override val icon
@@ -128,7 +128,7 @@ private fun List<Provider>.groupByAccessType(): List<AccessTypeNode> =
         .sortedBy { it.name }
 
 private fun List<Provider>.groupByCredentialType(): List<CredentialTypeNode> =
-    groupBy { it.credentialType }
+    groupBy { it.credentialsType }
         .flatMap { (type, providers) ->
             /*
              * Group the credential type internally by displayDescription as a first step.

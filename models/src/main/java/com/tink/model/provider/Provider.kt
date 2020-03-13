@@ -3,7 +3,7 @@ package com.tink.model.provider
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import com.tink.model.Images
-import com.tink.model.credential.Credential
+import com.tink.model.credential.Credentials
 import com.tink.model.misc.Field
 
 /**
@@ -18,10 +18,10 @@ import com.tink.model.misc.Field
  * @property displayName the formatted name of this provider, meant for display to the end user
  * @property type The type of the provider. See [Type]
  * @property status The status of the provider. See [Status]
- * @property credentialType Indicates which method will be used to connect this provider, for example with username/password or a third party app.
+ * @property credentialsType Indicates which method will be used to connect this provider, for example with username/password or a third party app.
  * @property helpText a small help text that you can display to the user for further information on how to connect this provider
  * @property isPopular Indicates whether the provider is one of the major providers in a market. This can be used to provide shortcuts for the end user, for example by putting this provider on the top of the list.
- * @property fields the list of inputs that need to be filled to connect to this provider. See also [Credential.fields]
+ * @property fields the list of inputs that need to be filled to connect to this provider. See also [Credentials.fields]
  * @property groupDisplayName this can for example be used as a label for groups of providers
  * @property displayDescription a short displayable description of the authentication type used
  * @property images a wrapper class for images describing the provider, for example a bank logo
@@ -35,7 +35,7 @@ data class Provider(
     val displayName: String,
     val type: Type,
     val status: Status,
-    val credentialType: Credential.Type,
+    val credentialsType: Credentials.Type,
     val helpText: String,
     val isPopular: Boolean = false,
     val fields: List<Field>,
