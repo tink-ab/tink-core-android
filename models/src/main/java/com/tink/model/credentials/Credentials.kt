@@ -1,4 +1,4 @@
-package com.tink.model.credential
+package com.tink.model.credentials
 
 import android.os.Parcelable
 import org.threeten.bp.Instant
@@ -12,19 +12,19 @@ import kotlinx.android.parcel.Parcelize
  * This model represents how users are connected to a [Provider] to access their financial data.
  *
  * @property providerName Identifier for the [Provider]. See [Provider.name]
- * @property type The authentication type used for the credential.
+ * @property type The authentication type used for the credentials.
  * @property fields The map of [Field] name and value pairs for the [Provider].
- * @property id The unique identifier of the credential
- * @property status The current status of the credential.
+ * @property id The unique identifier of the credentials.
+ * @property status The current status of the credentials.
  * @property statusPayload A user-friendly text connected to the [Status]
  * @property supplementalInformation The list of [Field] objects representing additional information required for the authentication flow
  * @property statusUpdated Indicates when the credentials' status was last updated
  * @property updated Indicates the last time when the [status] was [Status.UPDATED]
- * @property sessionExpiryDate The session expiration time of the credential for a [Provider] with [Provider.accessType] set to [Provider.AccessType.OPEN_BANKING]
+ * @property sessionExpiryDate The session expiration time of the credentials for a [Provider] with [Provider.accessType] set to [Provider.AccessType.OPEN_BANKING]
  * @property thirdPartyAppAuthentication The [ThirdPartyAppAuthentication] object containing information about the third party authentication flow
  */
 @Parcelize
-data class Credential(
+data class Credentials(
     val providerName: String,
     val type: Type,
     val fields: Map<String, String>,
@@ -36,10 +36,10 @@ data class Credential(
     val updated: Instant = Instant.EPOCH,
     val sessionExpiryDate: Instant? = null,
     val thirdPartyAppAuthentication: ThirdPartyAppAuthentication? = null
-) : Comparable<Credential>, Parcelable {
+) : Comparable<Credentials>, Parcelable {
 
     /**
-     * Represents the type of authentication used for the credential.
+     * Represents the type of authentication used for the credentials.
      */
     enum class Type {
         UNKNOWN,
@@ -51,9 +51,9 @@ data class Credential(
     }
 
     /**
-     * Represents the status of the credential.
+     * Represents the status of the credentials.
      *
-     * When data is being fetched/updated from a [Provider], the status of the credential can change to indicate the current state of the flow.
+     * When data is being fetched/updated from a [Provider], the status of the credentials can change to indicate the current state of the flow.
      * You can observe the credentials and act upon changes in the status if the [statusUpdated] value is greater than what it was previously.
      */
     enum class Status {
@@ -95,5 +95,5 @@ data class Credential(
             else -> false
         }
 
-    override fun compareTo(other: Credential): Int = providerName.compareTo(other.providerName)
+    override fun compareTo(other: Credentials): Int = providerName.compareTo(other.providerName)
 }

@@ -6,8 +6,8 @@ import com.tink.service.authorization.UserService
 import com.tink.service.authorization.UserServiceImpl
 import com.tink.service.consent.ConsentService
 import com.tink.service.consent.ConsentServiceImpl
-import com.tink.service.credential.CredentialService
-import com.tink.service.credential.CredentialServiceImpl
+import com.tink.service.credentials.CredentialsService
+import com.tink.service.credentials.CredentialsServiceImpl
 import com.tink.service.provider.ProviderService
 import com.tink.service.provider.ProviderServiceImpl
 import dagger.Binds
@@ -20,7 +20,7 @@ abstract class ServiceModule {
     abstract fun providerService(implementation: ProviderServiceImpl): ProviderService
 
     @Binds
-    abstract fun credentialService(implementation: CredentialServiceImpl): CredentialService
+    abstract fun credentialsService(implementation: CredentialsServiceImpl): CredentialsService
 
     @Binds
     internal abstract fun authenticationService(implementation: AuthenticationServiceImpl): AuthenticationService

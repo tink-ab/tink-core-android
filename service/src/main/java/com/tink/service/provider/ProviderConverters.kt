@@ -2,7 +2,7 @@ package com.tink.service.provider
 
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
-import com.tink.service.credential.toCredentialType
+import com.tink.service.credentials.toCredentialsType
 import com.tink.service.misc.toField
 import com.tink.service.misc.toImages
 
@@ -17,7 +17,7 @@ internal fun ProviderDTO.toProvider(): Provider =
         displayName = displayName,
         type = type.toProviderType(),
         status = status.toProviderStatus(),
-        credentialType = credentialType.toCredentialType(),
+        credentialsType = credentialType.toCredentialsType(),
         helpText = helpText,
         isPopular = popular,
         fields = fieldsOrEmpty(),

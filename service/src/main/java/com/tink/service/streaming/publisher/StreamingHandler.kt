@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import com.tink.model.account.Account
-import com.tink.model.credential.Credential
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.Provider
 import com.tink.service.streaming.StreamingEvent
 import kotlin.properties.Delegates
@@ -13,10 +13,10 @@ import kotlin.reflect.KMutableProperty0
 interface StreamingHandler {
     val providersStream: Observable<List<Provider>>
     val accountsStream: Observable<List<Account>>
-    val credentialsStream: Observable<List<Credential>>
+    val credentialsStream: Observable<List<Credentials>>
 
     fun subscribeForProviders(onNext: (List<Provider>) -> Unit): StreamSubscription
-    fun subscribeForCredentials(onNext: (List<Credential>) -> Unit): StreamSubscription
+    fun subscribeForCredentials(onNext: (List<Credentials>) -> Unit): StreamSubscription
     fun subscribeForAccounts(onNext: (List<Account>) -> Unit): StreamSubscription
 
     fun onNext(value: StreamingEvent)
@@ -36,7 +36,7 @@ class StreamingHandlerImpl : StreamingHandler {
         }
     }
 
-    private var credentials: List<Credential> by Delegates.observable(emptyList()) { _, old, new ->
+    private var credentials: List<Credentials> by Delegates.observable(emptyList()) { _, old, new ->
         if (old != new) {
             _credentialsStream.onNext(new)
         }
@@ -60,7 +60,7 @@ class StreamingHandlerImpl : StreamingHandler {
         )
     }
 
-    private fun updateCredentialsFromEvent(event: StreamingEvent.CredentialEvent) {
+    private fun updateCredentialsFromEvent(event: StreamingEvent.CredentialsEvent) {
         updateListFromEvent(
             currentList = ::credentials,
             eventList = event.credentials,
@@ -96,21 +96,21 @@ class StreamingHandlerImpl : StreamingHandler {
     private val _accountsStream: PublishSubject<List<Account>> = PublishSubject.create()
     override val accountsStream: Observable<List<Account>> = _accountsStream
 
-    private val _credentialsStream: PublishSubject<List<Credential>> = PublishSubject.create()
-    override val credentialsStream: Observable<List<Credential>> = _credentialsStream
+    private val _credentialsStream: PublishSubject<List<Credentials>> = PublishSubject.create()
+    override val credentialsStream: Observable<List<Credentials>> = _credentialsStream
 
     override fun onNext(value: StreamingEvent) =
         when (value) {
             is StreamingEvent.ProviderEvent -> updateProvidersFromEvent(value)
             is StreamingEvent.AccountEvent -> updateAccountsFromEvent(value)
-            is StreamingEvent.CredentialEvent -> updateCredentialsFromEvent(value)
+            is StreamingEvent.CredentialsEvent -> updateCredentialsFromEvent(value)
         }
 
     override fun subscribeForProviders(onNext: (List<Provider>) -> Unit): StreamSubscription {
         return SubscriptionFromDisposable(providersStream.subscribe(onNext))
     }
 
-    override fun subscribeForCredentials(onNext: (List<Credential>) -> Unit): StreamSubscription {
+    override fun subscribeForCredentials(onNext: (List<Credentials>) -> Unit): StreamSubscription {
         return SubscriptionFromDisposable(credentialsStream.subscribe(onNext))
     }
 
