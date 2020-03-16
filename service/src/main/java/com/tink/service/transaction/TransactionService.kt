@@ -3,72 +3,70 @@ package com.tink.service.transaction
 import com.tink.model.time.Period
 import com.tink.model.transaction.Transaction
 import com.tink.service.handler.ResultHandler
-import com.tink.service.observer.ChangeObserver
+import com.tink.service.observer.ListChangeObserver
 
 interface TransactionService {
     fun listAndSubscribeForAccountId(
-        accountId: String?,
-        listener: ChangeObserver<Transaction?>?
+        accountId: String,
+        listener: ListChangeObserver<Transaction>
     ): Pageable
 
     fun listAndSubscribeForCategoryCode(
-        categoryCode: String?,
-        listener: ChangeObserver<Transaction?>?
+        categoryCode: String,
+        listener: ListChangeObserver<Transaction>
     ): Pageable
 
     fun listAndSubscribeForCategoryCodeAndPeriod(
-        categoryCode: String?,
-        period: Period?, listener: ChangeObserver<Transaction?>?
+        categoryCode: String,
+        period: Period,
+        listener: ListChangeObserver<Transaction>
     ): Pageable
 
     fun listAllAndSubscribeForCategoryCodeAndPeriod(
-        categoryCode: String?,
-        period: Period?,
-        listener: ChangeObserver<Transaction?>?
+        categoryCode: String,
+        period: Period,
+        listener: ListChangeObserver<Transaction>
     )
 
     fun listAndSubscribeForLeftToSpendAndPeriod(
-        period: Period?,
-        listener: ChangeObserver<Transaction?>?
-    ): Pageable
-
-    fun search(
-        query: String?, listener: ChangeObserver<Transaction?>?,
-        metadataResultHandler: ResultHandler<SearchResultMetadata?>?
+        period: Period,
+        listener: ListChangeObserver<Transaction>
     ): Pageable
 
     fun listAndSubscribeForLatestTransactions(
-        includeUpcomming: Boolean,
-        listener: ChangeObserver<Transaction?>?
+        includeUpcoming: Boolean,
+        listener: ListChangeObserver<Transaction>
     ): Pageable
 
     fun listAndSubscribeForLatestTransactions(
-        includeUpcomming: Boolean,
-        pageSize: Int, listener: ChangeObserver<Transaction?>?
+        includeUpcoming: Boolean,
+        pageSize: Int,
+        listener: ListChangeObserver<Transaction>
     ): Pageable
 
-    fun unsubscribe(listener: ChangeObserver<Transaction?>?)
+    fun unsubscribe(listener: ListChangeObserver<Transaction>)
 
     fun updateTransaction(
-        transaction: Transaction?,
-        handler: ResultHandler<Transaction?>?
+        descriptor: TransactionUpdateDescriptor,
+        handler: ResultHandler<Transaction>
     )
 
     fun getTransaction(
-        transactionId: String?,
-        handler: ResultHandler<Transaction?>?
+        transactionId: String,
+        handler: ResultHandler<Transaction>
     )
 
     fun categorizeTransactions(
-        transactionIds: List<String?>?, categoryCode: String?,
-        handler: ResultHandler<List<Transaction?>?>?
+        transactionIds: List<String>,
+        categoryCode: String,
+        handler: ResultHandler<List<Transaction>>
     )
 
     fun getSimilarTransactions(
-        transactionId: String?,
-        handler: ResultHandler<List<Transaction?>?>?
+        transactionId: String,
+        handler: ResultHandler<List<Transaction>>
     )
 
-    fun subscribe(changeObserver: ChangeObserver<Transaction?>?)
+    fun subscribe(changeObserver: ListChangeObserver<Transaction>)
 }
 
