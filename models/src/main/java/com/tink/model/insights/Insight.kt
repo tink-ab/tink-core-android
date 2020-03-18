@@ -4,6 +4,8 @@ import android.os.Parcelable
 import com.tink.model.budget.Budget
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
+import com.tink.model.relations.ExpensesByDay
+import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.Instant
@@ -97,7 +99,9 @@ enum class InsightType {
     LARGE_EXPENSE,
     DOUBLE_CHARGE,
     WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY,
-    WEEKLY_UNCATEGORIZED_TRANSACTIONS
+    WEEKLY_SUMMARY_EXPENSES_BY_DAY,
+    WEEKLY_UNCATEGORIZED_TRANSACTIONS,
+    MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY
 }
 
 sealed class InsightState : Parcelable {
@@ -175,6 +179,18 @@ sealed class InsightData : Parcelable {
     data class WeeklyUncategorizedTransactionsData(
         val week: YearWeek,
         val transactionIds: List<String>
+    ) : InsightData()
+
+    @Parcelize
+    data class WeeklyExpensesByDayData(
+        val week: YearWeek,
+        val expensesByDay: List<ExpensesByDay>
+    ) : InsightData()
+
+    @Parcelize
+    data class MonthlySummaryExpensesByCategoryData(
+        val month: YearMonth,
+        val expenses: List<AmountByCategory>
     ) : InsightData()
 
     // Simple data holders
