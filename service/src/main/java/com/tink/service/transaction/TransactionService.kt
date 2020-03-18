@@ -3,49 +3,49 @@ package com.tink.service.transaction
 import com.tink.model.time.Period
 import com.tink.model.transaction.Transaction
 import com.tink.service.handler.ResultHandler
-import com.tink.service.observer.ListChangeObserver
+import com.tink.service.observer.ChangeObserver
 import javax.inject.Inject
 
 interface TransactionService {
     fun listAndSubscribeForAccountId(
         accountId: String,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable
 
     fun listAndSubscribeForCategoryCode(
         categoryCode: String,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable
 
     fun listAndSubscribeForCategoryCodeAndPeriod(
         categoryCode: String,
         period: Period,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable
 
     fun listAllAndSubscribeForCategoryCodeAndPeriod(
         categoryCode: String,
         period: Period,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     )
 
     fun listAndSubscribeForLeftToSpendAndPeriod(
         period: Period,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable
 
     fun listAndSubscribeForLatestTransactions(
         includeUpcoming: Boolean,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable
 
     fun listAndSubscribeForLatestTransactions(
         includeUpcoming: Boolean,
         pageSize: Int,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable
 
-    fun unsubscribe(listener: ListChangeObserver<Transaction>)
+    fun unsubscribe(listener: ChangeObserver<List<Transaction>>)
 
     fun updateTransaction(
         descriptor: TransactionUpdateDescriptor,
@@ -68,20 +68,20 @@ interface TransactionService {
         handler: ResultHandler<List<Transaction>>
     )
 
-    fun subscribe(changeObserver: ListChangeObserver<Transaction>)
+    fun subscribe(changeObserver: ChangeObserver<List<Transaction>>)
 }
 
 class TransactionServiceImpl @Inject constructor() : TransactionService {
     override fun listAndSubscribeForAccountId(
         accountId: String,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForCategoryCode(
         categoryCode: String,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -89,7 +89,7 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
     override fun listAndSubscribeForCategoryCodeAndPeriod(
         categoryCode: String,
         period: Period,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -97,21 +97,21 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
     override fun listAllAndSubscribeForCategoryCodeAndPeriod(
         categoryCode: String,
         period: Period,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForLeftToSpendAndPeriod(
         period: Period,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForLatestTransactions(
         includeUpcoming: Boolean,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -119,12 +119,12 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
     override fun listAndSubscribeForLatestTransactions(
         includeUpcoming: Boolean,
         pageSize: Int,
-        listener: ListChangeObserver<Transaction>
+        listener: ChangeObserver<List<Transaction>>
     ): Pageable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun unsubscribe(listener: ListChangeObserver<Transaction>) {
+    override fun unsubscribe(listener: ChangeObserver<List<Transaction>>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -154,7 +154,7 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun subscribe(changeObserver: ListChangeObserver<Transaction>) {
+    override fun subscribe(changeObserver: ChangeObserver<List<Transaction>>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
