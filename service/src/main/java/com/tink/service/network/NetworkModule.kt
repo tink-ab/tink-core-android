@@ -2,12 +2,12 @@ package com.tink.service.network
 
 import android.content.Context
 import android.net.Uri
+import com.tink.service.authentication.UserEventBus
 import dagger.Module
 import dagger.Provides
 import io.grpc.Channel
 import io.grpc.ClientInterceptors
 import io.grpc.okhttp.OkHttpChannelBuilder
-import com.tink.service.authentication.UserEventBus
 import java.io.ByteArrayInputStream
 import javax.inject.Singleton
 
@@ -90,42 +90,32 @@ sealed class Environment(
         restUrl = "https://api.tink.com",
         port = 443,
         grpcSSLKey = "-----BEGIN CERTIFICATE-----\n" +
-                "MIIGfDCCBWSgAwIBAgISA6JCzTmIuC+c2L6Z0RKVuuduMA0GCSqGSIb3DQEBCwUA\n" +
-                "MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD\n" +
-                "ExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0xOTA5MTUwMDEyMTZaFw0x\n" +
-                "OTEyMTQwMDEyMTZaMC4xLDAqBgNVBAMTI21haW4tZ3JwYy5wcm9kdWN0aW9uLm94\n" +
-                "Zm9yZC50aW5rLnNlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqRMz\n" +
-                "xxeDEBPucYRqkN4SwKtm63hZXmHOstbAVHqwubdVyKtEavud5t2ksN34mmUelf6j\n" +
-                "xkG9uaepB15nN3WCxezmqTP2aOUCZEk65yMEGkWHqTrzL2Wx97g923qYelet/aBw\n" +
-                "s8X5OU5E2T0rUDWHsFktp/B7kOkV7dwGEvApj7Cf1Exnmk1iJl1me5u326AeWAOD\n" +
-                "+71Qo4P7cEKEndYnADY7pIVyxfRnduwZpmovvEFYXyWFIzQJH2WR92q2/h/sRFGE\n" +
-                "y2tWct8vcj6O/NCUoRX200Wc4Dzr/PKp5kpliFDWtz1/h1AO6jGUvDNMT/PsXVwq\n" +
-                "38a+2iscE8O2rMnFtjilW0G6k3foOzfKX7Dkjqa618NNDDJWhTk8oAJ94xUnJEfz\n" +
-                "HqIM5jvjpolBrnOotPE3a9s8Dd59V5SS30eU/htjcsXwMOxn5mSS4qWC+jyclc2E\n" +
-                "2wI3aXCdfuXvXm9fl8zORzXlChAETM6JxtsTmuWLjev+5QiWLMUH7KRx81VY4V+P\n" +
-                "4vJaQ+T/kYTLBHTIXmj7bMziEJkYD2qQrW1YxgsM8YvCx5f5je9BOodKQoCPGNj5\n" +
-                "RnHmyA4o4f/HkrQk+yejNUJfQUTu25LuE9PBPk8jmLD7cGN9WQvGWZYe981IQvZc\n" +
-                "3h70ODmGFxgBEWIA0lzYweSZMEv6m80enZyCTeMCAwEAAaOCAnYwggJyMA4GA1Ud\n" +
-                "DwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwDAYDVR0T\n" +
-                "AQH/BAIwADAdBgNVHQ4EFgQU0nqn88nowwgt+v2UY7oskgQy++cwHwYDVR0jBBgw\n" +
-                "FoAUqEpqYwR93brm0Tm3pkVl7/Oo7KEwbwYIKwYBBQUHAQEEYzBhMC4GCCsGAQUF\n" +
-                "BzABhiJodHRwOi8vb2NzcC5pbnQteDMubGV0c2VuY3J5cHQub3JnMC8GCCsGAQUF\n" +
-                "BzAChiNodHRwOi8vY2VydC5pbnQteDMubGV0c2VuY3J5cHQub3JnLzAuBgNVHREE\n" +
-                "JzAlgiNtYWluLWdycGMucHJvZHVjdGlvbi5veGZvcmQudGluay5zZTBMBgNVHSAE\n" +
-                "RTBDMAgGBmeBDAECATA3BgsrBgEEAYLfEwEBATAoMCYGCCsGAQUFBwIBFhpodHRw\n" +
-                "Oi8vY3BzLmxldHNlbmNyeXB0Lm9yZzCCAQIGCisGAQQB1nkCBAIEgfMEgfAA7gB1\n" +
-                "AOJpS64m6OlACeiGG7Y7g9Q+5/50iPukjyiTAZ3d8dv+AAABbTJ6QtUAAAQDAEYw\n" +
-                "RAIgBimryfdTNENB7fZxWKR+70Hy3ZdCT5uo7JMC0M8UjNcCIEav84M6j3fGf2Zm\n" +
-                "2JNNofhYF7v33vxB7WzW0O5mwT96AHUAKTxRllTIOWW6qlD8WAfUt2+/WHopctyk\n" +
-                "wwz05UVH9HgAAAFtMnpCywAABAMARjBEAiB9DAhwG0SwlIhv37quc7wjp55X3DAE\n" +
-                "0krJrGPjBrnWUAIgHNAVRs58tfUf6bErgtsXaXS7hlteM6k/l6xYe26Om40wDQYJ\n" +
-                "KoZIhvcNAQELBQADggEBABJ0nKTp+puipp5hUmusm+8Tn2kZCVAfpsbjBZZ+H/k6\n" +
-                "Nq4EAHmiTsDg2k91XUvZ1kUfN2LwW+UukwQqVWD/KxZ91M0yDwfYxSyP/pHuXIU2\n" +
-                "PrbFoLIP9Lqh7ZERFJWyYMo2d5Yes1XQDJLa9zMA5P2cSHYnJxpuOZ84O2ioG4yy\n" +
-                "S38Rz2aBTcDvaub1Z+cs5guUrL3NjxZji+x8CHTFjhpJ4Kfgocn3I+dNLp/0rxTm\n" +
-                "aIlh9rC91zbAQ5esq95fJV96TpTnyLbkrU2mlWGQGTGFmklxulBMEN1sd2WWq8zq\n" +
-                "HXjyrn4TF6wI7GbbHJQFh6Isr3ePMRYNrQaqUCYKtG8=\n" +
-                "-----END CERTIFICATE-----\n",
+                "MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/\n" +
+                "MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT\n" +
+                "DkRTVCBSb290IENBIFgzMB4XDTE2MDMxNzE2NDA0NloXDTIxMDMxNzE2NDA0Nlow\n" +
+                "SjELMAkGA1UEBhMCVVMxFjAUBgNVBAoTDUxldCdzIEVuY3J5cHQxIzAhBgNVBAMT\n" +
+                "GkxldCdzIEVuY3J5cHQgQXV0aG9yaXR5IFgzMIIBIjANBgkqhkiG9w0BAQEFAAOC\n" +
+                "AQ8AMIIBCgKCAQEAnNMM8FrlLke3cl03g7NoYzDq1zUmGSXhvb418XCSL7e4S0EF\n" +
+                "q6meNQhY7LEqxGiHC6PjdeTm86dicbp5gWAf15Gan/PQeGdxyGkOlZHP/uaZ6WA8\n" +
+                "SMx+yk13EiSdRxta67nsHjcAHJyse6cF6s5K671B5TaYucv9bTyWaN8jKkKQDIZ0\n" +
+                "Z8h/pZq4UmEUEz9l6YKHy9v6Dlb2honzhT+Xhq+w3Brvaw2VFn3EK6BlspkENnWA\n" +
+                "a6xK8xuQSXgvopZPKiAlKQTGdMDQMc2PMTiVFrqoM7hD8bEfwzB/onkxEz0tNvjj\n" +
+                "/PIzark5McWvxI0NHWQWM6r6hCm21AvA2H3DkwIDAQABo4IBfTCCAXkwEgYDVR0T\n" +
+                "AQH/BAgwBgEB/wIBADAOBgNVHQ8BAf8EBAMCAYYwfwYIKwYBBQUHAQEEczBxMDIG\n" +
+                "CCsGAQUFBzABhiZodHRwOi8vaXNyZy50cnVzdGlkLm9jc3AuaWRlbnRydXN0LmNv\n" +
+                "bTA7BggrBgEFBQcwAoYvaHR0cDovL2FwcHMuaWRlbnRydXN0LmNvbS9yb290cy9k\n" +
+                "c3Ryb290Y2F4My5wN2MwHwYDVR0jBBgwFoAUxKexpHsscfrb4UuQdf/EFWCFiRAw\n" +
+                "VAYDVR0gBE0wSzAIBgZngQwBAgEwPwYLKwYBBAGC3xMBAQEwMDAuBggrBgEFBQcC\n" +
+                "ARYiaHR0cDovL2Nwcy5yb290LXgxLmxldHNlbmNyeXB0Lm9yZzA8BgNVHR8ENTAz\n" +
+                "MDGgL6AthitodHRwOi8vY3JsLmlkZW50cnVzdC5jb20vRFNUUk9PVENBWDNDUkwu\n" +
+                "Y3JsMB0GA1UdDgQWBBSoSmpjBH3duubRObemRWXv86jsoTANBgkqhkiG9w0BAQsF\n" +
+                "AAOCAQEA3TPXEfNjWDjdGBX7CVW+dla5cEilaUcne8IkCJLxWh9KEik3JHRRHGJo\n" +
+                "uM2VcGfl96S8TihRzZvoroed6ti6WqEBmtzw3Wodatg+VyOeph4EYpr/1wXKtx8/\n" +
+                "wApIvJSwtmVi4MFU5aMqrSDE6ea73Mj2tcMyo5jMd6jmeWUHK8so/joWUoHOUgwu\n" +
+                "X4Po1QYz+3dszkDqMp4fklxBwXRsW10KXzPMTZ+sOPAveyxindmjkW8lGy+QsRlG\n" +
+                "PfZ+G6Z6h7mjem0Y+iWlkYcV4PIWL1iwBi8saCbGS5jN2p8M+X+Q7UNKEkROb3N6\n" +
+                "KOqkqm57TH2H3eDJAkSnh6/DNFu0Qg==\n" +
+                "-----END CERTIFICATE-----",
         restSSLKey = "-----BEGIN CERTIFICATE-----\n" +
                 "MIIGeDCCBWCgAwIBAgISA/I1VxCbScdt47kFS63VetEFMA0GCSqGSIb3DQEBCwUA\n" +
                 "MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD\n" +
