@@ -3,7 +3,7 @@ package com.tink.core
 import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.service.authentication.user.User
-import com.tink.service.ServiceModule
+import com.tink.service.di.ServiceModule
 import com.tink.service.authentication.AuthenticationService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
