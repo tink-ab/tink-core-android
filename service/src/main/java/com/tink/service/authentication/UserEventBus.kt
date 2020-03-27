@@ -1,12 +1,12 @@
 package com.tink.service.authentication
 
 import com.tink.service.authentication.user.User
+import com.tink.service.di.ServiceScope
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@ServiceScope
 class UserEventBus @Inject constructor() {
     private val publisherSubject = BehaviorSubject.create<User>()
 

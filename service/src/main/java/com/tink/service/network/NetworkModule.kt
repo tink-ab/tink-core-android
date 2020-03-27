@@ -8,15 +8,15 @@ import io.grpc.Channel
 import io.grpc.ClientInterceptors
 import io.grpc.okhttp.OkHttpChannelBuilder
 import com.tink.service.authentication.UserEventBus
+import com.tink.service.di.ServiceScope
 import okhttp3.OkHttpClient
 import java.io.ByteArrayInputStream
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
     @Provides
-    @Singleton
+    @ServiceScope
     internal fun provideInterceptor(
         tinkConfig: TinkConfiguration,
         userEventBus: UserEventBus
@@ -28,7 +28,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @ServiceScope
     internal fun provideChannel(
         tinkConfig: TinkConfiguration,
         interceptor: HeaderClientInterceptor,
@@ -55,8 +55,9 @@ class NetworkModule {
         return ClientInterceptors.intercept(channel, interceptor)
     }
 
-    @Singleton
-    internal fun provideOkHttpClient(tinkConfiguration: TinkConfiguration) =
+    @Provides
+    @ServiceScope
+    internal fun provideOkHttpClient(tinkConfiguration: TinkConfiguration): OkHttpClient =
         OkHttpClient.Builder()
             .apply {
                 tinkConfiguration.environment.restSSLKey?.let { sslKey ->

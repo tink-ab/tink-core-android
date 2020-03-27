@@ -4,18 +4,18 @@ import android.annotation.SuppressLint
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authentication.user.Authorization
 import com.tink.service.authentication.user.User
+import com.tink.service.di.ServiceScope
 import com.tink.service.handler.ResultHandler
 import com.tink.service.network.TinkConfiguration
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import javax.inject.Singleton
 
 interface UserService {
     fun authorize(scopes: Set<Scope>, resultHandler: ResultHandler<String>)
     fun authenticate(authenticationCode: String, resultHandler: ResultHandler<String>)
 }
 
-@Singleton
+@ServiceScope
 internal class UserServiceImpl @Inject constructor(
     private val tinkConfiguration: TinkConfiguration,
     private val retrofitService: UserRetrofitService,

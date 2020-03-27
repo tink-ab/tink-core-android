@@ -3,17 +3,13 @@ package com.tink.core
 import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.service.authentication.user.User
-import com.tink.service.di.ServiceModule
-import com.tink.service.authentication.AuthenticationService
 import com.tink.service.authentication.UserEventBus
-import com.tink.service.authorization.UserService
-import com.tink.service.consent.ConsentService
-import com.tink.service.credentials.CredentialsService
-import com.tink.service.network.NetworkModule
+import com.tink.service.di.DaggerServiceComponent
+import com.tink.service.di.ServiceComponent
 import com.tink.service.network.TinkConfiguration
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
+import javax.inject.Scope
 
 object Tink {
 
@@ -23,11 +19,15 @@ object Tink {
 
     @JvmStatic
     fun init(config: TinkConfiguration, context: Context) {
+        val serviceComponent = DaggerServiceComponent
+            .builder()
+            .tinkConfiguration(config)
+            .applicationContext(context.applicationContext)
+            .build()
 
         component = DaggerTinkComponent
             .builder()
-            .applicationContext(context.applicationContext)
-            .tinkConfiguration(config)
+            .serviceComponent(serviceComponent)
             .build()
     }
 
@@ -50,19 +50,14 @@ object Tink {
     fun requireComponent() = checkNotNull(component) { "Tink is not initialized" }
 }
 
-@Component(modules = [NetworkModule::class, ServiceModule::class])
-@Singleton
-abstract class TinkComponent { // TODO: Create dagger component in service module
+@Scope
+annotation class TinkScope
+
+@Component(dependencies = [ServiceComponent::class])
+@TinkScope
+abstract class TinkComponent {
 
     abstract val providerRepository: ProviderRepository
-
-    abstract val credentialsService: CredentialsService
-
-    abstract val userService: UserService
-
-    abstract val authenticationService: AuthenticationService
-
-    abstract val consentService: ConsentService
 
     abstract val tinkConfiguration: TinkConfiguration
 
@@ -71,11 +66,7 @@ abstract class TinkComponent { // TODO: Create dagger component in service modul
     @Component.Builder
     internal interface Builder {
 
-        @BindsInstance
-        fun tinkConfiguration(tinkConfiguration: TinkConfiguration): Builder
-
-        @BindsInstance
-        fun applicationContext(applicationContext: Context): Builder
+        fun serviceComponent(serviceComponent: ServiceComponent): Builder
 
         fun build(): TinkComponent
     }

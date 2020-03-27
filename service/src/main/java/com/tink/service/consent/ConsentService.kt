@@ -1,6 +1,7 @@
 package com.tink.service.consent
 
 import com.tink.service.authorization.Scope
+import com.tink.service.di.ServiceScope
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
 import com.tink.service.network.TinkConfiguration
@@ -13,6 +14,7 @@ interface ConsentService {
     fun scopeDescriptions(scopes: Set<Scope>, resultHandler: ResultHandler<List<ScopeDescription>>)
 }
 
+@ServiceScope
 class ConsentServiceImpl @Inject constructor(
     channel: Channel,
     private val tinkConfiguration: TinkConfiguration
