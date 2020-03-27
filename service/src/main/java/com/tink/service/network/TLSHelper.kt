@@ -4,10 +4,12 @@ import java.io.InputStream
 import java.security.KeyStore
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.util.Arrays
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
+import javax.net.ssl.X509TrustManager
 
 object TLSHelper {
 
@@ -35,5 +37,13 @@ object TLSHelper {
         val context = SSLContext.getInstance("TLS")
         context.init(null, getTrustManagers(ca), null)
         return context.socketFactory
+    }
+
+    fun getFirstTrustManager(ca: InputStream): X509TrustManager {
+        val trustManagers = getTrustManagers(ca)
+        check(trustManagers.size == 1 && trustManagers[0] is X509TrustManager) {
+            ("Unexpected default trust managers: ${trustManagers.contentToString()}")
+        }
+        return trustManagers[0] as X509TrustManager
     }
 }

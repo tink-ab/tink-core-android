@@ -63,4 +63,6 @@ object Dependencies {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     const val ktlint = "com.pinterest:ktlint:0.33.0"
+
+    const val okhttp = "com.squareup.okhttp3:okhttp:4.4.0"
 }

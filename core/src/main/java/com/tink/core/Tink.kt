@@ -52,7 +52,7 @@ object Tink {
 
 @Component(modules = [NetworkModule::class, ServiceModule::class])
 @Singleton
-abstract class TinkComponent {
+abstract class TinkComponent { // TODO: Create dagger component in service module
 
     abstract val providerRepository: ProviderRepository
 
