@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("com.yelp.codegen.plugin") version "1.4.1"
     id("kotlin-android")
     id("kotlin-kapt")
 }
@@ -26,8 +27,20 @@ android {
             )
         }
     }
-
 }
+
+//generateSwagger {
+//    platform.set("kotlin")
+//    packageName.set("com.yelp.codegen.samples")
+//    specName.set("sample_specs")
+//    specVersion.set("1.0.0")
+//    inputFile.set(file("../sample_specs.json"))
+//    outputDir.set(project.layout.projectDirectory.dir("./src/main/java/"))
+//    features {
+//        headersToRemove.add("Accept-Language")
+//    }
+//}
+
 
 dependencies {
     implementation(project(":rpc"))
@@ -35,6 +48,9 @@ dependencies {
 
     implementation(Dependencies.kotlin_stdlib)
     implementation(Dependencies.three_ten_abp)
+
+    implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
 
     implementation(Dependencies.Androidx.lifecycle_extensions)
 
@@ -71,3 +87,5 @@ if (project.hasProperty("kapt")) {
 }
 
 apply(from = "../publishing.gradle")
+apply(from = "swagger.gradle")
+
