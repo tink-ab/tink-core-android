@@ -2,13 +2,13 @@ package com.tink.service.network
 
 import android.content.Context
 import android.net.Uri
+import com.tink.service.authentication.UserEventBus
+import com.tink.service.di.ServiceScope
 import dagger.Module
 import dagger.Provides
 import io.grpc.Channel
 import io.grpc.ClientInterceptors
 import io.grpc.okhttp.OkHttpChannelBuilder
-import com.tink.service.authentication.UserEventBus
-import com.tink.service.di.ServiceScope
 import okhttp3.OkHttpClient
 import java.io.ByteArrayInputStream
 
@@ -57,7 +57,10 @@ class NetworkModule {
 
     @Provides
     @ServiceScope
-    internal fun provideOkHttpClient(tinkConfiguration: TinkConfiguration): OkHttpClient =
+    internal fun provideOkHttpClient(
+        tinkConfiguration: TinkConfiguration,
+        userEventBus: UserEventBus
+    ): OkHttpClient =
         OkHttpClient.Builder()
             .apply {
                 tinkConfiguration.environment.restSSLKey?.let { sslKey ->
@@ -66,6 +69,13 @@ class NetworkModule {
                         TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
                     )
                 }
+                addInterceptor(
+                    HeaderInterceptor(
+                        tinkConfiguration.oAuthClientId,
+                        userEventBus,
+                        null
+                    )
+                )
             }
             .build()
 }
