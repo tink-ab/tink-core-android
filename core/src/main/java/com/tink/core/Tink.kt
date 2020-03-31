@@ -7,7 +7,6 @@ import com.tink.service.authentication.UserEventBus
 import com.tink.service.di.DaggerServiceComponent
 import com.tink.service.di.ServiceComponent
 import com.tink.service.network.TinkConfiguration
-import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Scope
 
