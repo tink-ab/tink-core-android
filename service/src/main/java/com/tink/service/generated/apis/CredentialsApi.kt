@@ -31,7 +31,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: create",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/credentials")
     suspend fun create(
@@ -83,7 +83,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: manualAuthentication",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/{id}/authenticate")
     suspend fun manualAuthentication(
@@ -98,7 +98,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: qrAsBase64",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @GET("/api/v1/credentials/{id}/qr")
     suspend fun qrAsBase64(
@@ -115,7 +115,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: refresh",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/{id}/refresh")
     suspend fun refresh(
@@ -133,7 +133,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: supplemental",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/{id}/supplemental-information")
     suspend fun supplemental(
@@ -148,7 +148,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: thirdPartyCallbackRelayedPost",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/third-party/callback/relayed")
     suspend fun thirdPartyCallbackRelayedPost(
@@ -163,7 +163,7 @@ interface CredentialsApi {
      */
     @Headers(
         "X-Operation-ID: update",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/credentials/{id}")
     suspend fun update(

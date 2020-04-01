@@ -78,7 +78,7 @@ interface ProviderApi {
     ): ProviderMarketListResponse
     /**
      * Suggest providers for user.
-     * 
+     *
      * The endpoint is owned by defaultname service owner
      * @param body (optional)
      */

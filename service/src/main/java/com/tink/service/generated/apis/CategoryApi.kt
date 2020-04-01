@@ -20,7 +20,7 @@ interface CategoryApi {
      */
     @Headers(
         "X-Operation-ID: list",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @GET("/api/v1/categories")
     suspend fun list(

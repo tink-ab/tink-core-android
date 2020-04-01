@@ -42,7 +42,7 @@ interface AccountApi {
      */
     @Headers(
         "X-Operation-ID: update",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/accounts/{id}")
     suspend fun update(

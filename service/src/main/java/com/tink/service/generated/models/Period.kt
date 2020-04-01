@@ -13,7 +13,7 @@ import org.threeten.bp.ZonedDateTime
 /**
  * @property endDate Timestamp at the end of the period
  * @property name
- * @property resolution Resolution for the statistics. 
+ * @property resolution Resolution for the statistics.
  * @property startDate Timestamp at the start of the period
  */
 @JsonClass(generateAdapter = true)
@@ -24,7 +24,7 @@ data class Period(
     @Json(name = "startDate") @field:Json(name = "startDate") var startDate: ZonedDateTime? = null
 ) {
     /**
-     * Resolution for the statistics. 
+     * Resolution for the statistics.
      * Values: MONTHLY, MONTHLY_ADJUSTED
      */
     @JsonClass(generateAdapter = false)

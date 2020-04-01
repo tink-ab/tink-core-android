@@ -45,7 +45,7 @@ interface BudgetApi {
      */
     @Headers(
         "X-Operation-ID: createOneOff",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/budgets/one-off")
     suspend fun createOneOff(
@@ -59,7 +59,7 @@ interface BudgetApi {
      */
     @Headers(
         "X-Operation-ID: createRecurring",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/budgets/recurring")
     suspend fun createRecurring(
@@ -147,7 +147,7 @@ interface BudgetApi {
      */
     @Headers(
         "X-Operation-ID: update",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/budgets/{id}")
     suspend fun update(

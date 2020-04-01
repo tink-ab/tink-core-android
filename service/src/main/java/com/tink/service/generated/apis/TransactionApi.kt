@@ -31,7 +31,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: categorize",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions/categorize-multiple")
     suspend fun categorize(
@@ -46,7 +46,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: deletePart",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @DELETE("/api/v1/transactions/{id}/part/{partId}")
     suspend fun deletePart(
@@ -76,7 +76,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: link",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/transactions/{id}/link/{counterpartTransactionId}")
     suspend fun link(
@@ -93,7 +93,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: linkSuggest",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @GET("/api/v1/transactions/{id}/link/suggest")
     suspend fun linkSuggest(
@@ -142,7 +142,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: updateLink",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions/{id}/part/{partId}")
     suspend fun updateLink(
@@ -159,7 +159,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: updateTransaction",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions/{id}")
     suspend fun updateTransaction(
@@ -174,7 +174,7 @@ interface TransactionApi {
      */
     @Headers(
         "X-Operation-ID: updateTransactions",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions")
     suspend fun updateTransactions(

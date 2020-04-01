@@ -17,7 +17,7 @@ import org.threeten.bp.ZonedDateTime
  * @property amount The amount of the transaction. This can be modified by the user.
  * @property categoryId The category of the transaction. This can be modified by the user.
  * @property categoryType The category type of the transaction.
- * @property credentialsId (DEPRECATED) The internal identifier of the credentials that the transaction belongs to. This is deprecated and will soon be removed. This information can instead be accessed through the account. Account can be located with the transactions accountId. 
+ * @property credentialsId (DEPRECATED) The internal identifier of the credentials that the transaction belongs to. This is deprecated and will soon be removed. This information can instead be accessed through the account. Account can be located with the transactions accountId.
  * @property date The date the transaction was executed. This can be modified by the user.
  * @property description The description of the transaction. This can be modified by the user.
  * @property id The internal identifier of the transaction.

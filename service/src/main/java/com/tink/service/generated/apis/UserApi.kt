@@ -27,7 +27,7 @@ interface UserApi {
      */
     @Headers(
         "X-Operation-ID: createUser",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/user/create")
     suspend fun createUser(
@@ -41,7 +41,7 @@ interface UserApi {
      */
     @Headers(
         "X-Operation-ID: delete",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/user/delete")
     suspend fun delete(
@@ -92,13 +92,13 @@ interface UserApi {
     suspend fun getUser(): User
     /**
      * Logout a user
-     * 
+     *
      * The endpoint is owned by defaultname service owner
      * @param autologout boolean (optional)
      */
     @Headers(
         "X-Operation-ID: logout",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @POST("/api/v1/user/logout")
     suspend fun logout(
@@ -112,7 +112,7 @@ interface UserApi {
      */
     @Headers(
         "X-Operation-ID: updateProfile",
-      "Content-Type: application/json"
+        "Content-Type: application/json"
     )
     @PUT("/api/v1/user/profile")
     suspend fun updateProfile(
