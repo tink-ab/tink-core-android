@@ -29,19 +29,6 @@ android {
     }
 }
 
-//generateSwagger {
-//    platform.set("kotlin")
-//    packageName.set("com.yelp.codegen.samples")
-//    specName.set("sample_specs")
-//    specVersion.set("1.0.0")
-//    inputFile.set(file("../sample_specs.json"))
-//    outputDir.set(project.layout.projectDirectory.dir("./src/main/java/"))
-//    features {
-//        headersToRemove.add("Accept-Language")
-//    }
-//}
-
-
 dependencies {
     implementation(project(":rpc"))
     api(project(":models"))
