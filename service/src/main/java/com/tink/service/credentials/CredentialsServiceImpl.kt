@@ -1,6 +1,7 @@
 package com.tink.service.credentials
 
 import com.tink.model.credentials.Credentials
+import com.tink.service.di.ServiceScope
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
@@ -18,6 +19,7 @@ import se.tink.grpc.v1.rpc.ThirdPartyCallbackRequest
 import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
 
+@ServiceScope
 class CredentialsServiceImpl @Inject constructor(
     channel: Channel
 ) : CredentialsService {

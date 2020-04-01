@@ -47,6 +47,8 @@ dependencies {
     implementation(Dependencies.Coroutines.core)
     implementation(Dependencies.Coroutines.android)
 
+    implementation(Dependencies.okhttp)
+
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.retrofit_adapter_rxjava)
     implementation(Dependencies.Retrofit.retrofit_converter_gson)

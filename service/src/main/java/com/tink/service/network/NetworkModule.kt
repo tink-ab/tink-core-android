@@ -3,19 +3,20 @@ package com.tink.service.network
 import android.content.Context
 import android.net.Uri
 import com.tink.service.authentication.UserEventBus
+import com.tink.service.di.ServiceScope
 import dagger.Module
 import dagger.Provides
 import io.grpc.Channel
 import io.grpc.ClientInterceptors
 import io.grpc.okhttp.OkHttpChannelBuilder
+import okhttp3.OkHttpClient
 import java.io.ByteArrayInputStream
-import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
     @Provides
-    @Singleton
+    @ServiceScope
     internal fun provideInterceptor(
         tinkConfig: TinkConfiguration,
         userEventBus: UserEventBus
@@ -27,7 +28,7 @@ class NetworkModule {
     }
 
     @Provides
-    @Singleton
+    @ServiceScope
     internal fun provideChannel(
         tinkConfig: TinkConfiguration,
         interceptor: HeaderClientInterceptor,
@@ -53,6 +54,30 @@ class NetworkModule {
 
         return ClientInterceptors.intercept(channel, interceptor)
     }
+
+    @Provides
+    @ServiceScope
+    internal fun provideOkHttpClient(
+        tinkConfiguration: TinkConfiguration,
+        userEventBus: UserEventBus
+    ): OkHttpClient =
+        OkHttpClient.Builder()
+            .apply {
+                tinkConfiguration.environment.restSSLKey?.let { sslKey ->
+                    sslSocketFactory(
+                        TLSHelper.getSslSocketFactory(ByteArrayInputStream(sslKey.toByteArray())),
+                        TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
+                    )
+                }
+                addInterceptor(
+                    HeaderInterceptor(
+                        tinkConfiguration.oAuthClientId,
+                        userEventBus,
+                        null
+                    )
+                )
+            }
+            .build()
 }
 
 /**

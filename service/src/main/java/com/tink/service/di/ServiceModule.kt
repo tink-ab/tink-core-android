@@ -1,4 +1,4 @@
-package com.tink.service
+package com.tink.service.di
 
 import com.tink.service.authentication.AuthenticationService
 import com.tink.service.authentication.AuthenticationServiceImpl
@@ -13,7 +13,7 @@ import com.tink.service.provider.ProviderServiceImpl
 import dagger.Binds
 import dagger.Module
 
-@Module
+@Module(includes = [RetrofitModule::class])
 abstract class ServiceModule {
 
     @Binds

@@ -1,5 +1,6 @@
 package com.tink.service.authentication
 
+import com.tink.service.di.ServiceScope
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
 import io.grpc.Channel
@@ -7,6 +8,7 @@ import se.tink.grpc.v1.rpc.CreateAnonymousRequest
 import se.tink.grpc.v1.services.UserServiceGrpc
 import javax.inject.Inject
 
+@ServiceScope
 internal class AuthenticationServiceImpl @Inject constructor(
     channel: Channel
 ) : AuthenticationService {

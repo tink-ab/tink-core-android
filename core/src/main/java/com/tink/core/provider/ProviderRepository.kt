@@ -1,5 +1,6 @@
 package com.tink.core.provider
 
+import com.tink.core.TinkScope
 import com.tink.model.provider.Provider
 import com.tink.service.handler.ResultHandler
 import com.tink.service.provider.ProviderService
@@ -11,6 +12,7 @@ import javax.inject.Inject
  * @constructor Create a new repository instance from a [ProviderService].
  * This is usually done inside the TinkLink framework and it should normally not be necessary to create your own instance.
  */
+@TinkScope
 class ProviderRepository @Inject constructor(private val service: ProviderService) {
 
     /**
