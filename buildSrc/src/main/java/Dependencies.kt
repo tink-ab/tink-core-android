@@ -12,6 +12,8 @@ object Versions {
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
     const val navigation = "2.1.0-rc01"
+
+    const val moshi = "1.9.2"
 }
 
 object Dependencies {
@@ -44,6 +46,13 @@ object Dependencies {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val retrofit_adapter_rxjava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
         const val retrofit_converter_gson =  "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+        const val retrofit_converter_moshi =  "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    }
+
+    object Moshi {
+        const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
+        const val moshi_codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}" // Kapt codegen
+        const val moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}" // Reflect
     }
 
     object Testing {

@@ -64,10 +64,14 @@ dependencies {
     implementation(Dependencies.Coroutines.android)
 
     implementation(Dependencies.okhttp)
+    implementation(Dependencies.Moshi.moshi)
+    implementation(Dependencies.Moshi.moshi_kotlin)
+    kapt(Dependencies.Moshi.moshi_codegen)
 
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.retrofit_adapter_rxjava)
     implementation(Dependencies.Retrofit.retrofit_converter_gson)
+    implementation(Dependencies.Retrofit.retrofit_converter_moshi)
     implementation(Dependencies.rxjava)
 
     implementation(Dependencies.timber)
