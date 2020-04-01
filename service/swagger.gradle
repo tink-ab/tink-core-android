@@ -1,0 +1,7 @@
+
+generateSwagger {
+    platform = "kotlin-coroutines"
+    packageName = "com.tink.service.generated"
+    inputFile = file("./swagger.json")
+    outputDir = file("./src/main/java/")
+}

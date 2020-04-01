@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("com.yelp.codegen.plugin") version "1.4.1"
     id("kotlin-android")
     id("kotlin-kapt")
 }
@@ -26,7 +27,6 @@ android {
             )
         }
     }
-
 }
 
 dependencies {
@@ -35,6 +35,9 @@ dependencies {
 
     implementation(Dependencies.kotlin_stdlib)
     implementation(Dependencies.three_ten_abp)
+
+    implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
 
     implementation(Dependencies.Androidx.lifecycle_extensions)
 
@@ -48,10 +51,14 @@ dependencies {
     implementation(Dependencies.Coroutines.android)
 
     implementation(Dependencies.okhttp)
+    implementation(Dependencies.Moshi.moshi)
+    implementation(Dependencies.Moshi.moshi_kotlin)
+    kapt(Dependencies.Moshi.moshi_codegen)
 
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.retrofit_adapter_rxjava)
     implementation(Dependencies.Retrofit.retrofit_converter_gson)
+    implementation(Dependencies.Retrofit.retrofit_converter_moshi)
     implementation(Dependencies.rxjava)
 
     implementation(Dependencies.timber)
@@ -71,3 +78,5 @@ if (project.hasProperty("kapt")) {
 }
 
 apply(from = "../publishing.gradle")
+apply(from = "swagger.gradle")
+
