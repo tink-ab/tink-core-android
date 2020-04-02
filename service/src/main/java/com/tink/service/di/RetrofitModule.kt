@@ -1,6 +1,7 @@
 package com.tink.service.di
 
 import com.tink.service.authorization.UserRetrofitService
+import com.tink.service.generated.apis.CredentialsApi
 import com.tink.service.generated.tools.GeneratedCodeConverters
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
@@ -27,4 +28,10 @@ class RetrofitModule {
     internal fun provideUserRetrofitService(
         retrofit: Retrofit
     ): UserRetrofitService = retrofit.create(UserRetrofitService::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideCredentialsRetrofitService(
+        retrofit: Retrofit
+    ): CredentialsApi = retrofit.create(CredentialsApi::class.java)
 }
