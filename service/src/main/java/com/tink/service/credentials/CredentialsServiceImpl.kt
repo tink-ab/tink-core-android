@@ -2,17 +2,18 @@ package com.tink.service.credentials
 
 import com.tink.model.credentials.Credentials
 import com.tink.service.di.ServiceScope
+import com.tink.service.generated.apis.CredentialsApi
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
-import com.tink.service.streaming.publisher.toGrpcStreamObserver
 import io.grpc.Channel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import se.tink.grpc.v1.rpc.CancelSupplementInformationRequest
 import se.tink.grpc.v1.rpc.DeleteCredentialRequest
 import se.tink.grpc.v1.rpc.DisableCredentialRequest
 import se.tink.grpc.v1.rpc.EnableCredentialRequest
-import se.tink.grpc.v1.rpc.ListCredentialsRequest
 import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
 import se.tink.grpc.v1.rpc.SupplementInformationRequest
 import se.tink.grpc.v1.rpc.ThirdPartyCallbackRequest
@@ -21,19 +22,22 @@ import javax.inject.Inject
 
 @ServiceScope
 class CredentialsServiceImpl @Inject constructor(
-    channel: Channel
+    channel: Channel,
+    val api: CredentialsApi
 ) : CredentialsService {
 
     private val stub = CredentialServiceGrpc.newStub(channel)
 
     override fun list(): Stream<List<Credentials>> {
         return PollingHandler { observer ->
-                stub.listCredentials(
-                    ListCredentialsRequest.getDefaultInstance(),
-                    observer.toGrpcStreamObserver { value ->
-                        value.credentialsList.map { it.toCredentials() }
-                    })
+            try {
+                val response = api.getCredentialsList()
+                val credentials = response.credentials?.map { it.toCoreModel() } ?: listOf()
+                observer.onNext(credentials)
+            } catch (exception: Exception) {
+                observer.onError(exception)
             }
+        }
     }
 
     override fun create(
