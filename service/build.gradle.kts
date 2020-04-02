@@ -62,6 +62,10 @@ dependencies {
     implementation(Dependencies.rxjava)
 
     implementation(Dependencies.timber)
+
+    testImplementation(Dependencies.Testing.test_assertj)
+    testImplementation(Dependencies.Testing.test_junit_api)
+    testRuntimeOnly(Dependencies.Testing.test_junit_engine)
 }
 
 // Workaround for https://youtrack.jetbrains.com/issue/KT-32804
