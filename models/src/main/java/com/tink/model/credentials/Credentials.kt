@@ -69,7 +69,8 @@ data class Credentials(
         AWAITING_THIRD_PARTY_APP_AUTHENTICATION,
         AWAITING_SUPPLEMENTAL_INFORMATION,
         SESSION_EXPIRED,
-        DISABLED
+        DISABLED,
+        DELETED
     }
 
     private fun isThirdPartyRefreshable(): Boolean =
