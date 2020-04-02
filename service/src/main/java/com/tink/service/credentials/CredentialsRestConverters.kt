@@ -1,25 +1,94 @@
 package com.tink.service.credentials
 
+import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.credentials.Credentials
+import com.tink.model.misc.Field
+import com.tink.service.generated.tools.GeneratedCodeConverters
 import org.threeten.bp.Instant
 import com.tink.service.generated.models.Credentials as CredentialsRestDTO
+import com.tink.service.generated.models.Field as FieldRestDTO
 
 fun CredentialsRestDTO.toCoreModel(): Credentials {
 
     fun Long?.toInstant() = Instant.ofEpochMilli(this ?: 0)
 
+    val status = status!!.toCoreModel()
+
+    val thirdPartyAuth: ThirdPartyAppAuthentication?
+    val supplementalInfo: List<Field>
+    when (status) {
+        Credentials.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION -> { //TODO
+            thirdPartyAuth = null
+            supplementalInfo = listOf()
+        }
+        Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> { //TODO
+            thirdPartyAuth = null
+            supplementalInfo = listOf()
+        }
+        Credentials.Status.AWAITING_SUPPLEMENTAL_INFORMATION -> {
+            thirdPartyAuth = null
+            supplementalInfo = mapSupplementalInformation(supplementalInformation!!)
+        }
+        else -> {
+            thirdPartyAuth = null
+            supplementalInfo = listOf()
+        }
+    }
+
     return Credentials(
         id = id!!,
         providerName = providerName,
         fields = fields,
-        supplementalInformation = listOf(), // TODO: rest setup
+        supplementalInformation = supplementalInfo,
         sessionExpiryDate = sessionExpiryDate.toInstant(),
-        status = status!!.toCoreModel(),
+        status = status,
         type = type!!.toCoreModel(),
         statusPayload = statusPayload,
         statusUpdated = statusUpdated.toInstant(),
         updated = updated.toInstant(),
-        thirdPartyAppAuthentication = null // TODO: rest setup
+        thirdPartyAppAuthentication = thirdPartyAuth
+    )
+}
+
+internal fun mapSupplementalInformation(supplementalInformation: String): List<Field> {
+
+    val moshi = GeneratedCodeConverters.moshi
+
+    val jsonListConverter = moshi.adapter(List::class.java)
+    val jsonFieldConverter = moshi.adapter(FieldRestDTO::class.java)
+
+    return jsonListConverter
+        .fromJson(supplementalInformation)
+        ?.mapNotNull {
+            jsonFieldConverter
+                .fromJsonValue(it)
+                ?.toCoreModel()
+        }
+        ?: listOf()
+}
+
+//TODO: Move to more general file
+fun FieldRestDTO.toCoreModel(): Field {
+    return Field(
+        name = name ?: "",
+        value = value ?: "",
+        validationRules = Field.ValidationRules(
+            maxLength = maxLength ?: 0,
+            minLength = minLength ?: 0,
+            pattern = pattern ?: "",
+            patternError = patternError ?: "",
+            isOptional = optional ?: false
+        ),
+        attributes = Field.Attributes(
+            description = description ?: "",
+            hint = hint ?: "",
+            helpText = helpText ?: "",
+            inputType = Field.InputType(
+                isMasked = masked ?: false,
+                isNumeric = numeric ?: false,
+                isImmutable = immutable ?: false
+            )
+        )
     )
 }
 

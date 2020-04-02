@@ -6,7 +6,8 @@ import retrofit2.Converter
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object GeneratedCodeConverters {
-    private val moshi = Moshi.Builder()
+
+    val moshi: Moshi = Moshi.Builder()
             .add(XNullableAdapterFactory())
             .add(KotlinJsonAdapterFactory())
             .add(TypesAdapterFactory())
