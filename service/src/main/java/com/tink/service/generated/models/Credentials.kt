@@ -72,7 +72,7 @@ data class Credentials(
     data class SupplementalInfoWrapper(
         val thirdPartyAuthentication: ThirdPartyAuthentication? = null,
         val fieldList: List<Field>? = null,
-        val unknownValue: String? = null
+        val rawStringInfo: String? = null
     )
 
     @JsonClass(generateAdapter = true)

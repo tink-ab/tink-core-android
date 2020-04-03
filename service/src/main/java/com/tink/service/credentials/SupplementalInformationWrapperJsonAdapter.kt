@@ -32,9 +32,9 @@ class SupplementalInformationWrapperJsonAdapter(
 
             val supplementalInfoString = reader.nextString()
 
-            val newReader = JsonReader.of(
-                ByteArrayInputStream(supplementalInfoString.toByteArray()).source().buffer()
-            )
+            val newReader = JsonReader
+                .of(ByteArrayInputStream(supplementalInfoString.toByteArray()).source().buffer())
+                .apply { isLenient = true }
 
             return when (newReader.peek()) {
                 JsonReader.Token.BEGIN_OBJECT -> {
@@ -46,7 +46,7 @@ class SupplementalInformationWrapperJsonAdapter(
                     Credentials.SupplementalInfoWrapper(fieldList = fieldList)
                 }
                 JsonReader.Token.STRING -> {
-                    Credentials.SupplementalInfoWrapper(unknownValue = newReader.nextString())
+                    Credentials.SupplementalInfoWrapper(rawStringInfo = newReader.nextString())
                 }
                 else -> null
             }

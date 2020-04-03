@@ -4,6 +4,7 @@ import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.credentials.Credentials
 import com.tink.model.misc.Field
 import org.threeten.bp.Instant
+import java.util.regex.Pattern
 import com.tink.service.generated.models.Credentials as CredentialsRestDTO
 import com.tink.service.generated.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
 import com.tink.service.generated.models.Field as FieldRestDTO
@@ -17,8 +18,8 @@ fun CredentialsRestDTO.toCoreModel(): Credentials {
     val thirdPartyAuth: ThirdPartyAppAuthentication?
     val supplementalInfo: List<Field>
     when (status) {
-        Credentials.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION -> { //TODO
-            thirdPartyAuth = null
+        Credentials.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION -> {
+            thirdPartyAuth = createThirdPartyAuthFromAutostartToken(supplementalInformation?.rawStringInfo)
             supplementalInfo = listOf()
         }
         Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> {
@@ -63,6 +64,23 @@ fun ThirdPartyAuthRestDto.toCoreModel() =
             requiredMinimumVersion = android.requiredMinimumVersion
         )
     )
+
+fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyAppAuthentication? {
+    val validAutostartToken = autostartToken?.let {
+        Pattern.compile("^[a-f0-9-]+\$").matcher(autostartToken).matches()
+    }
+    if(validAutostartToken == true) {
+        return ThirdPartyAppAuthentication(
+            "", "", "", "",
+            android = ThirdPartyAppAuthentication.Android(
+                intent = "bankid:///?autostarttoken=$autostartToken",
+                packageName = "",
+                requiredMinimumVersion = 0
+            )
+        )
+    }
+    return null
+}
 
 //TODO: Move to more general file
 fun FieldRestDTO.toCoreModel(): Field {

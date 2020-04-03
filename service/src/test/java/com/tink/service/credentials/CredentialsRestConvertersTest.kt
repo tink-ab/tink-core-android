@@ -19,6 +19,9 @@ internal class CredentialsRestConvertersTest {
     private val credentialsWithThirdParty =
         "{ \"fields\": { \"username\": \"198410045701\" }, \"id\": \"6e68cc6287704273984567b3300c5822\", \"providerName\": \"handelsbanken-bankid\", \"sessionExpiryDate\": 1493379467000, \"status\": \"UPDATED\", \"statusPayload\": \"Analyzed 1,200 out of 1,200 transactions.\", \"statusUpdated\": 1493379467000, \"supplementalInformation\": \"$thirdPartyAuthenticationString\", \"type\": \"MOBILE_BANKID\", \"updated\": 1493379467000, \"userId\": \"c4ae034f96c740da91ae00022ddcac4d\" }"
 
+    private val credentialsWithAutostartToken =
+        "{ \"fields\": { \"username\": \"198410045701\" }, \"id\": \"6e68cc6287704273984567b3300c5822\", \"providerName\": \"handelsbanken-bankid\", \"sessionExpiryDate\": 1493379467000, \"status\": \"UPDATED\", \"statusPayload\": \"Analyzed 1,200 out of 1,200 transactions.\", \"statusUpdated\": 1493379467000, \"supplementalInformation\": \"4d13a3a4-38e9-37d8-11cc-6e89982e4b70\", \"type\": \"MOBILE_BANKID\", \"updated\": 1493379467000, \"userId\": \"c4ae034f96c740da91ae00022ddcac4d\" }"
+
     @Test
     fun `convert string to supplemental information`() {
 
@@ -76,5 +79,22 @@ internal class CredentialsRestConvertersTest {
             assertThat(upgradeTitle).isEqualTo("Update your app")
             assertThat(upgradeMessage).isEmpty()
         }
+    }
+
+    @Test
+    fun `convert supplementalInfo to autostart token`() {
+
+        val credentials = GeneratedCodeConverters.moshi
+            .adapter(Credentials::class.java)
+            .fromJson(credentialsWithAutostartToken)
+
+        val token = credentials?.supplementalInformation?.rawStringInfo
+
+        assertThat(token).isNotEmpty()
+
+        val result = createThirdPartyAuthFromAutostartToken(token)
+
+        assertThat(result?.android?.intent).isEqualTo("bankid:///?autostarttoken=4d13a3a4-38e9-37d8-11cc-6e89982e4b70")
+
     }
 }
