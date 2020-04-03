@@ -95,6 +95,7 @@ internal class CredentialsRestConvertersTest {
         requireNotNull(result)
 
         assertThat(result.android?.intent).isEqualTo("bankid:///?autostarttoken=4d13a3a4-38e9-37d8-11cc-6e89982e4b70")
+        assertThat(result.android?.packageName).isEqualTo("com.bankid.bus")
         assertThat(result.downloadTitle).isEqualTo("Download Mobile BankID")
         assertThat(result.downloadMessage).isEqualTo("You need to install the Mobile BankID app to authenticate")
     }

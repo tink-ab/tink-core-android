@@ -78,7 +78,7 @@ fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyA
             upgradeMessage = "",
             android = ThirdPartyAppAuthentication.Android(
                 intent = "bankid:///?autostarttoken=$autostartToken",
-                packageName = "",
+                packageName = "com.bankid.bus",
                 requiredMinimumVersion = 0
             )
         )
