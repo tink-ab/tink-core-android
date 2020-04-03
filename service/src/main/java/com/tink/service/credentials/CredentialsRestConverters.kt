@@ -19,7 +19,8 @@ fun CredentialsRestDTO.toCoreModel(): Credentials {
     val supplementalInfo: List<Field>
     when (status) {
         Credentials.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION -> {
-            thirdPartyAuth = createThirdPartyAuthFromAutostartToken(supplementalInformation?.rawStringInfo)
+            thirdPartyAuth =
+                createThirdPartyAuthFromAutostartToken(supplementalInformation?.rawStringInfo)
             supplementalInfo = listOf()
         }
         Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> {
@@ -71,7 +72,10 @@ fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyA
     }
     if (validAutostartToken == true) {
         return ThirdPartyAppAuthentication(
-            "", "", "", "",
+            downloadTitle = "Download Mobile BankID",
+            downloadMessage = "You need to install the Mobile BankID app to authenticate",
+            upgradeTitle = "",
+            upgradeMessage = "",
             android = ThirdPartyAppAuthentication.Android(
                 intent = "bankid:///?autostarttoken=$autostartToken",
                 packageName = "",
