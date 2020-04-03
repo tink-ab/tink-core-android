@@ -71,6 +71,7 @@ fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyA
         Pattern.compile("^[a-f0-9-]+\$").matcher(autostartToken).matches()
     }
     if (validAutostartToken == true) {
+        // TODO: Localization
         return ThirdPartyAppAuthentication(
             downloadTitle = "Download Mobile BankID",
             downloadMessage = "You need to install the Mobile BankID app to authenticate",
