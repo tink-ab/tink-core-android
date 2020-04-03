@@ -33,7 +33,7 @@ data class Credentials(
     @Json(name = "statusUpdated") @field:Json(name = "statusUpdated") var statusUpdated: Long? = null,
     @Json(name = "statusPayload") @field:Json(name = "statusPayload") var statusPayload: String? = null,
     @Json(name = "updated") @field:Json(name = "updated") var updated: Long? = null,
-    @Json(name = "supplementalInformation") @field:Json(name = "supplementalInformation") var supplementalInformation: String? = null,
+    @Json(name = "supplementalInformation") @field:Json(name = "supplementalInformation") var supplementalInformation: SupplementalInfoWrapper? = null,
     @Json(name = "sessionExpiryDate") @field:Json(name = "sessionExpiryDate") var sessionExpiryDate: Long? = null,
     @Json(name = "userId") @field:Json(name = "userId") var userId: String? = null
 ) {
@@ -66,5 +66,28 @@ data class Credentials(
         @Json(name = "AWAITING_THIRD_PARTY_APP_AUTHENTICATION") AWAITING_THIRD_PARTY_APP_AUTHENTICATION("AWAITING_THIRD_PARTY_APP_AUTHENTICATION"),
         @Json(name = "DELETED") DELETED("DELETED"),
         @Json(name = "SESSION_EXPIRED") SESSION_EXPIRED("SESSION_EXPIRED")
+    }
+
+    @JsonClass(generateAdapter = false)
+    data class SupplementalInfoWrapper(
+        val thirdPartyAuthentication: ThirdPartyAuthentication? = null,
+        val fieldList: List<Field>? = null,
+        val unknownValue: String? = null
+    )
+
+    @JsonClass(generateAdapter = true)
+    data class ThirdPartyAuthentication(
+        @Json(name = "downloadTitle") val downloadTitle: String?,
+        @Json(name = "downloadMessage") val downloadMessage: String?,
+        @Json(name = "upgradeTitle") val upgradeTitle: String?,
+        @Json(name = "upgradeMessage") val upgradeMessage: String?,
+        @Json(name = "android") val android: Android
+    ) {
+        @JsonClass(generateAdapter = false)
+        data class Android(
+            @Json(name = "packageName") val packageName: String?,
+            @Json(name = "intent") val intent: String,
+            @Json(name = "requiredMinimumVersion") val requiredMinimumVersion: Int
+        )
     }
 }

@@ -8,10 +8,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object GeneratedCodeConverters {
 
     val moshi: Moshi = Moshi.Builder()
-            .add(XNullableAdapterFactory())
-            .add(KotlinJsonAdapterFactory())
-            .add(TypesAdapterFactory())
-            .build()
+        .add(TinkJsonAdapterFactory())
+        .add(XNullableAdapterFactory())
+        .add(KotlinJsonAdapterFactory())
+        .add(TypesAdapterFactory())
+        .build()
 
     /**
      * Creates everything needed for retrofit to make it work with the client lib, including a

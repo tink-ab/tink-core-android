@@ -3,9 +3,9 @@ package com.tink.service.credentials
 import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.credentials.Credentials
 import com.tink.model.misc.Field
-import com.tink.service.generated.tools.GeneratedCodeConverters
 import org.threeten.bp.Instant
 import com.tink.service.generated.models.Credentials as CredentialsRestDTO
+import com.tink.service.generated.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
 import com.tink.service.generated.models.Field as FieldRestDTO
 
 fun CredentialsRestDTO.toCoreModel(): Credentials {
@@ -21,13 +21,14 @@ fun CredentialsRestDTO.toCoreModel(): Credentials {
             thirdPartyAuth = null
             supplementalInfo = listOf()
         }
-        Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> { //TODO
-            thirdPartyAuth = null
+        Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> {
+            thirdPartyAuth = supplementalInformation?.thirdPartyAuthentication?.toCoreModel()
             supplementalInfo = listOf()
         }
         Credentials.Status.AWAITING_SUPPLEMENTAL_INFORMATION -> {
             thirdPartyAuth = null
-            supplementalInfo = mapSupplementalInformation(supplementalInformation!!)
+            supplementalInfo =
+                supplementalInformation?.fieldList?.map { it.toCoreModel() } ?: listOf()
         }
         else -> {
             thirdPartyAuth = null
@@ -50,22 +51,18 @@ fun CredentialsRestDTO.toCoreModel(): Credentials {
     )
 }
 
-internal fun mapSupplementalInformation(supplementalInformation: String): List<Field> {
-
-    val moshi = GeneratedCodeConverters.moshi
-
-    val jsonListConverter = moshi.adapter(List::class.java)
-    val jsonFieldConverter = moshi.adapter(FieldRestDTO::class.java)
-
-    return jsonListConverter
-        .fromJson(supplementalInformation)
-        ?.mapNotNull {
-            jsonFieldConverter
-                .fromJsonValue(it)
-                ?.toCoreModel()
-        }
-        ?: listOf()
-}
+fun ThirdPartyAuthRestDto.toCoreModel() =
+    ThirdPartyAppAuthentication(
+        downloadMessage = downloadMessage ?: "",
+        downloadTitle = downloadTitle ?: "",
+        upgradeMessage = upgradeMessage ?: "",
+        upgradeTitle = upgradeTitle ?: "",
+        android = ThirdPartyAppAuthentication.Android(
+            intent = android.intent,
+            packageName = android.packageName ?: "",
+            requiredMinimumVersion = android.requiredMinimumVersion
+        )
+    )
 
 //TODO: Move to more general file
 fun FieldRestDTO.toCoreModel(): Field {
