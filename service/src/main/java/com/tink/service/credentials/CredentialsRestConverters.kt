@@ -69,7 +69,7 @@ fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyA
     val validAutostartToken = autostartToken?.let {
         Pattern.compile("^[a-f0-9-]+\$").matcher(autostartToken).matches()
     }
-    if(validAutostartToken == true) {
+    if (validAutostartToken == true) {
         return ThirdPartyAppAuthentication(
             "", "", "", "",
             android = ThirdPartyAppAuthentication.Android(
@@ -82,7 +82,7 @@ fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyA
     return null
 }
 
-//TODO: Move to more general file
+// TODO: Move to more general file
 fun FieldRestDTO.toCoreModel(): Field {
     return Field(
         name = name ?: "",

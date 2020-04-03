@@ -35,7 +35,6 @@ internal class CredentialsRestConvertersTest {
             ?.map { it.toCoreModel() }
             ?.associateBy { it.name }
 
-
         requireNotNull(resultMap)
 
         assertThat(resultMap.size).isEqualTo(2)
@@ -60,7 +59,6 @@ internal class CredentialsRestConvertersTest {
             assertThat(attributes.description).isEqualTo("Security Code")
         }
     }
-
 
     @Test
     fun `convert string to third party authentication`() {
@@ -95,6 +93,5 @@ internal class CredentialsRestConvertersTest {
         val result = createThirdPartyAuthFromAutostartToken(token)
 
         assertThat(result?.android?.intent).isEqualTo("bankid:///?autostarttoken=4d13a3a4-38e9-37d8-11cc-6e89982e4b70")
-
     }
 }

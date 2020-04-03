@@ -8,8 +8,6 @@ import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import io.grpc.Channel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import se.tink.grpc.v1.rpc.CancelSupplementInformationRequest
 import se.tink.grpc.v1.rpc.DeleteCredentialRequest
 import se.tink.grpc.v1.rpc.DisableCredentialRequest
