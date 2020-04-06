@@ -6,12 +6,11 @@ import kotlinx.coroutines.launch
 
 internal fun <T> CoroutineScope.launchForResult(
     resultHandler: ResultHandler<T>,
-    action: suspend () -> T
+    getResult: suspend () -> T
 ) {
     launch {
         try {
-            val result = action()
-            resultHandler.onSuccess(result)
+            resultHandler.onSuccess(getResult())
         } catch (error: Throwable) {
             resultHandler.onError(error)
         }
