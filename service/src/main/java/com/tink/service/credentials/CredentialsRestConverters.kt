@@ -3,6 +3,7 @@ package com.tink.service.credentials
 import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.credentials.Credentials
 import com.tink.model.misc.Field
+import com.tink.service.misc.toInstant
 import org.threeten.bp.Instant
 import java.util.regex.Pattern
 import com.tink.service.generated.models.Credentials as CredentialsRestDTO
@@ -11,7 +12,6 @@ import com.tink.service.generated.models.Field as FieldRestDTO
 
 fun CredentialsRestDTO.toCoreModel(): Credentials {
 
-    fun Long?.toInstant() = Instant.ofEpochMilli(this ?: 0)
 
     val status = status!!.toCoreModel()
 
