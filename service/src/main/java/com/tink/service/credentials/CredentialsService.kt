@@ -6,9 +6,9 @@ import com.tink.service.streaming.publisher.Stream
 
 interface CredentialsService {
     fun list(): Stream<List<Credentials>>
-    fun create(descriptor: CredentialsCreationDescriptor, handler: ResultHandler<Credentials>)
-    fun delete(credentialsId: String, handler: ResultHandler<Unit>)
-    fun update(descriptor: CredentialsUpdateDescriptor, handler: ResultHandler<Credentials>)
+    suspend fun create(descriptor: CredentialsCreationDescriptor): Credentials
+    suspend fun delete(credentialsId: String)
+    suspend fun update(descriptor: CredentialsUpdateDescriptor): Credentials
     fun refresh(credentialsIds: List<String>, handler: ResultHandler<Unit>)
     fun enable(credentialsId: String, handler: ResultHandler<Unit>)
     fun disable(credentialsId: String, handler: ResultHandler<Unit>)
