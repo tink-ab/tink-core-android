@@ -2,17 +2,17 @@ package com.tink.service.credentials
 
 import com.tink.model.credentials.Credentials
 import com.tink.service.di.ServiceScope
+import com.tink.service.generated.apis.CredentialsApi
+import com.tink.service.generated.models.CreateCredentialsRequest
+import com.tink.service.generated.models.UpdateCredentialsRequest
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
-import com.tink.service.streaming.publisher.toGrpcStreamObserver
 import io.grpc.Channel
 import se.tink.grpc.v1.rpc.CancelSupplementInformationRequest
-import se.tink.grpc.v1.rpc.DeleteCredentialRequest
 import se.tink.grpc.v1.rpc.DisableCredentialRequest
 import se.tink.grpc.v1.rpc.EnableCredentialRequest
-import se.tink.grpc.v1.rpc.ListCredentialsRequest
 import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
 import se.tink.grpc.v1.rpc.SupplementInformationRequest
 import se.tink.grpc.v1.rpc.ThirdPartyCallbackRequest
@@ -21,43 +21,44 @@ import javax.inject.Inject
 
 @ServiceScope
 class CredentialsServiceImpl @Inject constructor(
-    channel: Channel
+    channel: Channel,
+    private val api: CredentialsApi
 ) : CredentialsService {
 
     private val stub = CredentialServiceGrpc.newStub(channel)
 
     override fun list(): Stream<List<Credentials>> {
         return PollingHandler { observer ->
-                stub.listCredentials(
-                    ListCredentialsRequest.getDefaultInstance(),
-                    observer.toGrpcStreamObserver { value ->
-                        value.credentialsList.map { it.toCredentials() }
-                    })
+            try {
+                val response = api.getCredentialsList()
+                val credentials = response.credentials?.map { it.toCoreModel() } ?: listOf()
+                observer.onNext(credentials)
+            } catch (exception: Exception) {
+                observer.onError(exception)
             }
+        }
     }
 
-    override fun create(
-        descriptor: CredentialsCreationDescriptor,
-        handler: ResultHandler<Credentials>
-    ) = stub.createCredential(descriptor.toRequest(), handler.toStreamObserver {
-        it.credential.toCredentials()
-    })
+    override suspend fun create(descriptor: CredentialsCreationDescriptor) =
+        api.create(
+            CreateCredentialsRequest(
+                providerName = descriptor.providerName,
+                fields = descriptor.fields,
+                appUri = descriptor.appUri.toString()
+            ),
+            items = listOf()
+        ).toCoreModel()
 
-    override fun delete(credentialsId: String, handler: ResultHandler<Unit>) =
-        DeleteCredentialRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.deleteCredential(it, handler.toStreamObserver())
-            }
+    override suspend fun delete(credentialsId: String) = api.delete(credentialsId)
 
-    override fun update(
-        descriptor: CredentialsUpdateDescriptor,
-        handler: ResultHandler<Credentials>
-    ) = stub.updateCredential(descriptor.toRequest(), handler.toStreamObserver { response ->
-        response.credential.toCredentials()
-    })
+    override suspend fun update(descriptor: CredentialsUpdateDescriptor) =
+        api.update(
+            descriptor.id,
+            UpdateCredentialsRequest(
+                fields = descriptor.fields,
+                appUri = descriptor.appUri.toString()
+            )
+        ).toCoreModel()
 
     override fun refresh(credentialsIds: List<String>, handler: ResultHandler<Unit>) =
         RefreshCredentialsRequest
@@ -100,7 +101,10 @@ class CredentialsServiceImpl @Inject constructor(
                 stub.supplementInformation(it, handler.toStreamObserver())
             }
 
-    override fun cancelSupplementalInformation(credentialsId: String, handler: ResultHandler<Unit>) =
+    override fun cancelSupplementalInformation(
+        credentialsId: String,
+        handler: ResultHandler<Unit>
+    ) =
         CancelSupplementInformationRequest
             .newBuilder()
             .setCredentialId(credentialsId)
@@ -109,7 +113,11 @@ class CredentialsServiceImpl @Inject constructor(
                 stub.cancelSupplementInformation(it, handler.toStreamObserver())
             }
 
-    override fun thirdPartyCallback(state: String, parameters: Map<String, String>, handler: ResultHandler<Unit>) =
+    override fun thirdPartyCallback(
+        state: String,
+        parameters: Map<String, String>,
+        handler: ResultHandler<Unit>
+    ) =
         ThirdPartyCallbackRequest
             .newBuilder()
             .setState(state)
