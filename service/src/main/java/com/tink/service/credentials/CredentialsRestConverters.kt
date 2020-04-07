@@ -4,14 +4,12 @@ import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.credentials.Credentials
 import com.tink.model.misc.Field
 import com.tink.service.misc.toInstant
-import org.threeten.bp.Instant
 import java.util.regex.Pattern
 import com.tink.service.generated.models.Credentials as CredentialsRestDTO
 import com.tink.service.generated.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
 import com.tink.service.generated.models.Field as FieldRestDTO
 
 fun CredentialsRestDTO.toCoreModel(): Credentials {
-
 
     val status = status!!.toCoreModel()
 
