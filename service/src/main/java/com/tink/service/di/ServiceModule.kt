@@ -13,7 +13,7 @@ import com.tink.service.provider.ProviderServiceImpl
 import dagger.Binds
 import dagger.Module
 
-@Module(includes = [RetrofitModule::class])
+@Module(includes = [RetrofitModule::class, CoroutineModule::class])
 abstract class ServiceModule {
 
     @Binds
