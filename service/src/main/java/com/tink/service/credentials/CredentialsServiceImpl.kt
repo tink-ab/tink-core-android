@@ -22,7 +22,7 @@ import javax.inject.Inject
 @ServiceScope
 class CredentialsServiceImpl @Inject constructor(
     channel: Channel,
-    val api: CredentialsApi
+    private val api: CredentialsApi
 ) : CredentialsService {
 
     private val stub = CredentialServiceGrpc.newStub(channel)
