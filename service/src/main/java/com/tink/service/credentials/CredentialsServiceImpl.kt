@@ -12,8 +12,6 @@ import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import io.grpc.Channel
-import se.tink.grpc.v1.rpc.DisableCredentialRequest
-import se.tink.grpc.v1.rpc.EnableCredentialRequest
 import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
 import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
@@ -68,29 +66,14 @@ class CredentialsServiceImpl @Inject constructor(
                 stub.refreshCredentials(it, handler.toStreamObserver())
             }
 
-    override fun enable(credentialsId: String, handler: ResultHandler<Unit>) =
-        EnableCredentialRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.enableCredential(it, handler.toStreamObserver())
-            }
+    override suspend fun disable(credentialsId: String) = api.enable(credentialsId)
 
-    override fun disable(credentialsId: String, handler: ResultHandler<Unit>) =
-        DisableCredentialRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.disableCredential(it, handler.toStreamObserver())
-            }
+    override suspend fun enable(credentialsId: String) = api.enable(credentialsId)
 
     override suspend fun supplementInformation(
         credentialsId: String,
         information: Map<String, String>
     ) = api.supplemental(credentialsId, SupplementalInformation(information))
-
 
     // Uses workaround since the endpoint is not exposed in REST
     override suspend fun cancelSupplementalInformation(credentialsId: String) =

@@ -170,4 +170,15 @@ interface CredentialsApi {
         @retrofit2.http.Path("id") id: String,
         @retrofit2.http.Body body: UpdateCredentialsRequest
     ): Credentials
+
+
+    @POST("/api/v1/credentials/{id}/enable")
+    suspend fun enable(
+        @retrofit2.http.Path("id") id: String
+    )
+
+    @POST("/api/v1/credentials/{id}/disable")
+    suspend fun disable(
+        @retrofit2.http.Path("id") id: String
+    )
 }
