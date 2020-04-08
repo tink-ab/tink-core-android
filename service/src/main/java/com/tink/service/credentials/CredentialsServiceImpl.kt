@@ -46,6 +46,7 @@ class CredentialsServiceImpl @Inject constructor(
         api.update(
             descriptor.id,
             UpdateCredentialsRequest(
+                providerName = descriptor.providerName,
                 fields = descriptor.fields,
                 appUri = descriptor.appUri.toString()
             )

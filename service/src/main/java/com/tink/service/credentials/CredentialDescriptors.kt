@@ -12,6 +12,7 @@ data class CredentialsCreationDescriptor(
 
 data class CredentialsUpdateDescriptor(
     val id: String,
+    val providerName: String,
     val fields: Map<String, String>,
     val appUri: Uri
 )
