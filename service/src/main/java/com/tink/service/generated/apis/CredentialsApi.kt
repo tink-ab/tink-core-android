@@ -14,6 +14,7 @@ import com.tink.service.generated.models.ManualAuthenticationRequest
 import com.tink.service.generated.models.RefreshCredentialsRequest
 import com.tink.service.generated.models.SupplementalInformation
 import com.tink.service.generated.models.UpdateCredentialsRequest
+import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -38,6 +39,7 @@ interface CredentialsApi {
         @retrofit2.http.Body body: CreateCredentialsRequest,
         @retrofit2.http.Query("items") items: List<String>?
     ): Credentials
+
     /**
      * Delete credentials
      * Deletes the given credentials. The deletion is partly done asynchronously.
@@ -50,7 +52,8 @@ interface CredentialsApi {
     @DELETE("/api/v1/credentials/{id}")
     suspend fun delete(
         @retrofit2.http.Path("id") id: String
-    ): Unit
+    ): Response<Unit>
+
     /**
      * Get credentials
      * Gets credentials by ID.
@@ -64,6 +67,7 @@ interface CredentialsApi {
     suspend fun get(
         @retrofit2.http.Path("id") id: String
     ): Credentials
+
     /**
      * List credentials
      * List all credentials for the user.
@@ -74,6 +78,7 @@ interface CredentialsApi {
     )
     @GET("/api/v1/credentials/list")
     suspend fun getCredentialsList(): CredentialsListResponse
+
     /**
      * Manual authenticate of credentials
      * Triggers a full authentication flow to renew refresh tokens with ASPSPs. This endpoint is limited to credentials connected to providers of access type `OPEN_BANKING`. This endpoint only triggers authentication, thus a full credentials refresh will not be executed.
@@ -89,7 +94,8 @@ interface CredentialsApi {
     suspend fun manualAuthentication(
         @retrofit2.http.Path("id") id: String,
         @retrofit2.http.Body body: ManualAuthenticationRequest
-    ): Unit
+    ): Response<Unit>
+
     /**
      * Get QR code
      * QR code for authentication flows such as Mobile BankID as base64 encoded PNG. Includes `data:image/png;base64,`.
@@ -104,6 +110,7 @@ interface CredentialsApi {
     suspend fun qrAsBase64(
         @retrofit2.http.Path("id") id: String
     ): String
+
     /**
      * Refresh credentials
      * Refreshes the specified credentials. It's only possible to refresh a credential every tenth minute, given that the latest refresh was successful.
@@ -123,7 +130,8 @@ interface CredentialsApi {
         @retrofit2.http.Body body: RefreshCredentialsRequest,
         @retrofit2.http.Query("items") items: List<String>?,
         @retrofit2.http.Query("optIn") optIn: Boolean?
-    ): Unit
+    ): Response<Unit>
+
     /**
      * Add Supplemental Information
      * Adds supplemental information to an authentication.
@@ -139,7 +147,8 @@ interface CredentialsApi {
     suspend fun supplemental(
         @retrofit2.http.Path("id") id: String,
         @retrofit2.http.Body body: SupplementalInformation
-    ): Unit
+    ): Response<Unit>
+
     /**
      * Third-party callback with redirect
      * Send callback information from an ASPSP. This endpoint will return the registered redirect uri as response.
@@ -153,7 +162,8 @@ interface CredentialsApi {
     @POST("/api/v1/credentials/third-party/callback/relayed")
     suspend fun thirdPartyCallbackRelayedPost(
         @retrofit2.http.Body body: CallbackRelayedRequest
-    ): Unit
+    ): Response<Unit>
+
     /**
      * Modify credentials
      * Modify the specified credentials.
@@ -174,10 +184,10 @@ interface CredentialsApi {
     @POST("/api/v1/credentials/{id}/enable")
     suspend fun enable(
         @retrofit2.http.Path("id") id: String
-    )
+    ): Response<Unit>
 
     @POST("/api/v1/credentials/{id}/disable")
     suspend fun disable(
         @retrofit2.http.Path("id") id: String
-    )
+    ): Response<Unit>
 }

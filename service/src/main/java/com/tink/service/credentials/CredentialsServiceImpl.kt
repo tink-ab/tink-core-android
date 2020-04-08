@@ -8,6 +8,7 @@ import com.tink.service.generated.models.CreateCredentialsRequest
 import com.tink.service.generated.models.RefreshCredentialsRequest
 import com.tink.service.generated.models.SupplementalInformation
 import com.tink.service.generated.models.UpdateCredentialsRequest
+import com.tink.service.generated.tools.unwrap
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import javax.inject.Inject
@@ -39,7 +40,7 @@ class CredentialsServiceImpl @Inject constructor(
             items = listOf()
         ).toCoreModel()
 
-    override suspend fun delete(credentialsId: String) = api.delete(credentialsId)
+    override suspend fun delete(credentialsId: String) = api.delete(credentialsId).unwrap()
 
     override suspend fun update(descriptor: CredentialsUpdateDescriptor) =
         api.update(
@@ -52,16 +53,16 @@ class CredentialsServiceImpl @Inject constructor(
 
     // TODO: Refreshable items
     override suspend fun refresh(credentialsId: String) =
-        api.refresh(credentialsId, RefreshCredentialsRequest(), items = null, optIn = null)
+        api.refresh(credentialsId, RefreshCredentialsRequest(), items = null, optIn = null).unwrap()
 
-    override suspend fun disable(credentialsId: String) = api.enable(credentialsId)
+    override suspend fun disable(credentialsId: String) = api.enable(credentialsId).unwrap()
 
-    override suspend fun enable(credentialsId: String) = api.enable(credentialsId)
+    override suspend fun enable(credentialsId: String) = api.enable(credentialsId).unwrap()
 
     override suspend fun supplementInformation(
         credentialsId: String,
         information: Map<String, String>
-    ) = api.supplemental(credentialsId, SupplementalInformation(information))
+    ) = api.supplemental(credentialsId, SupplementalInformation(information)).unwrap()
 
     // Uses workaround since the endpoint is not exposed in REST
     override suspend fun cancelSupplementalInformation(credentialsId: String) =
@@ -70,5 +71,5 @@ class CredentialsServiceImpl @Inject constructor(
     override suspend fun thirdPartyCallback(
         state: String,
         parameters: Map<String, String>
-    ) = api.thirdPartyCallbackRelayedPost(CallbackRelayedRequest(state, parameters))
+    ) = api.thirdPartyCallbackRelayedPost(CallbackRelayedRequest(state, parameters)).unwrap()
 }
