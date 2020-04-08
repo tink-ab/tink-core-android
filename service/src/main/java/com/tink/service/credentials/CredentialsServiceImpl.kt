@@ -5,6 +5,7 @@ import com.tink.service.di.ServiceScope
 import com.tink.service.generated.apis.CredentialsApi
 import com.tink.service.generated.models.CallbackRelayedRequest
 import com.tink.service.generated.models.CreateCredentialsRequest
+import com.tink.service.generated.models.SupplementalInformation
 import com.tink.service.generated.models.UpdateCredentialsRequest
 import com.tink.service.handler.ResultHandler
 import com.tink.service.handler.toStreamObserver
@@ -15,7 +16,6 @@ import se.tink.grpc.v1.rpc.CancelSupplementInformationRequest
 import se.tink.grpc.v1.rpc.DisableCredentialRequest
 import se.tink.grpc.v1.rpc.EnableCredentialRequest
 import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
-import se.tink.grpc.v1.rpc.SupplementInformationRequest
 import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
 
@@ -87,19 +87,11 @@ class CredentialsServiceImpl @Inject constructor(
                 stub.disableCredential(it, handler.toStreamObserver())
             }
 
-    override fun supplementInformation(
+    override suspend fun supplementInformation(
         credentialsId: String,
-        information: Map<String, String>,
-        handler: ResultHandler<Unit>
-    ) =
-        SupplementInformationRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .putAllSupplementalInformationFields(information)
-            .build()
-            .let {
-                stub.supplementInformation(it, handler.toStreamObserver())
-            }
+        information: Map<String, String>
+    ) = api.supplemental(credentialsId, SupplementalInformation(information))
+
 
     override fun cancelSupplementalInformation(
         credentialsId: String,
