@@ -10,17 +10,12 @@ import com.tink.service.generated.models.SupplementalInformation
 import com.tink.service.generated.models.UpdateCredentialsRequest
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
-import io.grpc.Channel
-import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
 
 @ServiceScope
 class CredentialsServiceImpl @Inject constructor(
-    channel: Channel,
     private val api: CredentialsApi
 ) : CredentialsService {
-
-    private val stub = CredentialServiceGrpc.newStub(channel)
 
     override fun list(): Stream<List<Credentials>> {
         return PollingHandler { observer ->
@@ -55,12 +50,12 @@ class CredentialsServiceImpl @Inject constructor(
             )
         ).toCoreModel()
 
-    //TODO: Refreshable items
+    // TODO: Refreshable items
     override suspend fun refresh(credentialsId: String) =
         api.refresh(credentialsId, RefreshCredentialsRequest(), items = null, optIn = null)
 
     override suspend fun disable(credentialsId: String) = api.enable(credentialsId)
-    
+
     override suspend fun enable(credentialsId: String) = api.enable(credentialsId)
 
     override suspend fun supplementInformation(
