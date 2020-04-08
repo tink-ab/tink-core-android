@@ -3,6 +3,7 @@ package com.tink.service.credentials
 import com.tink.model.credentials.Credentials
 import com.tink.service.di.ServiceScope
 import com.tink.service.generated.apis.CredentialsApi
+import com.tink.service.generated.models.CallbackRelayedRequest
 import com.tink.service.generated.models.CreateCredentialsRequest
 import com.tink.service.generated.models.UpdateCredentialsRequest
 import com.tink.service.handler.ResultHandler
@@ -15,7 +16,6 @@ import se.tink.grpc.v1.rpc.DisableCredentialRequest
 import se.tink.grpc.v1.rpc.EnableCredentialRequest
 import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
 import se.tink.grpc.v1.rpc.SupplementInformationRequest
-import se.tink.grpc.v1.rpc.ThirdPartyCallbackRequest
 import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
 
@@ -113,17 +113,8 @@ class CredentialsServiceImpl @Inject constructor(
                 stub.cancelSupplementInformation(it, handler.toStreamObserver())
             }
 
-    override fun thirdPartyCallback(
+    override suspend fun thirdPartyCallback(
         state: String,
-        parameters: Map<String, String>,
-        handler: ResultHandler<Unit>
-    ) =
-        ThirdPartyCallbackRequest
-            .newBuilder()
-            .setState(state)
-            .putAllParameters(parameters)
-            .build()
-            .let {
-                stub.thirdPartyCallback(it, handler.toStreamObserver())
-            }
+        parameters: Map<String, String>
+    ) = api.thirdPartyCallbackRelayedPost(CallbackRelayedRequest(state, parameters))
 }
