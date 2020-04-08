@@ -12,7 +12,6 @@ import com.tink.service.handler.toStreamObserver
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import io.grpc.Channel
-import se.tink.grpc.v1.rpc.CancelSupplementInformationRequest
 import se.tink.grpc.v1.rpc.DisableCredentialRequest
 import se.tink.grpc.v1.rpc.EnableCredentialRequest
 import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
@@ -93,17 +92,9 @@ class CredentialsServiceImpl @Inject constructor(
     ) = api.supplemental(credentialsId, SupplementalInformation(information))
 
 
-    override fun cancelSupplementalInformation(
-        credentialsId: String,
-        handler: ResultHandler<Unit>
-    ) =
-        CancelSupplementInformationRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.cancelSupplementInformation(it, handler.toStreamObserver())
-            }
+    // Uses workaround since the endpoint is not exposed in REST
+    override suspend fun cancelSupplementalInformation(credentialsId: String) =
+        supplementInformation(credentialsId, mapOf())
 
     override suspend fun thirdPartyCallback(
         state: String,
