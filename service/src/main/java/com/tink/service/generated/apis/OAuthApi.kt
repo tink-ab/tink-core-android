@@ -6,9 +6,12 @@
 
 package com.tink.service.generated.apis
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.tink.service.generated.models.OAuth2AuthenticationTokenResponse
 import com.tink.service.generated.models.OAuth2AuthorizeResponse
 import com.tink.service.generated.models.OAuth2Client
+import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -100,4 +103,34 @@ interface OAuthApi {
         @retrofit2.http.Field("refresh_token") refreshToken: String?,
         @retrofit2.http.Field("scope") scope: String?
     ): OAuth2AuthenticationTokenResponse
+
+    @POST("api/v1/oauth/describe")
+    suspend fun describe(
+        @Body describeOAuth2ClientRequest: DescribeOAuth2ClientRequest
+    ): DescribeOAuth2ClientResponse
 }
+
+@JsonClass(generateAdapter = true)
+data class DescribeOAuth2ClientRequest(
+    val clientId: String,
+    val redirectUri: String,
+    val scopes: String
+)
+
+// TODO: Find out if any of these feels can be null
+@JsonClass(generateAdapter = true)
+data class DescribeOAuth2ClientResponse(
+    @field:Json(name = "clientName") val clientName: String,
+    @field:Json(name = "clientUrl") val clientUrl: String,
+    @field:Json(name = "clientIconUrl") val clientIconUrl: String,
+    @field:Json(name = "embeddedAllowed") val embeddedAllowed: Boolean,
+    @field:Json(name = "scopesDescriptionsList") val scopeDescriptions: List<ScopeDescription>,
+    @field:Json(name = "verified") val verified: Boolean,
+    @field:Json(name = "aggregator") val aggregator: Boolean
+)
+
+@JsonClass(generateAdapter = true)
+data class ScopeDescription(
+    @field:Json(name = "title") val title: String,
+    @field:Json(name = "description") val description: String
+)
