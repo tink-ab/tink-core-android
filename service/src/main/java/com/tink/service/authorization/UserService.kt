@@ -1,11 +1,9 @@
 package com.tink.service.authorization
 
-import com.tink.service.handler.ResultHandler
-
 interface UserService {
     suspend fun authorize(scopes: Set<Scope>): String
     suspend fun authenticate(authenticationCode: String): String
-    fun createAnonymousUser(arguments: UserCreationDescriptor, resultHandler: ResultHandler<String>)
+    suspend fun createAnonymousUser(arguments: UserCreationDescriptor): String
 }
 
 sealed class Scope(private val scope: String) {

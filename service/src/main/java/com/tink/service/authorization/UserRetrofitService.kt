@@ -16,6 +16,11 @@ internal interface UserRetrofitService {
         @Body body: AuthenticationRequest
     ): AuthenticationResponse
 
+    @POST("/api/v1/user/anonymous")
+    suspend fun createAnonymousUser(
+        @Body body: CreateAnonymousUserRequest
+    ): CreateAnonymousUserResponse
+
     data class AuthorizationRequest(
         @field:Json(name = "clientId") val clientId: String,
         @field:Json(name = "redirectUri") val redirectUri: String,
@@ -35,3 +40,13 @@ internal interface UserRetrofitService {
         @field:Json(name = "Scope") val scope: String
     )
 }
+
+data class CreateAnonymousUserRequest(
+    @field:Json(name = "market") val market: String,
+    @field:Json(name = "locale") val locale: String,
+    @field:Json(name = "origin") val origin: String? = null
+)
+
+class CreateAnonymousUserResponse(
+    @field:Json(name = "access_token") val accessToken: String
+)
