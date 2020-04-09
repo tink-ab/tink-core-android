@@ -3,8 +3,8 @@ package com.tink.service.authorization
 import com.tink.service.handler.ResultHandler
 
 interface UserService {
-    fun authorize(scopes: Set<Scope>, resultHandler: ResultHandler<String>)
-    fun authenticate(authenticationCode: String, resultHandler: ResultHandler<String>)
+    suspend fun authorize(scopes: Set<Scope>): String
+    suspend fun authenticate(authenticationCode: String): String
     fun createAnonymousUser(arguments: UserCreationDescriptor, resultHandler: ResultHandler<String>)
 }
 

@@ -1,40 +1,37 @@
 package com.tink.service.authorization
 
-import com.google.gson.annotations.SerializedName
-import io.reactivex.Single
+import com.squareup.moshi.Json
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 internal interface UserRetrofitService {
 
     @POST("/api/v1/oauth/authorize")
-    fun authorize(
-        @Header("Authorization") auth: String,
+    suspend fun authorize(
         @Body body: AuthorizationRequest
-    ): Single<AuthorizationResponse>
+    ): AuthorizationResponse
 
     @POST("/link/v1/authentication/token")
-    fun authenticate(
+    suspend fun authenticate(
         @Body body: AuthenticationRequest
-    ): Single<AuthenticationResponse>
+    ): AuthenticationResponse
 
     data class AuthorizationRequest(
-        @SerializedName("clientId") val clientId: String,
-        @SerializedName("redirectUri") val redirectUri: String,
-        @SerializedName("scope") val scope: String
+        @field:Json(name = "clientId") val clientId: String,
+        @field:Json(name = "redirectUri") val redirectUri: String,
+        @field:Json(name = "scope") val scope: String
     )
 
     data class AuthorizationResponse(
-        @SerializedName("code") val authorizationCode: String
+        @field:Json(name = "code") val authorizationCode: String
     )
 
     data class AuthenticationRequest(
-        @SerializedName("code") val code: String
+        @field:Json(name = "code") val code: String
     )
 
     data class AuthenticationResponse(
-        @SerializedName("accessToken") val accessToken: String,
-        @SerializedName("Scope") val scope: String
+        @field:Json(name = "accessToken") val accessToken: String,
+        @field:Json(name = "Scope") val scope: String
     )
 }
