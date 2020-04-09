@@ -15,58 +15,6 @@ interface UserService {
     fun authenticate(authenticationCode: String, resultHandler: ResultHandler<String>)
 }
 
-@ServiceScope
-internal class UserServiceImpl @Inject constructor(
-    private val tinkConfiguration: TinkConfiguration,
-    private val retrofitService: UserRetrofitService,
-    userEventBus: UserEventBus
-) : UserService {
-
-    private var user: User? = null
-
-    init {
-        userEventBus.subscribe { user = it }
-    }
-
-    @SuppressLint("CheckResult")
-    override fun authorize(
-        scopes: Set<Scope>,
-        resultHandler: ResultHandler<String>
-    ) {
-
-        val accessToken = requireNotNull(
-            (user?.authorization as? Authorization.AccessToken)?.accessToken
-        ) { "User token not set" }
-
-        retrofitService
-            .authorize(
-                "Bearer $accessToken",
-                UserRetrofitService.AuthorizationRequest(
-                    tinkConfiguration.oAuthClientId,
-                    tinkConfiguration.redirectUri.toString(),
-                    scopes.joinToString(",")
-                )
-            )
-            .map { it.authorizationCode }
-            ?.subscribeOn(Schedulers.io())
-            ?.subscribe(
-                { resultHandler.onSuccess(it) },
-                { resultHandler.onError(it) }
-            )
-    }
-
-    @SuppressLint("CheckResult")
-    override fun authenticate(authenticationCode: String, resultHandler: ResultHandler<String>) {
-        retrofitService
-            .authenticate(UserRetrofitService.AuthenticationRequest(authenticationCode))
-            .map { it.accessToken }
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                resultHandler.onSuccess,
-                resultHandler.onError
-            )
-    }
-}
 
 sealed class Scope(private val scope: String) {
     object TransactionsRead : Scope("transactions:read")
