@@ -1,43 +1,44 @@
 package com.tink.service.provider
 
-import io.grpc.Channel
-import se.tink.grpc.v1.rpc.ProviderListRequest
-import se.tink.grpc.v1.rpc.ProviderSuggestRequest
-import se.tink.grpc.v1.services.ProviderServiceGrpc
 import com.tink.model.provider.Provider
+import com.tink.service.coroutines.launchForResult
 import com.tink.service.di.ServiceScope
+import com.tink.service.generated.apis.ProviderApi
+import com.tink.service.generated.models.AuthenticatedUser
 import com.tink.service.handler.ResultHandler
-import com.tink.service.handler.toStreamObserver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 
 @ServiceScope
 class ProviderServiceImpl @Inject constructor(
-    channel: Channel
+    private val api: ProviderApi
 ) : ProviderService {
 
-    private val stub = ProviderServiceGrpc.newStub(channel)
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun listSuggestions(handler: ResultHandler<List<Provider>>) {
-        stub.suggest(
-            ProviderSuggestRequest.getDefaultInstance(),
-            handler.toStreamObserver { value ->
-                value.providersList.map { it.toProvider() }
-            }
-        )
+        scope.launchForResult(handler) {
+            api.suggest(body = AuthenticatedUser(AuthenticatedUser.MethodEnum.TOKEN))
+                .toProviderList()
+        }
     }
 
     override fun listProviders(
         handler: ResultHandler<List<Provider>>,
         includeDemoProviders: Boolean
     ) {
-        stub.listProviders(
-            ProviderListRequest
-                .newBuilder()
-                .setIncludeTestType(includeDemoProviders)
-                .build(),
-            handler.toStreamObserver { value ->
-                value.providersList.map { it.toProvider() }
-            }
-        )
+        scope.launchForResult(handler) {
+            api
+                .list(
+                    body = AuthenticatedUser(AuthenticatedUser.MethodEnum.TOKEN),
+                    capability = null,
+                    includeTestProviders = false,
+                    excludeNonTestProviders = false,
+                    name = null
+                )
+                .toProviderList()
+        }
     }
 }

@@ -2,27 +2,27 @@ package com.tink.service.provider
 
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
-import com.tink.service.credentials.toCredentialsType
-import com.tink.service.misc.toField
+import com.tink.service.credentials.toCoreModel
+import com.tink.service.generated.models.ProviderListResponse
 import com.tink.service.misc.toImages
 
-internal typealias ProviderDTO = se.tink.grpc.v1.models.Provider
-internal typealias ProviderStatusDTO = se.tink.grpc.v1.models.Provider.Status
-internal typealias ProviderTypeDTO = se.tink.grpc.v1.models.Provider.Type
-internal typealias ProviderAccessTypeDTO = se.tink.grpc.v1.models.Provider.AccessType
+internal typealias ProviderDTO = com.tink.service.generated.models.Provider
+internal typealias ProviderStatusDTO = com.tink.service.generated.models.Provider.StatusEnum
+internal typealias ProviderTypeDTO = com.tink.service.generated.models.Provider.TypeEnum
+internal typealias ProviderAccessTypeDTO = com.tink.service.generated.models.Provider.AccessTypeEnum
 
-internal fun ProviderDTO.toProvider(): Provider =
+internal fun ProviderDTO.toCoreModel(): Provider =
     Provider(
         name = name,
         displayName = displayName,
         type = type.toProviderType(),
         status = status.toProviderStatus(),
-        credentialsType = credentialType.toCredentialsType(),
-        helpText = helpText,
+        credentialsType = credentialsType.toCoreModel(),
+        helpText = passwordHelpText.orEmpty(),
         isPopular = popular,
         fields = fieldsOrEmpty(),
-        groupDisplayName = groupDisplayName,
-        displayDescription = displayDescription,
+        groupDisplayName = groupDisplayName.orEmpty(),
+        displayDescription = displayDescription.orEmpty(),
         images = images?.toImages(),
         financialInstitution = Provider.FinancialInstitution(
             financialInstitutionId,
@@ -33,31 +33,30 @@ internal fun ProviderDTO.toProvider(): Provider =
 
 internal fun ProviderStatusDTO.toProviderStatus(): Provider.Status =
     when (this) {
-        ProviderStatusDTO.UNRECOGNIZED,
-        ProviderStatusDTO.STATUS_UNKNOWN -> Provider.Status.UNKNOWN
-        ProviderStatusDTO.STATUS_DISABLED -> Provider.Status.DISABLED
-        ProviderStatusDTO.STATUS_ENABLED -> Provider.Status.ENABLED
-        ProviderStatusDTO.STATUS_OBSOLETE -> Provider.Status.OBSOLETE
-        ProviderStatusDTO.STATUS_TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
+        ProviderStatusDTO.DISABLED -> Provider.Status.DISABLED
+        ProviderStatusDTO.ENABLED -> Provider.Status.ENABLED
+        ProviderStatusDTO.TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
     }
 
 internal fun ProviderTypeDTO.toProviderType(): Provider.Type =
     when (this) {
-        ProviderTypeDTO.UNRECOGNIZED,
-        ProviderTypeDTO.TYPE_UNKNOWN -> Provider.Type.UNKNOWN
-        ProviderTypeDTO.TYPE_BANK -> Provider.Type.BANK
-        ProviderTypeDTO.TYPE_BROKER -> Provider.Type.BROKER
-        ProviderTypeDTO.TYPE_CREDIT_CARD -> Provider.Type.CREDIT_CARD
-        ProviderTypeDTO.TYPE_FRAUD -> Provider.Type.FRAUD
-        ProviderTypeDTO.TYPE_OTHER -> Provider.Type.OTHER
-        ProviderTypeDTO.TYPE_TEST -> Provider.Type.TEST
+        ProviderTypeDTO.BANK -> Provider.Type.BANK
+        ProviderTypeDTO.BROKER -> Provider.Type.BROKER
+        ProviderTypeDTO.CREDIT_CARD -> Provider.Type.CREDIT_CARD
+        ProviderTypeDTO.OTHER -> Provider.Type.OTHER
+        ProviderTypeDTO.TEST -> Provider.Type.TEST
     }
 
 internal fun ProviderDTO.fieldsOrEmpty(): List<Field> =
-    fieldsList?.map { it.toField() }.orEmpty()
+    fields.map { it.toCoreModel() }
 
 internal fun ProviderAccessTypeDTO.toAccessType(): Provider.AccessType =
     when (this) {
-        ProviderAccessTypeDTO.ACCESS_TYPE_OPEN_BANKING -> Provider.AccessType.OPEN_BANKING
-        else -> Provider.AccessType.OTHER
+        ProviderAccessTypeDTO.OPEN_BANKING -> Provider.AccessType.OPEN_BANKING
+        ProviderAccessTypeDTO.OTHER -> Provider.AccessType.OTHER
     }
+
+internal fun ProviderListResponse.toProviderList() =
+    providers
+        ?.let { list -> list.map { it.toCoreModel() } }
+        .orEmpty()
