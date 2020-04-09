@@ -21,30 +21,30 @@ internal interface UserRetrofitService {
     suspend fun createAnonymousUser(
         @Body body: CreateAnonymousUserRequest
     ): CreateAnonymousUserResponse
-
-    @JsonClass(generateAdapter = true)
-    data class AuthorizationRequest(
-        @field:Json(name = "clientId") val clientId: String,
-        @field:Json(name = "redirectUri") val redirectUri: String,
-        @field:Json(name = "scope") val scope: String
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class AuthorizationResponse(
-        @field:Json(name = "code") val authorizationCode: String
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class AuthenticationRequest(
-        @field:Json(name = "code") val code: String
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class AuthenticationResponse(
-        @field:Json(name = "accessToken") val accessToken: String,
-        @field:Json(name = "Scope") val scope: String
-    )
 }
+
+@JsonClass(generateAdapter = true)
+data class AuthorizationRequest(
+    @field:Json(name = "clientId") val clientId: String,
+    @field:Json(name = "redirectUri") val redirectUri: String,
+    @field:Json(name = "scope") val scope: String
+)
+
+@JsonClass(generateAdapter = true)
+data class AuthorizationResponse(
+    @field:Json(name = "code") val authorizationCode: String
+)
+
+@JsonClass(generateAdapter = true)
+data class AuthenticationRequest(
+    @field:Json(name = "code") val code: String
+)
+
+@JsonClass(generateAdapter = true)
+data class AuthenticationResponse(
+    @field:Json(name = "accessToken") val accessToken: String,
+    @field:Json(name = "Scope") val scope: String
+)
 
 data class CreateAnonymousUserRequest(
     @field:Json(name = "market") val market: String,

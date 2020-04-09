@@ -12,7 +12,7 @@ internal class UserServiceImpl @Inject constructor(
 
     override suspend fun authorize(scopes: Set<Scope>) =
         retrofitService.authorize(
-            UserRetrofitService.AuthorizationRequest(
+            AuthorizationRequest(
                 tinkConfiguration.oAuthClientId,
                 tinkConfiguration.redirectUri.toString(),
                 scopes.joinToString(",")
@@ -20,7 +20,7 @@ internal class UserServiceImpl @Inject constructor(
         ).authorizationCode
 
     override suspend fun authenticate(authenticationCode: String) =
-        retrofitService.authenticate(UserRetrofitService.AuthenticationRequest(authenticationCode)).accessToken
+        retrofitService.authenticate(AuthenticationRequest(authenticationCode)).accessToken
 
     override suspend fun createAnonymousUser(arguments: UserCreationDescriptor) =
         retrofitService.createAnonymousUser(
