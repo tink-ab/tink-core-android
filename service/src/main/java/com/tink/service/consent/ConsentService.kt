@@ -1,41 +1,29 @@
 package com.tink.service.consent
 
-import com.tink.model.consent.ScopeDescription
+import com.tink.model.consent.OAuthClientDescription
 import com.tink.service.authorization.Scope
 import com.tink.service.di.ServiceScope
-import com.tink.service.handler.ResultHandler
-import com.tink.service.handler.toStreamObserver
+import com.tink.service.generated.apis.DescribeOAuth2ClientRequest
+import com.tink.service.generated.apis.OAuthApi
 import com.tink.service.network.TinkConfiguration
-import io.grpc.Channel
-import se.tink.grpc.v1.rpc.DescribeOAuth2ClientRequest
-import se.tink.grpc.v1.services.AuthenticationServiceGrpc
 import javax.inject.Inject
 
 interface ConsentService {
-    fun scopeDescriptions(scopes: Set<Scope>, resultHandler: ResultHandler<List<ScopeDescription>>)
+    suspend fun describeClient(scopes: Set<Scope>): OAuthClientDescription
 }
 
 @ServiceScope
 class ConsentServiceImpl @Inject constructor(
-    channel: Channel,
+    private val api: OAuthApi,
     private val tinkConfiguration: TinkConfiguration
 ) : ConsentService {
-    private val authServiceStub: AuthenticationServiceGrpc.AuthenticationServiceStub =
-        AuthenticationServiceGrpc.newStub(channel)
 
-    override fun scopeDescriptions(
-        scopes: Set<Scope>,
-        resultHandler: ResultHandler<List<ScopeDescription>>
-    ) {
-        val request = DescribeOAuth2ClientRequest.newBuilder()
-            .addAllScopes(scopes.map { it.toString() })
-            .setClientId(tinkConfiguration.oAuthClientId)
-            .setRedirectUri(tinkConfiguration.redirectUri.toString())
-            .build()
-
-        authServiceStub.describeOAuth2Client(request, resultHandler.toStreamObserver { response ->
-            response.scopesList.map { ScopeDescription(it.title, it.description) }
-        })
-    }
+    override suspend fun describeClient(scopes: Set<Scope>) =
+        api.describe(
+            DescribeOAuth2ClientRequest(
+                clientId = tinkConfiguration.oAuthClientId,
+                redirectUri = tinkConfiguration.redirectUri.toString(),
+                scopes = scopes.joinToString(",")
+            )
+        ).toOAuthClientDescription()
 }
-
