@@ -1,7 +1,5 @@
 package com.tink.service.di
 
-import com.tink.service.authentication.AuthenticationService
-import com.tink.service.authentication.AuthenticationServiceImpl
 import com.tink.service.authorization.UserService
 import com.tink.service.authorization.UserServiceImpl
 import com.tink.service.consent.ConsentService
@@ -21,9 +19,6 @@ abstract class ServiceModule {
 
     @Binds
     abstract fun credentialsService(implementation: CredentialsServiceImpl): CredentialsService
-
-    @Binds
-    internal abstract fun authenticationService(implementation: AuthenticationServiceImpl): AuthenticationService
 
     @Binds
     internal abstract fun authorizationService(implementation: UserServiceImpl): UserService

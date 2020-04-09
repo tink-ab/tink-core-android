@@ -6,17 +6,23 @@ import com.tink.service.authentication.user.Authorization
 import com.tink.service.authentication.user.User
 import com.tink.service.di.ServiceScope
 import com.tink.service.handler.ResultHandler
+import com.tink.service.handler.toStreamObserver
 import com.tink.service.network.TinkConfiguration
+import io.grpc.Channel
 import io.reactivex.schedulers.Schedulers
+import se.tink.grpc.v1.rpc.CreateAnonymousRequest
+import se.tink.grpc.v1.services.UserServiceGrpc
 import javax.inject.Inject
 
 @ServiceScope
 internal class UserServiceImpl @Inject constructor(
     private val tinkConfiguration: TinkConfiguration,
     private val retrofitService: UserRetrofitService,
+    channel: Channel,
     userEventBus: UserEventBus
 ) : UserService {
 
+    private val userStub = UserServiceGrpc.newStub(channel)
     private var user: User? = null
 
     init {
@@ -60,5 +66,25 @@ internal class UserServiceImpl @Inject constructor(
                 resultHandler.onSuccess,
                 resultHandler.onError
             )
+    }
+
+    override fun createAnonymousUser(
+        arguments: UserCreationDescriptor,
+        resultHandler: ResultHandler<String>
+    ) {
+        CreateAnonymousRequest
+            .newBuilder()
+            .setMarket(arguments.market)
+            .setLocale(arguments.locale)
+            .build()
+            .also { request ->
+                userStub.createAnonymous(
+                    request,
+                    ResultHandler(
+                        resultHandler.onSuccess,
+                        resultHandler.onError
+                    ).toStreamObserver { it.accessToken }
+                )
+            }
     }
 }
