@@ -1,5 +1,6 @@
 package com.tink.service.consent
 
+import com.tink.model.consent.ScopeDescription
 import com.tink.service.authorization.Scope
 import com.tink.service.di.ServiceScope
 import com.tink.service.handler.ResultHandler
@@ -38,12 +39,3 @@ class ConsentServiceImpl @Inject constructor(
     }
 }
 
-/**
- * A title and description explaining a specific [Scope].
- */
-data class ScopeDescription(
-    /** The short string of what access the scope is for. */
-    val title: String,
-    /** A string describing what user data the scope provides access to. */
-    val description: String
-)
