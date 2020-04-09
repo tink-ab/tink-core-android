@@ -2,6 +2,7 @@ package com.tink.service.di
 
 import com.tink.service.authorization.UserRetrofitService
 import com.tink.service.generated.apis.CredentialsApi
+import com.tink.service.generated.apis.OAuthApi
 import com.tink.service.generated.tools.GeneratedCodeConverters
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
@@ -9,6 +10,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.create
 
 @Module
 class RetrofitModule {
@@ -34,4 +36,10 @@ class RetrofitModule {
     internal fun provideCredentialsRetrofitService(
         retrofit: Retrofit
     ): CredentialsApi = retrofit.create(CredentialsApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideOAuthRetrofitService(
+        retrofit: Retrofit
+    ): OAuthApi = retrofit.create(OAuthApi::class.java)
 }
