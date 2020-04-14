@@ -117,7 +117,7 @@ data class DescribeOAuth2ClientRequest(
     val scopes: String
 )
 
-// TODO: Find out if any of these feels can be null
+// TODO: Find out if any of these fields can be null
 @JsonClass(generateAdapter = true)
 data class DescribeOAuth2ClientResponse(
     @field:Json(name = "clientName") val clientName: String,
