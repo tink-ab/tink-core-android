@@ -51,6 +51,7 @@ dependencies {
     implementation(Dependencies.Coroutines.android)
 
     implementation(Dependencies.okhttp)
+    implementation(Dependencies.conscrypt)
     implementation(Dependencies.Moshi.moshi)
     implementation(Dependencies.Moshi.moshi_kotlin)
     kapt(Dependencies.Moshi.moshi_codegen)
