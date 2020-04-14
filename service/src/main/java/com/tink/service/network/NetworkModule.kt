@@ -10,10 +10,16 @@ import io.grpc.Channel
 import io.grpc.ClientInterceptors
 import io.grpc.okhttp.OkHttpChannelBuilder
 import okhttp3.OkHttpClient
+import org.conscrypt.Conscrypt
 import java.io.ByteArrayInputStream
+import java.security.Security
 
 @Module
 class NetworkModule {
+
+    init {
+        insertConscryptSecurityProvider()
+    }
 
     @Provides
     @ServiceScope
@@ -78,6 +84,15 @@ class NetworkModule {
                 )
             }
             .build()
+
+    /**
+     * Use Conscrypt TLS implementation
+     *
+     * See [OkHttp docs](https://square.github.io/okhttp/#requirements)
+     */
+    private fun insertConscryptSecurityProvider() {
+        Security.insertProviderAt(Conscrypt.newProvider(), 1)
+    }
 }
 
 /**

@@ -74,4 +74,5 @@ object Dependencies {
     const val ktlint = "com.pinterest:ktlint:0.33.0"
 
     const val okhttp = "com.squareup.okhttp3:okhttp:4.4.0"
+    const val conscrypt = "org.conscrypt:conscrypt-android:2.4.0"
 }
