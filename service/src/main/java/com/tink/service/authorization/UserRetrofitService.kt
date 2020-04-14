@@ -46,6 +46,7 @@ data class AuthenticationResponse(
     @field:Json(name = "Scope") val scope: String
 )
 
+@JsonClass(generateAdapter = true)
 data class CreateAnonymousUserRequest(
     @field:Json(name = "market") val market: String,
     @field:Json(name = "locale") val locale: String,
