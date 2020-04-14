@@ -1,40 +1,59 @@
 package com.tink.service.authorization
 
-import com.google.gson.annotations.SerializedName
-import io.reactivex.Single
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 internal interface UserRetrofitService {
 
     @POST("/api/v1/oauth/authorize")
-    fun authorize(
-        @Header("Authorization") auth: String,
+    suspend fun authorize(
         @Body body: AuthorizationRequest
-    ): Single<AuthorizationResponse>
+    ): AuthorizationResponse
 
     @POST("/link/v1/authentication/token")
-    fun authenticate(
+    suspend fun authenticate(
         @Body body: AuthenticationRequest
-    ): Single<AuthenticationResponse>
+    ): AuthenticationResponse
 
-    data class AuthorizationRequest(
-        @SerializedName("clientId") val clientId: String,
-        @SerializedName("redirectUri") val redirectUri: String,
-        @SerializedName("scope") val scope: String
-    )
-
-    data class AuthorizationResponse(
-        @SerializedName("code") val authorizationCode: String
-    )
-
-    data class AuthenticationRequest(
-        @SerializedName("code") val code: String
-    )
-
-    data class AuthenticationResponse(
-        @SerializedName("accessToken") val accessToken: String,
-        @SerializedName("Scope") val scope: String
-    )
+    @POST("/api/v1/user/anonymous")
+    suspend fun createAnonymousUser(
+        @Body body: CreateAnonymousUserRequest
+    ): CreateAnonymousUserResponse
 }
+
+@JsonClass(generateAdapter = true)
+data class AuthorizationRequest(
+    @field:Json(name = "clientId") val clientId: String,
+    @field:Json(name = "redirectUri") val redirectUri: String,
+    @field:Json(name = "scope") val scope: String
+)
+
+@JsonClass(generateAdapter = true)
+data class AuthorizationResponse(
+    @field:Json(name = "code") val authorizationCode: String
+)
+
+@JsonClass(generateAdapter = true)
+data class AuthenticationRequest(
+    @field:Json(name = "code") val code: String
+)
+
+@JsonClass(generateAdapter = true)
+data class AuthenticationResponse(
+    @field:Json(name = "accessToken") val accessToken: String,
+    @field:Json(name = "Scope") val scope: String
+)
+
+@JsonClass(generateAdapter = true)
+data class CreateAnonymousUserRequest(
+    @field:Json(name = "market") val market: String,
+    @field:Json(name = "locale") val locale: String,
+    @field:Json(name = "origin") val origin: String? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class CreateAnonymousUserResponse(
+    @field:Json(name = "access_token") val accessToken: String
+)
