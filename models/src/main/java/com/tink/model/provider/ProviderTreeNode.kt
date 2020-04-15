@@ -28,7 +28,8 @@ sealed class ProviderTreeNode : Parcelable {
      * The top level node of the tree structure, with a list of [FinancialInstitutionNode] children.
      *
      * @param name The grouping identifier related to the [Provider]'s `groupDisplayName` or
-     *              `financialInstitution.name` property
+     *              `financialInstitution.name` property.
+     * @param financialInstitutions The list of child nodes.
      */
     @Parcelize
     data class FinancialInstitutionGroupNode(
@@ -42,7 +43,8 @@ sealed class ProviderTreeNode : Parcelable {
     /**
      * A parent node of the tree structure, with a list of [AccessTypeNode] children.
      *
-     * @param id The unique identifier of the financial institution.
+     * @param financialInstitution The `financialInstitution` that this node represents.
+     * @param accessTypes The list of child nodes.
      */
     @Parcelize
     data class FinancialInstitutionNode(
@@ -58,6 +60,7 @@ sealed class ProviderTreeNode : Parcelable {
      * A parent node of the tree structure, with a list of [CredentialsTypeNode] children.
      *
      * @param type Grouping identifier. See [Provider.AccessType]
+     * @param credentialsTypes The list of child nodes.
      */
     @Parcelize
     data class AccessTypeNode(
@@ -73,6 +76,7 @@ sealed class ProviderTreeNode : Parcelable {
      * A parent node of the tree structure, with a list of [ProviderNode] children.
      *
      * @param type Grouping identifier. See [Credentials.Type]
+     * @param providers The list of child nodes.
      */
     @Parcelize
     data class CredentialsTypeNode(
