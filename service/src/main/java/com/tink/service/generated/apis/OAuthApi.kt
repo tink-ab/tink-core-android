@@ -11,6 +11,7 @@ import com.squareup.moshi.JsonClass
 import com.tink.service.generated.models.OAuth2AuthenticationTokenResponse
 import com.tink.service.generated.models.OAuth2AuthorizeResponse
 import com.tink.service.generated.models.OAuth2Client
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -40,7 +41,7 @@ interface OAuthApi {
         @retrofit2.http.Field("user_id") userId: String?,
         @retrofit2.http.Field("external_user_id") externalUserId: String?,
         @retrofit2.http.Field("scope") scope: String?
-    ): Unit
+    ): Response<Unit>
     /**
      * Create an authorization
      * Creates an authorization for the given user ID or external user ID with requested scopes and returns the authorization code.
@@ -78,7 +79,7 @@ interface OAuthApi {
         @retrofit2.http.Body body: OAuth2Client,
         @retrofit2.http.Field("user_id") userId: String?,
         @retrofit2.http.Field("external_user_id") externalUserId: String?
-    ): Unit
+    ): Response<Unit>
     /**
      * Get an authorization token
      * Exchange an authorization code or a refresh token for authorization tokens. The authorization tokens are used to access API resources on the end-user's behalf.

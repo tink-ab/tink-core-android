@@ -16,6 +16,7 @@ import com.tink.service.generated.models.ListBudgetSpecificationsResponse
 import com.tink.service.generated.models.ListBudgetSummariesResponse
 import com.tink.service.generated.models.UpdateBudgetRequest
 import com.tink.service.generated.models.UpdateBudgetResponse
+import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -77,7 +78,7 @@ interface BudgetApi {
     @DELETE("/api/v1/budgets/{id}")
     suspend fun delete(
         @retrofit2.http.Path("id") id: String
-    ): Unit
+    ): Response<Unit>
     /**
      * Get budget details
      * Get the specified budget and its periods within the start and end dates. The date parameters are inclusive, thus specifying a date in the middle of a period will include the complete period amounts. Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.

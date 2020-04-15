@@ -12,6 +12,7 @@ import com.tink.service.generated.models.DeleteUserRequest
 import com.tink.service.generated.models.MarketListResponse
 import com.tink.service.generated.models.User
 import com.tink.service.generated.models.UserProfile
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -46,7 +47,7 @@ interface UserApi {
     @POST("/api/v1/user/delete")
     suspend fun delete(
         @retrofit2.http.Body body: DeleteUserRequest
-    ): Unit
+    ): Response<Unit>
     /**
      * Flag user for test PSD2-migration
      * Flag the currently authenticated user as ready for test PSD2-migration
@@ -56,7 +57,7 @@ interface UserApi {
         "X-Operation-ID: flagUserReadyForTestPSD2MigrationFlow"
     )
     @PUT("/api/v1/user/psd2flag")
-    suspend fun flagUserReadyForTestPSD2MigrationFlow(): Unit
+    suspend fun flagUserReadyForTestPSD2MigrationFlow(): Response<Unit>
     /**
      * List markets
      * Returns an object with a list of all available markets in which a user could register with.
@@ -103,7 +104,7 @@ interface UserApi {
     @POST("/api/v1/user/logout")
     suspend fun logout(
         @retrofit2.http.Query("autologout") autologout: Boolean?
-    ): Unit
+    ): Response<Unit>
     /**
      * Update the user profile
      * Updates certain user modifiable properties of a user's profile. Please refer to the body schema to see which properties are modifiable by the user.
