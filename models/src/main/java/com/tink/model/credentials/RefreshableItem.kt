@@ -16,7 +16,7 @@ enum class RefreshableItem(val item: String) {
     IDENTITY_DATA("IDENTITY_DATA");
 
     companion object {
-        
+
         val transactions = setOf(
             CHECKING_TRANSACTIONS,
             SAVING_TRANSACTIONS,
