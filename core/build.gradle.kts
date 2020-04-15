@@ -41,6 +41,8 @@ dependencies {
 
     implementation(Dependencies.rxjava)
 
+    implementation(Dependencies.Coroutines.core)
+
     testImplementation(Dependencies.Testing.test_assertj)
     testImplementation(Dependencies.Testing.test_junit_api)
     testRuntimeOnly(Dependencies.Testing.test_junit_engine)

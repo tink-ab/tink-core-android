@@ -1,4 +1,4 @@
-package com.tink.service.coroutines
+package com.tink.core.coroutines
 
 import com.tink.service.handler.ResultHandler
 import kotlinx.coroutines.CoroutineScope
