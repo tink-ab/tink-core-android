@@ -12,15 +12,13 @@ class ProviderServiceImpl @Inject constructor(
 ) : ProviderService {
 
     override suspend fun listSuggestions(): List<Provider> =
-        api.suggest(body = AuthenticatedUser(AuthenticatedUser.MethodEnum.TOKEN))
-            .toProviderList()
+        api.suggest().toProviderList()
 
     override suspend fun listProviders(
         includeDemoProviders: Boolean
     ): List<Provider> =
         api
             .list(
-                body = AuthenticatedUser(AuthenticatedUser.MethodEnum.TOKEN),
                 capability = null,
                 includeTestProviders = includeDemoProviders,
                 excludeNonTestProviders = false,

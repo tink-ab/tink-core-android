@@ -30,12 +30,12 @@ interface ProviderApi {
     )
     @GET("/api/v1/providers")
     suspend fun list(
-        @retrofit2.http.Body body: AuthenticatedUser,
         @retrofit2.http.Query("capability") capability: String?,
         @retrofit2.http.Query("includeTestProviders") includeTestProviders: Boolean?,
         @retrofit2.http.Query("excludeNonTestProviders") excludeNonTestProviders: Boolean?,
         @retrofit2.http.Query("name") name: String?
     ): ProviderListResponse
+
     /**
      * List providers for a market
      * Lists all providers on a specified market. Your authentication affects the list of providers you get: When authenticated, the result will only contain providers available for that user. When unauthenticated and without passing The OAuth2 Client ID header, you get all providers made available for the entire environment. If you are unauthenticated but you include The OAuth2 Client ID header, you will get providers available for the app with the given client id.
@@ -54,13 +54,13 @@ interface ProviderApi {
     @GET("/api/v1/providers/{market}")
     suspend fun listByMarket(
         @retrofit2.http.Path("market") market: String,
-        @retrofit2.http.Body body: AuthenticationContext,
         @retrofit2.http.Header("X-Tink-OAuth-Client-ID") xTinkOAuthClientID: String?,
         @retrofit2.http.Header("Accept-Language") acceptLanguage: String?,
         @retrofit2.http.Query("includeTestProviders") includeTestProviders: Boolean?,
         @retrofit2.http.Query("excludeNonTestProviders") excludeNonTestProviders: Boolean?,
         @retrofit2.http.Query("capability") capability: String?
     ): ProviderListResponse
+
     /**
      * List markets
      * Lists all markets where there are providers available.
@@ -73,20 +73,17 @@ interface ProviderApi {
     )
     @GET("/api/v1/providers/markets")
     suspend fun listMarkets(
-        @retrofit2.http.Body body: AuthenticationContext,
         @retrofit2.http.Header("X-Tink-OAuth-Client-ID") xTinkOAuthClientID: String?
     ): ProviderMarketListResponse
+
     /**
      * Suggest providers for user.
      *
      * The endpoint is owned by defaultname service owner
-     * @param body (optional)
      */
     @Headers(
         "X-Operation-ID: suggest"
     )
     @GET("/api/v1/providers/suggest")
-    suspend fun suggest(
-        @retrofit2.http.Body body: AuthenticatedUser
-    ): ProviderListResponse
+    suspend fun suggest(): ProviderListResponse
 }
