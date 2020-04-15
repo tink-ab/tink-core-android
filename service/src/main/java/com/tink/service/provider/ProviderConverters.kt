@@ -45,6 +45,7 @@ internal fun ProviderTypeDTO.toProviderType(): Provider.Type =
         ProviderTypeDTO.CREDIT_CARD -> Provider.Type.CREDIT_CARD
         ProviderTypeDTO.OTHER -> Provider.Type.OTHER
         ProviderTypeDTO.TEST -> Provider.Type.TEST
+        ProviderTypeDTO.FRAUD -> Provider.Type.FRAUD
     }
 
 internal fun ProviderDTO.fieldsOrEmpty(): List<Field> =

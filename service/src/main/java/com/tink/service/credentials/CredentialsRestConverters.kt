@@ -115,6 +115,7 @@ fun CredentialsRestDTO.TypeEnum.toCoreModel() =
         CredentialsRestDTO.TypeEnum.PASSWORD -> Credentials.Type.PASSWORD
         CredentialsRestDTO.TypeEnum.MOBILE_BANKID -> Credentials.Type.MOBILE_BANKID
         CredentialsRestDTO.TypeEnum.KEYFOB -> Credentials.Type.KEYFOB
+        CredentialsRestDTO.TypeEnum.FRAUD -> Credentials.Type.FRAUD
         CredentialsRestDTO.TypeEnum.THIRD_PARTY_APP -> Credentials.Type.THIRD_PARTY_AUTHENTICATION
     }
 

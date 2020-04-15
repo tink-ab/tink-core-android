@@ -112,6 +112,7 @@ data class Provider(
         @Json(name = "CREDIT_CARD") CREDIT_CARD("CREDIT_CARD"),
         @Json(name = "BROKER") BROKER("BROKER"),
         @Json(name = "TEST") TEST("TEST"),
+        @Json(name = "FRAUD") FRAUD("FRAUD"),
         @Json(name = "OTHER") OTHER("OTHER")
     }
 }

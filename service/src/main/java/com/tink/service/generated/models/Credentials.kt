@@ -46,6 +46,7 @@ data class Credentials(
         @Json(name = "PASSWORD") PASSWORD("PASSWORD"),
         @Json(name = "MOBILE_BANKID") MOBILE_BANKID("MOBILE_BANKID"),
         @Json(name = "KEYFOB") KEYFOB("KEYFOB"),
+        @Json(name = "FRAUD") FRAUD("FRAUD"),
         @Json(name = "THIRD_PARTY_APP") THIRD_PARTY_APP("THIRD_PARTY_APP")
     }
     /**
