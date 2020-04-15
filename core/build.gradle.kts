@@ -29,7 +29,6 @@ android {
 dependencies {
     api(project(":service"))
     api(project(":models"))
-    implementation(project(":rpc"))
 
     implementation(Dependencies.kotlin_stdlib)
 

@@ -1,14 +1,10 @@
 package com.tink.service.network
 
-import android.content.Context
 import android.net.Uri
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.di.ServiceScope
 import dagger.Module
 import dagger.Provides
-import io.grpc.Channel
-import io.grpc.ClientInterceptors
-import io.grpc.okhttp.OkHttpChannelBuilder
 import okhttp3.OkHttpClient
 import org.conscrypt.Conscrypt
 import java.io.ByteArrayInputStream
@@ -19,46 +15,6 @@ class NetworkModule {
 
     init {
         insertConscryptSecurityProvider()
-    }
-
-    @Provides
-    @ServiceScope
-    internal fun provideInterceptor(
-        tinkConfig: TinkConfiguration,
-        userEventBus: UserEventBus
-    ): HeaderClientInterceptor {
-        return HeaderClientInterceptor(
-            tinkConfig.oAuthClientId,
-            userEventBus
-        )
-    }
-
-    @Provides
-    @ServiceScope
-    internal fun provideChannel(
-        tinkConfig: TinkConfiguration,
-        interceptor: HeaderClientInterceptor,
-        applicationContext: Context
-    ): Channel {
-        val channel =
-            OkHttpChannelBuilder
-                .forAddress(tinkConfig.environment.grpcUrl, tinkConfig.environment.port)
-                .apply {
-                    tinkConfig.environment.grpcSSLKey?.let { sslKey ->
-                        sslSocketFactory(
-                            TLSHelper.getSslSocketFactory(
-                                ByteArrayInputStream(
-                                    sslKey.toByteArray()
-                                )
-                            )
-                        )
-                    }
-                }
-                .build()
-
-        ChannelConnector(applicationContext, channel).keepConnected()
-
-        return ClientInterceptors.intercept(channel, interceptor)
     }
 
     @Provides
