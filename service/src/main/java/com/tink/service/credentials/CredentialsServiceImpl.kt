@@ -3,29 +3,20 @@ package com.tink.service.credentials
 import com.tink.model.credentials.Credentials
 import com.tink.service.di.ServiceScope
 import com.tink.service.generated.apis.CredentialsApi
+import com.tink.service.generated.models.CallbackRelayedRequest
 import com.tink.service.generated.models.CreateCredentialsRequest
+import com.tink.service.generated.models.RefreshCredentialsRequest
+import com.tink.service.generated.models.SupplementalInformation
 import com.tink.service.generated.models.UpdateCredentialsRequest
-import com.tink.service.handler.ResultHandler
-import com.tink.service.handler.toStreamObserver
+import com.tink.service.generated.tools.unwrap
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
-import io.grpc.Channel
-import se.tink.grpc.v1.rpc.CancelSupplementInformationRequest
-import se.tink.grpc.v1.rpc.DisableCredentialRequest
-import se.tink.grpc.v1.rpc.EnableCredentialRequest
-import se.tink.grpc.v1.rpc.RefreshCredentialsRequest
-import se.tink.grpc.v1.rpc.SupplementInformationRequest
-import se.tink.grpc.v1.rpc.ThirdPartyCallbackRequest
-import se.tink.grpc.v1.services.CredentialServiceGrpc
 import javax.inject.Inject
 
 @ServiceScope
 class CredentialsServiceImpl @Inject constructor(
-    channel: Channel,
     private val api: CredentialsApi
 ) : CredentialsService {
-
-    private val stub = CredentialServiceGrpc.newStub(channel)
 
     override fun list(): Stream<List<Credentials>> {
         return PollingHandler { observer ->
@@ -49,81 +40,37 @@ class CredentialsServiceImpl @Inject constructor(
             items = listOf()
         ).toCoreModel()
 
-    override suspend fun delete(credentialsId: String) = api.delete(credentialsId)
+    override suspend fun delete(credentialsId: String) = api.delete(credentialsId).unwrap()
 
     override suspend fun update(descriptor: CredentialsUpdateDescriptor) =
         api.update(
             descriptor.id,
             UpdateCredentialsRequest(
+                providerName = descriptor.providerName,
                 fields = descriptor.fields,
                 appUri = descriptor.appUri.toString()
             )
         ).toCoreModel()
 
-    override fun refresh(credentialsIds: List<String>, handler: ResultHandler<Unit>) =
-        RefreshCredentialsRequest
-            .newBuilder()
-            .addAllCredentialIds(credentialsIds)
-            .build()
-            .let {
-                stub.refreshCredentials(it, handler.toStreamObserver())
-            }
+    // TODO: Refreshable items
+    override suspend fun refresh(credentialsId: String) =
+        api.refresh(credentialsId, RefreshCredentialsRequest(), items = null, optIn = null).unwrap()
 
-    override fun enable(credentialsId: String, handler: ResultHandler<Unit>) =
-        EnableCredentialRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.enableCredential(it, handler.toStreamObserver())
-            }
+    override suspend fun disable(credentialsId: String) = api.enable(credentialsId).unwrap()
 
-    override fun disable(credentialsId: String, handler: ResultHandler<Unit>) =
-        DisableCredentialRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.disableCredential(it, handler.toStreamObserver())
-            }
+    override suspend fun enable(credentialsId: String) = api.enable(credentialsId).unwrap()
 
-    override fun supplementInformation(
+    override suspend fun supplementInformation(
         credentialsId: String,
-        information: Map<String, String>,
-        handler: ResultHandler<Unit>
-    ) =
-        SupplementInformationRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .putAllSupplementalInformationFields(information)
-            .build()
-            .let {
-                stub.supplementInformation(it, handler.toStreamObserver())
-            }
+        information: Map<String, String>
+    ) = api.supplemental(credentialsId, SupplementalInformation(information)).unwrap()
 
-    override fun cancelSupplementalInformation(
-        credentialsId: String,
-        handler: ResultHandler<Unit>
-    ) =
-        CancelSupplementInformationRequest
-            .newBuilder()
-            .setCredentialId(credentialsId)
-            .build()
-            .let {
-                stub.cancelSupplementInformation(it, handler.toStreamObserver())
-            }
+    // Uses workaround since the endpoint is not exposed in REST
+    override suspend fun cancelSupplementalInformation(credentialsId: String) =
+        supplementInformation(credentialsId, mapOf())
 
-    override fun thirdPartyCallback(
+    override suspend fun thirdPartyCallback(
         state: String,
-        parameters: Map<String, String>,
-        handler: ResultHandler<Unit>
-    ) =
-        ThirdPartyCallbackRequest
-            .newBuilder()
-            .setState(state)
-            .putAllParameters(parameters)
-            .build()
-            .let {
-                stub.thirdPartyCallback(it, handler.toStreamObserver())
-            }
+        parameters: Map<String, String>
+    ) = api.thirdPartyCallbackRelayedPost(CallbackRelayedRequest(state, parameters)).unwrap()
 }
