@@ -6,8 +6,6 @@
 
 package com.tink.service.generated.apis
 
-import com.tink.service.generated.models.AuthenticatedUser
-import com.tink.service.generated.models.AuthenticationContext
 import com.tink.service.generated.models.ProviderListResponse
 import com.tink.service.generated.models.ProviderMarketListResponse
 import retrofit2.http.GET

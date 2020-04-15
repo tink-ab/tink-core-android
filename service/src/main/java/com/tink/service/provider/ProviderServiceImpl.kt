@@ -3,7 +3,6 @@ package com.tink.service.provider
 import com.tink.model.provider.Provider
 import com.tink.service.di.ServiceScope
 import com.tink.service.generated.apis.ProviderApi
-import com.tink.service.generated.models.AuthenticatedUser
 import javax.inject.Inject
 
 @ServiceScope

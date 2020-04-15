@@ -1,7 +1,6 @@
 package com.tink.service.provider
 
 import com.tink.model.provider.Provider
-import com.tink.service.handler.ResultHandler
 
 interface ProviderService {
 
