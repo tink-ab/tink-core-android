@@ -30,7 +30,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":rpc"))
     api(project(":models"))
 
     implementation(Dependencies.kotlin_stdlib)
