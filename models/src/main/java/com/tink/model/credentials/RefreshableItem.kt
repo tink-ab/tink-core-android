@@ -13,7 +13,28 @@ enum class RefreshableItem(val item: String) {
     INVESTMENT_TRANSACTIONS("INVESTMENT_TRANSACTIONS"),
     EINVOICES("EINVOICES"),
     TRANSFER_DESTINATIONS("TRANSFER_DESTINATIONS"),
-    IDENTITY_DATA("IDENTITY_DATA"),
+    IDENTITY_DATA("IDENTITY_DATA");
 
-    // TODO: helper functions
+    companion object {
+        
+        val transactions = setOf(
+            CHECKING_TRANSACTIONS,
+            SAVING_TRANSACTIONS,
+            CREDITCARD_TRANSACTIONS,
+            LOAN_TRANSACTIONS,
+            INVESTMENT_TRANSACTIONS
+        )
+
+        val accounts = setOf(
+            CHECKING_ACCOUNTS,
+            SAVING_ACCOUNTS,
+            CREDITCARD_ACCOUNTS,
+            LOAN_ACCOUNTS,
+            INVESTMENT_ACCOUNTS
+        )
+
+        val all = setOf(values())
+    }
 }
+
+operator fun RefreshableItem.plus(other: RefreshableItem) = setOf(this, other)
