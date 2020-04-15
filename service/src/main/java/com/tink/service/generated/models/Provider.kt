@@ -36,7 +36,7 @@ import com.squareup.moshi.JsonClass
 data class Provider(
     @Json(name = "accessType") @field:Json(name = "accessType") var accessType: Provider.AccessTypeEnum,
     @Json(name = "capabilities") @field:Json(name = "capabilities") var capabilities: List<Provider.CapabilitiesEnum>,
-    @Json(name = "credentialsType") @field:Json(name = "credentialsType") var credentialsType: Provider.CredentialsTypeEnum,
+    @Json(name = "credentialsType") @field:Json(name = "credentialsType") var credentialsType: Credentials.TypeEnum,
     @Json(name = "currency") @field:Json(name = "currency") var currency: String,
     @Json(name = "displayName") @field:Json(name = "displayName") var displayName: String,
     @Json(name = "fields") @field:Json(name = "fields") var fields: List<Field>,
@@ -93,17 +93,6 @@ data class Provider(
         @Json(name = "IDENTITY_DATA") IDENTITY_DATA("IDENTITY_DATA")
     }
     /**
-     * When creating a new credential connected to the provider this will be the credentials type.
-     * Values: PASSWORD, MOBILE_BANKID, KEYFOB, THIRD_PARTY_APP
-     */
-    @JsonClass(generateAdapter = false)
-    enum class CredentialsTypeEnum(val value: String) {
-        @Json(name = "PASSWORD") PASSWORD("PASSWORD"),
-        @Json(name = "MOBILE_BANKID") MOBILE_BANKID("MOBILE_BANKID"),
-        @Json(name = "KEYFOB") KEYFOB("KEYFOB"),
-        @Json(name = "THIRD_PARTY_APP") THIRD_PARTY_APP("THIRD_PARTY_APP")
-    }
-    /**
      * Indicates the current status of the provider. It is only possible to perform credentials create or refresh actions on providers which are enabled.
      * Values: ENABLED, TEMPORARY_DISABLED, DISABLED
      */
@@ -123,6 +112,7 @@ data class Provider(
         @Json(name = "CREDIT_CARD") CREDIT_CARD("CREDIT_CARD"),
         @Json(name = "BROKER") BROKER("BROKER"),
         @Json(name = "TEST") TEST("TEST"),
+        @Json(name = "FRAUD") FRAUD("FRAUD"),
         @Json(name = "OTHER") OTHER("OTHER")
     }
 }

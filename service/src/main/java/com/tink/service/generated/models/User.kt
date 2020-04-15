@@ -8,7 +8,6 @@ package com.tink.service.generated.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * The user model represents a unique Tink end-user and includes properties that defines the user, user profile information and user-modifiable settings. The user information can primarily be used whenever a Tink user signs up for a 3rd party service using her Tink account, or when user-modifiable settings, such as locale or currency, are needed in order to display or calculate the correct data in the 3rd party service.
@@ -21,7 +20,7 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class User(
-    @Json(name = "created") @field:Json(name = "created") var created: ZonedDateTime,
+    @Json(name = "created") @field:Json(name = "created") var created: Long,
     @Json(name = "id") @field:Json(name = "id") var id: String,
     @Json(name = "profile") @field:Json(name = "profile") var profile: UserProfile,
     @Json(name = "flags") @field:Json(name = "flags") var flags: List<String>? = null,
