@@ -3,11 +3,11 @@ package com.tink.service.credentials
 import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.credentials.Credentials
 import com.tink.model.misc.Field
+import com.tink.service.misc.toCoreModel
 import com.tink.service.misc.toInstant
 import java.util.regex.Pattern
 import com.tink.service.generated.models.Credentials as CredentialsRestDTO
 import com.tink.service.generated.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
-import com.tink.service.generated.models.Field as FieldRestDTO
 
 fun CredentialsRestDTO.toCoreModel(): Credentials {
 
@@ -83,31 +83,6 @@ fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyA
         )
     }
     return null
-}
-
-// TODO: Move to more general file
-fun FieldRestDTO.toCoreModel(): Field {
-    return Field(
-        name = name ?: "",
-        value = value ?: "",
-        validationRules = Field.ValidationRules(
-            maxLength = maxLength ?: 0,
-            minLength = minLength ?: 0,
-            pattern = pattern ?: "",
-            patternError = patternError ?: "",
-            isOptional = optional ?: false
-        ),
-        attributes = Field.Attributes(
-            description = description ?: "",
-            hint = hint ?: "",
-            helpText = helpText ?: "",
-            inputType = Field.InputType(
-                isMasked = masked ?: false,
-                isNumeric = numeric ?: false,
-                isImmutable = immutable ?: false
-            )
-        )
-    )
 }
 
 fun CredentialsRestDTO.TypeEnum.toCoreModel() =

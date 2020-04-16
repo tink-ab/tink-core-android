@@ -4,6 +4,7 @@ import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
 import com.tink.service.credentials.toCoreModel
 import com.tink.service.generated.models.ProviderListResponse
+import com.tink.service.misc.toCoreModel
 import com.tink.service.misc.toImages
 
 internal typealias ProviderDTO = com.tink.service.generated.models.Provider
