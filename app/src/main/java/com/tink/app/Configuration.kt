@@ -6,9 +6,7 @@ object Configuration {
     const val sampleOAuthClientId: String = "TODO"
     val sampleEnvironment = Environment.Custom(
         "TODO",
-        "TODO",
         0,
-        null,
         null
     )
 }
