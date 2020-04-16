@@ -1,6 +1,6 @@
 package com.tink.service.di
 
-import com.tink.service.authorization.UserRetrofitService
+import com.tink.service.access.AccessApi
 import com.tink.service.generated.apis.CredentialsApi
 import com.tink.service.generated.apis.ProviderApi
 import com.tink.service.generated.apis.OAuthApi
@@ -29,7 +29,7 @@ internal class RetrofitModule {
     @ServiceScope
     internal fun provideUserRetrofitService(
         retrofit: Retrofit
-    ): UserRetrofitService = retrofit.create(UserRetrofitService::class.java)
+    ): AccessApi = retrofit.create(AccessApi::class.java)
 
     @Provides
     @ServiceScope
