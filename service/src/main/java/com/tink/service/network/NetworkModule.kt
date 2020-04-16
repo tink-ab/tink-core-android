@@ -75,13 +75,11 @@ data class TinkConfiguration(
 
 sealed class Environment(
     val restUrl: String,
-    val port: Int,
     val restSSLKey: String? = null
 ) {
 
     object Production : Environment(
         restUrl = "https://api.tink.com",
-        port = 443,
         restSSLKey = "-----BEGIN CERTIFICATE-----\n" +
                 "MIIEkjCCA3qgAwIBAgIQCgFBQgAAAVOFc2oLheynCDANBgkqhkiG9w0BAQsFADA/\n" +
                 "MSQwIgYDVQQKExtEaWdpdGFsIFNpZ25hdHVyZSBUcnVzdCBDby4xFzAVBgNVBAMT\n" +
@@ -113,11 +111,9 @@ sealed class Environment(
 
     class Custom(
         restApiUrl: String,
-        portNumber: Int,
         restApiSSLKey: String?
     ) : Environment(
         restUrl = restApiUrl,
-        port = portNumber,
         restSSLKey = restApiSSLKey
     )
 }
