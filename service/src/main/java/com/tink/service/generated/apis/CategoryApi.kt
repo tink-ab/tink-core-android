@@ -15,7 +15,6 @@ interface CategoryApi {
     /**
      * List categories
      * Returns all categories for the given locale. The locale is either taken from the authenticated user or from a query parameter, if no user is authenticated. If no user and no query parameter is given, a default locale is used.
-     * The endpoint is owned by defaultname service owner
      * @param locale The locale for which to fetch categories. (optional)
      */
     @Headers(

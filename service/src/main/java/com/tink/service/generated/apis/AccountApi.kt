@@ -14,9 +14,6 @@ import retrofit2.http.PUT
 
 @JvmSuppressWildcards
 interface AccountApi {
-    /**
-     * The endpoint is owned by defaultname service owner
-     */
     @Headers(
         "X-Operation-ID: list"
     )
@@ -26,7 +23,6 @@ interface AccountApi {
     /**
      * List accounts
      * Returns an object with a list of the authenticated user's accounts.
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: listAccounts"
@@ -36,7 +32,6 @@ interface AccountApi {
     /**
      * Update an Account
      * Updates mutable properties of an account. The following properties are possible to update: accountExclusion, accountNumber, excluded, favored, name, type
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the account (required)
      * @param body The updated account object (required)
      */

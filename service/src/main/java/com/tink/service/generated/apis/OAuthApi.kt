@@ -20,7 +20,6 @@ interface OAuthApi {
     /**
      * Create a delegated authorization code
      * Creates a delegated authorization code for a user with requested scopes.
-     * The endpoint is owned by defaultname service owner
      * @param idHint Human readable identifier to prevent user from authorizing access for another user (required)
      * @param actorClientId The unique identifier of the client which is allowed to use the authorization request. Actor client existence is not validated (required)
      * @param body (optional)
@@ -44,7 +43,6 @@ interface OAuthApi {
     /**
      * Create an authorization
      * Creates an authorization for the given user ID or external user ID with requested scopes and returns the authorization code.
-     * The endpoint is owned by defaultname service owner
      * @param scope The requested OAuth scopes (required)
      * @param body (optional)
      * @param userId User ID. Cannot be specified at the same time as &#x60;external_user_id&#x60;. (optional)
@@ -64,7 +62,6 @@ interface OAuthApi {
     /**
      * Revoke all tokens
      * Revokes all access and refresh tokens for a given user ID or external user ID.
-     * The endpoint is owned by defaultname service owner
      * @param body (optional)
      * @param userId The user ID (optional)
      * @param externalUserId The external user ID (optional)
@@ -82,7 +79,6 @@ interface OAuthApi {
     /**
      * Get an authorization token
      * Exchange an authorization code or a refresh token for authorization tokens. The authorization tokens are used to access API resources on the end-user's behalf.
-     * The endpoint is owned by defaultname service owner
      * @param clientId The OAuth client ID. (required)
      * @param clientSecret The client secret of your third-party application. (required)
      * @param grantType The grant type. (required)

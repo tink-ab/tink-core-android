@@ -16,7 +16,6 @@ interface CalendarApi {
     /**
      * Get business days
      * Get the business days available for this user.
-     * The endpoint is owned by defaultname service owner
      * @param startYear Start year for queried business days (required)
      * @param startMonth Start month for queried business days (required)
      * @param months Number of months queried for. Defaults to 1. (optional)
@@ -33,7 +32,6 @@ interface CalendarApi {
     /**
      * Get period details
      * Get details for the supplied period. Will always return one of the monthly resolutions.
-     * The endpoint is owned by defaultname service owner
      * @param period Period to get details for (required)
      */
     @Headers(

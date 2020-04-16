@@ -26,7 +26,6 @@ interface TransactionApi {
     /**
      * Change category of transactions
      * Changes category of the supplied list of transactions to the supplied category
-     * The endpoint is owned by defaultname service owner
      * @param body Object holding a list of new categories and the transactions to be categorized (required)
      */
     @Headers(
@@ -40,7 +39,6 @@ interface TransactionApi {
     /**
      * Delete transaction part
      * If the part is linked to another transaction, the bilateral link is removed as well (i.e. the counterpart will be removed too, if found).
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the transaction to which the part belongs to. (required)
      * @param partId The part ID to delete. (required)
      */
@@ -56,7 +54,6 @@ interface TransactionApi {
     /**
      * Get one transaction
      * Returns a transaction matching the requested id
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the transaction (required)
      */
     @Headers(
@@ -69,7 +66,6 @@ interface TransactionApi {
     /**
      * Link transactions
      * Link two transactions, creating a transaction part for each transaction and netting out the amounts. The transactions are required to have different signs (i.e. one income and one expense). If one transaction is -300 and the other is +100, the common disposable amount is 100.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the first transaction to link. (required)
      * @param counterpartTransactionId The ID of the other transaction (the counterpart) to link. (required)
      * @param body Object holding the required amount for transaction linking (required)
@@ -87,7 +83,6 @@ interface TransactionApi {
     /**
      * Get counterpart suggestions
      * Returns suggestions for potential counterpart expenses for a reimbursement.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the transaction to get suggestions for (required)
      * @param limit Max number of suggestions returned. (optional, default to 5)
      */
@@ -103,7 +98,6 @@ interface TransactionApi {
     /**
      * Get similar transactions
      * Returns an object holding a list of transactions similar to the supplied transaction based on description and a list of statistics summarizing these transactions
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the transaction (required)
      * @param categoryId Return similar of this category (optional)
      * @param includeSelf Include the supplied transaction in response (optional)
@@ -120,7 +114,6 @@ interface TransactionApi {
     /**
      * Get categorization clusters
      * Returns an object holding clusters of transactions to be categorized and possible categorization level improvement
-     * The endpoint is owned by defaultname service owner
      * @param numberOfClusters Max number of clusters returned (optional)
      * @param evaluateEverything (optional)
      */
@@ -135,7 +128,6 @@ interface TransactionApi {
     /**
      * Update transaction Link
      * Updates an transaction part amount and it's counterpart amount.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the transaction to which the part belongs to. (required)
      * @param partId The part ID to update. (required)
      * @param body Object holding the required amount for transaction linking (required)
@@ -153,7 +145,6 @@ interface TransactionApi {
     /**
      * Update a transaction
      * Updates mutable properties of a list of transactions. The following properties are possible to update:amount, categoryId, date, description.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the transaction (required)
      * @param body The transaction to be updated (required)
      */
@@ -169,7 +160,6 @@ interface TransactionApi {
     /**
      * Update a list of transactions
      * Updates mutable properties of a list of transactions. The following properties are possible to update:amount, categoryId, date, description.
-     * The endpoint is owned by defaultname service owner
      * @param body The transactions to be updated (required)
      */
     @Headers(

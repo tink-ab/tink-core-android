@@ -27,7 +27,6 @@ interface BudgetApi {
     /**
      * Archive budget
      * Archives the specified budget.Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the budget. (required)
      */
     @Headers(
@@ -40,7 +39,6 @@ interface BudgetApi {
     /**
      * Create one-off budget
      * Creates a budget for a specific date interval. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param body The one off budget to be created. (required)
      */
     @Headers(
@@ -54,7 +52,6 @@ interface BudgetApi {
     /**
      * Create recurring budget
      * Creates a recurring budget with a set periodicity.Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param body The recurring budget to be created. (required)
      */
     @Headers(
@@ -68,7 +65,6 @@ interface BudgetApi {
     /**
      * Delete budget
      * Deletes the specified budget. Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the budget. (required)
      */
     @Headers(
@@ -81,7 +77,6 @@ interface BudgetApi {
     /**
      * Get budget details
      * Get the specified budget and its periods within the start and end dates. The date parameters are inclusive, thus specifying a date in the middle of a period will include the complete period amounts. Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the budget. (required)
      * @param start Date within the first period expressed as UTC epoch timestamp in milliseconds. (optional)
      * @param end Date within the last period expressed as UTC epoch timestamp in milliseconds. (optional)
@@ -98,7 +93,6 @@ interface BudgetApi {
     /**
      * Get budget transactions
      * List all transactions for the specified budget within the start and end date. The date parameters are inclusive. Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the budget. (required)
      * @param start Query start date expressed as UTC epoch timestamp in milliseconds. (required)
      * @param end Query end date expressed as UTC epoch timestamp in milliseconds. (required)
@@ -115,7 +109,6 @@ interface BudgetApi {
     /**
      * List budgets
      * List all budgets for the user. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param includeArchived Whether to include archived budgets or not in the response. (optional, default to false)
      */
     @Headers(
@@ -128,7 +121,6 @@ interface BudgetApi {
     /**
      * List budgets with summaries
      * List all budgets for the user including current period for each budget. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param includeArchived Whether to include archived budgets or not in the response. (optional, default to false)
      */
     @Headers(
@@ -141,7 +133,6 @@ interface BudgetApi {
     /**
      * Update budget
      * Updates the specified budget. Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the budget. (required)
      * @param body The modified budget to be applied. (required)
      */

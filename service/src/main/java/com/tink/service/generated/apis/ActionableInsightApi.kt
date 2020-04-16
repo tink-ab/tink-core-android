@@ -19,7 +19,6 @@ interface ActionableInsightApi {
     /**
      * Archive an insight
      * Move an active insight to an archived state.
-     * The endpoint is owned by defaultname service owner
      * @param id The identifier of the insight that should be archived. (required)
      */
     @Headers(
@@ -32,7 +31,6 @@ interface ActionableInsightApi {
     /**
      * List insights
      * Lists all insights for the user.
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: list"
@@ -42,7 +40,6 @@ interface ActionableInsightApi {
     /**
      * List archived insights
      * Lists all archived insights for the user.
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: listArchivedInsights"
@@ -52,7 +49,6 @@ interface ActionableInsightApi {
     /**
      * Take action on an insight
      * Report a user action on an insight and move the insight to an archived state.
-     * The endpoint is owned by defaultname service owner
      * @param body The insight action that should be selected. (required)
      */
     @Headers(
