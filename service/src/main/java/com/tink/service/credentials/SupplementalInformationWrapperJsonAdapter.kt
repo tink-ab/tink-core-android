@@ -69,6 +69,6 @@ internal class SupplementalInformationWrapperJsonAdapter(
 
     @ToJson
     override fun toJson(writer: JsonWriter, value: Credentials.SupplementalInfoWrapper?) {
-        TODO("Not yet implemented")
+        throw NotImplementedError("This operation is not implemented since it is not supposed to be used")
     }
 }
