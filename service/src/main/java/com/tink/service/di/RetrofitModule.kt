@@ -14,7 +14,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.create
 
 @Module
-class RetrofitModule {
+internal class RetrofitModule {
 
     @Provides
     @ServiceScope

@@ -18,7 +18,7 @@ private const val USER_AGENT = "User-Agent"
 
 private const val SDK_NAME_HEADER_VALUE = "Tink Link Android"
 
-class HeaderInterceptor(
+internal class HeaderInterceptor(
     private val oauthClientId: String,
     userEventBus: UserEventBus,
     private val deviceId: String?

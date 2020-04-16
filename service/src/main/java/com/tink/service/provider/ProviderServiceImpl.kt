@@ -6,7 +6,7 @@ import com.tink.service.generated.apis.ProviderApi
 import javax.inject.Inject
 
 @ServiceScope
-class ProviderServiceImpl @Inject constructor(
+internal class ProviderServiceImpl @Inject constructor(
     private val api: ProviderApi
 ) : ProviderService {
 

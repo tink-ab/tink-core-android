@@ -9,7 +9,7 @@ import javax.inject.Named
 const val SERVICE_DISPATCHER = "serviceDispatcher"
 
 @Module
-class CoroutineModule {
+internal class CoroutineModule {
 
     @Provides
     @Named(SERVICE_DISPATCHER)

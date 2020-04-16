@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream
 import java.security.Security
 
 @Module
-class NetworkModule {
+internal class NetworkModule {
 
     init {
         insertConscryptSecurityProvider()

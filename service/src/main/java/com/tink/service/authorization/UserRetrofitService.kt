@@ -24,36 +24,36 @@ internal interface UserRetrofitService {
 }
 
 @JsonClass(generateAdapter = true)
-data class AuthorizationRequest(
+internal data class AuthorizationRequest(
     @field:Json(name = "clientId") val clientId: String,
     @field:Json(name = "redirectUri") val redirectUri: String,
     @field:Json(name = "scope") val scope: String
 )
 
 @JsonClass(generateAdapter = true)
-data class AuthorizationResponse(
+internal data class AuthorizationResponse(
     @field:Json(name = "code") val authorizationCode: String
 )
 
 @JsonClass(generateAdapter = true)
-data class AuthenticationRequest(
+internal data class AuthenticationRequest(
     @field:Json(name = "code") val code: String
 )
 
 @JsonClass(generateAdapter = true)
-data class AuthenticationResponse(
+internal data class AuthenticationResponse(
     @field:Json(name = "accessToken") val accessToken: String,
     @field:Json(name = "Scope") val scope: String
 )
 
 @JsonClass(generateAdapter = true)
-data class CreateAnonymousUserRequest(
+internal data class CreateAnonymousUserRequest(
     @field:Json(name = "market") val market: String,
     @field:Json(name = "locale") val locale: String,
     @field:Json(name = "origin") val origin: String? = null
 )
 
 @JsonClass(generateAdapter = true)
-data class CreateAnonymousUserResponse(
+internal data class CreateAnonymousUserResponse(
     @field:Json(name = "access_token") val accessToken: String
 )

@@ -14,7 +14,7 @@ import com.tink.service.streaming.publisher.Stream
 import javax.inject.Inject
 
 @ServiceScope
-class CredentialsServiceImpl @Inject constructor(
+internal class CredentialsServiceImpl @Inject constructor(
     private val api: CredentialsApi
 ) : CredentialsService {
 
