@@ -12,7 +12,7 @@ import dagger.Binds
 import dagger.Module
 
 @Module(includes = [RetrofitModule::class, CoroutineModule::class])
-abstract class ServiceModule {
+internal abstract class ServiceModule {
 
     @Binds
     abstract fun providerService(implementation: ProviderServiceImpl): ProviderService

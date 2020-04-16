@@ -13,7 +13,7 @@ interface ConsentService {
 }
 
 @ServiceScope
-class ConsentServiceImpl @Inject constructor(
+internal class ConsentServiceImpl @Inject constructor(
     private val api: OAuthApi,
     private val tinkConfiguration: TinkConfiguration
 ) : ConsentService {

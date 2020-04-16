@@ -9,7 +9,7 @@ import com.tink.service.generated.models.Credentials as CredentialsRestDTO
 import com.tink.service.generated.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
 import com.tink.service.generated.models.Field as FieldRestDTO
 
-fun CredentialsRestDTO.toCoreModel(): Credentials {
+internal fun CredentialsRestDTO.toCoreModel(): Credentials {
 
     val status = status!!.toCoreModel()
 

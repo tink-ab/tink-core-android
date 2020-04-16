@@ -5,7 +5,7 @@ import com.tink.model.consent.ScopeDescription
 import com.tink.service.generated.apis.DescribeOAuth2ClientResponse
 import com.tink.service.generated.apis.ScopeDescription as ScopeDescriptionDTO
 
-fun DescribeOAuth2ClientResponse.toOAuthClientDescription() =
+internal fun DescribeOAuth2ClientResponse.toOAuthClientDescription() =
     OAuthClientDescription(
         clientName = clientName,
         clientUrl = clientUrl,
@@ -16,4 +16,4 @@ fun DescribeOAuth2ClientResponse.toOAuthClientDescription() =
         scopeDescriptions = scopeDescriptions.map { it.toCoreModel() }
     )
 
-fun ScopeDescriptionDTO.toCoreModel() = ScopeDescription(title, description)
+internal fun ScopeDescriptionDTO.toCoreModel() = ScopeDescription(title, description)

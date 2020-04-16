@@ -10,7 +10,7 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
-object TLSHelper {
+internal object TLSHelper {
 
     @Throws(Exception::class)
     private fun getTrustManagers(ca: InputStream): Array<TrustManager> {
