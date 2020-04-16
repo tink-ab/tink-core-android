@@ -22,7 +22,6 @@ interface UserApi {
     /**
      * Create a new user
      * Returns the ID of the created user.
-     * The endpoint is owned by defaultname service owner
      * @param body Configuration for new user. (optional)
      */
     @Headers(
@@ -36,7 +35,6 @@ interface UserApi {
     /**
      * Delete user
      * Completely deletes the currently authenticated user and its data.
-     * The endpoint is owned by defaultname service owner
      * @param body (optional)
      */
     @Headers(
@@ -50,7 +48,6 @@ interface UserApi {
     /**
      * Flag user for test PSD2-migration
      * Flag the currently authenticated user as ready for test PSD2-migration
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: flagUserReadyForTestPSD2MigrationFlow"
@@ -60,7 +57,6 @@ interface UserApi {
     /**
      * List markets
      * Returns an object with a list of all available markets in which a user could register with.
-     * The endpoint is owned by defaultname service owner
      * @param desired The ISO 3166-1 alpha-2 country code of the desired market (optional)
      */
     @Headers(
@@ -73,7 +69,6 @@ interface UserApi {
     /**
      * Get the user profile
      * Returns the user profile.
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: getProfile"
@@ -83,7 +78,6 @@ interface UserApi {
     /**
      * Get the user
      * Returns the user object. Note that the password field is not stored in clear text nor populated when getting the user. It's only used for setting the password when registering a new user.
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: getUser"
@@ -93,7 +87,6 @@ interface UserApi {
     /**
      * Logout a user
      *
-     * The endpoint is owned by defaultname service owner
      * @param autologout boolean (optional)
      */
     @Headers(
@@ -107,7 +100,6 @@ interface UserApi {
     /**
      * Update the user profile
      * Updates certain user modifiable properties of a user's profile. Please refer to the body schema to see which properties are modifiable by the user.
-     * The endpoint is owned by defaultname service owner
      * @param body The updated user profile object (required)
      */
     @Headers(
@@ -121,7 +113,6 @@ interface UserApi {
     /**
      * Update the user
      * Updates certain user modifiable properties of a user. Please refer to the body schema to see which properties are modifiable by the user.
-     * The endpoint is owned by defaultname service owner
      * @param body The updated user object (required)
      */
     @Headers(
