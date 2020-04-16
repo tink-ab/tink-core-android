@@ -1,7 +1,7 @@
 package com.tink.service.consent
 
 import com.tink.model.consent.OAuthClientDescription
-import com.tink.service.authorization.Scope
+import com.tink.model.user.Scope
 import com.tink.service.di.ServiceScope
 import com.tink.service.generated.apis.DescribeOAuth2ClientRequest
 import com.tink.service.generated.apis.OAuthApi
