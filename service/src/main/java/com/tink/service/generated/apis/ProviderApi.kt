@@ -16,7 +16,6 @@ interface ProviderApi {
     /**
      * List providers
      * Lists all providers available for a authenticated user.
-     * The endpoint is owned by defaultname service owner
      * @param capability Use the capability to only list providers with a specific capability. If no capability the provider response will not be filtered on capability. (optional)
      * @param includeTestProviders Defaults to false. If set to &#x60;true&#x60;, Providers of &#x60;TEST&#x60; type will be added in the response list. (optional)
      * @param excludeNonTestProviders Defaults to false. If set to &#x60;true&#x60;, Providers of type different than &#x60;TEST&#x60; will be removed from the response list. (optional)
@@ -36,7 +35,6 @@ interface ProviderApi {
     /**
      * List providers for a market
      * Lists all providers on a specified market. Your authentication affects the list of providers you get: When authenticated, the result will only contain providers available for that user. When unauthenticated and without passing The OAuth2 Client ID header, you get all providers made available for the entire environment. If you are unauthenticated but you include The OAuth2 Client ID header, you will get providers available for the app with the given client id.
-     * The endpoint is owned by defaultname service owner
      * @param market The ISO 3166-1 alpha-2 market code. (required)
      * @param xTinkOAuthClientID The OAuth2 Client ID (optional)
      * @param acceptLanguage Language to translate to. (optional)
@@ -60,7 +58,6 @@ interface ProviderApi {
     /**
      * List markets
      * Lists all markets where there are providers available.
-     * The endpoint is owned by defaultname service owner
      * @param xTinkOAuthClientID The OAuth2 Client ID (optional)
      */
     @Headers(
@@ -74,7 +71,6 @@ interface ProviderApi {
     /**
      * Suggest providers for user.
      *
-     * The endpoint is owned by defaultname service owner
      */
     @Headers(
         "X-Operation-ID: suggest"
