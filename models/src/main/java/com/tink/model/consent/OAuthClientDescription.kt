@@ -1,5 +1,7 @@
 package com.tink.model.consent
 
+import com.tink.model.user.Scope
+
 data class OAuthClientDescription(
     val clientName: String,
     val clientUrl: String,

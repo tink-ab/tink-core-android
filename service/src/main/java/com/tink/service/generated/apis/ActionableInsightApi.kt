@@ -9,6 +9,7 @@ package com.tink.service.generated.apis
 import com.tink.service.generated.models.ActionableInsight
 import com.tink.service.generated.models.ArchivedInsight
 import com.tink.service.generated.models.SelectInsightActionRequest
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -27,7 +28,7 @@ interface ActionableInsightApi {
     @PUT("/api/v1/insights/{id}/archive")
     suspend fun archiveInsight(
         @retrofit2.http.Path("id") id: String
-    ): Unit
+    ): Response<Unit>
     /**
      * List insights
      * Lists all insights for the user.
@@ -57,5 +58,5 @@ interface ActionableInsightApi {
     @POST("/api/v1/insights/action")
     suspend fun selectInsightAction(
         @retrofit2.http.Body body: SelectInsightActionRequest
-    ): Unit
+    ): Response<Unit>
 }

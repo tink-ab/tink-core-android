@@ -1,5 +1,6 @@
 package com.tink.service.authorization
 
+import com.tink.model.user.Scope
 import com.tink.service.di.ServiceScope
 import com.tink.service.network.TinkConfiguration
 import javax.inject.Inject

@@ -24,11 +24,7 @@ internal class EnumToValueConverterFactory : Converter.Factory() {
 
             // Checking if the Enum is annotated with @Json to get the name.
             // If not, fallback to enum default (.toString())
-            return if (jsonAnnotation != null) {
-                jsonAnnotation.name
-            } else {
-                enum.toString()
-            }
+            return jsonAnnotation?.name ?: enum.toString()
         }
     }
 }

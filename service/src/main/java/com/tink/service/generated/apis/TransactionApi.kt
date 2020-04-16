@@ -15,6 +15,7 @@ import com.tink.service.generated.models.SuggestTransactionsResponse
 import com.tink.service.generated.models.Transaction
 import com.tink.service.generated.models.TransactionLinkSuggestionResponse
 import com.tink.service.generated.models.UpdateTransactionLinkRequest
+import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -35,7 +36,7 @@ interface TransactionApi {
     @PUT("/api/v1/transactions/categorize-multiple")
     suspend fun categorize(
         @retrofit2.http.Body body: CategorizeTransactionsListRequest
-    ): Unit
+    ): Response<Unit>
     /**
      * Delete transaction part
      * If the part is linked to another transaction, the bilateral link is removed as well (i.e. the counterpart will be removed too, if found).
@@ -156,7 +157,7 @@ interface TransactionApi {
     suspend fun updateTransaction(
         @retrofit2.http.Path("id") id: String,
         @retrofit2.http.Body body: Transaction
-    ): Unit
+    ): Response<Unit>
     /**
      * Update a list of transactions
      * Updates mutable properties of a list of transactions. The following properties are possible to update:amount, categoryId, date, description.
@@ -169,5 +170,5 @@ interface TransactionApi {
     @PUT("/api/v1/transactions")
     suspend fun updateTransactions(
         @retrofit2.http.Body body: List<Transaction>
-    ): Unit
+    ): Response<Unit>
 }
