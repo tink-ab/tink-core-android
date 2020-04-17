@@ -31,12 +31,10 @@ android {
 
 dependencies {
     api(project(":models"))
+    implementation(project(":rest"))
 
     implementation(Dependencies.kotlin_stdlib)
     implementation(Dependencies.three_ten_abp)
-
-    implementation("com.squareup.moshi:moshi:1.9.2")
-    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
 
     implementation(Dependencies.Androidx.lifecycle_extensions)
 

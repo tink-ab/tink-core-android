@@ -1,10 +1,10 @@
 package com.tink.service.di
 
 import com.tink.service.access.AccessApi
-import com.tink.service.generated.apis.CredentialsApi
-import com.tink.service.generated.apis.ProviderApi
-import com.tink.service.generated.apis.OAuthApi
-import com.tink.service.generated.tools.GeneratedCodeConverters
+import com.tink.rest.apis.CredentialsApi
+import com.tink.rest.apis.ProviderApi
+import com.tink.rest.apis.OAuthApi
+import com.tink.rest.tools.GeneratedCodeConverters
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
 import dagger.Provides

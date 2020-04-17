@@ -3,14 +3,14 @@ package com.tink.service.provider
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
 import com.tink.service.credentials.toCoreModel
-import com.tink.service.generated.models.ProviderListResponse
+import com.tink.rest.models.ProviderListResponse
 import com.tink.service.misc.toCoreModel
 import com.tink.service.misc.toImages
 
-internal typealias ProviderDTO = com.tink.service.generated.models.Provider
-internal typealias ProviderStatusDTO = com.tink.service.generated.models.Provider.StatusEnum
-internal typealias ProviderTypeDTO = com.tink.service.generated.models.Provider.TypeEnum
-internal typealias ProviderAccessTypeDTO = com.tink.service.generated.models.Provider.AccessTypeEnum
+internal typealias ProviderDTO = com.tink.rest.models.Provider
+internal typealias ProviderStatusDTO = com.tink.rest.models.Provider.StatusEnum
+internal typealias ProviderTypeDTO = com.tink.rest.models.Provider.TypeEnum
+internal typealias ProviderAccessTypeDTO = com.tink.rest.models.Provider.AccessTypeEnum
 
 internal fun ProviderDTO.toCoreModel(): Provider =
     Provider(

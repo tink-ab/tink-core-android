@@ -2,13 +2,13 @@ package com.tink.service.credentials
 
 import com.tink.model.credentials.Credentials
 import com.tink.service.di.ServiceScope
-import com.tink.service.generated.apis.CredentialsApi
-import com.tink.service.generated.models.CallbackRelayedRequest
-import com.tink.service.generated.models.CreateCredentialsRequest
-import com.tink.service.generated.models.RefreshCredentialsRequest
-import com.tink.service.generated.models.SupplementalInformation
-import com.tink.service.generated.models.UpdateCredentialsRequest
-import com.tink.service.generated.tools.unwrap
+import com.tink.rest.apis.CredentialsApi
+import com.tink.rest.models.CallbackRelayedRequest
+import com.tink.rest.models.CreateCredentialsRequest
+import com.tink.rest.models.RefreshCredentialsRequest
+import com.tink.rest.models.SupplementalInformation
+import com.tink.rest.models.UpdateCredentialsRequest
+import com.tink.rest.tools.unwrap
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import javax.inject.Inject

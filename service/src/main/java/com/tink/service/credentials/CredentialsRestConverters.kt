@@ -6,8 +6,8 @@ import com.tink.model.misc.Field
 import com.tink.service.misc.toCoreModel
 import com.tink.service.misc.toInstant
 import java.util.regex.Pattern
-import com.tink.service.generated.models.Credentials as CredentialsRestDTO
-import com.tink.service.generated.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
+import com.tink.rest.models.Credentials as CredentialsRestDTO
+import com.tink.rest.models.Credentials.ThirdPartyAuthentication as ThirdPartyAuthRestDto
 
 internal fun CredentialsRestDTO.toCoreModel(): Credentials {
 

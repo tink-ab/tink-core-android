@@ -2,8 +2,8 @@ package com.tink.service.consent
 
 import com.tink.model.consent.OAuthClientDescription
 import com.tink.model.consent.ScopeDescription
-import com.tink.service.generated.apis.DescribeOAuth2ClientResponse
-import com.tink.service.generated.apis.ScopeDescription as ScopeDescriptionDTO
+import com.tink.rest.apis.DescribeOAuth2ClientResponse
+import com.tink.rest.apis.ScopeDescription as ScopeDescriptionDTO
 
 internal fun DescribeOAuth2ClientResponse.toOAuthClientDescription() =
     OAuthClientDescription(
