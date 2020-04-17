@@ -1,4 +1,4 @@
-package com.tink.service.credentials
+package com.tink.rest.tools
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonAdapter
