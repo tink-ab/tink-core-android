@@ -17,7 +17,7 @@ enum class RefreshableItem(val item: String) {
 
     companion object {
 
-        val transactions = setOf(
+        private val transactions = setOf(
             CHECKING_TRANSACTIONS,
             SAVING_TRANSACTIONS,
             CREDITCARD_TRANSACTIONS,
@@ -25,7 +25,7 @@ enum class RefreshableItem(val item: String) {
             INVESTMENT_TRANSACTIONS
         )
 
-        val accounts = setOf(
+        private val accounts = setOf(
             CHECKING_ACCOUNTS,
             SAVING_ACCOUNTS,
             CREDITCARD_ACCOUNTS,
@@ -33,7 +33,11 @@ enum class RefreshableItem(val item: String) {
             INVESTMENT_ACCOUNTS
         )
 
-        val all = setOf(values())
+        private val all = setOf(values())
+
+        fun transactions() = transactions
+        fun accounts() = accounts
+        fun all() = all
     }
 }
 
