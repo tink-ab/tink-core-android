@@ -19,4 +19,5 @@ dependencies {
     implementation(Dependencies.okhttp)
 }
 
+apply(from = "../publishing.gradle")
 apply(from = "swagger.gradle")
