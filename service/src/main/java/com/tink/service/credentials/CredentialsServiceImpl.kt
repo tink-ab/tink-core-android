@@ -37,7 +37,7 @@ internal class CredentialsServiceImpl @Inject constructor(
                 fields = descriptor.fields,
                 appUri = descriptor.appUri.toString()
             ),
-            items = listOf()
+            items = descriptor.refreshableItems.map { it.item }
         ).toCoreModel()
 
     override suspend fun delete(credentialsId: String) = api.delete(credentialsId).unwrap()
@@ -52,9 +52,13 @@ internal class CredentialsServiceImpl @Inject constructor(
             )
         ).toCoreModel()
 
-    // TODO: Refreshable items
-    override suspend fun refresh(credentialsId: String) =
-        api.refresh(credentialsId, RefreshCredentialsRequest(), items = null, optIn = null).unwrap()
+    override suspend fun refresh(descriptor: CredentialsRefreshDescriptor) =
+        api.refresh(
+            descriptor.id,
+            RefreshCredentialsRequest(),
+            items = descriptor.refreshableItems.map { it.item },
+            optIn = null
+        ).unwrap()
 
     override suspend fun disable(credentialsId: String) = api.enable(credentialsId).unwrap()
 

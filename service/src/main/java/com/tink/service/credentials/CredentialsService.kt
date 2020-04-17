@@ -8,7 +8,7 @@ interface CredentialsService {
     suspend fun create(descriptor: CredentialsCreationDescriptor): Credentials
     suspend fun delete(credentialsId: String)
     suspend fun update(descriptor: CredentialsUpdateDescriptor): Credentials
-    suspend fun refresh(credentialsId: String)
+    suspend fun refresh(descriptor: CredentialsRefreshDescriptor)
     suspend fun enable(credentialsId: String)
     suspend fun disable(credentialsId: String)
     suspend fun supplementInformation(credentialsId: String, information: Map<String, String>)
