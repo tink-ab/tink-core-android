@@ -1,7 +1,7 @@
 package com.tink.service.misc
 
 import com.tink.model.misc.Field
-import com.tink.service.generated.models.Field as FieldDTO
+import com.tink.rest.models.Field as FieldDTO
 
 fun List<Field>.toFieldMap() = map { it.name to it.value }.toMap()
 

@@ -3,8 +3,8 @@ package com.tink.service.consent
 import com.tink.model.consent.OAuthClientDescription
 import com.tink.model.user.Scope
 import com.tink.service.di.ServiceScope
-import com.tink.service.generated.apis.DescribeOAuth2ClientRequest
-import com.tink.service.generated.apis.OAuthApi
+import com.tink.rest.apis.DescribeOAuth2ClientRequest
+import com.tink.rest.apis.OAuthApi
 import com.tink.service.network.TinkConfiguration
 import javax.inject.Inject
 

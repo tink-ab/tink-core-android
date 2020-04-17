@@ -1,7 +1,7 @@
 package com.tink.service.credentials
 
-import com.tink.service.generated.models.Credentials
-import com.tink.service.generated.tools.GeneratedCodeConverters
+import com.tink.rest.models.Credentials
+import com.tink.rest.tools.GeneratedCodeConverters
 import com.tink.service.misc.toCoreModel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

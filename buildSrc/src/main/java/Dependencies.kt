@@ -53,6 +53,7 @@ object Dependencies {
         const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
         const val moshi_codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}" // Kapt codegen
         const val moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}" // Reflect
+        const val moshi_adapters = "com.squareup.moshi:moshi-adapters:${Versions.moshi}" // Json adapters
     }
 
     object Testing {

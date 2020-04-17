@@ -1,6 +1,5 @@
 plugins {
     id("com.android.library")
-    id("com.yelp.codegen.plugin") version "1.4.1"
     id("kotlin-android")
     id("kotlin-kapt")
 }
@@ -31,12 +30,10 @@ android {
 
 dependencies {
     api(project(":models"))
+    implementation(project(":rest"))
 
     implementation(Dependencies.kotlin_stdlib)
     implementation(Dependencies.three_ten_abp)
-
-    implementation("com.squareup.moshi:moshi:1.9.2")
-    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
 
     implementation(Dependencies.Androidx.lifecycle_extensions)
 
@@ -82,5 +79,3 @@ if (project.hasProperty("kapt")) {
 }
 
 apply(from = "../publishing.gradle")
-apply(from = "swagger.gradle")
-

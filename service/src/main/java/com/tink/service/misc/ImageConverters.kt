@@ -2,7 +2,7 @@ package com.tink.service.misc
 
 import com.tink.model.Images
 
-internal typealias ImagesDTO = com.tink.service.generated.models.ImageUrls
+internal typealias ImagesDTO = com.tink.rest.models.ImageUrls
 
 internal fun ImagesDTO.toImages() =
     Images(

@@ -2,7 +2,7 @@ package com.tink.service.provider
 
 import com.tink.model.provider.Provider
 import com.tink.service.di.ServiceScope
-import com.tink.service.generated.apis.ProviderApi
+import com.tink.rest.apis.ProviderApi
 import javax.inject.Inject
 
 @ServiceScope
