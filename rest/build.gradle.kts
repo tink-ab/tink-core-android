@@ -1,4 +1,5 @@
 plugins {
+    id("com.yelp.codegen.plugin") version "1.4.1"
     kotlin("jvm")
     kotlin("kapt")
 }
@@ -17,3 +18,5 @@ dependencies {
     implementation(Dependencies.three_ten_abp)
     implementation(Dependencies.okhttp)
 }
+
+apply(from = "swagger.gradle")

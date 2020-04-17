@@ -1,6 +1,5 @@
 plugins {
     id("com.android.library")
-    id("com.yelp.codegen.plugin") version "1.4.1"
     id("kotlin-android")
     id("kotlin-kapt")
 }
@@ -80,5 +79,3 @@ if (project.hasProperty("kapt")) {
 }
 
 apply(from = "../publishing.gradle")
-apply(from = "swagger.gradle")
-
