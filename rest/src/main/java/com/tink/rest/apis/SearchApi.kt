@@ -21,7 +21,6 @@ interface SearchApi {
      * @param body (optional)
      */
     @Headers(
-        "X-Operation-ID: searchQuery",
         "Content-Type: application/json"
     )
     @POST("/api/v1/search")

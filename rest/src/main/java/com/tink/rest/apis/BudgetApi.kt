@@ -30,9 +30,6 @@ interface BudgetApi {
      * Archives the specified budget.Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
      * @param id The ID of the budget. (required)
      */
-    @Headers(
-        "X-Operation-ID: archive"
-    )
     @PUT("/api/v1/budgets/{id}/archive")
     suspend fun archive(
         @retrofit2.http.Path("id") id: String
@@ -43,7 +40,6 @@ interface BudgetApi {
      * @param body The one off budget to be created. (required)
      */
     @Headers(
-        "X-Operation-ID: createOneOff",
         "Content-Type: application/json"
     )
     @POST("/api/v1/budgets/one-off")
@@ -56,7 +52,6 @@ interface BudgetApi {
      * @param body The recurring budget to be created. (required)
      */
     @Headers(
-        "X-Operation-ID: createRecurring",
         "Content-Type: application/json"
     )
     @POST("/api/v1/budgets/recurring")
@@ -68,9 +63,6 @@ interface BudgetApi {
      * Deletes the specified budget. Returns `404 Not Found` if the budget does not exist. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
      * @param id The ID of the budget. (required)
      */
-    @Headers(
-        "X-Operation-ID: delete"
-    )
     @DELETE("/api/v1/budgets/{id}")
     suspend fun delete(
         @retrofit2.http.Path("id") id: String
@@ -82,9 +74,6 @@ interface BudgetApi {
      * @param start Date within the first period expressed as UTC epoch timestamp in milliseconds. (optional)
      * @param end Date within the last period expressed as UTC epoch timestamp in milliseconds. (optional)
      */
-    @Headers(
-        "X-Operation-ID: getDetails"
-    )
     @GET("/api/v1/budgets/{id}/details")
     suspend fun getDetails(
         @retrofit2.http.Path("id") id: String,
@@ -98,9 +87,6 @@ interface BudgetApi {
      * @param start Query start date expressed as UTC epoch timestamp in milliseconds. (required)
      * @param end Query end date expressed as UTC epoch timestamp in milliseconds. (required)
      */
-    @Headers(
-        "X-Operation-ID: getTransactions"
-    )
     @GET("/api/v1/budgets/{id}/transactions")
     suspend fun getTransactions(
         @retrofit2.http.Path("id") id: String,
@@ -112,9 +98,6 @@ interface BudgetApi {
      * List all budgets for the user. Returns `500 Internal Server Error` for any unspecified error.
      * @param includeArchived Whether to include archived budgets or not in the response. (optional, default to false)
      */
-    @Headers(
-        "X-Operation-ID: listSpecifications"
-    )
     @GET("/api/v1/budgets")
     suspend fun listSpecifications(
         @retrofit2.http.Query("includeArchived") includeArchived: Boolean?
@@ -124,9 +107,6 @@ interface BudgetApi {
      * List all budgets for the user including current period for each budget. Returns `500 Internal Server Error` for any unspecified error.
      * @param includeArchived Whether to include archived budgets or not in the response. (optional, default to false)
      */
-    @Headers(
-        "X-Operation-ID: listSummaries"
-    )
     @GET("/api/v1/budgets/summaries")
     suspend fun listSummaries(
         @retrofit2.http.Query("includeArchived") includeArchived: Boolean?
@@ -138,7 +118,6 @@ interface BudgetApi {
      * @param body The modified budget to be applied. (required)
      */
     @Headers(
-        "X-Operation-ID: update",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/budgets/{id}")

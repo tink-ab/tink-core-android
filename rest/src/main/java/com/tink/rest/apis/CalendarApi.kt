@@ -20,9 +20,6 @@ interface CalendarApi {
      * @param startMonth Start month for queried business days (required)
      * @param months Number of months queried for. Defaults to 1. (optional)
      */
-    @Headers(
-        "X-Operation-ID: businessDays"
-    )
     @GET("/api/v1/calendar/businessdays/{startYear}-{startMonth}")
     suspend fun businessDays(
         @retrofit2.http.Path("startYear") startYear: Int,
@@ -34,9 +31,6 @@ interface CalendarApi {
      * Get details for the supplied period. Will always return one of the monthly resolutions.
      * @param period Period to get details for (required)
      */
-    @Headers(
-        "X-Operation-ID: listPeriods"
-    )
     @GET("/api/v1/calendar/periods/{period}")
     suspend fun listPeriods(
         @retrofit2.http.Path("period") period: String

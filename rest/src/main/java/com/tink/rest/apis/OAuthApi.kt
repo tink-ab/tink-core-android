@@ -29,9 +29,6 @@ interface OAuthApi {
      * @param scope Scopes to delegate access for (optional)
      */
     @retrofit2.http.FormUrlEncoded
-    @Headers(
-        "X-Operation-ID: authorizationDelegate"
-    )
     @POST("/api/v1/oauth/authorization-grant/delegate")
     suspend fun authorizationDelegate(
         @retrofit2.http.Field("id_hint") idHint: String,
@@ -50,9 +47,6 @@ interface OAuthApi {
      * @param externalUserId External user ID set by the client on user creation. Cannot be specified at the same time as &#x60;user_id&#x60;. (optional)
      */
     @retrofit2.http.FormUrlEncoded
-    @Headers(
-        "X-Operation-ID: authorizationGrant"
-    )
     @POST("/api/v1/oauth/authorization-grant")
     suspend fun authorizationGrant(
         @retrofit2.http.Field("scope") scope: String,
@@ -68,9 +62,6 @@ interface OAuthApi {
      * @param externalUserId The external user ID (optional)
      */
     @retrofit2.http.FormUrlEncoded
-    @Headers(
-        "X-Operation-ID: revokeAll"
-    )
     @POST("/api/v1/oauth/revoke-all")
     suspend fun revokeAll(
         @retrofit2.http.Body body: OAuth2Client,
@@ -88,9 +79,6 @@ interface OAuthApi {
      * @param scope The requested scope when using client credentials. Can be omitted if grant types authorization_code or refresh_token are used. (optional)
      */
     @retrofit2.http.FormUrlEncoded
-    @Headers(
-        "X-Operation-ID: token"
-    )
     @POST("/api/v1/oauth/token")
     suspend fun token(
         @retrofit2.http.Field("client_id") clientId: String,

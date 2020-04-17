@@ -30,7 +30,6 @@ interface CredentialsApi {
      * @param items The data types to aggregate from the provider. Multiple items are allowed and are passed as: items&#x3D;item1&amp;items&#x3D;item2. If omitted, all data types are aggregated. (optional)
      */
     @Headers(
-        "X-Operation-ID: create",
         "Content-Type: application/json"
     )
     @POST("/api/v1/credentials")
@@ -44,9 +43,6 @@ interface CredentialsApi {
      * Deletes the given credentials. The deletion is partly done asynchronously.
      * @param id The internal identifier of the credentials to delete (required)
      */
-    @Headers(
-        "X-Operation-ID: delete"
-    )
     @DELETE("/api/v1/credentials/{id}")
     suspend fun delete(
         @retrofit2.http.Path("id") id: String
@@ -57,9 +53,6 @@ interface CredentialsApi {
      * Gets credentials by ID.
      * @param id The internal identifier of the credentials to get (required)
      */
-    @Headers(
-        "X-Operation-ID: get"
-    )
     @GET("/api/v1/credentials/{id}")
     suspend fun get(
         @retrofit2.http.Path("id") id: String
@@ -69,9 +62,6 @@ interface CredentialsApi {
      * List credentials
      * List all credentials for the user.
      */
-    @Headers(
-        "X-Operation-ID: getCredentialsList"
-    )
     @GET("/api/v1/credentials/list")
     suspend fun getCredentialsList(): CredentialsListResponse
 
@@ -82,7 +72,6 @@ interface CredentialsApi {
      * @param body (optional)
      */
     @Headers(
-        "X-Operation-ID: manualAuthentication",
         "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/{id}/authenticate")
@@ -97,7 +86,6 @@ interface CredentialsApi {
      * @param id (required)
      */
     @Headers(
-        "X-Operation-ID: qrAsBase64",
         "Content-Type: application/json"
     )
     @GET("/api/v1/credentials/{id}/qr")
@@ -114,7 +102,6 @@ interface CredentialsApi {
      * @param optIn Set to true to trigger an opt-in of accounts before doing the refresh. Today only available for enterprise customers. (optional)
      */
     @Headers(
-        "X-Operation-ID: refresh",
         "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/{id}/refresh")
@@ -132,7 +119,6 @@ interface CredentialsApi {
      * @param body The supplemental information. (required)
      */
     @Headers(
-        "X-Operation-ID: supplemental",
         "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/{id}/supplemental-information")
@@ -147,7 +133,6 @@ interface CredentialsApi {
      * @param body The callback response from the ASPSP with JSON format. (required)
      */
     @Headers(
-        "X-Operation-ID: thirdPartyCallbackRelayedPost",
         "Content-Type: application/json"
     )
     @POST("/api/v1/credentials/third-party/callback/relayed")
@@ -162,7 +147,6 @@ interface CredentialsApi {
      * @param body The new credentials object. (required)
      */
     @Headers(
-        "X-Operation-ID: update",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/credentials/{id}")

@@ -21,7 +21,6 @@ interface StatisticsApi {
      * @param body (optional)
      */
     @Headers(
-        "X-Operation-ID: query",
         "Content-Type: application/json"
     )
     @POST("/api/v1/statistics/query")

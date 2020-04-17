@@ -18,7 +18,6 @@ interface CategoryApi {
      * @param locale The locale for which to fetch categories. (optional)
      */
     @Headers(
-        "X-Operation-ID: list",
         "Content-Type: application/json"
     )
     @GET("/api/v1/categories")

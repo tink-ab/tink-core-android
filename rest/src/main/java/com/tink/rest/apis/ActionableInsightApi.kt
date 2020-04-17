@@ -22,9 +22,6 @@ interface ActionableInsightApi {
      * Move an active insight to an archived state.
      * @param id The identifier of the insight that should be archived. (required)
      */
-    @Headers(
-        "X-Operation-ID: archiveInsight"
-    )
     @PUT("/api/v1/insights/{id}/archive")
     suspend fun archiveInsight(
         @retrofit2.http.Path("id") id: String
@@ -33,18 +30,12 @@ interface ActionableInsightApi {
      * List insights
      * Lists all insights for the user.
      */
-    @Headers(
-        "X-Operation-ID: list"
-    )
     @GET("/api/v1/insights")
     suspend fun list(): List<ActionableInsight>
     /**
      * List archived insights
      * Lists all archived insights for the user.
      */
-    @Headers(
-        "X-Operation-ID: listArchivedInsights"
-    )
     @GET("/api/v1/insights/archived")
     suspend fun listArchivedInsights(): List<ArchivedInsight>
     /**
@@ -52,9 +43,6 @@ interface ActionableInsightApi {
      * Report a user action on an insight and move the insight to an archived state.
      * @param body The insight action that should be selected. (required)
      */
-    @Headers(
-        "X-Operation-ID: selectInsightAction"
-    )
     @POST("/api/v1/insights/action")
     suspend fun selectInsightAction(
         @retrofit2.http.Body body: SelectInsightActionRequest

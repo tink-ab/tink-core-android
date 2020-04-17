@@ -30,7 +30,6 @@ interface TransactionApi {
      * @param body Object holding a list of new categories and the transactions to be categorized (required)
      */
     @Headers(
-        "X-Operation-ID: categorize",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions/categorize-multiple")
@@ -44,7 +43,6 @@ interface TransactionApi {
      * @param partId The part ID to delete. (required)
      */
     @Headers(
-        "X-Operation-ID: deletePart",
         "Content-Type: application/json"
     )
     @DELETE("/api/v1/transactions/{id}/part/{partId}")
@@ -57,9 +55,6 @@ interface TransactionApi {
      * Returns a transaction matching the requested id
      * @param id The ID of the transaction (required)
      */
-    @Headers(
-        "X-Operation-ID: getTransaction"
-    )
     @GET("/api/v1/transactions/{id}")
     suspend fun getTransaction(
         @retrofit2.http.Path("id") id: String
@@ -72,7 +67,6 @@ interface TransactionApi {
      * @param body Object holding the required amount for transaction linking (required)
      */
     @Headers(
-        "X-Operation-ID: link",
         "Content-Type: application/json"
     )
     @POST("/api/v1/transactions/{id}/link/{counterpartTransactionId}")
@@ -88,7 +82,6 @@ interface TransactionApi {
      * @param limit Max number of suggestions returned. (optional, default to 5)
      */
     @Headers(
-        "X-Operation-ID: linkSuggest",
         "Content-Type: application/json"
     )
     @GET("/api/v1/transactions/{id}/link/suggest")
@@ -103,9 +96,6 @@ interface TransactionApi {
      * @param categoryId Return similar of this category (optional)
      * @param includeSelf Include the supplied transaction in response (optional)
      */
-    @Headers(
-        "X-Operation-ID: similar"
-    )
     @GET("/api/v1/transactions/{id}/similar")
     suspend fun similar(
         @retrofit2.http.Path("id") id: String,
@@ -118,9 +108,6 @@ interface TransactionApi {
      * @param numberOfClusters Max number of clusters returned (optional)
      * @param evaluateEverything (optional)
      */
-    @Headers(
-        "X-Operation-ID: suggest"
-    )
     @GET("/api/v1/transactions/suggest")
     suspend fun suggest(
         @retrofit2.http.Query("numberOfClusters") numberOfClusters: Int?,
@@ -134,7 +121,6 @@ interface TransactionApi {
      * @param body Object holding the required amount for transaction linking (required)
      */
     @Headers(
-        "X-Operation-ID: updateLink",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions/{id}/part/{partId}")
@@ -150,7 +136,6 @@ interface TransactionApi {
      * @param body The transaction to be updated (required)
      */
     @Headers(
-        "X-Operation-ID: updateTransaction",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions/{id}")
@@ -164,7 +149,6 @@ interface TransactionApi {
      * @param body The transactions to be updated (required)
      */
     @Headers(
-        "X-Operation-ID: updateTransactions",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/transactions")

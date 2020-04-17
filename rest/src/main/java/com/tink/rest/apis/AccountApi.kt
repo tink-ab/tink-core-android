@@ -14,9 +14,6 @@ import retrofit2.http.PUT
 
 @JvmSuppressWildcards
 interface AccountApi {
-    @Headers(
-        "X-Operation-ID: list"
-    )
     @GET("/api/v1/accounts")
     @Deprecated(message = "Deprecated")
     suspend fun list(): List<Account>
@@ -24,9 +21,6 @@ interface AccountApi {
      * List accounts
      * Returns an object with a list of the authenticated user's accounts.
      */
-    @Headers(
-        "X-Operation-ID: listAccounts"
-    )
     @GET("/api/v1/accounts/list")
     suspend fun listAccounts(): AccountListResponse
     /**
@@ -36,7 +30,6 @@ interface AccountApi {
      * @param body The updated account object (required)
      */
     @Headers(
-        "X-Operation-ID: update",
         "Content-Type: application/json"
     )
     @PUT("/api/v1/accounts/{id}")
