@@ -9,7 +9,6 @@ package com.tink.rest.apis
 import com.tink.rest.models.Account
 import com.tink.rest.models.AccountListResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.PUT
 
 @JvmSuppressWildcards

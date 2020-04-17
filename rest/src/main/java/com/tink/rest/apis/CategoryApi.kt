@@ -8,7 +8,6 @@ package com.tink.rest.apis
 
 import com.tink.rest.models.Category
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 @JvmSuppressWildcards
 interface CategoryApi {

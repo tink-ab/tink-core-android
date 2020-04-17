@@ -9,7 +9,6 @@ package com.tink.rest.apis
 import com.tink.rest.models.ProviderListResponse
 import com.tink.rest.models.ProviderMarketListResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 @JvmSuppressWildcards
 interface ProviderApi {

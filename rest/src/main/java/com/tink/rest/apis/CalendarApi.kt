@@ -9,7 +9,6 @@ package com.tink.rest.apis
 import com.tink.rest.models.BusinessDaysResponse
 import com.tink.rest.models.Period
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 @JvmSuppressWildcards
 interface CalendarApi {

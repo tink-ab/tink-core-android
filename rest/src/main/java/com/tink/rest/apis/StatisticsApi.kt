@@ -9,7 +9,6 @@ package com.tink.rest.apis
 import com.tink.rest.models.AuthenticationContext
 import com.tink.rest.models.StatisticQuery
 import com.tink.rest.models.Statistics
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 @JvmSuppressWildcards

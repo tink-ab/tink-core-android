@@ -14,7 +14,6 @@ import com.tink.rest.models.User
 import com.tink.rest.models.UserProfile
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
