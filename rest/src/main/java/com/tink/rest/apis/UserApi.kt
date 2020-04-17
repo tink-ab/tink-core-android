@@ -25,9 +25,6 @@ interface UserApi {
      * Returns the ID of the created user.
      * @param body Configuration for new user. (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/user/create")
     suspend fun createUser(
         @retrofit2.http.Body body: CreateUserRequest
@@ -37,9 +34,6 @@ interface UserApi {
      * Completely deletes the currently authenticated user and its data.
      * @param body (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/user/delete")
     suspend fun delete(
         @retrofit2.http.Body body: DeleteUserRequest
@@ -76,9 +70,6 @@ interface UserApi {
      *
      * @param autologout boolean (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/user/logout")
     suspend fun logout(
         @retrofit2.http.Query("autologout") autologout: Boolean?
@@ -88,9 +79,6 @@ interface UserApi {
      * Updates certain user modifiable properties of a user's profile. Please refer to the body schema to see which properties are modifiable by the user.
      * @param body The updated user profile object (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/user/profile")
     suspend fun updateProfile(
         @retrofit2.http.Body body: UserProfile

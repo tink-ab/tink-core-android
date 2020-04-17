@@ -29,9 +29,6 @@ interface CredentialsApi {
      * @param body The credentials to create. Only providerName and fields are required. (optional)
      * @param items The data types to aggregate from the provider. Multiple items are allowed and are passed as: items&#x3D;item1&amp;items&#x3D;item2. If omitted, all data types are aggregated. (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/credentials")
     suspend fun create(
         @retrofit2.http.Body body: CreateCredentialsRequest,
@@ -71,9 +68,6 @@ interface CredentialsApi {
      * @param id The internal identifier of the &#x60;Credentials&#x60; object to authenticate. (required)
      * @param body (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/credentials/{id}/authenticate")
     suspend fun manualAuthentication(
         @retrofit2.http.Path("id") id: String,
@@ -85,9 +79,6 @@ interface CredentialsApi {
      * QR code for authentication flows such as Mobile BankID as base64 encoded PNG. Includes `data:image/png;base64,`.
      * @param id (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @GET("/api/v1/credentials/{id}/qr")
     suspend fun qrAsBase64(
         @retrofit2.http.Path("id") id: String
@@ -101,9 +92,6 @@ interface CredentialsApi {
      * @param items The data types to aggregate from the Provider. Multiple items are allowed. If omitted, all data types are aggregated. (optional)
      * @param optIn Set to true to trigger an opt-in of accounts before doing the refresh. Today only available for enterprise customers. (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/credentials/{id}/refresh")
     suspend fun refresh(
         @retrofit2.http.Path("id") id: String,
@@ -118,9 +106,6 @@ interface CredentialsApi {
      * @param id (required)
      * @param body The supplemental information. (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/credentials/{id}/supplemental-information")
     suspend fun supplemental(
         @retrofit2.http.Path("id") id: String,
@@ -132,9 +117,6 @@ interface CredentialsApi {
      * Send callback information from an ASPSP. This endpoint will return the registered redirect uri as response.
      * @param body The callback response from the ASPSP with JSON format. (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/credentials/third-party/callback/relayed")
     suspend fun thirdPartyCallbackRelayedPost(
         @retrofit2.http.Body body: CallbackRelayedRequest
@@ -146,9 +128,6 @@ interface CredentialsApi {
      * @param id The internal identifier of the credentials to change (required)
      * @param body The new credentials object. (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/credentials/{id}")
     suspend fun update(
         @retrofit2.http.Path("id") id: String,

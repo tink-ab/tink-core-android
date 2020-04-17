@@ -29,9 +29,6 @@ interface AccountApi {
      * @param id The ID of the account (required)
      * @param body The updated account object (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/accounts/{id}")
     suspend fun update(
         @retrofit2.http.Path("id") id: String,

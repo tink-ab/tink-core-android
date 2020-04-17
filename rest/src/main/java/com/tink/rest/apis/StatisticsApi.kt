@@ -20,9 +20,6 @@ interface StatisticsApi {
      * @param body2 The query object (required)
      * @param body (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/statistics/query")
     suspend fun query(
         @retrofit2.http.Body body2: StatisticQuery,

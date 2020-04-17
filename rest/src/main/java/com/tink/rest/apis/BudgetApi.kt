@@ -39,9 +39,6 @@ interface BudgetApi {
      * Creates a budget for a specific date interval. Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
      * @param body The one off budget to be created. (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/budgets/one-off")
     suspend fun createOneOff(
         @retrofit2.http.Body body: CreateOneOffBudgetRequest
@@ -51,9 +48,6 @@ interface BudgetApi {
      * Creates a recurring budget with a set periodicity.Returns `400 Bad Request` if any of the request parameters is incorrect or missing. Returns `500 Internal Server Error` for any unspecified error.
      * @param body The recurring budget to be created. (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/budgets/recurring")
     suspend fun createRecurring(
         @retrofit2.http.Body body: CreateRecurringBudgetRequest
@@ -117,9 +111,6 @@ interface BudgetApi {
      * @param id The ID of the budget. (required)
      * @param body The modified budget to be applied. (required)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/budgets/{id}")
     suspend fun update(
         @retrofit2.http.Path("id") id: String,

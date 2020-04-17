@@ -17,9 +17,6 @@ interface CategoryApi {
      * Returns all categories for the given locale. The locale is either taken from the authenticated user or from a query parameter, if no user is authenticated. If no user and no query parameter is given, a default locale is used.
      * @param locale The locale for which to fetch categories. (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @GET("/api/v1/categories")
     suspend fun list(
         @retrofit2.http.Query("locale") locale: String?

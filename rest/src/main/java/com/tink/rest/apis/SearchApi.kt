@@ -20,9 +20,6 @@ interface SearchApi {
      * @param body2 The search query. (required)
      * @param body (optional)
      */
-    @Headers(
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/search")
     suspend fun searchQuery(
         @retrofit2.http.Body body2: SearchQuery,
