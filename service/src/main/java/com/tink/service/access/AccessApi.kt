@@ -1,11 +1,11 @@
-package com.tink.service.authorization
+package com.tink.service.access
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-internal interface UserRetrofitService {
+internal interface AccessApi {
 
     @POST("/api/v1/oauth/authorize")
     suspend fun authorize(
