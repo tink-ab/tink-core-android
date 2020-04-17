@@ -1,5 +1,15 @@
 package com.tink.model.credentials
 
+/**
+ * Refreshable items are a way to limit which types of data should be aggregated from a provider.
+ *
+ * Tip: You can use collection operations to quickly define different sets of items, e.g.
+ * ```
+ * val onlyAccounts = RefreshableItem.accounts()
+ * val everythingExceptTransactions = RefreshableItem.all() - RefreshableItem.transactions()
+ * val onlyCreditCardData = RefreshableItem.CREDITCARD_ACCOUNTS + RefreshableItem.CREDITCARD_TRANSACTIONS
+ * ```
+ */
 enum class RefreshableItem(val item: String) {
     CHECKING_ACCOUNTS("CHECKING_ACCOUNTS"),
     CHECKING_TRANSACTIONS("CHECKING_TRANSACTIONS"),
