@@ -1,6 +1,6 @@
 package com.tink.service.di
 
-import com.tink.service.access.AccessApi
+import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
