@@ -32,17 +32,17 @@ fi
 
 echo ""
 
-# RPC
-echo "Enter the checksum for rpc aar"
-read rpcChecksum
+# REST
+echo "Enter the checksum for rest aar"
+read restChecksum
 
-actualRpcChecksum=($(shasum -a 256 rpc/build/libs/rpc.jar))
+actualRestChecksum=($(shasum -a 256 rest/build/libs/rest.jar))
 
-if [ "$rpcChecksum" = "$actualRpcChecksum" ]
+if [ "$restChecksum" = "$actualRestChecksum" ]
 then
-  echo "VALID: rpc checksum"
+  echo "VALID: rest checksum"
 else
-  echo "INVALID: rpc checksum. Expected: $actualRpcChecksum"
+  echo "INVALID: rest checksum. Expected: $actualRestChecksum"
 fi
 
 echo ""
