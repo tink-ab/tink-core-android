@@ -1,10 +1,10 @@
 package com.tink.service.authorization
 
 import com.tink.model.user.Scope
-import com.tink.service.access.AccessApi
-import com.tink.service.access.AuthenticationRequest
-import com.tink.service.access.AuthorizationRequest
-import com.tink.service.access.CreateAnonymousUserRequest
+import com.tink.rest.apis.AccessApi
+import com.tink.rest.apis.AuthenticationRequest
+import com.tink.rest.apis.AuthorizationRequest
+import com.tink.rest.apis.CreateAnonymousUserRequest
 import com.tink.service.di.ServiceScope
 import com.tink.service.network.TinkConfiguration
 import javax.inject.Inject
@@ -25,7 +25,11 @@ internal class UserServiceImpl @Inject constructor(
         ).authorizationCode
 
     override suspend fun authenticate(authenticationCode: String) =
-        api.authenticate(AuthenticationRequest(authenticationCode)).accessToken
+        api.authenticate(
+            AuthenticationRequest(
+                authenticationCode
+            )
+        ).accessToken
 
     override suspend fun createAnonymousUser(arguments: UserCreationDescriptor) =
         api.createAnonymousUser(
