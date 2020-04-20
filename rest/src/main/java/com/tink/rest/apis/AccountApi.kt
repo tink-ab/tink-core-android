@@ -9,14 +9,10 @@ package com.tink.rest.apis
 import com.tink.rest.models.Account
 import com.tink.rest.models.AccountListResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.PUT
 
 @JvmSuppressWildcards
 interface AccountApi {
-    @Headers(
-        "X-Operation-ID: list"
-    )
     @GET("/api/v1/accounts")
     @Deprecated(message = "Deprecated")
     suspend fun list(): List<Account>
@@ -24,9 +20,6 @@ interface AccountApi {
      * List accounts
      * Returns an object with a list of the authenticated user's accounts.
      */
-    @Headers(
-        "X-Operation-ID: listAccounts"
-    )
     @GET("/api/v1/accounts/list")
     suspend fun listAccounts(): AccountListResponse
     /**
@@ -35,10 +28,6 @@ interface AccountApi {
      * @param id The ID of the account (required)
      * @param body The updated account object (required)
      */
-    @Headers(
-        "X-Operation-ID: update",
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/accounts/{id}")
     suspend fun update(
         @retrofit2.http.Path("id") id: String,

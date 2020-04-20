@@ -18,7 +18,6 @@ import com.tink.rest.models.UpdateTransactionLinkRequest
 import retrofit2.Response
 import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
@@ -29,10 +28,6 @@ interface TransactionApi {
      * Changes category of the supplied list of transactions to the supplied category
      * @param body Object holding a list of new categories and the transactions to be categorized (required)
      */
-    @Headers(
-        "X-Operation-ID: categorize",
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/transactions/categorize-multiple")
     suspend fun categorize(
         @retrofit2.http.Body body: CategorizeTransactionsListRequest
@@ -43,10 +38,6 @@ interface TransactionApi {
      * @param id The ID of the transaction to which the part belongs to. (required)
      * @param partId The part ID to delete. (required)
      */
-    @Headers(
-        "X-Operation-ID: deletePart",
-        "Content-Type: application/json"
-    )
     @DELETE("/api/v1/transactions/{id}/part/{partId}")
     suspend fun deletePart(
         @retrofit2.http.Path("id") id: String,
@@ -57,9 +48,6 @@ interface TransactionApi {
      * Returns a transaction matching the requested id
      * @param id The ID of the transaction (required)
      */
-    @Headers(
-        "X-Operation-ID: getTransaction"
-    )
     @GET("/api/v1/transactions/{id}")
     suspend fun getTransaction(
         @retrofit2.http.Path("id") id: String
@@ -71,10 +59,6 @@ interface TransactionApi {
      * @param counterpartTransactionId The ID of the other transaction (the counterpart) to link. (required)
      * @param body Object holding the required amount for transaction linking (required)
      */
-    @Headers(
-        "X-Operation-ID: link",
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/transactions/{id}/link/{counterpartTransactionId}")
     suspend fun link(
         @retrofit2.http.Path("id") id: String,
@@ -87,10 +71,6 @@ interface TransactionApi {
      * @param id The ID of the transaction to get suggestions for (required)
      * @param limit Max number of suggestions returned. (optional, default to 5)
      */
-    @Headers(
-        "X-Operation-ID: linkSuggest",
-        "Content-Type: application/json"
-    )
     @GET("/api/v1/transactions/{id}/link/suggest")
     suspend fun linkSuggest(
         @retrofit2.http.Path("id") id: String,
@@ -103,9 +83,6 @@ interface TransactionApi {
      * @param categoryId Return similar of this category (optional)
      * @param includeSelf Include the supplied transaction in response (optional)
      */
-    @Headers(
-        "X-Operation-ID: similar"
-    )
     @GET("/api/v1/transactions/{id}/similar")
     suspend fun similar(
         @retrofit2.http.Path("id") id: String,
@@ -118,9 +95,6 @@ interface TransactionApi {
      * @param numberOfClusters Max number of clusters returned (optional)
      * @param evaluateEverything (optional)
      */
-    @Headers(
-        "X-Operation-ID: suggest"
-    )
     @GET("/api/v1/transactions/suggest")
     suspend fun suggest(
         @retrofit2.http.Query("numberOfClusters") numberOfClusters: Int?,
@@ -133,10 +107,6 @@ interface TransactionApi {
      * @param partId The part ID to update. (required)
      * @param body Object holding the required amount for transaction linking (required)
      */
-    @Headers(
-        "X-Operation-ID: updateLink",
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/transactions/{id}/part/{partId}")
     suspend fun updateLink(
         @retrofit2.http.Path("id") id: String,
@@ -149,10 +119,6 @@ interface TransactionApi {
      * @param id The ID of the transaction (required)
      * @param body The transaction to be updated (required)
      */
-    @Headers(
-        "X-Operation-ID: updateTransaction",
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/transactions/{id}")
     suspend fun updateTransaction(
         @retrofit2.http.Path("id") id: String,
@@ -163,10 +129,6 @@ interface TransactionApi {
      * Updates mutable properties of a list of transactions. The following properties are possible to update:amount, categoryId, date, description.
      * @param body The transactions to be updated (required)
      */
-    @Headers(
-        "X-Operation-ID: updateTransactions",
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/transactions")
     suspend fun updateTransactions(
         @retrofit2.http.Body body: List<Transaction>

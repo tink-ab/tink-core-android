@@ -14,7 +14,6 @@ import com.tink.rest.models.User
 import com.tink.rest.models.UserProfile
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
 
@@ -25,10 +24,6 @@ interface UserApi {
      * Returns the ID of the created user.
      * @param body Configuration for new user. (optional)
      */
-    @Headers(
-        "X-Operation-ID: createUser",
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/user/create")
     suspend fun createUser(
         @retrofit2.http.Body body: CreateUserRequest
@@ -38,10 +33,6 @@ interface UserApi {
      * Completely deletes the currently authenticated user and its data.
      * @param body (optional)
      */
-    @Headers(
-        "X-Operation-ID: delete",
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/user/delete")
     suspend fun delete(
         @retrofit2.http.Body body: DeleteUserRequest
@@ -50,9 +41,6 @@ interface UserApi {
      * Flag user for test PSD2-migration
      * Flag the currently authenticated user as ready for test PSD2-migration
      */
-    @Headers(
-        "X-Operation-ID: flagUserReadyForTestPSD2MigrationFlow"
-    )
     @PUT("/api/v1/user/psd2flag")
     suspend fun flagUserReadyForTestPSD2MigrationFlow(): Response<Unit>
     /**
@@ -60,9 +48,6 @@ interface UserApi {
      * Returns an object with a list of all available markets in which a user could register with.
      * @param desired The ISO 3166-1 alpha-2 country code of the desired market (optional)
      */
-    @Headers(
-        "X-Operation-ID: getMarketList"
-    )
     @GET("/api/v1/user/markets/list")
     suspend fun getMarketList(
         @retrofit2.http.Query("desired") desired: String?
@@ -71,18 +56,12 @@ interface UserApi {
      * Get the user profile
      * Returns the user profile.
      */
-    @Headers(
-        "X-Operation-ID: getProfile"
-    )
     @GET("/api/v1/user/profile")
     suspend fun getProfile(): UserProfile
     /**
      * Get the user
      * Returns the user object. Note that the password field is not stored in clear text nor populated when getting the user. It's only used for setting the password when registering a new user.
      */
-    @Headers(
-        "X-Operation-ID: getUser"
-    )
     @GET("/api/v1/user")
     suspend fun getUser(): User
     /**
@@ -90,10 +69,6 @@ interface UserApi {
      *
      * @param autologout boolean (optional)
      */
-    @Headers(
-        "X-Operation-ID: logout",
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/user/logout")
     suspend fun logout(
         @retrofit2.http.Query("autologout") autologout: Boolean?
@@ -103,10 +78,6 @@ interface UserApi {
      * Updates certain user modifiable properties of a user's profile. Please refer to the body schema to see which properties are modifiable by the user.
      * @param body The updated user profile object (required)
      */
-    @Headers(
-        "X-Operation-ID: updateProfile",
-        "Content-Type: application/json"
-    )
     @PUT("/api/v1/user/profile")
     suspend fun updateProfile(
         @retrofit2.http.Body body: UserProfile
@@ -116,9 +87,6 @@ interface UserApi {
      * Updates certain user modifiable properties of a user. Please refer to the body schema to see which properties are modifiable by the user.
      * @param body The updated user object (required)
      */
-    @Headers(
-        "X-Operation-ID: updateUser"
-    )
     @PUT("/api/v1/user")
     suspend fun updateUser(
         @retrofit2.http.Body body: User

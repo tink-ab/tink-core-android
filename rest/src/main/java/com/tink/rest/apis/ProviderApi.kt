@@ -9,7 +9,6 @@ package com.tink.rest.apis
 import com.tink.rest.models.ProviderListResponse
 import com.tink.rest.models.ProviderMarketListResponse
 import retrofit2.http.GET
-import retrofit2.http.Headers
 
 @JvmSuppressWildcards
 interface ProviderApi {
@@ -21,9 +20,6 @@ interface ProviderApi {
      * @param excludeNonTestProviders Defaults to false. If set to &#x60;true&#x60;, Providers of type different than &#x60;TEST&#x60; will be removed from the response list. (optional)
      * @param name Gets a specific provider from the name. If this query parameter is used, only one or no providers will be returned. (optional)
      */
-    @Headers(
-        "X-Operation-ID: list"
-    )
     @GET("/api/v1/providers")
     suspend fun list(
         @retrofit2.http.Query("capability") capability: String?,
@@ -42,9 +38,6 @@ interface ProviderApi {
      * @param excludeNonTestProviders Defaults to false. If set to &#x60;true&#x60;, Providers of type different than &#x60;TEST&#x60; will be removed from the response list. (optional)
      * @param capability Use the capability to only list providers with a specific capability. If no capability the provider response will not be filtered on capability. (optional)
      */
-    @Headers(
-        "X-Operation-ID: listByMarket"
-    )
     @GET("/api/v1/providers/{market}")
     suspend fun listByMarket(
         @retrofit2.http.Path("market") market: String,
@@ -60,9 +53,6 @@ interface ProviderApi {
      * Lists all markets where there are providers available.
      * @param xTinkOAuthClientID The OAuth2 Client ID (optional)
      */
-    @Headers(
-        "X-Operation-ID: listMarkets"
-    )
     @GET("/api/v1/providers/markets")
     suspend fun listMarkets(
         @retrofit2.http.Header("X-Tink-OAuth-Client-ID") xTinkOAuthClientID: String?
@@ -72,9 +62,6 @@ interface ProviderApi {
      * Suggest providers for user.
      *
      */
-    @Headers(
-        "X-Operation-ID: suggest"
-    )
     @GET("/api/v1/providers/suggest")
     suspend fun suggest(): ProviderListResponse
 }

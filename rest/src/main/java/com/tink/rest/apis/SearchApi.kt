@@ -9,7 +9,6 @@ package com.tink.rest.apis
 import com.tink.rest.models.AuthenticationContext
 import com.tink.rest.models.SearchQuery
 import com.tink.rest.models.SearchResponse
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 @JvmSuppressWildcards
@@ -20,10 +19,6 @@ interface SearchApi {
      * @param body2 The search query. (required)
      * @param body (optional)
      */
-    @Headers(
-        "X-Operation-ID: searchQuery",
-        "Content-Type: application/json"
-    )
     @POST("/api/v1/search")
     suspend fun searchQuery(
         @retrofit2.http.Body body2: SearchQuery,
