@@ -4,6 +4,10 @@ plugins {
     kotlin("kapt")
 }
 
+tasks.jar {
+    archiveName = "rest.jar"
+}
+
 dependencies {
     implementation(Dependencies.kotlin_stdlib)
 
