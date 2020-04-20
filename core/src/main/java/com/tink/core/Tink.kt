@@ -4,6 +4,9 @@ import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.service.authentication.user.User
 import com.tink.service.authentication.UserEventBus
+import com.tink.service.authorization.UserService
+import com.tink.service.consent.ConsentService
+import com.tink.service.credentials.CredentialsService
 import com.tink.service.di.DaggerServiceComponent
 import com.tink.service.di.ServiceComponent
 import com.tink.service.network.TinkConfiguration
@@ -55,6 +58,12 @@ annotation class TinkScope
 @Component(dependencies = [ServiceComponent::class])
 @TinkScope
 abstract class TinkComponent {
+
+    abstract val credentialsService: CredentialsService
+
+    abstract val userService: UserService
+
+    abstract val consentService: ConsentService
 
     abstract val providerRepository: ProviderRepository
 
