@@ -8,8 +8,7 @@ read coreChecksum
 
 actualCoreChecksum=($(shasum -a 256 core/build/outputs/aar/core-release.aar))
 
-if [ "$coreChecksum" = "$actualCoreChecksum" ]
-then
+if [ "$coreChecksum" = "$actualCoreChecksum" ]; then
   echo "VALID: core checksum"
 else
   echo "INVALID: core checksum. Expected: $actualCoreChecksum"
@@ -23,8 +22,7 @@ read serviceChecksum
 
 actualServiceChecksum=($(shasum -a 256 service/build/outputs/aar/service-release.aar))
 
-if [ "$serviceChecksum" = "$actualServiceChecksum" ]
-then
+if [ "$serviceChecksum" = "$actualServiceChecksum" ]; then
   echo "VALID: service checksum"
 else
   echo "INVALID: service checksum. Expected: $actualServiceChecksum"
@@ -32,17 +30,16 @@ fi
 
 echo ""
 
-# RPC
-echo "Enter the checksum for rpc aar"
-read rpcChecksum
+# REST
+echo "Enter the checksum for rest aar"
+read restChecksum
 
-actualRpcChecksum=($(shasum -a 256 rpc/build/libs/rpc.jar))
+actualRestChecksum=($(shasum -a 256 rest/build/libs/rest.jar))
 
-if [ "$rpcChecksum" = "$actualRpcChecksum" ]
-then
-  echo "VALID: rpc checksum"
+if [ "$restChecksum" = "$actualRestChecksum" ]; then
+  echo "VALID: rest checksum"
 else
-  echo "INVALID: rpc checksum. Expected: $actualRpcChecksum"
+  echo "INVALID: rest checksum. Expected: $actualRestChecksum"
 fi
 
 echo ""
@@ -53,8 +50,7 @@ read modelsChecksum
 
 actualModelsChecksum=($(shasum -a 256 models/build/outputs/aar/models-release.aar))
 
-if [ "$modelsChecksum" = "$actualModelsChecksum" ]
-then
+if [ "$modelsChecksum" = "$actualModelsChecksum" ]; then
   echo "VALID: models checksum"
 else
   echo "INVALID: models checksum. Expected: $actualModelsChecksum"
