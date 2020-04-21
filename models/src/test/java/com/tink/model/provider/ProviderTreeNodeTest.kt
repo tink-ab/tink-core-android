@@ -1,6 +1,6 @@
 package com.tink.model.provider
 
-import com.tink.model.credential.Credential
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionNode
 import org.assertj.core.api.Assertions.assertThat
@@ -15,7 +15,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Nordea",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.MOBILE_BANKID,
+        credentialsType = Credentials.Type.MOBILE_BANKID,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -34,7 +34,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Nordea",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.PASSWORD,
+        credentialsType = Credentials.Type.PASSWORD,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -53,7 +53,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Nordea Open Banking",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.MOBILE_BANKID,
+        credentialsType = Credentials.Type.MOBILE_BANKID,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -72,7 +72,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Sparbankerna",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.MOBILE_BANKID,
+        credentialsType = Credentials.Type.MOBILE_BANKID,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -90,7 +90,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Sparbankerna",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.PASSWORD,
+        credentialsType = Credentials.Type.PASSWORD,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -109,7 +109,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Swedbank",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.MOBILE_BANKID,
+        credentialsType = Credentials.Type.MOBILE_BANKID,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -127,7 +127,7 @@ internal class ProviderTreeNodeTest {
         displayName = "Swedbank",
         type = Provider.Type.BANK,
         status = Provider.Status.ENABLED,
-        credentialType = Credential.Type.PASSWORD,
+        credentialsType = Credentials.Type.PASSWORD,
         helpText = "",
         isPopular = true,
         fields = emptyList(),
@@ -157,7 +157,7 @@ internal class ProviderTreeNodeTest {
     )
 
     @Test
-    fun `test credential types grouping`() {
+    fun `test credentials types grouping`() {
         val providers = listOf(nordeaBankId, nordeaPassword)
         val groups = providers.toProviderTree()
         assertThat(groups).hasSize(1)
@@ -173,11 +173,11 @@ internal class ProviderTreeNodeTest {
         val accessTypes = financialInstitutions.first().accessTypes
         assertThat(accessTypes).hasSize(1)
 
-        val credentialTypes = accessTypes.first().credentialTypes
-        assertThat(credentialTypes)
+        val credentialsTypes = accessTypes.first().credentialsTypes
+        assertThat(credentialsTypes)
             .hasSize(2)
-            .anySatisfy { assertThat(it.type).isEqualTo(Credential.Type.MOBILE_BANKID) }
-            .anySatisfy { assertThat(it.type).isEqualTo(Credential.Type.PASSWORD) }
+            .anySatisfy { assertThat(it.type).isEqualTo(Credentials.Type.MOBILE_BANKID) }
+            .anySatisfy { assertThat(it.type).isEqualTo(Credentials.Type.PASSWORD) }
     }
 
     @Test
