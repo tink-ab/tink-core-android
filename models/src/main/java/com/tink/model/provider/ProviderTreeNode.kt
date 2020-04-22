@@ -3,20 +3,20 @@ package com.tink.model.provider
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
-import com.tink.model.credential.Credential
+import com.tink.model.credentials.Credentials
 import com.tink.model.provider.ProviderTreeNode.AccessTypeNode
-import com.tink.model.provider.ProviderTreeNode.CredentialTypeNode
+import com.tink.model.provider.ProviderTreeNode.CredentialsTypeNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionNode
 
 /**
  * This class represents a tree structure of [FinancialInstitutionGroupNode] objects with children.
- * This eventually leads to a leaf object of type [CredentialTypeNode],
+ * This eventually leads to a leaf object of type [CredentialsTypeNode],
  * that contains more detailed [Provider] data.
  *
  * The tree will always follow the structure:
  *
- * [FinancialInstitutionGroupNode] -> [FinancialInstitutionNode] -> [AccessTypeNode] -> [CredentialTypeNode]
+ * [FinancialInstitutionGroupNode] -> [FinancialInstitutionNode] -> [AccessTypeNode] -> [CredentialsTypeNode]
  */
 sealed class ProviderTreeNode : Parcelable {
     /** A textual description of the node. */
@@ -28,7 +28,8 @@ sealed class ProviderTreeNode : Parcelable {
      * The top level node of the tree structure, with a list of [FinancialInstitutionNode] children.
      *
      * @param name The grouping identifier related to the [Provider]'s `groupDisplayName` or
-     *              `financialInstitution.name` property
+     *              `financialInstitution.name` property.
+     * @param financialInstitutions The list of child nodes.
      */
     @Parcelize
     data class FinancialInstitutionGroupNode(
@@ -42,7 +43,8 @@ sealed class ProviderTreeNode : Parcelable {
     /**
      * A parent node of the tree structure, with a list of [AccessTypeNode] children.
      *
-     * @param id The unique identifier of the financial institution.
+     * @param financialInstitution The `financialInstitution` that this node represents.
+     * @param accessTypes The list of child nodes.
      */
     @Parcelize
     data class FinancialInstitutionNode(
@@ -55,29 +57,31 @@ sealed class ProviderTreeNode : Parcelable {
     }
 
     /**
-     * A parent node of the tree structure, with a list of [CredentialTypeNode] children.
+     * A parent node of the tree structure, with a list of [CredentialsTypeNode] children.
      *
      * @param type Grouping identifier. See [Provider.AccessType]
+     * @param credentialsTypes The list of child nodes.
      */
     @Parcelize
     data class AccessTypeNode(
         val type: Provider.AccessType,
-        val credentialTypes: @RawValue List<CredentialTypeNode>
+        val credentialsTypes: @RawValue List<CredentialsTypeNode>
     ) : ProviderTreeNode() {
         override val name: String? get() = null
         override val icon: String?
-            get() = credentialTypes.first().icon
+            get() = credentialsTypes.first().icon
     }
 
     /**
      * A parent node of the tree structure, with a list of [ProviderNode] children.
      *
-     * @param type Grouping identifier. See [Credential.Type]
+     * @param type Grouping identifier. See [Credentials.Type]
+     * @param providers The list of child nodes.
      */
     @Parcelize
-    data class CredentialTypeNode(
+    data class CredentialsTypeNode(
         override val name: String?,
-        val type: Credential.Type,
+        val type: Credentials.Type,
         val providers: List<ProviderNode>
     ) : ProviderTreeNode() {
         override val icon
@@ -104,7 +108,7 @@ sealed class ProviderTreeNode : Parcelable {
  *
  * @return A tree of [ProviderTreeNode] objects that will always follow the structure:
  *
- * [FinancialInstitutionGroupNode] -> [FinancialInstitutionNode] -> [AccessTypeNode] -> [CredentialTypeNode]
+ * [FinancialInstitutionGroupNode] -> [FinancialInstitutionNode] -> [AccessTypeNode] -> [CredentialsTypeNode]
  */
 fun List<Provider>.toProviderTree(): List<ProviderTreeNode> =
     groupBy { it.groupDisplayName.ifBlank { it.financialInstitution.name } }
@@ -123,26 +127,26 @@ private fun List<Provider>.groupByFinancialInstitution(): List<FinancialInstitut
 private fun List<Provider>.groupByAccessType(): List<AccessTypeNode> =
     groupBy { it.accessType }
         .map { (type, providers) ->
-            AccessTypeNode(type, providers.groupByCredentialType())
+            AccessTypeNode(type, providers.groupByCredentialsType())
         }
         .sortedBy { it.name }
 
-private fun List<Provider>.groupByCredentialType(): List<CredentialTypeNode> =
-    groupBy { it.credentialType }
+private fun List<Provider>.groupByCredentialsType(): List<CredentialsTypeNode> =
+    groupBy { it.credentialsType }
         .flatMap { (type, providers) ->
             /*
-             * Group the credential type internally by displayDescription as a first step.
-             * This is necessary since we sometimes have providers with same credential type that
+             * Group the credentials type internally by displayDescription as a first step.
+             * This is necessary since we sometimes have providers with same credentials type that
              * have different descriptions, for example PASSWORD is used for multiple purposes,
              * and we might have "Pin" and "Password" as two different descriptions.
              *
-             * This lets the CredentialTypeNode allow for a better UI where the providers with the
-             * same credential type can use different names.
+             * This lets the CredentialsTypeNode allow for a better UI where the providers with the
+             * same credentials type can use different names.
              */
             providers
                 .groupBy { it.displayDescription }
                 .map { (displayDescription, providerList) ->
-                    CredentialTypeNode(
+                    CredentialsTypeNode(
                         name = displayDescription.takeIf { it.isNotEmpty() },
                         type = type,
                         providers = providerList.map { ProviderTreeNode.ProviderNode(it) })

@@ -12,7 +12,7 @@ import timber.log.Timber
 
 private const val POLLING_INTERVAL = 2_000L
 
-class PollingHandler<T>(private val pollingAction: (StreamObserver<T>) -> Unit) : Stream<T> {
+class PollingHandler<T>(private val pollingAction: suspend (StreamObserver<T>) -> Unit) : Stream<T> {
 
     private val job = Job()
     private val ioScope = CoroutineScope(Dispatchers.IO + job)
