@@ -29,7 +29,6 @@ android {
 dependencies {
     api(project(":service"))
     api(project(":models"))
-    implementation(project(":rpc"))
 
     implementation(Dependencies.kotlin_stdlib)
 
@@ -40,6 +39,8 @@ dependencies {
     kapt(Dependencies.Dagger.dagger_android_compiler)
 
     implementation(Dependencies.rxjava)
+
+    implementation(Dependencies.Coroutines.core)
 
     testImplementation(Dependencies.Testing.test_assertj)
     testImplementation(Dependencies.Testing.test_junit_api)

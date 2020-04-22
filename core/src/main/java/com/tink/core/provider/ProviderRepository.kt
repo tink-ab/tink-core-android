@@ -1,8 +1,13 @@
 package com.tink.core.provider
 
+import com.tink.core.TinkScope
+import com.tink.core.coroutines.launchForResult
 import com.tink.model.provider.Provider
 import com.tink.service.handler.ResultHandler
 import com.tink.service.provider.ProviderService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Inject
 
 /**
@@ -11,7 +16,10 @@ import javax.inject.Inject
  * @constructor Create a new repository instance from a [ProviderService].
  * This is usually done inside the TinkLink framework and it should normally not be necessary to create your own instance.
  */
+@TinkScope
 class ProviderRepository @Inject constructor(private val service: ProviderService) {
+
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     /**
      * List all providers on the current market. The result will already be filtered to only contain
@@ -26,14 +34,8 @@ class ProviderRepository @Inject constructor(private val service: ProviderServic
         handler: ResultHandler<List<Provider>>,
         includeDemoProviders: Boolean = false
     ) {
-        service.listProviders(
-            ResultHandler(
-                { providers ->
-                    handler.onSuccess(providers.filter { it.status == Provider.Status.ENABLED })
-                },
-                handler.onError
-            ),
-            includeDemoProviders
-        )
+        scope.launchForResult(handler) {
+            service.listProviders(includeDemoProviders)
+        }
     }
 }

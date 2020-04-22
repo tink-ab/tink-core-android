@@ -1,1 +1,1 @@
-include(":app", ":rpc", ":service", ":core", ":models")
+include(":app", ":service", ":core", ":models", "rest")

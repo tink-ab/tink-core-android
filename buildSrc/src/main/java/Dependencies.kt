@@ -4,7 +4,7 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
 
-    const val kotlin = "1.3.60"
+    const val kotlin = "1.3.72"
     const val lifecycle = "2.0.0"
     const val dagger = "2.16"
     const val androidx = "1.0.2"
@@ -12,6 +12,8 @@ object Versions {
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
     const val navigation = "2.1.0-rc01"
+
+    const val moshi = "1.9.2"
 }
 
 object Dependencies {
@@ -44,6 +46,14 @@ object Dependencies {
         const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
         const val retrofit_adapter_rxjava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
         const val retrofit_converter_gson =  "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+        const val retrofit_converter_moshi =  "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    }
+
+    object Moshi {
+        const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
+        const val moshi_codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}" // Kapt codegen
+        const val moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}" // Reflect
+        const val moshi_adapters = "com.squareup.moshi:moshi-adapters:${Versions.moshi}" // Json adapters
     }
 
     object Testing {
@@ -63,4 +73,7 @@ object Dependencies {
     const val timber = "com.jakewharton.timber:timber:4.7.1"
 
     const val ktlint = "com.pinterest:ktlint:0.33.0"
+
+    const val okhttp = "com.squareup.okhttp3:okhttp:4.4.0"
+    const val conscrypt = "org.conscrypt:conscrypt-android:2.4.0"
 }

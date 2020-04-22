@@ -26,12 +26,11 @@ android {
             )
         }
     }
-
 }
 
 dependencies {
-    implementation(project(":rpc"))
     api(project(":models"))
+    implementation(project(":rest"))
 
     implementation(Dependencies.kotlin_stdlib)
     implementation(Dependencies.three_ten_abp)
@@ -47,12 +46,23 @@ dependencies {
     implementation(Dependencies.Coroutines.core)
     implementation(Dependencies.Coroutines.android)
 
+    implementation(Dependencies.okhttp)
+    implementation(Dependencies.conscrypt)
+    implementation(Dependencies.Moshi.moshi)
+    implementation(Dependencies.Moshi.moshi_kotlin)
+    kapt(Dependencies.Moshi.moshi_codegen)
+
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.retrofit_adapter_rxjava)
     implementation(Dependencies.Retrofit.retrofit_converter_gson)
+    implementation(Dependencies.Retrofit.retrofit_converter_moshi)
     implementation(Dependencies.rxjava)
 
     implementation(Dependencies.timber)
+
+    testImplementation(Dependencies.Testing.test_assertj)
+    testImplementation(Dependencies.Testing.test_junit_api)
+    testRuntimeOnly(Dependencies.Testing.test_junit_engine)
 }
 
 // Workaround for https://youtrack.jetbrains.com/issue/KT-32804
