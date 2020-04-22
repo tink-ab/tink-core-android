@@ -1,11 +1,10 @@
 package com.tink.service.provider
 
 import com.tink.model.provider.Provider
-import com.tink.service.handler.ResultHandler
 
 interface ProviderService {
 
-    fun listSuggestions(handler: ResultHandler<List<Provider>>)
+    suspend fun listSuggestions(): List<Provider>
 
-    fun listProviders(handler: ResultHandler<List<Provider>>, includeDemoProviders: Boolean)
+    suspend fun listProviders(includeDemoProviders: Boolean): List<Provider>
 }

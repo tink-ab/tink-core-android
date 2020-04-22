@@ -10,7 +10,7 @@ import com.tink.model.misc.ExactNumber
 data class Account(
     val accountNumber: String,
     val balance: Amount,
-    val credentialId: String,
+    val credentialsId: String,
     val excluded: Boolean,
     val favored: Boolean,
     val transactional: Boolean,
