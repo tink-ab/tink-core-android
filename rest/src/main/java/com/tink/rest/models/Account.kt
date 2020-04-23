@@ -49,7 +49,6 @@ data class Account(
     @Json(name = "details") @field:Json(name = "details") var details: AccountDetails? = null,
     @Json(name = "holderName") @field:Json(name = "holderName") var holderName: String? = null,
     @Json(name = "closed") @field:Json(name = "closed") var closed: Boolean? = null,
-    @Json(name = "flags") @field:Json(name = "flags") var flags: Account.FlagsEnum? = null,
     @Json(name = "currencyDenominatedBalance") @field:Json(name = "currencyDenominatedBalance") var currencyDenominatedBalance: CurrencyDenominatedAmount? = null,
     @Json(name = "refreshed") @field:Json(name = "refreshed") var refreshed: Long?,
     @Json(name = "financialInstitutionId") @field:Json(name = "financialInstitutionId") var financialInstitutionId: String? = null
