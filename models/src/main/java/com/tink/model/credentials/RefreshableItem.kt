@@ -45,10 +45,10 @@ enum class RefreshableItem(val item: String) {
 
         private val all = values().toSet()
 
-        fun transactions() = transactions
-        fun accounts() = accounts
-        fun all() = all
+        fun transactions(): Set<RefreshableItem> = transactions
+        fun accounts(): Set<RefreshableItem> = accounts
+        fun all(): Set<RefreshableItem> = all
     }
 }
 
-operator fun RefreshableItem.plus(other: RefreshableItem) = setOf(this, other)
+operator fun RefreshableItem.plus(other: RefreshableItem): Set<RefreshableItem> = setOf(this, other)
