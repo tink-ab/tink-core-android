@@ -1,6 +1,7 @@
 package com.tink.service.account
 
 import com.tink.model.account.Account
+import com.tink.rest.apis.AccountApi
 import com.tink.service.handler.ResultHandler
 import com.tink.service.observer.ChangeObserver
 import javax.inject.Inject
@@ -12,7 +13,9 @@ interface AccountService {
     suspend fun update(account: UpdateAccountDescriptor): Account
 }
 
-class AccountServiceImpl @Inject constructor() : AccountService {
+class AccountServiceImpl @Inject constructor(
+    private val api: AccountApi
+) : AccountService {
     override fun subscribe(listener: ChangeObserver<List<Account>>) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
@@ -21,9 +24,8 @@ class AccountServiceImpl @Inject constructor() : AccountService {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    override suspend fun listAccounts(): List<Account> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun listAccounts(): List<Account> =
+        api.listAccounts().accounts?.map { it.toCoreModel() } ?: listOf()
 
     override suspend fun update(account: UpdateAccountDescriptor): Account {
         TODO("Not yet implemented")
