@@ -10,6 +10,6 @@ interface UserProfileService {
 
 class UserProfileServiceImpl @Inject constructor() : UserProfileService {
     override fun getProfile(handler: ResultHandler<UserProfile>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 }

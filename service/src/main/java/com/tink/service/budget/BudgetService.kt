@@ -47,22 +47,22 @@ class BudgetServiceImpl @Inject constructor() : BudgetService {
         descriptor: BudgetCreateOrUpdateDescriptor,
         mutationHandler: ResultHandler<BudgetSpecification>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateBudget(
         descriptor: BudgetCreateOrUpdateDescriptor,
         mutationHandler: ResultHandler<BudgetSpecification>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun deleteBudget(id: String, mutationHandler: ResultHandler<Unit>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listBudgets(mutationHandler: ResultHandler<List<BudgetSummary>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listTransactionsForBudget(
@@ -71,7 +71,7 @@ class BudgetServiceImpl @Inject constructor() : BudgetService {
         end: Instant,
         mutationHandler: ResultHandler<List<BudgetTransaction>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun budgetPeriodDetails(
@@ -80,7 +80,6 @@ class BudgetServiceImpl @Inject constructor() : BudgetService {
         end: Instant,
         mutationHandler: ResultHandler<Pair<BudgetSpecification, List<BudgetPeriod>>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
-
 }

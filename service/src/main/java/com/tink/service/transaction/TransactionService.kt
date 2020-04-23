@@ -76,14 +76,14 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
         accountId: String,
         listener: ChangeObserver<List<Transaction>>
     ): Pageable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForCategoryCode(
         categoryCode: String,
         listener: ChangeObserver<List<Transaction>>
     ): Pageable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForCategoryCodeAndPeriod(
@@ -91,7 +91,7 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
         period: Period,
         listener: ChangeObserver<List<Transaction>>
     ): Pageable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAllAndSubscribeForCategoryCodeAndPeriod(
@@ -99,21 +99,21 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
         period: Period,
         listener: ChangeObserver<List<Transaction>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForLeftToSpendAndPeriod(
         period: Period,
         listener: ChangeObserver<List<Transaction>>
     ): Pageable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForLatestTransactions(
         includeUpcoming: Boolean,
         listener: ChangeObserver<List<Transaction>>
     ): Pageable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listAndSubscribeForLatestTransactions(
@@ -121,22 +121,22 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
         pageSize: Int,
         listener: ChangeObserver<List<Transaction>>
     ): Pageable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun unsubscribe(listener: ChangeObserver<List<Transaction>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateTransaction(
         descriptor: TransactionUpdateDescriptor,
         handler: ResultHandler<Transaction>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getTransaction(transactionId: String, handler: ResultHandler<Transaction>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun categorizeTransactions(
@@ -144,18 +144,17 @@ class TransactionServiceImpl @Inject constructor() : TransactionService {
         categoryCode: String,
         handler: ResultHandler<List<Transaction>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun getSimilarTransactions(
         transactionId: String,
         handler: ResultHandler<List<Transaction>>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun subscribe(changeObserver: ChangeObserver<List<Transaction>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 }
-

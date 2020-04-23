@@ -6,13 +6,10 @@ import com.tink.model.user.User
 import com.tink.service.account.AccountService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
-import com.tink.service.budget.BudgetService
-import com.tink.service.category.CategoryService
 import com.tink.service.consent.ConsentService
 import com.tink.service.credentials.CredentialsService
 import com.tink.service.di.DaggerServiceComponent
 import com.tink.service.di.ServiceComponent
-import com.tink.service.insight.InsightService
 import com.tink.service.network.TinkConfiguration
 import com.tink.service.transfer.TransferService
 import com.tink.service.statistics.StatisticsService
@@ -78,12 +75,6 @@ abstract class TinkComponent {
 
     abstract val transferService: TransferService
 
-    abstract val transactionService: TransactionService
-    abstract val categoryService: CategoryService
-    abstract val statisticsService: StatisticsService
-    abstract val budgetService: BudgetService
-    abstract val insightService: InsightService
-    abstract val userProfileService: UserProfileService
     abstract val tinkConfiguration: TinkConfiguration
 
     abstract val userEventBus: UserEventBus

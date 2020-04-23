@@ -13,18 +13,17 @@ interface InsightService {
 
 class InsightServiceImpl @Inject constructor() : InsightService {
     override fun listInsights(resultHandler: ResultHandler<List<Insight>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun listArchived(resultHandler: ResultHandler<List<Insight>>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun selectAction(
         performedAction: PerformedInsightAction,
         resultHandler: ResultHandler<Unit>
     ) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
-
 }

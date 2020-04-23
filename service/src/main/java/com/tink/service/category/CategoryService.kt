@@ -12,15 +12,14 @@ interface CategoryService {
 
 class CategoryServiceImpl @Inject constructor() : CategoryService {
     override fun subscribe(listener: ChangeObserver<CategoryTree>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun unsubscribe(listener: ChangeObserver<CategoryTree>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun refreshCategories() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
-
 }
