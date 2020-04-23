@@ -43,7 +43,7 @@ enum class RefreshableItem(val item: String) {
             INVESTMENT_ACCOUNTS
         )
 
-        private val all = setOf(values())
+        private val all = values().toSet()
 
         fun transactions() = transactions
         fun accounts() = accounts
