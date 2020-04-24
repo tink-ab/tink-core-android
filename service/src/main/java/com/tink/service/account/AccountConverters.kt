@@ -7,11 +7,11 @@ import com.tink.service.misc.toAmount
 import com.tink.service.misc.toDouble
 import com.tink.service.misc.toExactNumber
 import com.tink.service.misc.toImages
-import com.tink.rest.models.Account as AccountDTO
-import com.tink.rest.models.Account.TypeEnum as AccountTypeDTO
+import com.tink.rest.models.Account as AccountDto
+import com.tink.rest.models.Account.TypeEnum as AccountTypeDto
 
 
-fun AccountDTO.toCoreModel(): Account =
+fun AccountDto.toCoreModel(): Account =
     Account(
         id = id,
         accountNumber = accountNumber,
@@ -28,30 +28,30 @@ fun AccountDTO.toCoreModel(): Account =
     )
 
 
-fun AccountTypeDTO.toCoreModel() =
+fun AccountTypeDto.toCoreModel() =
     when (this) {
-        AccountTypeDTO.CHECKING -> Account.Type.TYPE_CHECKING
-        AccountTypeDTO.SAVINGS -> Account.Type.TYPE_SAVINGS
-        AccountTypeDTO.INVESTMENT -> Account.Type.TYPE_INVESTMENT
-        AccountTypeDTO.MORTGAGE -> Account.Type.TYPE_MORTGAGE
-        AccountTypeDTO.CREDIT_CARD -> Account.Type.TYPE_CREDIT_CARD
-        AccountTypeDTO.LOAN -> Account.Type.TYPE_LOAN
-        AccountTypeDTO.PENSION -> Account.Type.TYPE_PENSION
-        AccountTypeDTO.OTHER -> Account.Type.TYPE_OTHER
-        AccountTypeDTO.EXTERNAL -> Account.Type.TYPE_EXTERNAL
+        AccountTypeDto.CHECKING -> Account.Type.TYPE_CHECKING
+        AccountTypeDto.SAVINGS -> Account.Type.TYPE_SAVINGS
+        AccountTypeDto.INVESTMENT -> Account.Type.TYPE_INVESTMENT
+        AccountTypeDto.MORTGAGE -> Account.Type.TYPE_MORTGAGE
+        AccountTypeDto.CREDIT_CARD -> Account.Type.TYPE_CREDIT_CARD
+        AccountTypeDto.LOAN -> Account.Type.TYPE_LOAN
+        AccountTypeDto.PENSION -> Account.Type.TYPE_PENSION
+        AccountTypeDto.OTHER -> Account.Type.TYPE_OTHER
+        AccountTypeDto.EXTERNAL -> Account.Type.TYPE_EXTERNAL
     }
 
-fun Account.Type.toDto(): AccountTypeDTO? =
+fun Account.Type.toDto(): AccountTypeDto? =
     when (this) {
-        Account.Type.TYPE_CHECKING -> AccountTypeDTO.CHECKING
-        Account.Type.TYPE_SAVINGS -> AccountTypeDTO.SAVINGS
-        Account.Type.TYPE_INVESTMENT -> AccountTypeDTO.INVESTMENT
-        Account.Type.TYPE_MORTGAGE -> AccountTypeDTO.MORTGAGE
-        Account.Type.TYPE_CREDIT_CARD -> AccountTypeDTO.CREDIT_CARD
-        Account.Type.TYPE_LOAN -> AccountTypeDTO.LOAN
-        Account.Type.TYPE_PENSION -> AccountTypeDTO.PENSION
-        Account.Type.TYPE_OTHER -> AccountTypeDTO.OTHER
-        Account.Type.TYPE_EXTERNAL -> AccountTypeDTO.EXTERNAL
+        Account.Type.TYPE_CHECKING -> AccountTypeDto.CHECKING
+        Account.Type.TYPE_SAVINGS -> AccountTypeDto.SAVINGS
+        Account.Type.TYPE_INVESTMENT -> AccountTypeDto.INVESTMENT
+        Account.Type.TYPE_MORTGAGE -> AccountTypeDto.MORTGAGE
+        Account.Type.TYPE_CREDIT_CARD -> AccountTypeDto.CREDIT_CARD
+        Account.Type.TYPE_LOAN -> AccountTypeDto.LOAN
+        Account.Type.TYPE_PENSION -> AccountTypeDto.PENSION
+        Account.Type.TYPE_OTHER -> AccountTypeDto.OTHER
+        Account.Type.TYPE_EXTERNAL -> AccountTypeDto.EXTERNAL
         else -> null
     }
 
