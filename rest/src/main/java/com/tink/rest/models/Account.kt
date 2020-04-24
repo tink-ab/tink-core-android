@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * An account could either be a debit account, a credit card, a loan or mortgage.

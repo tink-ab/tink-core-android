@@ -9,10 +9,7 @@ package com.tink.rest.apis
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.tink.rest.models.Account
-import com.tink.rest.models.AccountDetails
 import com.tink.rest.models.AccountListResponse
-import com.tink.rest.models.CurrencyDenominatedAmount
-import com.tink.rest.models.TransferDestination
 import retrofit2.http.GET
 import retrofit2.http.PUT
 

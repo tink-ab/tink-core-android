@@ -57,7 +57,6 @@ internal class AccountConvertersTest {
             "  ]\n" +
             "}"
 
-
     @Test
     fun `basic account conversion test`() {
 
@@ -72,12 +71,11 @@ internal class AccountConvertersTest {
         assertThat(account.balance).isEqualTo(Amount(ExactNumber(1050, 2), "EUR"))
         assertThat(account.type).isEqualTo(Account.Type.TYPE_CHECKING)
         assertThat(account.name).isEqualTo("My account")
-        assertThat(account.ownership).isEqualTo(ExactNumber(0,0))
+        assertThat(account.ownership).isEqualTo(ExactNumber(0, 0))
         assertThat(account.images?.icon).isEqualTo("https://cdn.tink.se/provider-images/tink.png")
         assertThat(account.excluded).isFalse()
         assertThat(account.favored).isFalse()
         assertThat(account.closed).isFalse()
-        //TODO: transactional
+        // TODO: transactional
     }
-
 }

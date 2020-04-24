@@ -2,7 +2,6 @@ package com.tink.service.account
 
 import com.tink.model.account.Account
 import com.tink.rest.apis.AccountApi
-import com.tink.service.handler.ResultHandler
 import com.tink.service.observer.ChangeObserver
 import javax.inject.Inject
 

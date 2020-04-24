@@ -1,7 +1,6 @@
 package com.tink.service.account
 
 import com.tink.model.account.Account
-import com.tink.rest.apis.AccountApi
 import com.tink.rest.apis.UpdateAccountRequest
 import com.tink.service.misc.toAmount
 import com.tink.service.misc.toDouble
@@ -9,7 +8,6 @@ import com.tink.service.misc.toExactNumber
 import com.tink.service.misc.toImages
 import com.tink.rest.models.Account as AccountDto
 import com.tink.rest.models.Account.TypeEnum as AccountTypeDto
-
 
 fun AccountDto.toCoreModel(): Account =
     Account(
@@ -19,14 +17,13 @@ fun AccountDto.toCoreModel(): Account =
         credentialsId = credentialsId,
         excluded = excluded,
         favored = favored,
-        transactional = false, //TODO
+        transactional = false, // TODO
         closed = closed ?: false,
         name = name,
         ownership = ownership.toExactNumber(),
         type = type.toCoreModel(),
         images = imageUrls.toImages()
     )
-
 
 fun AccountTypeDto.toCoreModel() =
     when (this) {
