@@ -49,7 +49,8 @@ fun Account.Type.toDto(): AccountTypeDto? =
         Account.Type.TYPE_PENSION -> AccountTypeDto.PENSION
         Account.Type.TYPE_OTHER -> AccountTypeDto.OTHER
         Account.Type.TYPE_EXTERNAL -> AccountTypeDto.EXTERNAL
-        else -> null
+        Account.Type.TYPE_UNKNOWN,
+        Account.Type.TYPE_DUMMY -> null
     }
 
 fun UpdateAccountDescriptor.toRequest() =
