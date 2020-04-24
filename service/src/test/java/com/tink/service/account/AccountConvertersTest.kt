@@ -69,7 +69,7 @@ internal class AccountConvertersTest {
         assertThat(account.credentialsId).isEqualTo("6e68cc6287704273984567b3300c5822")
         assertThat(account.accountNumber).isEqualTo("1234-123456789")
         assertThat(account.balance).isEqualTo(Amount(ExactNumber(1050, 2), "EUR"))
-        assertThat(account.type).isEqualTo(Account.Type.TYPE_CHECKING)
+        assertThat(account.type).isEqualTo(Account.Type.CHECKING)
         assertThat(account.name).isEqualTo("My account")
         assertThat(account.ownership).isEqualTo(ExactNumber(0, 0))
         assertThat(account.images?.icon).isEqualTo("https://cdn.tink.se/provider-images/tink.png")

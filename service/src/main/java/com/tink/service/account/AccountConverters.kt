@@ -27,30 +27,28 @@ fun AccountDto.toCoreModel(): Account =
 
 fun AccountTypeDto.toCoreModel() =
     when (this) {
-        AccountTypeDto.CHECKING -> Account.Type.TYPE_CHECKING
-        AccountTypeDto.SAVINGS -> Account.Type.TYPE_SAVINGS
-        AccountTypeDto.INVESTMENT -> Account.Type.TYPE_INVESTMENT
-        AccountTypeDto.MORTGAGE -> Account.Type.TYPE_MORTGAGE
-        AccountTypeDto.CREDIT_CARD -> Account.Type.TYPE_CREDIT_CARD
-        AccountTypeDto.LOAN -> Account.Type.TYPE_LOAN
-        AccountTypeDto.PENSION -> Account.Type.TYPE_PENSION
-        AccountTypeDto.OTHER -> Account.Type.TYPE_OTHER
-        AccountTypeDto.EXTERNAL -> Account.Type.TYPE_EXTERNAL
+        AccountTypeDto.CHECKING -> Account.Type.CHECKING
+        AccountTypeDto.SAVINGS -> Account.Type.SAVINGS
+        AccountTypeDto.INVESTMENT -> Account.Type.INVESTMENT
+        AccountTypeDto.MORTGAGE -> Account.Type.MORTGAGE
+        AccountTypeDto.CREDIT_CARD -> Account.Type.CREDIT_CARD
+        AccountTypeDto.LOAN -> Account.Type.LOAN
+        AccountTypeDto.PENSION -> Account.Type.PENSION
+        AccountTypeDto.OTHER -> Account.Type.OTHER
+        AccountTypeDto.EXTERNAL -> Account.Type.EXTERNAL
     }
 
 fun Account.Type.toDto(): AccountTypeDto? =
     when (this) {
-        Account.Type.TYPE_CHECKING -> AccountTypeDto.CHECKING
-        Account.Type.TYPE_SAVINGS -> AccountTypeDto.SAVINGS
-        Account.Type.TYPE_INVESTMENT -> AccountTypeDto.INVESTMENT
-        Account.Type.TYPE_MORTGAGE -> AccountTypeDto.MORTGAGE
-        Account.Type.TYPE_CREDIT_CARD -> AccountTypeDto.CREDIT_CARD
-        Account.Type.TYPE_LOAN -> AccountTypeDto.LOAN
-        Account.Type.TYPE_PENSION -> AccountTypeDto.PENSION
-        Account.Type.TYPE_OTHER -> AccountTypeDto.OTHER
-        Account.Type.TYPE_EXTERNAL -> AccountTypeDto.EXTERNAL
-        Account.Type.TYPE_UNKNOWN,
-        Account.Type.TYPE_DUMMY -> null
+        Account.Type.CHECKING -> AccountTypeDto.CHECKING
+        Account.Type.SAVINGS -> AccountTypeDto.SAVINGS
+        Account.Type.INVESTMENT -> AccountTypeDto.INVESTMENT
+        Account.Type.MORTGAGE -> AccountTypeDto.MORTGAGE
+        Account.Type.CREDIT_CARD -> AccountTypeDto.CREDIT_CARD
+        Account.Type.LOAN -> AccountTypeDto.LOAN
+        Account.Type.PENSION -> AccountTypeDto.PENSION
+        Account.Type.OTHER -> AccountTypeDto.OTHER
+        Account.Type.EXTERNAL -> AccountTypeDto.EXTERNAL
     }
 
 fun UpdateAccountDescriptor.toRequest() =
