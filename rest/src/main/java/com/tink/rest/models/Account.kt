@@ -47,6 +47,7 @@ data class Account(
     @Json(name = "identifiers") @field:Json(name = "identifiers") var identifiers: String? = null,
     @Json(name = "transferDestinations") @field:Json(name = "transferDestinations") var transferDestinations: List<TransferDestination>? = null,
     @Json(name = "details") @field:Json(name = "details") var details: AccountDetails? = null,
+    @Json(name = "images") @field:Json(name = "images") var imageUrls: ImageUrls,
     @Json(name = "holderName") @field:Json(name = "holderName") var holderName: String? = null,
     @Json(name = "closed") @field:Json(name = "closed") var closed: Boolean? = null,
     @Json(name = "currencyDenominatedBalance") @field:Json(name = "currencyDenominatedBalance") var currencyDenominatedBalance: CurrencyDenominatedAmount? = null,

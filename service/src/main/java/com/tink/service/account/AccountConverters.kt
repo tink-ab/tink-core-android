@@ -3,6 +3,7 @@ package com.tink.service.account
 import com.tink.model.account.Account
 import com.tink.service.misc.toAmount
 import com.tink.service.misc.toExactNumber
+import com.tink.service.misc.toImages
 import com.tink.rest.models.Account as AccountDTO
 import com.tink.rest.models.Account.TypeEnum as AccountTypeDTO
 
@@ -20,7 +21,7 @@ fun AccountDTO.toCoreModel(): Account =
         name = name,
         ownership = ownership.toExactNumber(),
         type = type.toCoreModel(),
-        images = null //TODO
+        images = imageUrls.toImages()
     )
 
 

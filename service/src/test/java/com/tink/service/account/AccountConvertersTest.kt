@@ -23,6 +23,10 @@ internal class AccountConvertersTest {
             "        \"scale\": 2,\n" +
             "        \"unscaledValue\": 1050\n" +
             "      },\n" +
+            "      \"images\" : {\n" +
+            "        \"icon\" : \"https://cdn.tink.se/provider-images/tink.png\",\n" +
+            "        \"banner\" : null\n" +
+            "      }," +
             "      \"details\": {\n" +
             "        \"interest\": 0,\n" +
             "        \"numMonthsBound\": 0,\n" +
@@ -69,10 +73,11 @@ internal class AccountConvertersTest {
         assertThat(account.type).isEqualTo(Account.Type.TYPE_CHECKING)
         assertThat(account.name).isEqualTo("My account")
         assertThat(account.ownership).isEqualTo(ExactNumber(0,0))
+        assertThat(account.images?.icon).isEqualTo("https://cdn.tink.se/provider-images/tink.png")
         assertThat(account.excluded).isFalse()
         assertThat(account.favored).isFalse()
         assertThat(account.closed).isFalse()
-        //TODO: transactional, images
+        //TODO: transactional
     }
 
 }
