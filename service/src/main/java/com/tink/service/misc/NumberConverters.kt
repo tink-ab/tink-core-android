@@ -8,3 +8,6 @@ internal fun Double.toExactNumber() =
 
 internal fun BigDecimal.toExactNumber() =
     ExactNumber(unscaledValue().toLong(), scale().toLong())
+
+internal fun ExactNumber.toDouble() =
+    BigDecimal.valueOf(unscaledValue, scale.toInt()).toDouble()

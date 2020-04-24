@@ -10,7 +10,7 @@ interface AccountService {
     fun subscribe(listener: ChangeObserver<List<Account>>)
     fun unsubscribe(listener: ChangeObserver<List<Account>>)
     suspend fun listAccounts(): List<Account>
-    suspend fun update(account: UpdateAccountDescriptor): Account
+    suspend fun update(descriptor: UpdateAccountDescriptor): Account
 }
 
 class AccountServiceImpl @Inject constructor(
@@ -27,7 +27,6 @@ class AccountServiceImpl @Inject constructor(
     override suspend fun listAccounts(): List<Account> =
         api.listAccounts().accounts?.map { it.toCoreModel() } ?: listOf()
 
-    override suspend fun update(account: UpdateAccountDescriptor): Account {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(descriptor: UpdateAccountDescriptor): Account =
+        api.update(descriptor.id, descriptor.toRequest()).toCoreModel()
 }
