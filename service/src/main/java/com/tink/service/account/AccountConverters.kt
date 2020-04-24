@@ -60,5 +60,4 @@ fun UpdateAccountDescriptor.toRequest() =
         favored = favored,
         ownership = ownership?.toDouble(),
         type = type?.toDto()
-
     )
