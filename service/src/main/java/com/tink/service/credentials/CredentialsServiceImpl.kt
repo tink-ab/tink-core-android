@@ -5,6 +5,7 @@ import com.tink.service.di.ServiceScope
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.models.CallbackRelayedRequest
 import com.tink.rest.models.CreateCredentialsRequest
+import com.tink.rest.models.ManualAuthenticationRequest
 import com.tink.rest.models.RefreshCredentialsRequest
 import com.tink.rest.models.SupplementalInformation
 import com.tink.rest.models.UpdateCredentialsRequest
@@ -58,6 +59,13 @@ internal class CredentialsServiceImpl @Inject constructor(
             RefreshCredentialsRequest(),
             items = descriptor.refreshableItems?.map { it.item },
             optIn = null
+        ).unwrap()
+
+    override suspend fun authenticate(descriptor: CredentialsAuthenticateDescriptor) =
+        api.manualAuthentication(
+            descriptor.id, ManualAuthenticationRequest(
+                appUri = descriptor.appUri.toString()
+            )
         ).unwrap()
 
     override suspend fun disable(credentialsId: String) = api.enable(credentialsId).unwrap()

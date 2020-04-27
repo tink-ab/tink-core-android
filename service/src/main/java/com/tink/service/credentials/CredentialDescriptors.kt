@@ -23,3 +23,8 @@ data class CredentialsRefreshDescriptor(
     val id: String,
     val refreshableItems: Collection<RefreshableItem>? = null
 )
+
+data class CredentialsAuthenticateDescriptor(
+    val id: String,
+    val appUri: Uri
+)
