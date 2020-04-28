@@ -1,14 +1,18 @@
-package com.tink.service.authentication.user
+package com.tink.model.user
 
 data class User(val authorization: Authorization) {
 
     companion object {
 
         @JvmStatic
-        fun fromAccessToken(accessToken: String) = User(Authorization.AccessToken(accessToken))
+        fun fromAccessToken(accessToken: String) = User(
+            Authorization.AccessToken(accessToken)
+        )
 
         @JvmStatic
-        fun fromSessionId(sessionId: String) = User(Authorization.AccessToken(sessionId))
+        fun fromSessionId(sessionId: String) = User(
+            Authorization.AccessToken(sessionId)
+        )
     }
 }
 
