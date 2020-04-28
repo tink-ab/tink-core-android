@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
  * @param clientUrl: A url specified by the client for additional information. Can be empty.
  * @param clientIconUrl: A url for a client icon. Can be empty.
  * @param scopeDescriptions: A list of [ScopeDescription]s describing which financial info is going to be collected.
- * @param verified: Indicates whether the app is verified or not. If it unverified, the user should be cautious when sharing financial data.
+ * @param verified: Indicates whether the app is verified or not. If it is unverified, the user should be cautious when sharing financial data.
  * @param aggregator: Describes whether the client is aggregating data under their own or under Tink's license.
  */
 @Parcelize
