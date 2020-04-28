@@ -1,6 +1,10 @@
 package com.tink.model.user
 
-data class User(val authorization: Authorization) {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class User(val authorization: Authorization) : Parcelable {
 
     companion object {
 
@@ -16,7 +20,11 @@ data class User(val authorization: Authorization) {
     }
 }
 
-sealed class Authorization {
+sealed class Authorization : Parcelable {
+
+    @Parcelize
     data class AccessToken(val accessToken: String) : Authorization()
+
+    @Parcelize
     data class SessionId(val sessionId: String) : Authorization()
 }
