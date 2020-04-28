@@ -7,10 +7,10 @@ import kotlinx.android.parcel.Parcelize
 /**
  * A description of the OAuth client and the data it will collect from the user.
  *
- * @param clientName: The name of the application the client specified in the console when creating an app.
- * @param clientUrl: Url specified by the client for additional information. Can be empty.
- * @param clientIconUrl: Url for a client icon. Can be empty.
- * @param scopeDescriptions: Describes which financial info is going to be collected (based on the scopes).
+ * @param clientName: The name of the application the client specified in the console when creating it.
+ * @param clientUrl: A url specified by the client for additional information. Can be empty.
+ * @param clientIconUrl: A url for a client icon. Can be empty.
+ * @param scopeDescriptions: A list of [ScopeDescription]s describing which financial info is going to be collected.
  * @param verified: Indicates that the app is unverified so the user should be cautious when sharing financial data.
  * @param aggregator: Describes whether the client is aggregating data under their own or under Tink's license.
  */
