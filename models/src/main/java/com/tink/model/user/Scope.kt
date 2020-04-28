@@ -3,7 +3,7 @@ package com.tink.model.user
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-sealed class Scope(private val scope: String): Parcelable {
+sealed class Scope(private val scope: String) : Parcelable {
 
     @Parcelize
     object TransactionsRead : Scope("transactions:read")
