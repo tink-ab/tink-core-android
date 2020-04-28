@@ -1,6 +1,8 @@
 package com.tink.model.consent
 
+import android.os.Parcelable
 import com.tink.model.user.Scope
+import kotlinx.android.parcel.Parcelize
 
 /**
  * A description of the OAuth client and the data it will collect from the user.
@@ -13,6 +15,7 @@ import com.tink.model.user.Scope
  * @param verified: Indicates that the app is unverified so the user should be cautious when sharing financial data.
  * @param aggregator: Describes whether the client is aggregating data under their own or under Tink's license.
  */
+@Parcelize
 data class OAuthClientDescription(
     val clientName: String,
     val clientUrl: String,
@@ -21,14 +24,15 @@ data class OAuthClientDescription(
     val verified: Boolean,
     val aggregator: Boolean,
     val scopeDescriptions: List<ScopeDescription>
-)
+) : Parcelable
 
 /**
  * A title and description explaining a specific [Scope].
  */
+@Parcelize
 data class ScopeDescription(
     /** The short string of what access the scope is for. */
     val title: String,
     /** A string describing what user data the scope provides access to. */
     val description: String
-)
+) : Parcelable
