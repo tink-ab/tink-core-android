@@ -23,7 +23,7 @@ internal class ConsentServiceImpl @Inject constructor(
             DescribeOAuth2ClientRequest(
                 clientId = tinkConfiguration.oAuthClientId,
                 redirectUri = tinkConfiguration.redirectUri.toString(),
-                scopes = scopes.joinToString(",")
+                scopes = scopes.joinToString(" ")
             )
         ).toOAuthClientDescription()
 }
