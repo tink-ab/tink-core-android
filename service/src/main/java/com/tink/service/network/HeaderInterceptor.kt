@@ -2,8 +2,8 @@ package com.tink.service.network
 
 import com.tink.service.BuildConfig
 import com.tink.service.authentication.UserEventBus
-import com.tink.service.authentication.user.Authorization
-import com.tink.service.authentication.user.User
+import com.tink.model.user.Authorization
+import com.tink.model.user.User
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

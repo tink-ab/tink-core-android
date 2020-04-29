@@ -10,7 +10,6 @@ internal fun DescribeOAuth2ClientResponse.toOAuthClientDescription() =
         clientName = clientName,
         clientUrl = clientUrl,
         clientIconUrl = clientIconUrl,
-        embeddedAllowed = embeddedAllowed,
         verified = verified,
         aggregator = aggregator,
         scopeDescriptions = scopeDescriptions.map { it.toCoreModel() }
