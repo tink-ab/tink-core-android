@@ -3,9 +3,9 @@ package com.tink.service.misc
 import com.tink.model.misc.Field
 import com.tink.rest.models.Field as FieldDTO
 
-fun List<Field>.toFieldMap() = map { it.name to it.value }.toMap()
+internal fun List<Field>.toFieldMap() = map { it.name to it.value }.toMap()
 
-fun FieldDTO.toCoreModel(): Field {
+internal fun FieldDTO.toCoreModel(): Field {
     return Field(
         name = name ?: "",
         value = value ?: "",
