@@ -96,9 +96,9 @@ interface OAuthApi {
 
 @JsonClass(generateAdapter = true)
 data class DescribeOAuth2ClientRequest(
-    val clientId: String,
-    val redirectUri: String,
-    val scopes: String
+    @field:Json(name = "clientId") val clientId: String,
+    @field:Json(name = "redirectUri") val redirectUri: String,
+    @field:Json(name = "scope") val scopes: String
 )
 
 @JsonClass(generateAdapter = true)

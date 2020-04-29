@@ -9,7 +9,7 @@ data class CredentialsCreationDescriptor(
     val type: Credentials.Type,
     val fields: Map<String, String>,
     val appUri: Uri,
-    val refreshableItems: Collection<RefreshableItem> = listOf()
+    val refreshableItems: Collection<RefreshableItem>? = null
 )
 
 data class CredentialsUpdateDescriptor(
@@ -21,5 +21,10 @@ data class CredentialsUpdateDescriptor(
 
 data class CredentialsRefreshDescriptor(
     val id: String,
-    val refreshableItems: Collection<RefreshableItem> = listOf()
+    val refreshableItems: Collection<RefreshableItem>? = null
+)
+
+data class CredentialsAuthenticateDescriptor(
+    val id: String,
+    val appUri: Uri
 )
