@@ -24,6 +24,7 @@ import com.tink.model.misc.Field
  * @property fields the list of inputs that need to be filled to connect to this provider. See also [Credentials.fields]
  * @property groupDisplayName this can for example be used as a label for groups of providers
  * @property displayDescription a short displayable description of the authentication type used
+ * @property marketCode The market of the provider. Each provider is unique per market.
  * @property images a wrapper class for images describing the provider, for example a bank logo
  * @property financialInstitution The financial institution the provider belongs to. See [FinancialInstitution]
  * @property accessType The access type of the provider. See [AccessType]
@@ -41,6 +42,7 @@ data class Provider(
     val fields: List<Field>,
     val groupDisplayName: String,
     val displayDescription: String,
+    val marketCode: String,
     val images: Images? = null,
     val financialInstitution: FinancialInstitution,
     val accessType: AccessType,
