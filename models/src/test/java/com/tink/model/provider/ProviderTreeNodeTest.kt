@@ -22,6 +22,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Nordea",
         images = null,
         displayDescription = "Mobile BankID",
+        marketCode = "SE",
         accessType = Provider.AccessType.OTHER,
         financialInstitution = Provider.FinancialInstitution(
             id = "dde2463acf40501389de4fca5a3693a4",
@@ -42,6 +43,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Nordea",
         images = null,
         displayDescription = "Password",
+        marketCode = "SE",
         accessType = Provider.AccessType.OTHER,
         financialInstitution = Provider.FinancialInstitution(
             id = "dde2463acf40501389de4fca5a3693a4",
@@ -62,6 +64,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Nordea",
         images = null,
         displayDescription = "Mobile BankID",
+        marketCode = "SE",
         accessType = Provider.AccessType.OPEN_BANKING,
         financialInstitution = Provider.FinancialInstitution(
             id = "dde2463acf40501389de4fca5a3693a4",
@@ -82,6 +85,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Swedbank och Sparbankerna",
         images = null,
         displayDescription = "Mobile BankID",
+        marketCode = "SE",
         accessType = Provider.AccessType.OTHER,
         financialInstitution = Provider.FinancialInstitution(
             id = "a0afa9bbc85c52aba1b1b8d6a04bc57c",
@@ -101,6 +105,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Swedbank och Sparbankerna",
         images = null,
         displayDescription = "Security token",
+        marketCode = "SE",
         accessType = Provider.AccessType.OTHER,
         financialInstitution = Provider.FinancialInstitution(
             id = "a0afa9bbc85c52aba1b1b8d6a04bc57c",
@@ -121,6 +126,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Swedbank och Sparbankerna",
         images = null,
         displayDescription = "Mobile BankID",
+        marketCode = "SE",
         accessType = Provider.AccessType.OTHER,
         financialInstitution = Provider.FinancialInstitution(
             id = "6c1749b4475e5677a83e9fa4bb60a18a",
@@ -140,6 +146,7 @@ internal class ProviderTreeNodeTest {
         groupDisplayName = "Swedbank och Sparbankerna",
         images = null,
         displayDescription = "Security token",
+        marketCode = "SE",
         accessType = Provider.AccessType.OTHER,
         financialInstitution = Provider.FinancialInstitution(
             id = "6c1749b4475e5677a83e9fa4bb60a18a",

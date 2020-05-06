@@ -25,6 +25,7 @@ internal fun ProviderDTO.toCoreModel(): Provider =
         fields = fieldsOrEmpty(),
         groupDisplayName = groupDisplayName.orEmpty(),
         displayDescription = displayDescription.orEmpty(),
+        marketCode = market,
         images = images?.toImages(),
         financialInstitution = Provider.FinancialInstitution(
             financialInstitutionId,
