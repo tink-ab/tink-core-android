@@ -27,7 +27,7 @@ import com.tink.model.misc.Field
  * @property images a wrapper class for images describing the provider, for example a bank logo
  * @property financialInstitution The financial institution the provider belongs to. See [FinancialInstitution]
  * @property accessType The access type of the provider. See [AccessType]
- *
+ * @property capabilities The list of capabilities for the provider. See [Capability]
  */
 @Parcelize
 data class Provider(
@@ -43,7 +43,8 @@ data class Provider(
     val displayDescription: String,
     val images: Images? = null,
     val financialInstitution: FinancialInstitution,
-    val accessType: AccessType
+    val accessType: AccessType,
+    val capabilities: List<Capability>
 ) : Comparable<Provider>, Parcelable {
 
     /**
@@ -77,6 +78,23 @@ data class Provider(
         UNKNOWN,
         OPEN_BANKING,
         OTHER
+    }
+
+    /**
+     * Indicates what this provider is capable of, in terms of financial data it can aggregate and if it can execute payments.
+     */
+    enum class Capability {
+        UNKNOWN,
+        TRANSFERS,
+        EINVOICES,
+        MORTGAGE_AGGREGATION,
+        CHECKING_ACCOUNTS,
+        SAVINGS_ACCOUNTS,
+        CREDIT_CARDS,
+        LOANS,
+        INVESTMENTS,
+        PAYMENTS,
+        IDENTITY_DATA
     }
 
     /**
