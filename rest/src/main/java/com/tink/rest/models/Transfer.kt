@@ -10,7 +10,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 import java.util.UUID
-import org.threeten.bp.ZonedDateTime
 
 /**
  * A Transfer on Tink represents the tentative action of requesting a payment initiation. By consequence, its success does not represent that money has been successfully transferred from one account to another because the payment initiation relays the responsibility of properly executing the monetary reallocation to the financial institution.  The source account must belong to the authenticated user. Source and destination accounts are sent in a special URI format. See below examples.
@@ -32,10 +31,10 @@ data class Transfer(
     @Json(name = "destinationMessage") @field:Json(name = "destinationMessage") var destinationMessage: String,
     @Json(name = "destinationUri") @field:Json(name = "destinationUri") var destinationUri: DestinationUriEnum,
     @Json(name = "sourceUri") @field:Json(name = "sourceUri") var sourceUri: String,
-    @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: UUID? = null,
+    @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String? = null,
     @Json(name = "id") @field:Json(name = "id") var id: UUID? = null,
     @Json(name = "sourceMessage") @field:Json(name = "sourceMessage") var sourceMessage: String? = null,
-    @Json(name = "dueDate") @field:Json(name = "dueDate") var dueDate: ZonedDateTime? = null,
+    @Json(name = "dueDate") @field:Json(name = "dueDate") var dueDate: Long? = null,
     @Json(name = "messageType") @field:Json(name = "messageType") var messageType: MessageTypeEnum? = null
 ) {
     /**
