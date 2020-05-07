@@ -8,8 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.UUID
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property created The timestamp of the creation of the operation.
@@ -24,15 +22,15 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class SignableOperation(
-    @Json(name = "created") @field:Json(name = "created") var created: ZonedDateTime? = null,
-    @Json(name = "id") @field:Json(name = "id") var id: UUID? = null,
+    @Json(name = "created") @field:Json(name = "created") var created: Long? = null,
+    @Json(name = "id") @field:Json(name = "id") var id: String? = null,
     @Json(name = "status") @field:Json(name = "status") var status: StatusEnum? = null,
     @Json(name = "statusMessage") @field:Json(name = "statusMessage") var statusMessage: String? = null,
     @Json(name = "type") @field:Json(name = "type") var type: TypeEnum? = null,
-    @Json(name = "underlyingId") @field:Json(name = "underlyingId") var underlyingId: UUID? = null,
-    @Json(name = "updated") @field:Json(name = "updated") var updated: ZonedDateTime? = null,
-    @Json(name = "userId") @field:Json(name = "userId") var userId: UUID? = null,
-    @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: UUID? = null
+    @Json(name = "underlyingId") @field:Json(name = "underlyingId") var underlyingId: String? = null,
+    @Json(name = "updated") @field:Json(name = "updated") var updated: Long? = null,
+    @Json(name = "userId") @field:Json(name = "userId") var userId: String? = null,
+    @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String? = null
 ) {
     /**
      * The status of the operation. CANCELLED, FAILED and EXECUTED are all endstates.

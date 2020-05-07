@@ -26,13 +26,13 @@ import java.util.UUID
  */
 @JsonClass(generateAdapter = true)
 data class Transfer(
-    @Json(name = "amount") @field:Json(name = "amount") var amount: BigDecimal,
+    @Json(name = "amount") @field:Json(name = "amount") var amount: Double, //TODO
     @Json(name = "currency") @field:Json(name = "currency") var currency: String,
     @Json(name = "destinationMessage") @field:Json(name = "destinationMessage") var destinationMessage: String,
     @Json(name = "destinationUri") @field:Json(name = "destinationUri") var destinationUri: DestinationUriEnum,
     @Json(name = "sourceUri") @field:Json(name = "sourceUri") var sourceUri: String,
     @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String? = null,
-    @Json(name = "id") @field:Json(name = "id") var id: UUID? = null,
+    @Json(name = "id") @field:Json(name = "id") var id: String? = null,
     @Json(name = "sourceMessage") @field:Json(name = "sourceMessage") var sourceMessage: String? = null,
     @Json(name = "dueDate") @field:Json(name = "dueDate") var dueDate: Long? = null,
     @Json(name = "messageType") @field:Json(name = "messageType") var messageType: MessageTypeEnum? = null
