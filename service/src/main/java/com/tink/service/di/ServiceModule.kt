@@ -10,6 +10,8 @@ import com.tink.service.credentials.CredentialsService
 import com.tink.service.credentials.CredentialsServiceImpl
 import com.tink.service.provider.ProviderService
 import com.tink.service.provider.ProviderServiceImpl
+import com.tink.service.transfer.TransferService
+import com.tink.service.transfer.TransferServiceImpl
 import dagger.Binds
 import dagger.Module
 
@@ -30,4 +32,7 @@ internal abstract class ServiceModule {
 
     @Binds
     internal abstract fun accountService(implementation: AccountServiceImpl): AccountService
+
+    @Binds
+    internal abstract fun transferService(implementation: TransferServiceImpl): TransferService
 }
