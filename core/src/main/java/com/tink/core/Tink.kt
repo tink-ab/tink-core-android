@@ -65,7 +65,7 @@ abstract class TinkComponent {
     abstract val userService: UserService
 
     abstract val consentService: ConsentService
-    
+
     abstract val accountService: AccountService
 
     abstract val providerRepository: ProviderRepository
