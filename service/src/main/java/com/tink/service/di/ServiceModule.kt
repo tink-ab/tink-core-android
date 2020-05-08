@@ -1,5 +1,7 @@
 package com.tink.service.di
 
+import com.tink.service.account.AccountService
+import com.tink.service.account.AccountServiceImpl
 import com.tink.service.authorization.UserService
 import com.tink.service.authorization.UserServiceImpl
 import com.tink.service.consent.ConsentService
@@ -25,4 +27,7 @@ internal abstract class ServiceModule {
 
     @Binds
     internal abstract fun consentService(implementation: ConsentServiceImpl): ConsentService
+
+    @Binds
+    internal abstract fun accountService(implementation: AccountServiceImpl): AccountService
 }

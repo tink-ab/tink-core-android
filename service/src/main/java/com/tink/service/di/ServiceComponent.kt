@@ -1,6 +1,7 @@
 package com.tink.service.di
 
 import android.content.Context
+import com.tink.service.account.AccountService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
 import com.tink.service.consent.ConsentService
@@ -26,6 +27,8 @@ abstract class ServiceComponent {
     abstract val userService: UserService
 
     abstract val consentService: ConsentService
+
+    abstract val accountService: AccountService
 
     abstract val tinkConfiguration: TinkConfiguration
 
