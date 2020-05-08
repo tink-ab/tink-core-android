@@ -49,7 +49,7 @@ interface TransferApi {
      */
     @GET("/api/v1/transfer/accounts")
     suspend fun getSourceAccounts(
-        @retrofit2.http.Query("destination") destination: List<String>?
+        @retrofit2.http.Query("destination") destination: List<String>? = null
     ): AccountListResponse
 
     /**

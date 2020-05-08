@@ -1,12 +1,14 @@
 package com.tink.service.transfer
 
+import com.tink.model.account.Account
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.Transfer
-import java.math.BigDecimal
+import com.tink.service.account.toCoreModel
 import javax.inject.Inject
 
 interface TransferService {
     suspend fun createTransfer()
+    suspend fun getSourceAccounts(): List<Account>
 }
 
 class TransferServiceImpl @Inject constructor(
@@ -27,4 +29,7 @@ class TransferServiceImpl @Inject constructor(
             )
         )
     }
+
+    override suspend fun getSourceAccounts() =
+        transferApi.getSourceAccounts().accounts?.map { it.toCoreModel() } ?: emptyList()
 }
