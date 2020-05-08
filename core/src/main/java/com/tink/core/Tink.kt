@@ -3,6 +3,7 @@ package com.tink.core
 import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.model.user.User
+import com.tink.service.account.AccountService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
 import com.tink.service.consent.ConsentService
@@ -64,6 +65,8 @@ abstract class TinkComponent {
     abstract val userService: UserService
 
     abstract val consentService: ConsentService
+
+    abstract val accountService: AccountService
 
     abstract val providerRepository: ProviderRepository
 

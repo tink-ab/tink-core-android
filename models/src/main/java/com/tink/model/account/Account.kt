@@ -23,16 +23,14 @@ data class Account(
 ) : Parcelable {
 
     enum class Type {
-        TYPE_UNKNOWN,
-        TYPE_CHECKING,
-        TYPE_SAVINGS,
-        TYPE_INVESTMENT,
-        TYPE_MORTGAGE,
-        TYPE_CREDIT_CARD,
-        TYPE_LOAN,
-        TYPE_DUMMY,
-        TYPE_PENSION,
-        TYPE_OTHER,
-        TYPE_EXTERNAL
+        CHECKING,
+        SAVINGS,
+        INVESTMENT,
+        MORTGAGE,
+        CREDIT_CARD,
+        LOAN,
+        PENSION,
+        OTHER,
+        EXTERNAL
     }
 }
