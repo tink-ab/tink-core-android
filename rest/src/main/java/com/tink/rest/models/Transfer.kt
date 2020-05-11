@@ -8,8 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.math.BigDecimal
-import java.util.UUID
 
 /**
  * A Transfer on Tink represents the tentative action of requesting a payment initiation. By consequence, its success does not represent that money has been successfully transferred from one account to another because the payment initiation relays the responsibility of properly executing the monetary reallocation to the financial institution.  The source account must belong to the authenticated user. Source and destination accounts are sent in a special URI format. See below examples.
@@ -26,10 +24,10 @@ import java.util.UUID
  */
 @JsonClass(generateAdapter = true)
 data class Transfer(
-    @Json(name = "amount") @field:Json(name = "amount") var amount: Double, //TODO
+    @Json(name = "amount") @field:Json(name = "amount") var amount: Double, // TODO
     @Json(name = "currency") @field:Json(name = "currency") var currency: String,
     @Json(name = "destinationMessage") @field:Json(name = "destinationMessage") var destinationMessage: String,
-    @Json(name = "destinationUri") @field:Json(name = "destinationUri") var destinationUri: DestinationUriEnum,
+    @Json(name = "destinationUri") @field:Json(name = "destinationUri") var destinationUri: String,
     @Json(name = "sourceUri") @field:Json(name = "sourceUri") var sourceUri: String,
     @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String? = null,
     @Json(name = "id") @field:Json(name = "id") var id: String? = null,
