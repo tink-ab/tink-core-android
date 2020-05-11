@@ -19,7 +19,6 @@ interface TransferApi {
     /**
      * Create a new transfer
      * Creates a new transfer, returning a `SignableOperation` object.
-     * The endpoint is owned by defaultname service owner
      * @param transfer The transfer object to create. (optional)
      */
     @POST("/api/v1/transfer")
@@ -30,7 +29,6 @@ interface TransferApi {
     /**
      * Signing status of Transfer
      * Get the SignableOperation object of the transfer.
-     * The endpoint is owned by defaultname service owner
      * @param id The ID of the Transfer (required)
      * @param body (optional)
      */
@@ -42,7 +40,6 @@ interface TransferApi {
     /**
      * Get bank accounts
      * List bank accounts that can make payments. Note that if you are using a new account that has no saved  recipients, it won't be shown. You need to add a recipient via your internet bank first.
-     * The endpoint is owned by defaultname service owner
      * @param destination Destinations to whom the accounts should be able to initiate transfers. Example: &#x60;/api/v1/transfer/accounts?destination[]&#x3D;se-bg://9008004&amp;destination[]&#x3D;se-bg://8007003&#x60;. (optional)
      */
     @GET("/api/v1/transfer/accounts")
@@ -53,7 +50,6 @@ interface TransferApi {
     /**
      * Fetch data about a transfer
      * Fetches data about the current status of a given transfer.
-     * The endpoint is owned by defaultname service owner
      * @param id The transfer&#39;s id. (required)
      */
     @GET("/api/v1/transfer/{id}/data")
@@ -64,7 +60,6 @@ interface TransferApi {
     /**
      * Validates source account against destination patterns
      * This endpoint returns \"canTransfer\" : true if a user can transfer money from the given source account to the given destination account. It will return \"canTransfer\" : false otherwise. Request example : `/api/v1/transfer/source-destination-validation?source=se://83279234947790&destination=se://33001984`.
-     * The endpoint is owned by defaultname service owner
      * @param source The transfer&#39;s source account. (required)
      * @param destination The transfer&#39;s destination account (required)
      */
