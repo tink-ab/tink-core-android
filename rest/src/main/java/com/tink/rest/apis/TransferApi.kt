@@ -7,7 +7,6 @@
 package com.tink.rest.apis
 
 import com.tink.rest.models.AccountListResponse
-import com.tink.rest.models.AuthenticatedUser
 import com.tink.rest.models.SignableOperation
 import com.tink.rest.models.SourceDestinationValidation
 import com.tink.rest.models.Transfer
@@ -37,8 +36,7 @@ interface TransferApi {
      */
     @GET("/api/v1/transfer/{id}/status")
     suspend fun getSignableOperation(
-        @retrofit2.http.Path("id") id: String,
-        @retrofit2.http.Body body: AuthenticatedUser
+        @retrofit2.http.Path("id") id: String
     ): SignableOperation
 
     /**
