@@ -16,7 +16,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
-import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -116,7 +115,8 @@ class TransferServiceImpl @Inject constructor(
 
             if (!firstOperation.status.isEndState()) {
                 pollingSubscription =
-                    streamSignableOperation(firstOperation.underlyingId).subscribe(streamObserverWrapper)
+                    streamSignableOperation(firstOperation.underlyingId)
+                        .subscribe(streamObserverWrapper)
             } else {
                 streamObserver.onCompleted()
             }
@@ -127,12 +127,8 @@ class TransferServiceImpl @Inject constructor(
 
     private fun streamSignableOperation(transferId: String): Stream<SignableOperation> {
         return PollingHandler { observer ->
-            try {
-                val result = transferApi.getSignableOperation(transferId).toCoreModel()
-                observer.onNext(result)
-            } catch (exception: Exception) {
-                observer.onError(exception)
-            }
+            val result = transferApi.getSignableOperation(transferId).toCoreModel()
+            observer.onNext(result)
         }
     }
 }
