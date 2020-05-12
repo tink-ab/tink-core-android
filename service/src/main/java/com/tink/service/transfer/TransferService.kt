@@ -34,6 +34,8 @@ class TransferServiceImpl @Inject constructor(
     @Named(SERVICE_DISPATCHER) private val serviceDispatcher: CoroutineDispatcher
 ) : TransferService {
 
+    override suspend fun getSourceAccounts() =
+        transferApi.getSourceAccounts().accounts?.map { it.toCoreModel() } ?: emptyList()
 
     // Notes:
     // - Hot vs cold observable
@@ -97,9 +99,6 @@ class TransferServiceImpl @Inject constructor(
 
         return subscription
     }
-
-    override suspend fun getSourceAccounts() =
-        transferApi.getSourceAccounts().accounts?.map { it.toCoreModel() } ?: emptyList()
 
     private fun streamSignableOperation(transferId: String): Stream<SignableOperation> {
         return PollingHandler { observer ->
