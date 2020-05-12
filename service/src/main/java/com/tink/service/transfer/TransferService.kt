@@ -41,7 +41,7 @@ interface TransferService {
      * @return A [StreamSubscription] that allows you to stop receiving updates to the
      * [streamObserver] by calling [StreamSubscription.unsubscribe].
      */
-    fun createTransfer(
+    fun initiateTransfer(
         descriptor: CreateTransferDescriptor,
         streamObserver: StreamObserver<SignableOperation>
     ): StreamSubscription
@@ -71,7 +71,7 @@ class TransferServiceImpl @Inject constructor(
             )
         ).toCoreModel()
 
-    override fun createTransfer(
+    override fun initiateTransfer(
         descriptor: CreateTransferDescriptor,
         streamObserver: StreamObserver<SignableOperation>
     ): StreamSubscription {
