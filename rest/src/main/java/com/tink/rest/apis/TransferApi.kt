@@ -40,7 +40,7 @@ interface TransferApi {
     /**
      * Get bank accounts
      * List bank accounts that can make payments. Note that if you are using a new account that has no saved  recipients, it won't be shown. You need to add a recipient via your internet bank first.
-     * @param destination Destinations to whom the accounts should be able to initiate transfers. Example: &#x60;/api/v1/transfer/accounts?destination[]&#x3D;se-bg://9008004&amp;destination[]&#x3D;se-bg://8007003&#x60;. (optional)
+     * @param destination Destinations to whom the accounts should be able to initiate transfers. Example: "/api/v1/transfer/accounts?destination[]=se-bg://9008004&destination[]=se-bg://8007003". (optional)
      */
     @GET("/api/v1/transfer/accounts")
     suspend fun getSourceAccounts(
@@ -50,7 +50,7 @@ interface TransferApi {
     /**
      * Fetch data about a transfer
      * Fetches data about the current status of a given transfer.
-     * @param id The transfer&#39;s id. (required)
+     * @param id The transfer's id. (required)
      */
     @GET("/api/v1/transfer/{id}/data")
     suspend fun getTransferData(
@@ -60,8 +60,8 @@ interface TransferApi {
     /**
      * Validates source account against destination patterns
      * This endpoint returns \"canTransfer\" : true if a user can transfer money from the given source account to the given destination account. It will return \"canTransfer\" : false otherwise. Request example : `/api/v1/transfer/source-destination-validation?source=se://83279234947790&destination=se://33001984`.
-     * @param source The transfer&#39;s source account. (required)
-     * @param destination The transfer&#39;s destination account (required)
+     * @param source The transfer's source account. (required)
+     * @param destination The transfer's destination account (required)
      */
     @GET("/api/v1/transfer/source-destination-validation")
     suspend fun isSourceDestinationValid(
