@@ -11,12 +11,12 @@ import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionNode
 
 /**
  * This class represents a tree structure of [FinancialInstitutionGroupNode] objects with children.
- * This eventually leads to a leaf object of type [CredentialsTypeNode],
+ * This eventually leads to a leaf object of type [ProviderNode],
  * that contains more detailed [Provider] data.
  *
  * The tree will always follow the structure:
  *
- * [FinancialInstitutionGroupNode] -> [FinancialInstitutionNode] -> [AccessTypeNode] -> [CredentialsTypeNode]
+ * [FinancialInstitutionGroupNode] -> [FinancialInstitutionNode] -> [AccessTypeNode] -> [CredentialsTypeNode] -> [ProviderNode]
  */
 sealed class ProviderTreeNode : Parcelable {
     /** A textual description of the node. */
