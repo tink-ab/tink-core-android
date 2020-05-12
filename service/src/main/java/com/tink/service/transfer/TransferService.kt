@@ -29,7 +29,7 @@ interface TransferService {
     /**
      * Initiates a new transfer, and then starts observing for updates.
      *
-     * The [SignableOperation] obtained through the [StreamObserver.onNext] method will let you
+     * The [SignableOperation] obtained through the [StreamObserver.onNext] function will let you
      * listen to updates until you have reached one of the [endstates][SignableOperation.Status],
      * or until an error is observed through [StreamObserver.onError].
      *
