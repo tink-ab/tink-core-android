@@ -9,7 +9,7 @@ import com.tink.rest.models.SignableOperation.StatusEnum as SignableOperationSta
 fun SignableOperationDto.toCoreModel(): SignableOperation =
     SignableOperation(
         id = id!!,
-        credentialsId = credentialsId!!,
+        credentialsId = credentialsId,
         created = created.toInstant(),
         status = status!!.toCoreModel(),
         statusMessage = statusMessage ?: "",

@@ -7,7 +7,7 @@ import org.threeten.bp.Instant
 @Parcelize
 data class SignableOperation(
     val id: String,
-    val credentialsId: String,
+    val credentialsId: String?,
     val created: Instant,
     val status: Status,
     val statusMessage: String,

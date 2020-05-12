@@ -23,13 +23,13 @@ class TransferServiceImpl @Inject constructor(
     override suspend fun createTransfer(descriptor: CreateTransferDescriptor) =
         transferApi.createTransfer(
             Transfer(
-                credentialsId = descriptor.credentialsId,
                 amount = descriptor.amount.value.toBigDecimal().toDouble(),
                 currency = descriptor.amount.currencyCode,
                 destinationMessage = descriptor.destinationMessage,
                 destinationUri = descriptor.destinationUri,
                 sourceMessage = descriptor.sourceMessage,
-                sourceUri = descriptor.sourceUri
+                sourceUri = descriptor.sourceUri,
+                credentialsId = descriptor.credentialsId
             )
         ).toCoreModel()
 
