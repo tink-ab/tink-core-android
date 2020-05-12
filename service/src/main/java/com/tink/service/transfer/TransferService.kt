@@ -27,7 +27,7 @@ interface TransferService {
     suspend fun getSourceAccounts(): List<Account>
 
     /**
-     * Creates a new transfer, and then starts observing for updates.
+     * Initiates a new transfer, and then starts observing for updates.
      *
      * The [SignableOperation] obtained through the [StreamObserver.onNext] method will let you
      * listen to updates until you have reached one of the [endstates][SignableOperation.Status],
