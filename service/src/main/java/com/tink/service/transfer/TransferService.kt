@@ -92,6 +92,20 @@ class TransferServiceImpl @Inject constructor(
             pollingSubscription?.unsubscribe()
         }
 
+        val streamObserverWrapper = object : StreamObserver<SignableOperation> {
+
+            override fun onNext(value: SignableOperation) {
+                streamObserver.onNext(value)
+                if(value.status.isEndState()) {
+                    pollingSubscription?.unsubscribe()
+                    onCompleted()
+                }
+            }
+
+            override fun onCompleted() = streamObserver.onCompleted()
+            override fun onError(error: Throwable) = streamObserver.onError(error)
+        }
+
         CoroutineScope(serviceDispatcher + creationJob + exceptionHandler).launch {
 
             val firstOperation = createTransfer(descriptor)
@@ -100,9 +114,9 @@ class TransferServiceImpl @Inject constructor(
 
             streamObserver.onNext(firstOperation)
 
-            if (firstOperation.status != SignableOperation.Status.FAILED) {
+            if (!firstOperation.status.isEndState()) {
                 pollingSubscription =
-                    streamSignableOperation(firstOperation.underlyingId).subscribe(streamObserver)
+                    streamSignableOperation(firstOperation.underlyingId).subscribe(streamObserverWrapper)
             } else {
                 streamObserver.onCompleted()
             }
