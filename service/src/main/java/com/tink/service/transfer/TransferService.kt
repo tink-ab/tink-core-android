@@ -21,8 +21,26 @@ import javax.inject.Inject
 import javax.inject.Named
 
 interface TransferService {
+    /**
+     * Fetch a list of available source accounts.
+     */
     suspend fun getSourceAccounts(): List<Account>
 
+    /**
+     * Creates a new transfer, and then starts observing for updates.
+     *
+     * The [SignableOperation] obtained through the [StreamObserver.onNext] method will let you
+     * listen to updates until you have reached one of the [endstates][SignableOperation.Status],
+     * or until an error is observed through [StreamObserver.onError].
+     *
+     * @param descriptor Information about the transfer that should be created
+     * @param streamObserver The [StreamObserver] that observes updates to the transfer.
+     * These updates will be delivered in [SignableOperation] format,
+     * from which you can read the [status][SignableOperation.Status] of the operation.
+     *
+     * @return A [StreamSubscription] that allows you to stop receiving updates to the
+     * [streamObserver] by calling [StreamSubscription.unsubscribe].
+     */
     fun createTransfer(
         descriptor: CreateTransferDescriptor,
         streamObserver: StreamObserver<SignableOperation>
@@ -37,14 +55,9 @@ class TransferServiceImpl @Inject constructor(
     override suspend fun getSourceAccounts() =
         transferApi.getSourceAccounts().accounts?.map { it.toCoreModel() } ?: emptyList()
 
-    // Notes:
-    // - Hot vs cold observable
-    // - Hot: might miss events like the initial error
-    // - Cold: will create a new transfer if accidentally subscribes again
-    // Ideas:
-    //     - Combine one shot and stream: Return stream in onSuccess
-    //     - subscribe when creating the transfer: "createTransferAndSubscribeForUpdates(descriptor, streamObserver): StreamSubscription
-
+    /**
+     * Creates a new transfer, returning a [SignableOperation] object.
+     */
     private suspend fun createTransfer(descriptor: CreateTransferDescriptor) =
         transferApi.createTransfer(
             Transfer(
@@ -58,8 +71,6 @@ class TransferServiceImpl @Inject constructor(
             )
         ).toCoreModel()
 
-
-    // TODO: docs
     override fun createTransfer(
         descriptor: CreateTransferDescriptor,
         streamObserver: StreamObserver<SignableOperation>
