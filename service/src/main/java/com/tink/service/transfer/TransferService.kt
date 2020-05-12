@@ -7,20 +7,40 @@ import com.tink.rest.models.Transfer
 import com.tink.service.account.toCoreModel
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
+import com.tink.service.streaming.publisher.StreamObserver
+import com.tink.service.streaming.publisher.StreamSubscription
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import java.lang.Exception
 import javax.inject.Inject
 
 interface TransferService {
-    suspend fun createTransfer(descriptor: CreateTransferDescriptor): SignableOperation
     suspend fun getSourceAccounts(): List<Account>
-    fun getSignableOperation(transferId: String): Stream<SignableOperation> // TODO: Endpoint naming
+
+    fun createTransfer(
+        descriptor: CreateTransferDescriptor,
+        streamObserver: StreamObserver<SignableOperation>
+    ): StreamSubscription
 }
 
 class TransferServiceImpl @Inject constructor(
     private val transferApi: TransferApi
 ) : TransferService {
 
-    override suspend fun createTransfer(descriptor: CreateTransferDescriptor) =
+
+    // Notes:
+    // - Hot vs cold observable
+    // - Hot: might miss events like the initial error
+    // - Cold: will create a new transfer if accidentally subscribes again
+    // Ideas:
+    //     - Combine one shot and stream: Return stream in onSuccess
+    //     - subscribe when creating the transfer: "createTransferAndSubscribeForUpdates(descriptor, streamObserver): StreamSubscription
+
+    private suspend fun createTransfer(descriptor: CreateTransferDescriptor) =
         transferApi.createTransfer(
             Transfer(
                 amount = descriptor.amount.value.toBigDecimal().toDouble(),
@@ -33,10 +53,52 @@ class TransferServiceImpl @Inject constructor(
             )
         ).toCoreModel()
 
+
+    // TODO: docs
+    override fun createTransfer(
+        descriptor: CreateTransferDescriptor,
+        streamObserver: StreamObserver<SignableOperation>
+    ): StreamSubscription {
+
+        var pollingSubscription: StreamSubscription? = null
+
+        val creationJob = Job()
+
+        val subscription = object : StreamSubscription {
+            override fun unsubscribe() {
+                creationJob.cancel()
+                pollingSubscription?.unsubscribe() ?: streamObserver.onCompleted()
+            }
+        }
+
+        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+            streamObserver.onError(throwable)
+            pollingSubscription?.unsubscribe()
+        }
+
+        CoroutineScope(Dispatchers.IO + creationJob + exceptionHandler).launch {
+
+            val firstOperation = createTransfer(descriptor)
+
+            yield()
+
+            streamObserver.onNext(firstOperation)
+
+            if (firstOperation.status != SignableOperation.Status.FAILED) {
+                pollingSubscription =
+                    streamSignableOperation(firstOperation.underlyingId).subscribe(streamObserver)
+            } else {
+                streamObserver.onCompleted()
+            }
+        }
+
+        return subscription
+    }
+
     override suspend fun getSourceAccounts() =
         transferApi.getSourceAccounts().accounts?.map { it.toCoreModel() } ?: emptyList()
 
-    override fun getSignableOperation(transferId: String): Stream<SignableOperation> {
+    private fun streamSignableOperation(transferId: String): Stream<SignableOperation> {
         return PollingHandler { observer ->
             try {
                 val result = transferApi.getSignableOperation(transferId).toCoreModel()
