@@ -17,6 +17,9 @@ data class SignableOperation(
     val userId: String
 ) : Parcelable {
 
+    /**
+     * The status of the operation. [CANCELLED], [FAILED] and [EXECUTED] are all endstates.
+     */
     enum class Status {
         CREATED,
         EXECUTING,
