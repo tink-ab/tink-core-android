@@ -5,18 +5,20 @@ import com.tink.model.transfer.SignableOperation
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.Transfer
 import com.tink.service.account.toCoreModel
+import com.tink.service.di.SERVICE_DISPATCHER
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import com.tink.service.streaming.publisher.StreamObserver
 import com.tink.service.streaming.publisher.StreamSubscription
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Named
 
 interface TransferService {
     suspend fun getSourceAccounts(): List<Account>
@@ -28,7 +30,8 @@ interface TransferService {
 }
 
 class TransferServiceImpl @Inject constructor(
-    private val transferApi: TransferApi
+    private val transferApi: TransferApi,
+    @Named(SERVICE_DISPATCHER) private val serviceDispatcher: CoroutineDispatcher
 ) : TransferService {
 
 
@@ -76,7 +79,7 @@ class TransferServiceImpl @Inject constructor(
             pollingSubscription?.unsubscribe()
         }
 
-        CoroutineScope(Dispatchers.IO + creationJob + exceptionHandler).launch {
+        CoroutineScope(serviceDispatcher + creationJob + exceptionHandler).launch {
 
             val firstOperation = createTransfer(descriptor)
 
