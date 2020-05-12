@@ -44,14 +44,4 @@ data class Transfer(
         @Json(name = "STRUCTURED") STRUCTURED("STRUCTURED"),
         @Json(name = "FREE_TEXT") FREE_TEXT("FREE_TEXT")
     }
-    /**
-     * The destination account or recipient of the transfer, in the form of a uri.
-     * Values: SEPAMINUSEUR, SEMINUSBG, SEMINUSPG
-     */
-    @JsonClass(generateAdapter = false)
-    enum class DestinationUriEnum(val value: String) {
-        @Json(name = "sepa-eur") SEPAMINUSEUR("sepa-eur"),
-        @Json(name = "se-bg") SEMINUSBG("se-bg"),
-        @Json(name = "se-pg") SEMINUSPG("se-pg")
-    }
 }
