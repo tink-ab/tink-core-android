@@ -96,7 +96,7 @@ class TransferServiceImpl @Inject constructor(
 
             override fun onNext(value: SignableOperation) {
                 streamObserver.onNext(value)
-                if(value.status.isEndState()) {
+                if (value.status.isEndState()) {
                     pollingSubscription?.unsubscribe()
                     onCompleted()
                 }
