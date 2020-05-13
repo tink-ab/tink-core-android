@@ -9,6 +9,7 @@ import com.tink.service.credentials.CredentialsService
 import com.tink.service.network.NetworkModule
 import com.tink.service.network.TinkConfiguration
 import com.tink.service.provider.ProviderService
+import com.tink.service.transfer.TransferService
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Scope
@@ -29,6 +30,8 @@ abstract class ServiceComponent {
     abstract val consentService: ConsentService
 
     abstract val accountService: AccountService
+
+    abstract val transferService: TransferService
 
     abstract val tinkConfiguration: TinkConfiguration
 

@@ -5,6 +5,7 @@ import com.tink.rest.apis.AccountApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
+import com.tink.rest.apis.TransferApi
 import com.tink.rest.tools.GeneratedCodeConverters
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
@@ -56,4 +57,10 @@ internal class RetrofitModule {
     internal fun providerAccountRetrofitService(
         retrofit: Retrofit
     ): AccountApi = retrofit.create(AccountApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideTransferRetrofitService(
+        retrofit: Retrofit
+    ): TransferApi = retrofit.create(TransferApi::class.java)
 }
