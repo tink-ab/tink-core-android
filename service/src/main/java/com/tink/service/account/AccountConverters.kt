@@ -22,7 +22,9 @@ fun AccountDto.toCoreModel(): Account =
         name = name,
         ownership = ownership.toExactNumber(),
         type = type.toCoreModel(),
-        images = imageUrls.toImages()
+        images = imageUrls.toImages(),
+        identifier = stripIdentifier(identifiers),
+        transferDestinations = transferDestinations?.mapNotNull { it.uri } ?: emptyList()
     )
 
 fun AccountTypeDto.toCoreModel() =
@@ -59,3 +61,11 @@ fun UpdateAccountDescriptor.toRequest() =
         ownership = ownership?.toDouble(),
         type = type?.toDto()
     )
+
+fun stripIdentifier(identifiersRaw: String?): String? =
+    identifiersRaw
+        ?.replace("[", "")
+        ?.replace("]", "")
+        ?.split(",")
+        ?.firstOrNull()
+        ?.replace("\"", "")
