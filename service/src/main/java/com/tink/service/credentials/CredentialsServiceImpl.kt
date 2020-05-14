@@ -85,4 +85,7 @@ internal class CredentialsServiceImpl @Inject constructor(
         state: String,
         parameters: Map<String, String>
     ) = api.thirdPartyCallbackRelayedPost(CallbackRelayedRequest(state, parameters)).unwrap()
+
+    override suspend fun getCredentials(id: String): Credentials =
+        api.get(id).toCoreModel()
 }
