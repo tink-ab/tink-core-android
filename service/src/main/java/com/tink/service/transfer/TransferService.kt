@@ -44,6 +44,9 @@ interface TransferService {
         descriptor: CreateTransferDescriptor,
         streamObserver: StreamObserver<SignableOperation>
     ): StreamSubscription
+
+    suspend fun initiateTransfer(descriptor: CreateTransferDescriptor): SignableOperation
+    suspend fun getTransferStatus(transferId: String): SignableOperation
 }
 
 class TransferServiceImpl @Inject constructor(
@@ -125,10 +128,16 @@ class TransferServiceImpl @Inject constructor(
         return subscription
     }
 
+    override suspend fun initiateTransfer(descriptor: CreateTransferDescriptor): SignableOperation =
+        createTransfer(descriptor)
+
     private fun streamSignableOperation(transferId: String): Stream<SignableOperation> {
         return PollingHandler { observer ->
             val result = transferApi.getSignableOperation(transferId).toCoreModel()
             observer.onNext(result)
         }
     }
+
+    override suspend fun getTransferStatus(transferId: String): SignableOperation =
+        transferApi.getSignableOperation(transferId).toCoreModel()
 }
