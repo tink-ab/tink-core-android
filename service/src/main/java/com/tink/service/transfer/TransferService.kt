@@ -5,19 +5,7 @@ import com.tink.model.transfer.SignableOperation
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.Transfer
 import com.tink.service.account.toCoreModel
-import com.tink.service.di.SERVICE_DISPATCHER
-import com.tink.service.streaming.PollingHandler
-import com.tink.service.streaming.publisher.Stream
-import com.tink.service.streaming.publisher.StreamObserver
-import com.tink.service.streaming.publisher.StreamSubscription
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.yield
 import javax.inject.Inject
-import javax.inject.Named
 
 interface TransferService {
     /**
@@ -26,32 +14,24 @@ interface TransferService {
     suspend fun getSourceAccounts(): List<Account>
 
     /**
-     * Initiates a new transfer, and then starts observing for updates.
-     *
-     * The [SignableOperation] obtained through the [StreamObserver.onNext] function will let you
-     * listen to updates until you have reached one of the [endstates][SignableOperation.Status],
-     * or until an error is observed through [StreamObserver.onError].
+     * Initiates a new transfer
      *
      * @param descriptor Information about the transfer that should be created
-     * @param streamObserver The [StreamObserver] that observes updates to the transfer.
-     * These updates will be delivered in [SignableOperation] format,
-     * from which you can read the [status][SignableOperation.Status] of the operation.
      *
-     * @return A [StreamSubscription] that allows you to stop receiving updates to the
-     * [streamObserver] by calling [StreamSubscription.unsubscribe].
+     * @return A [SignableOperation] from which you can read the [status][SignableOperation.Status] of the operation.
      */
-    fun initiateTransfer(
-        descriptor: CreateTransferDescriptor,
-        streamObserver: StreamObserver<SignableOperation>
-    ): StreamSubscription
-
     suspend fun initiateTransfer(descriptor: CreateTransferDescriptor): SignableOperation
+
+    /**
+     * Retrieves information about the current status of the transfer.
+     *
+     * @return A [SignableOperation] from which you can read the [status][SignableOperation.Status] of the operation.
+     */
     suspend fun getTransferStatus(transferId: String): SignableOperation
 }
 
 class TransferServiceImpl @Inject constructor(
-    private val transferApi: TransferApi,
-    @Named(SERVICE_DISPATCHER) private val serviceDispatcher: CoroutineDispatcher
+    private val transferApi: TransferApi
 ) : TransferService {
 
     override suspend fun getSourceAccounts() =
@@ -60,7 +40,7 @@ class TransferServiceImpl @Inject constructor(
     /**
      * Creates a new transfer, returning a [SignableOperation] object.
      */
-    private suspend fun createTransfer(descriptor: CreateTransferDescriptor) =
+    override suspend fun initiateTransfer(descriptor: CreateTransferDescriptor) =
         transferApi.createTransfer(
             Transfer(
                 amount = descriptor.amount.value.toBigDecimal().toDouble(),
@@ -72,71 +52,6 @@ class TransferServiceImpl @Inject constructor(
                 credentialsId = descriptor.credentialsId
             )
         ).toCoreModel()
-
-    override fun initiateTransfer(
-        descriptor: CreateTransferDescriptor,
-        streamObserver: StreamObserver<SignableOperation>
-    ): StreamSubscription {
-
-        var pollingSubscription: StreamSubscription? = null
-
-        val creationJob = Job()
-
-        val subscription = object : StreamSubscription {
-            override fun unsubscribe() {
-                creationJob.cancel()
-                pollingSubscription?.unsubscribe() ?: streamObserver.onCompleted()
-            }
-        }
-
-        val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-            streamObserver.onError(throwable)
-            pollingSubscription?.unsubscribe()
-        }
-
-        val streamObserverWrapper = object : StreamObserver<SignableOperation> {
-
-            override fun onNext(value: SignableOperation) {
-                streamObserver.onNext(value)
-                if (value.status.isEndState()) {
-                    pollingSubscription?.unsubscribe()
-                    onCompleted()
-                }
-            }
-
-            override fun onCompleted() = streamObserver.onCompleted()
-            override fun onError(error: Throwable) = streamObserver.onError(error)
-        }
-
-        CoroutineScope(serviceDispatcher + creationJob + exceptionHandler).launch {
-
-            val firstOperation = createTransfer(descriptor)
-
-            yield()
-
-            streamObserver.onNext(firstOperation)
-
-            if (!firstOperation.status.isEndState()) {
-                pollingSubscription =
-                    streamSignableOperation(firstOperation.underlyingId)
-                        .subscribe(streamObserverWrapper)
-            } else {
-                streamObserver.onCompleted()
-            }
-        }
-
-        return subscription
-    }
-
-    override suspend fun initiateTransfer(descriptor: CreateTransferDescriptor): SignableOperation =
-        createTransfer(descriptor)
-
-    private fun streamSignableOperation(transferId: String): Stream<SignableOperation> {
-        return PollingHandler { observer ->
-            val result = transferApi.getSignableOperation(transferId).toCoreModel()
-            observer.onNext(result)
-        }
-    }
 
     override suspend fun getTransferStatus(transferId: String): SignableOperation =
         transferApi.getSignableOperation(transferId).toCoreModel()
