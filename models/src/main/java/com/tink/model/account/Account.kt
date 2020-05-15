@@ -19,7 +19,9 @@ data class Account(
     val name: String,
     val ownership: ExactNumber,
     val type: Type,
-    val images: Images?
+    val images: Images?,
+    val identifiers: List<String>,
+    val transferDestinations: List<String>
 ) : Parcelable {
 
     enum class Type {

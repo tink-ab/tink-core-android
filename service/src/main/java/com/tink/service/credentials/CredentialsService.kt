@@ -15,4 +15,5 @@ interface CredentialsService {
     suspend fun supplementInformation(credentialsId: String, information: Map<String, String>)
     suspend fun cancelSupplementalInformation(credentialsId: String)
     suspend fun thirdPartyCallback(state: String, parameters: Map<String, String>)
+    suspend fun getCredentials(id: String): Credentials
 }

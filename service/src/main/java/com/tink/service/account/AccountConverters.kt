@@ -1,5 +1,6 @@
 package com.tink.service.account
 
+import androidx.annotation.VisibleForTesting
 import com.tink.model.account.Account
 import com.tink.rest.apis.UpdateAccountRequest
 import com.tink.service.misc.toAmount
@@ -22,10 +23,12 @@ fun AccountDto.toCoreModel(): Account =
         name = name,
         ownership = ownership.toExactNumber(),
         type = type.toCoreModel(),
-        images = imageUrls.toImages()
+        images = imageUrls.toImages(),
+        identifiers = convertJsonStringArrayToList(identifiers),
+        transferDestinations = transferDestinations?.mapNotNull { it.uri } ?: emptyList()
     )
 
-fun AccountTypeDto.toCoreModel() =
+internal fun AccountTypeDto.toCoreModel() =
     when (this) {
         AccountTypeDto.CHECKING -> Account.Type.CHECKING
         AccountTypeDto.SAVINGS -> Account.Type.SAVINGS
@@ -38,7 +41,7 @@ fun AccountTypeDto.toCoreModel() =
         AccountTypeDto.EXTERNAL -> Account.Type.EXTERNAL
     }
 
-fun Account.Type.toDto(): AccountTypeDto? =
+internal fun Account.Type.toDto(): AccountTypeDto? =
     when (this) {
         Account.Type.CHECKING -> AccountTypeDto.CHECKING
         Account.Type.SAVINGS -> AccountTypeDto.SAVINGS
@@ -51,7 +54,7 @@ fun Account.Type.toDto(): AccountTypeDto? =
         Account.Type.EXTERNAL -> AccountTypeDto.EXTERNAL
     }
 
-fun UpdateAccountDescriptor.toRequest() =
+internal fun UpdateAccountDescriptor.toRequest() =
     UpdateAccountRequest(
         name = name,
         excluded = excluded,
@@ -59,3 +62,15 @@ fun UpdateAccountDescriptor.toRequest() =
         ownership = ownership?.toDouble(),
         type = type?.toDto()
     )
+
+/**
+ *   Converts a Json string containing a list of string to an actual string list
+ */
+@VisibleForTesting
+internal fun convertJsonStringArrayToList(rawString: String?): List<String> =
+    rawString
+        ?.replace("[", "")
+        ?.replace("]", "")
+        ?.split(",")
+        ?.map { it.replace("\"", "") }
+        ?: emptyList()
