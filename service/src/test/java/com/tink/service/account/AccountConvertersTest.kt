@@ -78,4 +78,21 @@ internal class AccountConvertersTest {
         assertThat(account.closed).isFalse()
         // TODO: transactional
     }
+
+    @Test
+    fun `strip one identifier`() {
+        val identifierString = "[\"se://9999111111111111\"]"
+        val identifiers = convertJsonStringArrayToList(identifierString)
+        assertThat(identifiers).hasSize(1)
+        assertThat(identifiers).contains("se://9999111111111111")
+    }
+
+    @Test
+    fun `strip multiple identifiers`() {
+        val identifierString = "[\"se://9999111111111111\",\"se://8888111111111111\"]"
+        val identifiers = convertJsonStringArrayToList(identifierString)
+        assertThat(identifiers).hasSize(2)
+        assertThat(identifiers).contains("se://9999111111111111")
+        assertThat(identifiers).contains("se://8888111111111111")
+    }
 }

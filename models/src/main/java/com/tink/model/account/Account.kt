@@ -20,7 +20,7 @@ data class Account(
     val ownership: ExactNumber,
     val type: Type,
     val images: Images?,
-    val identifier: String?,
+    val identifiers: List<String>,
     val transferDestinations: List<String>
 ) : Parcelable {
 
