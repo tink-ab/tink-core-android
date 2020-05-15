@@ -23,7 +23,10 @@ interface TransferService {
     suspend fun initiateTransfer(descriptor: CreateTransferDescriptor): SignableOperation
 
     /**
-     * Retrieves information about the current status of the transfer.
+     * Retrieves information about the current status of a transfer.
+     *
+     * @param transferId The id of the transfer. Note: When retrieving this from a [SignableOperation],
+     * [SignableOperation.underlyingId] should be passed in here.
      *
      * @return A [SignableOperation] from which you can read the [status][SignableOperation.Status] of the operation.
      */
