@@ -11,7 +11,6 @@ import com.tink.model.account.Account
  * @param accountNumber The account number of the beneficiary, for example the BG/PG number or the IBAN
  * @param name The name of the beneficiary
  * @param type The type of transfer that is used for this beneficiary, for example "iban"
- *
  */
 @Parcelize
 data class Beneficiary(
