@@ -35,8 +35,6 @@ interface TransferService {
 
     /**
      * Lists all beneficiaries of the current user
-     *
-     * @return A List of [Beneficiary]s
      */
     suspend fun getBeneficiaries(): List<Beneficiary>
 }
