@@ -1,10 +1,12 @@
 package com.tink.service.transfer
 
+import com.tink.model.transfer.Beneficiary
 import com.tink.model.transfer.SignableOperation
 import com.tink.service.misc.toInstant
+import com.tink.rest.models.Beneficiary as BeneficiaryDto
 import com.tink.rest.models.SignableOperation as SignableOperationDto
-import com.tink.rest.models.SignableOperation.TypeEnum as SignableOperationTypeDto
 import com.tink.rest.models.SignableOperation.StatusEnum as SignableOperationStatusDto
+import com.tink.rest.models.SignableOperation.TypeEnum as SignableOperationTypeDto
 
 fun SignableOperationDto.toCoreModel(): SignableOperation =
     SignableOperation(
@@ -35,3 +37,10 @@ private fun SignableOperationStatusDto.toCoreModel(): SignableOperation.Status =
         SignableOperationStatusDto.AWAITING_THIRD_PARTY_APP_AUTHENTICATION ->
             SignableOperation.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION
     }
+
+internal fun BeneficiaryDto.toCoreModel() = Beneficiary(
+    accountId = accountId!!,
+    accountNumber = accountNumber!!,
+    name = name!!,
+    type = type!!
+)
