@@ -23,17 +23,18 @@ import com.squareup.moshi.JsonClass
  * @property sourceUri The source account of the transfer, in the form of a uri.
  */
 @JsonClass(generateAdapter = true)
-data class Transfer(
-    @Json(name = "amount") @field:Json(name = "amount") var amount: Double, // TODO
-    @Json(name = "currency") @field:Json(name = "currency") var currency: String,
-    @Json(name = "destinationMessage") @field:Json(name = "destinationMessage") var destinationMessage: String,
-    @Json(name = "destinationUri") @field:Json(name = "destinationUri") var destinationUri: String,
-    @Json(name = "sourceUri") @field:Json(name = "sourceUri") var sourceUri: String,
-    @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String? = null,
-    @Json(name = "id") @field:Json(name = "id") var id: String? = null,
-    @Json(name = "sourceMessage") @field:Json(name = "sourceMessage") var sourceMessage: String? = null,
-    @Json(name = "dueDate") @field:Json(name = "dueDate") var dueDate: Long? = null,
-    @Json(name = "messageType") @field:Json(name = "messageType") var messageType: MessageTypeEnum? = null
+data class CreateTransferRequest(
+    @Json(name = "amount") var amount: Double, // TODO
+    @Json(name = "currency") var currency: String,
+    @Json(name = "destinationMessage") var destinationMessage: String,
+    @Json(name = "destinationUri") var destinationUri: String,
+    @Json(name = "sourceUri") var sourceUri: String,
+    @Json(name = "redirectUri") var redirectUri: String,
+    @Json(name = "credentialsId") var credentialsId: String? = null,
+    @Json(name = "id") var id: String? = null,
+    @Json(name = "sourceMessage") var sourceMessage: String? = null,
+    @Json(name = "dueDate") var dueDate: Long? = null,
+    @Json(name = "messageType") var messageType: MessageTypeEnum? = null
 ) {
     /**
      * Transfer's message type, only required for BE and SEPA-EUR schemes. STRUCTURED is for PAYMENT type transfers and FREE_TEXT is for BANK_TRANSFER type transfers.
@@ -41,7 +42,9 @@ data class Transfer(
      */
     @JsonClass(generateAdapter = false)
     enum class MessageTypeEnum(val value: String) {
-        @Json(name = "STRUCTURED") STRUCTURED("STRUCTURED"),
-        @Json(name = "FREE_TEXT") FREE_TEXT("FREE_TEXT")
+        @Json(name = "STRUCTURED")
+        STRUCTURED("STRUCTURED"),
+        @Json(name = "FREE_TEXT")
+        FREE_TEXT("FREE_TEXT")
     }
 }
