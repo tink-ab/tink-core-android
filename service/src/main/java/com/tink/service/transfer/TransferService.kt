@@ -6,6 +6,7 @@ import com.tink.model.transfer.SignableOperation
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.CreateTransferRequest
 import com.tink.service.account.toCoreModel
+import com.tink.service.network.TinkConfiguration
 import javax.inject.Inject
 
 interface TransferService {
@@ -40,7 +41,8 @@ interface TransferService {
 }
 
 class TransferServiceImpl @Inject constructor(
-    private val transferApi: TransferApi
+    private val transferApi: TransferApi,
+    private val configuration: TinkConfiguration
 ) : TransferService {
 
     override suspend fun getSourceAccounts() =
@@ -58,7 +60,8 @@ class TransferServiceImpl @Inject constructor(
                 destinationUri = descriptor.destinationUri,
                 sourceMessage = descriptor.sourceMessage,
                 sourceUri = descriptor.sourceUri,
-                credentialsId = descriptor.credentialsId
+                credentialsId = descriptor.credentialsId,
+                redirectUri = configuration.redirectUri.toString()
             )
         ).toCoreModel()
 

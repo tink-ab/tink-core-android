@@ -29,6 +29,7 @@ data class CreateTransferRequest(
     @Json(name = "destinationMessage") @field:Json(name = "destinationMessage") var destinationMessage: String,
     @Json(name = "destinationUri") @field:Json(name = "destinationUri") var destinationUri: String,
     @Json(name = "sourceUri") @field:Json(name = "sourceUri") var sourceUri: String,
+    @field:Json(name = "redirectUri") var redirectUri: String,
     @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String? = null,
     @Json(name = "id") @field:Json(name = "id") var id: String? = null,
     @Json(name = "sourceMessage") @field:Json(name = "sourceMessage") var sourceMessage: String? = null,
