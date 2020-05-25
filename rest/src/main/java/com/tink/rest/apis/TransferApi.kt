@@ -7,6 +7,7 @@
 package com.tink.rest.apis
 
 import com.tink.rest.models.AccountListResponse
+import com.tink.rest.models.BeneficiaryResponse
 import com.tink.rest.models.SignableOperation
 import com.tink.rest.models.SourceDestinationValidation
 import com.tink.rest.models.Transfer
@@ -68,4 +69,7 @@ interface TransferApi {
         @retrofit2.http.Query("source") source: String,
         @retrofit2.http.Query("destination") destination: String
     ): SourceDestinationValidation
+
+    @GET("/api/v1/beneficiaries")
+    suspend fun getBeneficiaries(): BeneficiaryResponse
 }

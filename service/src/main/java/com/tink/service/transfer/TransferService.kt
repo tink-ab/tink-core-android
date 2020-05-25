@@ -1,6 +1,7 @@
 package com.tink.service.transfer
 
 import com.tink.model.account.Account
+import com.tink.model.transfer.Beneficiary
 import com.tink.model.transfer.SignableOperation
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.Transfer
@@ -31,6 +32,11 @@ interface TransferService {
      * @return A [SignableOperation] from which you can read the [status][SignableOperation.Status] of the operation.
      */
     suspend fun getTransferStatus(transferId: String): SignableOperation
+
+    /**
+     * Lists all beneficiaries of the current user
+     */
+    suspend fun getBeneficiaries(): List<Beneficiary>
 }
 
 class TransferServiceImpl @Inject constructor(
@@ -58,4 +64,7 @@ class TransferServiceImpl @Inject constructor(
 
     override suspend fun getTransferStatus(transferId: String): SignableOperation =
         transferApi.getSignableOperation(transferId).toCoreModel()
+
+    override suspend fun getBeneficiaries(): List<Beneficiary> =
+        transferApi.getBeneficiaries().beneficiaries.map { it.toCoreModel() }
 }
