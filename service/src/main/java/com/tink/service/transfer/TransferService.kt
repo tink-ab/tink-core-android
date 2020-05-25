@@ -4,7 +4,7 @@ import com.tink.model.account.Account
 import com.tink.model.transfer.Beneficiary
 import com.tink.model.transfer.SignableOperation
 import com.tink.rest.apis.TransferApi
-import com.tink.rest.models.Transfer
+import com.tink.rest.models.CreateTransferRequest
 import com.tink.service.account.toCoreModel
 import javax.inject.Inject
 
@@ -51,7 +51,7 @@ class TransferServiceImpl @Inject constructor(
      */
     override suspend fun initiateTransfer(descriptor: CreateTransferDescriptor) =
         transferApi.createTransfer(
-            Transfer(
+            CreateTransferRequest(
                 amount = descriptor.amount.value.toBigDecimal().toDouble(),
                 currency = descriptor.amount.currencyCode,
                 destinationMessage = descriptor.destinationMessage,

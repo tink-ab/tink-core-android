@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
  * @property sourceUri The source account of the transfer, in the form of a uri.
  */
 @JsonClass(generateAdapter = true)
-data class Transfer(
+data class CreateTransferRequest(
     @Json(name = "amount") @field:Json(name = "amount") var amount: Double, // TODO
     @Json(name = "currency") @field:Json(name = "currency") var currency: String,
     @Json(name = "destinationMessage") @field:Json(name = "destinationMessage") var destinationMessage: String,
