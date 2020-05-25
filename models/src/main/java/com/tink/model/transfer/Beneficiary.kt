@@ -3,6 +3,7 @@ package com.tink.model.transfer
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 import com.tink.model.account.Account
+import kotlinx.android.parcel.IgnoredOnParcel
 
 /**
  * A beneficiary of a transfer
@@ -18,4 +19,11 @@ data class Beneficiary(
     val accountNumber: String,
     val name: String,
     val type: String
-) : Parcelable
+) : Parcelable {
+
+    /*
+     * The uri which can be used to make a transfer to this beneficiary
+     */
+    @IgnoredOnParcel
+    val uri: String = "$type://$accountNumber"
+}
