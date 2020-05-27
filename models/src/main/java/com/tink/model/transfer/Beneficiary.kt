@@ -15,15 +15,15 @@ import kotlinx.android.parcel.IgnoredOnParcel
  */
 @Parcelize
 data class Beneficiary(
-    val accountId: String,
+    val ownerAccountId: String,
     val accountNumber: String,
-    val name: String,
-    val type: String
+    val accountNumberType: String,
+    val name: String
 ) : Parcelable {
 
     /*
      * The uri which can be used to make a transfer to this beneficiary
      */
     @IgnoredOnParcel
-    val uri: String = "$type://$accountNumber"
+    val uri: String = "$accountNumberType://$accountNumber"
 }

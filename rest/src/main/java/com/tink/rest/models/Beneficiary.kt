@@ -5,10 +5,10 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Beneficiary(
-    @field:Json(name = "accountId") val accountId: String,
+    @field:Json(name = "ownerAccountId") val ownerAccountId: String,
     @field:Json(name = "accountNumber") val accountNumber: String,
-    @field:Json(name = "name") val name: String,
-    @field:Json(name = "type") val type: String
+    @field:Json(name = "accountNumberType") val accountNumberType: String,
+    @field:Json(name = "name") val name: String
 )
 
 @JsonClass(generateAdapter = true)
