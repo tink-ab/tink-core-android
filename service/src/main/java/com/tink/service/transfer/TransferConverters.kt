@@ -39,8 +39,8 @@ private fun SignableOperationStatusDto.toCoreModel(): SignableOperation.Status =
     }
 
 internal fun BeneficiaryDto.toCoreModel() = Beneficiary(
-    accountId = accountId,
+    ownerAccountId = ownerAccountId,
     accountNumber = accountNumber,
-    name = name,
-    type = type
+    accountNumberType = accountNumberType,
+    name = name
 )
