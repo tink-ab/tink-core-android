@@ -4,9 +4,9 @@ import com.tink.model.misc.Amount
 
 data class CreateTransferDescriptor(
     val amount: Amount,
-    val sourceUri: String,
+    val sourceAccountUri: String,
     val sourceMessage: String?,
-    val destinationUri: String,
+    val beneficiaryUri: String,
     val destinationMessage: String,
     val credentialsId: String? = null
 )

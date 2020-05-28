@@ -57,9 +57,9 @@ class TransferServiceImpl @Inject constructor(
                 amount = descriptor.amount.value.toBigDecimal().toDouble(),
                 currency = descriptor.amount.currencyCode,
                 destinationMessage = descriptor.destinationMessage,
-                destinationUri = descriptor.destinationUri,
+                destinationUri = descriptor.beneficiaryUri,
                 sourceMessage = descriptor.sourceMessage,
-                sourceUri = descriptor.sourceUri,
+                sourceUri = descriptor.sourceAccountUri,
                 credentialsId = descriptor.credentialsId,
                 redirectUri = configuration.redirectUri.toString()
             )
