@@ -7,10 +7,9 @@
 package com.tink.rest.apis
 
 import com.tink.rest.models.AccountListResponse
-import com.tink.rest.models.BeneficiaryResponse
+import com.tink.rest.models.CreateTransferRequest
 import com.tink.rest.models.SignableOperation
 import com.tink.rest.models.SourceDestinationValidation
-import com.tink.rest.models.CreateTransferRequest
 import com.tink.rest.models.TransferResponse
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -19,7 +18,7 @@ import retrofit2.http.POST
 interface TransferApi {
     /**
      * Create a new transfer
-     * Creates a new transfer, returning a `SignableOperation` object.
+     * Creates a new transfer, returning a [SignableOperation] object.
      * @param createTransferRequest The transfer object to create. (optional)
      */
     @POST("/api/v1/transfer")
@@ -31,7 +30,6 @@ interface TransferApi {
      * Signing status of Transfer
      * Get the SignableOperation object of the transfer.
      * @param id The ID of the Transfer (required)
-     * @param body (optional)
      */
     @GET("/api/v1/transfer/{id}/status")
     suspend fun getSignableOperation(
