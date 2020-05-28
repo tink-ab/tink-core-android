@@ -67,7 +67,4 @@ interface TransferApi {
         @retrofit2.http.Query("source") source: String,
         @retrofit2.http.Query("destination") destination: String
     ): SourceDestinationValidation
-
-    @GET("/api/v1/beneficiaries")
-    suspend fun getBeneficiaries(): BeneficiaryResponse
 }
