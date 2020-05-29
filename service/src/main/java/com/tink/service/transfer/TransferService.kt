@@ -40,7 +40,7 @@ interface TransferService {
     suspend fun getBeneficiaries(): List<Beneficiary>
 }
 
-class TransferServiceImpl @Inject constructor(
+internal class TransferServiceImpl @Inject constructor(
     private val transferApi: TransferApi,
     private val configuration: TinkConfiguration
 ) : TransferService {
