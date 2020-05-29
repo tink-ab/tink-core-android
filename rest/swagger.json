@@ -17,13 +17,28 @@
   },
   "tags": [
     {
-      "name": "Identity"
+      "name": "Category"
     },
     {
-      "name": "Budget"
+      "name": "Loan"
     },
     {
       "name": "ENTERPRISE"
+    },
+    {
+      "name": "Monitoring"
+    },
+    {
+      "name": "Webhook"
+    },
+    {
+      "name": "Transfer"
+    },
+    {
+      "name": "Search"
+    },
+    {
+      "name": "Device"
     },
     {
       "name": "Actionable Insight"
@@ -32,73 +47,61 @@
       "name": "BETA"
     },
     {
-      "name": "Category"
-    },
-    {
-      "name": "Credentials"
-    },
-    {
-      "name": "Version"
-    },
-    {
-      "name": "Search"
-    },
-    {
-      "name": "Account"
-    },
-    {
-      "name": "Activity"
+      "name": "Authentication"
     },
     {
       "name": "Transaction"
     },
     {
-      "name": "Statistics"
-    },
-    {
-      "name": "Investment"
-    },
-    {
-      "name": "Loan"
+      "name": "Beneficiary"
     },
     {
       "name": "Provider"
     },
     {
-      "name": "OAuth"
-    },
-    {
-      "name": "User Data Control"
-    },
-    {
-      "name": "Calendar"
-    },
-    {
-      "name": "Device"
-    },
-    {
-      "name": "Transfer"
-    },
-    {
-      "name": "Payment Request"
-    },
-    {
-      "name": "Authentication"
-    },
-    {
-      "name": "Notification"
-    },
-    {
-      "name": "Webhook"
-    },
-    {
-      "name": "Follow Item"
+      "name": "Identity"
     },
     {
       "name": "User"
     },
     {
-      "name": "Monitoring"
+      "name": "Payment Request"
+    },
+    {
+      "name": "Version"
+    },
+    {
+      "name": "Notification"
+    },
+    {
+      "name": "Savings Goals"
+    },
+    {
+      "name": "Activity"
+    },
+    {
+      "name": "Statistics"
+    },
+    {
+      "name": "Credentials"
+    },
+    {
+      "name": "Investment"
+    },
+    {
+      "name": "Follow Item"
+    },
+    {
+      "name": "Calendar"
+    },
+    {
+      "name": "User Data Control"
+    },
+    {
+      "name": "Account"
+    },
+    {
+      "name": "Budget"
     }
   ],
   "paths": {
@@ -297,16 +300,7 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -331,14 +325,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "in": "body",
             "name": "body",
@@ -370,14 +356,6 @@
         "operationId": "deleteHook",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
             "description": "The ID of the webhook",
@@ -390,6 +368,76 @@
             "description": "successful operation"
           }
         }
+      }
+    },
+    "/api/v1/beneficiaries": {
+      "get": {
+        "tags": [
+          "Beneficiary",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List beneficiaries",
+        "description": "Lists all beneficiaries for all accounts belonging to the authenticated user.",
+        "operationId": "list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The operation was successful.",
+            "schema": {
+              "$ref": "#/definitions/ListBeneficiariesResponse"
+            }
+          },
+          "500": {
+            "description": "An unexpected error occurred when trying to fetch beneficiaries."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "beneficiaries:read"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Beneficiary",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Create beneficiary",
+        "description": "Initiates a request to add beneficiary to the given account belonging to the authenticated user.",
+        "operationId": "create",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Configuration for new beneficiary.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/CreateBeneficiaryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "An unexpected error occured when trying to initiate adding a beneficiary."
+          },
+          "204": {
+            "description": "The operation was successful."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "beneficiaries:write"
+            ]
+          }
+        ]
       }
     },
     "/api/v1/budgets": {
@@ -782,6 +830,59 @@
           },
           "400": {
             "description": "The start year was not greater than 0 or start month was not between 1 and 12."
+          }
+        }
+      }
+    },
+    "/api/v1/calendar/periods": {
+      "get": {
+        "tags": [
+          "Calendar",
+          "ENTERPRISE"
+        ],
+        "summary": "Query Period details",
+        "description": "Get a list of detailed periods from a given start period to an end period. Will always return one of the monthly resolutions.",
+        "operationId": "queryPeriods",
+        "produces": [
+          "application/json",
+          "application/x-protobuf"
+        ],
+        "parameters": [
+          {
+            "name": "period_gte",
+            "in": "query",
+            "description": "Date inside the start period",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "YYYY-MM-DD"
+            ],
+            "x-example": "2016-05-21"
+          },
+          {
+            "name": "period_lte",
+            "in": "query",
+            "description": "Date inside the end period",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "YYYY-MM-DD"
+            ],
+            "x-example": "2016-08-13"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The periods were successfully returned.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Period"
+              }
+            }
+          },
+          "400": {
+            "description": "A period query parameter format is invalid or period_gte is after period_lte"
           }
         }
       }
@@ -1376,16 +1477,7 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -1393,7 +1485,14 @@
               "$ref": "#/definitions/DeviceListResponse"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "device:read"
+            ]
+          }
+        ]
       }
     },
     "/api/v1/devices/{deviceToken}": {
@@ -1412,14 +1511,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "name": "deviceToken",
             "in": "path",
@@ -1441,7 +1532,14 @@
           "default": {
             "description": "successful operation"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "device:write"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -1459,14 +1557,6 @@
         ],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
             "name": "deviceToken",
             "in": "path",
             "description": "The (persistent) deviceToken",
@@ -1478,7 +1568,14 @@
           "default": {
             "description": "successful operation"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "device:write"
+            ]
+          }
+        ]
       }
     },
     "/api/v1/devices/{deviceToken}/configuration": {
@@ -1498,14 +1595,6 @@
           "application/x-protobuf"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "name": "deviceToken",
             "in": "path",
@@ -1528,7 +1617,14 @@
               "$ref": "#/definitions/DeviceConfigurationDto"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "device:read"
+            ]
+          }
+        ]
       }
     },
     "/api/v1/follow": {
@@ -1548,14 +1644,6 @@
           "application/x-protobuf"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "in": "body",
             "name": "body",
@@ -1627,14 +1715,6 @@
           {
             "in": "body",
             "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
-            "in": "body",
-            "name": "body",
             "description": "A list of the follow items to create",
             "required": true,
             "schema": {
@@ -1672,14 +1752,6 @@
           "application/x-protobuf"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "name": "id",
             "in": "path",
@@ -1755,14 +1827,6 @@
         "description": "Deletes a follow item.",
         "operationId": "delete",
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "name": "id",
             "in": "path",
@@ -1995,16 +2059,7 @@
           "application/json",
           "application/x-protobuf"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -2033,16 +2088,7 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -2071,16 +2117,7 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -2112,14 +2149,6 @@
           "application/x-protobuf"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
           {
             "in": "body",
             "name": "body",
@@ -2211,14 +2240,6 @@
           {
             "in": "body",
             "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
-            "in": "body",
-            "name": "body",
             "description": "The query.",
             "required": true,
             "schema": {
@@ -2247,14 +2268,6 @@
         "operationId": "read",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
             "description": "The ID of the notification",
@@ -2281,14 +2294,6 @@
         "operationId": "received",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
             "description": "The ID of the notification",
@@ -2304,297 +2309,153 @@
         }
       }
     },
-    "/api/v1/oauth/authorization-grant": {
-      "post": {
+    "/api/v1/payments/providers": {
+      "get": {
         "tags": [
-          "OAuth",
-          "ENTERPRISE"
+          "Payment Request",
+          "ENTERPRISE",
+          "BETA"
         ],
-        "summary": "Create an authorization",
-        "description": "Creates an authorization for the given user ID or external user ID with requested scopes and returns the authorization code.",
-        "operationId": "authorizationGrant",
-        "produces": [
-          "application/json",
-          "application/x-protobuf"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/OAuth2Client"
-            }
-          },
-          {
-            "name": "user_id",
-            "in": "formData",
-            "description": "User ID. Cannot be specified at the same time as `external_user_id`.",
-            "required": false,
-            "type": "string",
-            "x-example": "256ae77fcbda4bc2b8d0ba94d9c3423c"
-          },
-          {
-            "name": "external_user_id",
-            "in": "formData",
-            "description": "External user ID set by the client on user creation. Cannot be specified at the same time as `user_id`.",
-            "required": false,
-            "type": "string",
-            "x-example": "256ae77fcbda4bc2b8d0ba94d9c3423d"
-          },
-          {
-            "name": "scope",
-            "in": "formData",
-            "description": "The requested OAuth scopes",
-            "required": true,
-            "type": "string",
-            "x-example": "accounts:read,transactions:read"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/OAuth2AuthorizeResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [
-              "authorization:grant"
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/oauth/authorization-grant/delegate": {
-      "post": {
-        "tags": [
-          "OAuth",
-          "ENTERPRISE"
-        ],
-        "summary": "Create a delegated authorization code",
-        "description": "Creates a delegated authorization code for a user with requested scopes.",
-        "operationId": "authorizationDelegate",
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "summary": "List providers",
+        "description": "Lists all providers available for a authenticated user.",
+        "operationId": "list",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
+            "name": "capability",
+            "in": "query",
+            "description": "Use the capability to only list providers with a specific capability. If no capability the provider response will not be filtered on capability.",
             "required": false,
-            "schema": {
-              "$ref": "#/definitions/OAuth2Client"
-            }
-          },
-          {
-            "name": "user_id",
-            "in": "formData",
-            "description": "User ID. Cannot be specified at the same time as `external_user_id`.",
-            "required": false,
-            "type": "string",
-            "x-example": "256ae77fcbda4bc2b8d0ba94d9c3423c"
-          },
-          {
-            "name": "external_user_id",
-            "in": "formData",
-            "description": "External user ID set by the client on user creation. Cannot be specified at the same time as `user_id`.",
-            "required": false,
-            "type": "string",
-            "x-example": "alice"
-          },
-          {
-            "name": "id_hint",
-            "in": "formData",
-            "description": "Human readable identifier to prevent user from authorizing access for another user",
-            "required": true,
-            "type": "string",
-            "x-example": "Alice"
-          },
-          {
-            "name": "actor_client_id",
-            "in": "formData",
-            "description": "The unique identifier of the client which is allowed to use the authorization request. Actor client existence is not validated",
-            "required": true,
-            "type": "string",
-            "x-example": "95d6581607ad40fcaac804a82d6bc2f6"
-          },
-          {
-            "name": "scope",
-            "in": "formData",
-            "description": "Scopes to delegate access for",
-            "required": false,
-            "type": "string",
-            "x-example": "user:read,credentials:write"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Authorization grant successfully created."
-          },
-          "400": {
-            "description": "The request is not following the specification. See body for details."
-          },
-          "401": {
-            "description": "The client either doesn't exist, doesn't have access to the requested user or can set the requested scope. See body for details."
-          },
-          "404": {
-            "description": "The user doesn't exist."
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [
-              "authorization:grant"
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/oauth/revoke-all": {
-      "post": {
-        "tags": [
-          "OAuth",
-          "ENTERPRISE"
-        ],
-        "summary": "Revoke all tokens",
-        "description": "Revokes all access and refresh tokens for a given user ID or external user ID.",
-        "operationId": "revokeAll",
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/OAuth2Client"
-            }
-          },
-          {
-            "name": "user_id",
-            "in": "formData",
-            "description": "The user ID",
-            "required": false,
-            "type": "string",
-            "x-example": "256ae77fcbda4bc2b8d0ba94d9c3423c"
-          },
-          {
-            "name": "external_user_id",
-            "in": "formData",
-            "description": "The external user ID",
-            "required": false,
-            "type": "string",
-            "x-example": "256ae77fcbda4bc2b8d0ba94d9c3423d"
-          }
-        ],
-        "responses": {
-          "400": {
-            "description": "The request is not following the specification. See body for details."
-          },
-          "401": {
-            "description": "The client either doesn't exist or doesn't have access to the requested user. See body for details."
-          },
-          "204": {
-            "description": "Call executed successfully."
-          },
-          "404": {
-            "description": "The user doesn't exist."
-          }
-        },
-        "security": [
-          {
-            "OAuth2": [
-              "authorization:revoke"
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/oauth/token": {
-      "post": {
-        "tags": [
-          "OAuth"
-        ],
-        "summary": "Get an authorization token",
-        "description": "Exchange an authorization code or a refresh token for authorization tokens. The authorization tokens are used to access API resources on the end-user's behalf.",
-        "operationId": "token",
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "name": "client_id",
-            "in": "formData",
-            "description": "The OAuth client ID.",
-            "required": true,
-            "type": "string",
-            "x-example": "256ae77fcbda4bc2b8d0ba94d9c3423c"
-          },
-          {
-            "name": "client_secret",
-            "in": "formData",
-            "description": "The client secret of your third-party application.",
-            "required": true,
-            "type": "string",
-            "x-example": "bdb8477398074160901ce1c8dd5b7848"
-          },
-          {
-            "name": "grant_type",
-            "in": "formData",
-            "description": "The grant type.",
-            "required": true,
             "type": "string",
             "enum": [
-              "authorization_code",
-              "refresh_token",
-              "client_credentials"
-            ],
-            "x-example": "authorization_code"
+              "UNKNOWN",
+              "TRANSFERS",
+              "EINVOICES",
+              "MORTGAGE_AGGREGATION",
+              "CHECKING_ACCOUNTS",
+              "SAVINGS_ACCOUNTS",
+              "CREDIT_CARDS",
+              "INVESTMENTS",
+              "LOANS",
+              "PAYMENTS",
+              "MORTGAGE_LOAN",
+              "IDENTITY_DATA"
+            ]
           },
           {
-            "name": "code",
-            "in": "formData",
-            "description": "The one-time code that was returned from the authorization flow. Can be omitted if grant types refresh_token or client_credentials are used.",
+            "name": "includeTestProviders",
+            "in": "query",
+            "description": "Defaults to false. If set to `true`, Providers of `TEST` type will be added in the response list.",
             "required": false,
-            "type": "string",
-            "x-example": "c50cd6960a6f44ffb701ef60fafa7761"
+            "type": "boolean"
           },
           {
-            "name": "refresh_token",
-            "in": "formData",
-            "description": "The refresh token to be used to get a new access token. Can be omitted if grant types authorization_code or client_credentials are used.",
+            "name": "excludeNonTestProviders",
+            "in": "query",
+            "description": "Defaults to false. If set to `true`, Providers of type different than `TEST` will be removed from the response list.",
             "required": false,
-            "type": "string",
-            "x-example": "c45d4e0daea9440aacf3b2aea66f46a8"
+            "type": "boolean"
           },
           {
-            "name": "scope",
-            "in": "formData",
-            "description": "The requested scope when using client credentials. Can be omitted if grant types authorization_code or refresh_token are used.",
+            "name": "name",
+            "in": "query",
+            "description": "Gets a specific provider from the name. If this query parameter is used, only one or no providers will be returned.",
             "required": false,
-            "type": "string",
-            "x-example": "user:create,authorization:grant"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/OAuth2AuthenticationTokenResponse"
+              "$ref": "#/definitions/ProviderListResponse"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "credentials:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/payments/providers/{market}": {
+      "get": {
+        "tags": [
+          "Payment Request",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List providers for a market",
+        "description": "Lists all providers on a specified market. Your authentication affects the list of providers you get: When authenticated, the result will only contain providers available for that user. When unauthenticated and without passing The OAuth2 Client ID header, you get all providers made available for the entire environment. If you are unauthenticated but you include The OAuth2 Client ID header, you will get providers available for the app with the given client id.",
+        "operationId": "listByMarket",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "X-Tink-OAuth-Client-ID",
+            "in": "header",
+            "description": "The OAuth2 Client ID",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "market",
+            "in": "path",
+            "description": "The ISO 3166-1 alpha-2 market code.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Accept-Language",
+            "in": "header",
+            "description": "Language to translate to.",
+            "required": false,
+            "type": "string",
+            "x-example": "en-US"
+          },
+          {
+            "name": "capability",
+            "in": "query",
+            "description": "Use the capability to only list providers with a specific capability. If no capability the provider response will not be filtered on capability.",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "TRANSFERS",
+              "EINVOICES",
+              "MORTGAGE_AGGREGATION",
+              "CHECKING_ACCOUNTS",
+              "SAVINGS_ACCOUNTS",
+              "CREDIT_CARDS",
+              "INVESTMENTS",
+              "LOANS",
+              "PAYMENTS",
+              "MORTGAGE_LOAN",
+              "IDENTITY_DATA"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/ProviderListResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "providers:read"
+            ]
+          }
+        ]
       }
     },
     "/api/v1/payments/requests": {
@@ -2796,14 +2657,6 @@
         "operationId": "list",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
             "name": "capability",
             "in": "query",
             "description": "Use the capability to only list providers with a specific capability. If no capability the provider response will not be filtered on capability.",
@@ -2873,14 +2726,6 @@
         "operationId": "listMarkets",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          },
-          {
             "name": "X-Tink-OAuth-Client-ID",
             "in": "header",
             "description": "The OAuth2 Client ID",
@@ -2914,16 +2759,7 @@
         "summary": "Suggest providers for user.",
         "description": "",
         "operationId": "suggest",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -2945,18 +2781,12 @@
         "parameters": [
           {
             "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          },
-          {
             "name": "X-Tink-OAuth-Client-ID",
-            "in": "header",
             "description": "The OAuth2 Client ID",
             "required": false,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/OAuth2ClientRequest"
+            }
           },
           {
             "name": "market",
@@ -3026,6 +2856,776 @@
         ]
       }
     },
+    "/api/v1/savings-goals": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List Savings Goals",
+        "description": "List the user's Savings Goals.",
+        "operationId": "listSavingsGoals",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "(Optional) The first token is presented on the response of the first call if there are multiple pages.",
+            "required": false,
+            "type": "string",
+            "x-example": "MQ=="
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "(Optional) Size of the page to fetch.",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "status_in",
+            "in": "query",
+            "description": "Filter Savings Goals by status. If left out, it will by default, filter out <code>ARCHIVED</code> Savings Goals.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "CREATED",
+                "IN_PROGRESS",
+                "COMPLETED",
+                "ARCHIVED"
+              ]
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "account_in",
+            "in": "query",
+            "description": "Filter the list of Savings Goals by account ids.",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list Savings Goals.",
+            "schema": {
+              "$ref": "#/definitions/ListSavingsGoalsResponse"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Create Savings Goal",
+        "description": "Create a new Savings Goal.",
+        "operationId": "createSavingsGoal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The Savings Goal to create",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The successfully created Savings Goal.",
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          },
+          "400": {
+            "description": "Request is not following the specification. See body for details."
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/accounts/{id}": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Get Account",
+        "description": "Get Account by ID from a Savings Goals domain.",
+        "operationId": "getAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The account ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Account with actual balance and unallocated funds available for Savings Goals to allocate.",
+            "schema": {
+              "$ref": "#/definitions/Account"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Account not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/accounts/{id}/allocations": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List allocations by Account",
+        "description": "",
+        "operationId": "listAllocationsByAccount",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "(Optional) The first token is presented on the response of the first call if there are multiple pages.",
+            "required": false,
+            "type": "string",
+            "x-example": "MQ=="
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "(Optional) Size of the page to fetch.",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The account ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of allocations withdraw from, and deposit to, the Account.",
+            "schema": {
+              "$ref": "#/definitions/ListAllocationsResponse"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Account not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/allocations/fund:reallocate": {
+      "post": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "ReAllocate amount",
+        "description": "ReAllocate amount from a Savings Goal to another Savings Goal.",
+        "operationId": "reallocate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The reallocation to make",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReAllocateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The reallocation allocation.",
+            "schema": {
+              "$ref": "#/definitions/Allocation"
+            }
+          },
+          "400": {
+            "description": "Request is not following the specification. See body for details."
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/categories": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List categories",
+        "description": "List all available categories.",
+        "operationId": "listCategories",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "The list of all available categories that can be set on a Savings Goal.",
+            "schema": {
+              "$ref": "#/definitions/ListCategoriesResponse"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Get Savings Goal",
+        "description": "Get Savings Goal by id.",
+        "operationId": "getSavingsGoal",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Savings Goal.",
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Update Savings Goal",
+        "description": "Update a Savings Goal.",
+        "operationId": "updateSavingsGoal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The Savings Goal fields to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated Savings Goal.",
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}/allocations": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List allocations",
+        "description": "List allocations by Savings Goal.",
+        "operationId": "listAllocations",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "(Optional) The first token is presented on the response of the first call if there are multiple pages.",
+            "required": false,
+            "type": "string",
+            "x-example": "MQ=="
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "(Optional) Size of the page to fetch.",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of allocations.",
+            "schema": {
+              "$ref": "#/definitions/ListAllocationsResponse"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}/allocations/fund:deposit": {
+      "post": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Deposit to Savings Goal",
+        "description": "Deposit amount to a Savings Goal.",
+        "operationId": "depositFundAllocation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The amount to deposit",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AmountRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The deposit Allocation.",
+            "schema": {
+              "$ref": "#/definitions/Allocation"
+            }
+          },
+          "400": {
+            "description": "Request is not following the specification. See body for details."
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}/allocations/fund:withdraw": {
+      "post": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Withdraw from Savings Goal",
+        "description": "Withdraw amount from a Savings Goal.",
+        "operationId": "withdrawFundAllocation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The amount to withdraw",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AmountRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The withdraw Allocation.",
+            "schema": {
+              "$ref": "#/definitions/Allocation"
+            }
+          },
+          "400": {
+            "description": "Request is not following the specification. See body for details."
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}/period_progress": {
+      "get": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "List periods progress",
+        "description": "Get a list of periodProgresses, based on Users <code>periodMode</code> between the Savings Goal <code>createTime</code> and <code>targetDate</code>.<br />If no targetDate is set on the Savings Goal, it will return PeriodProgresses between createTime and the current date",
+        "operationId": "listPeriodProgresses",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page_token",
+            "in": "query",
+            "description": "(Optional) The first token is presented on the response of the first call if there are multiple pages.",
+            "required": false,
+            "type": "string",
+            "x-example": "MQ=="
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "(Optional) Size of the page to fetch.",
+            "required": false,
+            "type": "integer",
+            "format": "int32",
+            "x-example": 10
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of PeriodProgresses between the createTime and targetDate.",
+            "schema": {
+              "$ref": "#/definitions/ListPeriodProgressesResponse"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}:archive": {
+      "post": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Archive Savings Goal",
+        "description": "Archive a Savings Goal.<br />All funds will be withdrawn from the Savings Goal and <code>status</code> changed to <code>ARCHIVED</code>.",
+        "operationId": "archive",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Savings Goal with status changed <code>status</code> to <code>ARCHIVED</code>.",
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/savings-goals/{id}:complete": {
+      "post": {
+        "tags": [
+          "Savings Goals",
+          "ENTERPRISE",
+          "BETA"
+        ],
+        "summary": "Complete Savings Goal",
+        "description": "Mark a Savings Goal as Completed<br />No more allocations can be made from or to this goal.",
+        "operationId": "complete",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The Savings Goal ID",
+            "required": true,
+            "type": "string",
+            "x-example": "d9f134ee2eb44846a4e02990ecc8d32e"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Savings Goal with status changed <code>status</code> to <code>COMPLETED</code>.",
+            "schema": {
+              "$ref": "#/definitions/Savings Goals"
+            }
+          },
+          "400": {
+            "description": "Request is not following the specification. See body for details."
+          },
+          "401": {
+            "description": "If the user is not authorized."
+          },
+          "404": {
+            "description": "Savings Goal not found."
+          }
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "savings-goals:write"
+            ]
+          }
+        ]
+      }
+    },
     "/api/v1/search": {
       "post": {
         "tags": [
@@ -3043,14 +3643,6 @@
           "application/x-protobuf"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          },
           {
             "in": "body",
             "name": "body",
@@ -3087,7 +3679,7 @@
           "Statistics"
         ],
         "summary": "Query statistics",
-        "description": "By querying the statistics endpoint, an API customer can select the specific types of data to access. The query should be posted in the request body and you can specify any of the properties available to filter the result set. Defining multiple properties will yield an `AND` operation, and specifying multiple values of a property will yield an `OR` operation.\nNote: Monthly statistics will be calculated only with the resolution that the user has in the user settings (MONTHLY, MONTHLY_ADJUSTED), and not for both.\nNote: `YEARLY` resolution is aggregated based on the resolution that the user has in the user settings. With `MONTHLY` it will be the calendar year and with `MONTHLY_ADJUSTED` it will be adjusted based on the users' `periodbreakday`\n\n### Statistics types\n\nType | Value of description field | Description | Available resolutions\n---- | ----------------- | ----------------- | -----------------\n`balances-by-account` | Identifier of an account | Balances over time by each account | `MONTHLY` `MONTHLY_ADJUSTED`\n`balances-by-account-type-group` | The type group name | Balances over time by each account group | `MONTHLY` `MONTHLY_ADJUSTED`\n`expenses-by-category` | Identifier of a category | Sum of expenses per period in each category | `MONTHLY` `MONTHLY_ADJUSTED` `YEARLY` `DAILY` `WEEKLY`\n`expenses-by-primary-category` | Identifier of a primary category | Combined sum of all expenses of sub-categories per period in each primary category | `MONTHLY` `MONTHLY_ADJUSTED` `YEARLY` `DAILY` `WEEKLY`\n`expenses-by-category/by-count` | Identifier of a category | Count of expenses per period in each category | `MONTHLY` `MONTHLY_ADJUSTED` `DAILY` `WEEKLY`\n`expenses-by-primary-category/by-count` | Identifier of a primary category | Combined count of all expenses of sub-catetories per period in each primary category | `MONTHLY` `MONTHLY_ADJUSTED` `DAILY` `WEEKLY`\n`income-by-category` | Identifier of a category | Sum of Incomes per period in each category | `MONTHLY` `MONTHLY_ADJUSTED`\n`income-and-expenses` |  | Sum of transactions per period for category type | `MONTHLY` `MONTHLY_ADJUSTED` `YEARLY`\n`left-to-spend` | The date | Takes income minus expenses over time | `MONTHLY` `MONTHLY_ADJUSTED`\n`left-to-spend-average` | The date | Average income minus expenses over 6 months | `MONTHLY` `MONTHLY_ADJUSTED`\n",
+        "description": "By querying the statistics endpoint, an API customer can select the specific types of data to access. The query should be posted in the request body and you can specify any of the properties available to filter the result set. Defining multiple properties will yield an `AND` operation, and specifying multiple values of a property will yield an `OR` operation.\nNote: Monthly statistics will be calculated only with the resolution that the user has in the user settings (MONTHLY, MONTHLY_ADJUSTED), and not for both.\nNote: `YEARLY` resolution is aggregated based on the resolution that the user has in the user settings. With `MONTHLY` it will be the calendar year and with `MONTHLY_ADJUSTED` it will be adjusted based on the users' `periodbreakday`\n\n### Statistics types\n\nType | Value of description field | Description | Available resolutions\n---- | ----------------- | ----------------- | -----------------\n`balances-by-account` | Identifier of an account | Balances over time by each account | `MONTHLY` `MONTHLY_ADJUSTED`\n`balances-by-account-type-group` | The type group name | Balances over time by each account group | `MONTHLY` `MONTHLY_ADJUSTED`\n`expenses-by-category` | Identifier of a category | Sum of expenses per period in each category | `MONTHLY` `MONTHLY_ADJUSTED` `YEARLY` `DAILY` `WEEKLY`\n`expenses-by-primary-category` | Identifier of a primary category | Combined sum of all expenses of sub-categories per period in each primary category | `MONTHLY` `MONTHLY_ADJUSTED` `YEARLY` `DAILY` `WEEKLY`\n`expenses-by-category/by-count` | Identifier of a category | Count of expenses per period in each category | `MONTHLY` `MONTHLY_ADJUSTED` `DAILY` `WEEKLY`\n`expenses-by-primary-category/by-count` | Identifier of a primary category | Combined count of all expenses of sub-catetories per period in each primary category | `MONTHLY` `MONTHLY_ADJUSTED` `DAILY` `WEEKLY`\n`income-by-category` | Identifier of a category | Sum of Incomes per period in each category | `MONTHLY` `MONTHLY_ADJUSTED`\n`income-and-expenses` |  | Sum of transactions per period for category type | `MONTHLY` `MONTHLY_ADJUSTED` `YEARLY`\n`left-to-spend` | The date | Takes income minus expenses over time | `MONTHLY` `MONTHLY_ADJUSTED`\n`left-to-spend-average` | The date | Average income minus expenses over 6 months | `MONTHLY` `MONTHLY_ADJUSTED`\n`incoming-transfers-by-category` | Identifier of a category | Sum of incoming transfers per period in each category <em>Note: This feature is not enabled by default. Speak to your account manager for more information.</em> | `YEARLY` `MONTHLY` `MONTHLY_ADJUSTED`\n`incoming-transfers-by-category/by-count` | Identifier of a category | Count of incoming transfers per period in each category <em>Note: This feature is not enabled by default. Speak to your account manager for more information.</em> | `YEARLY` `MONTHLY` `MONTHLY_ADJUSTED`\n`outgoing-transfers-by-category` | Identifier of a category | Sum of outgoing transfers per period in each category <em>Note: This feature is not enabled by default. Speak to your account manager for more information.</em> | `YEARLY` `MONTHLY` `MONTHLY_ADJUSTED`\n`outgoing-transfers-by-category/by-count` | Identifier of a category | Count of outgoing transfers per period in each category <em>Note: This feature is not enabled by default. Speak to your account manager for more information.</em> | `YEARLY` `MONTHLY` `MONTHLY_ADJUSTED`\n",
         "operationId": "query",
         "consumes": [
           "application/json"
@@ -3096,14 +3688,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticationContext"
-            }
-          },
           {
             "in": "body",
             "name": "body",
@@ -3872,14 +4456,6 @@
         ],
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/AuthenticatedUser"
-            }
-          },
-          {
             "name": "id",
             "in": "path",
             "description": "The ID of the Transfer",
@@ -3909,8 +4485,8 @@
         "tags": [
           "User"
         ],
-        "summary": "Get the user",
-        "description": "Returns the user object. Note that the password field is not stored in clear text nor populated when getting the user. It's only used for setting the password when registering a new user.",
+        "summary": "Get user",
+        "description": "Returns the authenticated user.",
         "operationId": "getUser",
         "produces": [
           "application/json",
@@ -4188,16 +4764,7 @@
           "application/json",
           "application/x-protobuf"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/DeleteUserRequest"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -4280,8 +4847,8 @@
         "tags": [
           "User"
         ],
-        "summary": "Get the user profile",
-        "description": "Returns the user profile.",
+        "summary": "Get user profile",
+        "description": "Returns the authenticated user's profile.",
         "operationId": "getProfile",
         "produces": [
           "application/json",
@@ -4407,6 +4974,32 @@
         }
       }
     },
+    "Account": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The ID of the Account."
+        },
+        "name": {
+          "type": "string",
+          "example": "My account",
+          "description": "The name of the Account."
+        },
+        "balance": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "The actual balance of the Account.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        },
+        "unallocatedFunds": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "The amount available for allocating to the connected Savings Goals.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        }
+      },
+      "description": "An account model within the Savings Goals domain, that contains the current unallocated amount available to fund a Savings Goal."
+    },
     "CategorizeTransactionsListRequest": {
       "type": "object",
       "required": [
@@ -4513,17 +5106,6 @@
         }
       }
     },
-    "ClientMessage": {
-      "type": "object",
-      "properties": {
-        "locale": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
     "LoanEventsResponse": {
       "type": "object",
       "properties": {
@@ -4532,6 +5114,17 @@
           "items": {
             "$ref": "#/definitions/LoanEvent"
           }
+        }
+      }
+    },
+    "ClientMessage": {
+      "type": "object",
+      "properties": {
+        "locale": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
         }
       }
     },
@@ -4578,6 +5171,45 @@
         }
       }
     },
+    "Beneficiary": {
+      "type": "object",
+      "required": [
+        "accountNumber",
+        "accountNumberType",
+        "name",
+        "ownerAccountId"
+      ],
+      "properties": {
+        "ownerAccountId": {
+          "type": "string",
+          "example": "bb1ca3b3080e45da97847c493914ad82",
+          "description": "The internal identifier of the account that this beneficiary belongs to."
+        },
+        "name": {
+          "type": "string",
+          "example": "Example Inc.",
+          "description": "The name chosen by the user for this beneficiary."
+        },
+        "accountNumberType": {
+          "type": "string",
+          "example": "iban",
+          "description": "The type of the `accountNumber` that this beneficiary has.",
+          "enum": [
+            "se",
+            "se-bg",
+            "se-pg",
+            "iban",
+            "sort-code"
+          ]
+        },
+        "accountNumber": {
+          "type": "string",
+          "example": "FR7630006000011234567890189",
+          "description": "The account number for the beneficiary. The structure of this field depends on the `accountNumberType`."
+        }
+      },
+      "description": "A beneficiary is a payment or transfer destination account which has been authorized by the bank. Each beneficiary belongs to an account, which means that the given account can send money to that beneficiary. However, different banks treat beneficiaries in different ways. Some treat them as fully trusted, meaning no signing at all is required when transferring money to the beneficiary. Other banks treat them more as address books of registered recipients."
+    },
     "RecurringPeriodicity": {
       "type": "object",
       "required": [
@@ -4593,6 +5225,17 @@
             "MONTH",
             "YEAR"
           ]
+        }
+      }
+    },
+    "ListCategoriesResponse": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -4865,6 +5508,67 @@
         }
       }
     },
+    "Device": {
+      "type": "object",
+      "required": [
+        "appId",
+        "deviceName",
+        "deviceToken",
+        "notificationToken",
+        "type",
+        "userAgent"
+      ],
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1455740874875",
+          "description": "Date when the device was first created"
+        },
+        "notificationToken": {
+          "type": "string",
+          "example": "LRJ2bFzHA1jUIkwayDqxteNsWY3udejkEe9UwRMt12E_R5i...",
+          "description": "The APN or GCM token"
+        },
+        "type": {
+          "type": "string",
+          "example": "android",
+          "description": "The operating system of the device"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1455740874875",
+          "description": "Date when the device was last updated"
+        },
+        "publicKey": {
+          "type": "string",
+          "example": "MIIC7DCCAdQCAQEwDQYJKoZIhvcNAQELBQAwPDE6MDgGA1UEAwwxTXlTUUxfU2Vy...",
+          "description": "Public key for sending encrypted push notifications to the device"
+        },
+        "appId": {
+          "type": "string",
+          "example": "se.tink.android",
+          "description": "The app ID of the app that registers the device"
+        },
+        "deviceToken": {
+          "type": "string",
+          "example": "51ed6c20-dad6-4270-a4f2-56648f442047",
+          "description": "A device token, should be unique per device and app"
+        },
+        "userAgent": {
+          "type": "string",
+          "example": "Tink Mobile/1.7.8 (Android; 4.4.2, LGE Nexus 4)",
+          "description": "The User-Agent of the device"
+        },
+        "deviceName": {
+          "type": "string",
+          "example": "Fredrik's iPhone",
+          "description": "The device name"
+        }
+      },
+      "description": "A device represents some kind of device which belongs to a user. It could for example be an iPhone."
+    },
     "NotificationSettings": {
       "type": "object",
       "required": [
@@ -4956,66 +5660,20 @@
         }
       }
     },
-    "Device": {
+    "ListAllocationsResponse": {
       "type": "object",
-      "required": [
-        "appId",
-        "deviceName",
-        "deviceToken",
-        "notificationToken",
-        "type",
-        "userAgent"
-      ],
       "properties": {
-        "created": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1455740874875",
-          "description": "Date when the device was first created"
+        "allocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Allocation"
+          }
         },
-        "notificationToken": {
+        "nextPageToken": {
           "type": "string",
-          "example": "LRJ2bFzHA1jUIkwayDqxteNsWY3udejkEe9UwRMt12E_R5i...",
-          "description": "The APN or GCM token"
-        },
-        "type": {
-          "type": "string",
-          "example": "android",
-          "description": "The operating system of the device"
-        },
-        "updated": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1455740874875",
-          "description": "Date when the device was last updated"
-        },
-        "publicKey": {
-          "type": "string",
-          "example": "MIIC7DCCAdQCAQEwDQYJKoZIhvcNAQELBQAwPDE6MDgGA1UEAwwxTXlTUUxfU2Vy...",
-          "description": "Public key for sending encrypted push notifications to the device"
-        },
-        "appId": {
-          "type": "string",
-          "example": "se.tink.android",
-          "description": "The app ID of the app that registers the device"
-        },
-        "deviceToken": {
-          "type": "string",
-          "example": "51ed6c20-dad6-4270-a4f2-56648f442047",
-          "description": "A device token, should be unique per device and app"
-        },
-        "userAgent": {
-          "type": "string",
-          "example": "Tink Mobile/1.7.8 (Android; 4.4.2, LGE Nexus 4)",
-          "description": "The User-Agent of the device"
-        },
-        "deviceName": {
-          "type": "string",
-          "example": "Fredrik's iPhone",
-          "description": "The device name"
+          "description": "Next page token to be used for pagination, use it with the next request parameter <code>page_token</code> to request the next page of the list."
         }
-      },
-      "description": "A device represents some kind of device which belongs to a user. It could for example be an iPhone."
+      }
     },
     "BudgetDetailsResponse": {
       "type": "object",
@@ -5054,6 +5712,88 @@
           "$ref": "#/definitions/CurrencyDenominatedAmount"
         }
       }
+    },
+    "Savings Goals": {
+      "type": "object",
+      "required": [
+        "account",
+        "name",
+        "targetAmount",
+        "targetDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The ID of the Savings Goal.",
+          "readOnly": true
+        },
+        "account": {
+          "type": "string",
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The ID of the Account connected to the Savings Goal."
+        },
+        "name": {
+          "type": "string",
+          "example": "Wedding",
+          "description": "The name of the Savings Goal."
+        },
+        "description": {
+          "type": "string",
+          "example": "The savings goal for our big wedding. Including wedding-singers.",
+          "description": "A longer description of the Savings Goal."
+        },
+        "savedAmount": {
+          "example": "{scale: 2, unscaledValue:1000, currencyCode:EUR}",
+          "description": "The current saved amount of this goal.",
+          "readOnly": true,
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        },
+        "targetAmount": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "The target amount to save for this Savings Goal.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        },
+        "targetDate": {
+          "type": "string",
+          "example": "2022-10-25",
+          "description": "The target date for the Savings Goal, ISO 8601 formatted date (yyyy-MM-dd)."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the Savings Goal.<br />- CREATED: Savings goal is created, nothing have been allocated to it yet.<br />- IN_PROGRESS: Savings goal is in progress, at least one allocation have been done.<br />- COMPLETED: Manual action, completed/inactive savings goal, funds are still allocated but no more allocations is possible.<br />- ARCHIVED: Archived savings-goal (when setting archived all funds will be unallocated).",
+          "readOnly": true,
+          "enum": [
+            "CREATED",
+            "IN_PROGRESS",
+            "COMPLETED",
+            "ARCHIVED"
+          ]
+        },
+        "createTime": {
+          "type": "string",
+          "example": "2020-05-14T13:30:45Z",
+          "description": "Date and time in UTC in which the Savings Goal was created.",
+          "readOnly": true
+        },
+        "categories": {
+          "type": "array",
+          "example": "[\"wedding\", \"trip\"]",
+          "description": "A set of predefined categories that applies to the Savings Goal.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "example": "[\"icon:blue\", \"priority:10\"]",
+          "description": "Custom user-tags for this Savings Goal.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "A Savings Goal represents a financial savings target for a user.<br />The Savings Goal itself is defined by either a target date or a target amount, or both.<br />The Savings Goal is directly bound to <code>one</code> Account, which can have multiple Savings Goals connected to it. Then user can allocate to her goals by keeping track of how much funds left on the account."
     },
     "NotificationQuery": {
       "type": "object",
@@ -5211,15 +5951,6 @@
         }
       }
     },
-    "CreateBudgetResponse": {
-      "type": "object",
-      "properties": {
-        "budgetSpecification": {
-          "description": "The created budget.",
-          "$ref": "#/definitions/Budget"
-        }
-      }
-    },
     "TransactionCluster": {
       "type": "object",
       "properties": {
@@ -5243,6 +5974,15 @@
         }
       }
     },
+    "CreateBudgetResponse": {
+      "type": "object",
+      "properties": {
+        "budgetSpecification": {
+          "description": "The created budget.",
+          "$ref": "#/definitions/Budget"
+        }
+      }
+    },
     "InsightData": {
       "type": "object",
       "properties": {
@@ -5258,15 +5998,43 @@
             "BUDGET_SUCCESS",
             "BUDGET_SUMMARY_ACHIEVED",
             "BUDGET_SUMMARY_OVERSPENT",
-            "LARGE_EXPENSE",
-            "SINGLE_UNCATEGORIZED_TRANSACTION",
-            "DOUBLE_CHARGE",
             "WEEKLY_UNCATEGORIZED_TRANSACTIONS",
-            "WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY",
-            "WEEKLY_SUMMARY_EXPENSES_BY_DAY",
-            "MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY",
-            "LEFT_TO_SPEND_NEGATIVE"
+            "WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY"
           ]
+        }
+      }
+    },
+    "SourceDestinationValidation": {
+      "type": "object",
+      "required": [
+        "canTransfer"
+      ],
+      "properties": {
+        "canTransfer": {
+          "type": "boolean",
+          "example": true,
+          "description": "Whether or not the source account can transfer money towards the destination account.",
+          "default": false
+        }
+      }
+    },
+    "DeviceConfigurationDto": {
+      "type": "object",
+      "properties": {
+        "flags": {
+          "type": "array",
+          "example": "[\"FLAG_1\", \"FLAG_2\"]",
+          "description": "Device specific feature flags.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "markets": {
+          "type": "array",
+          "description": "Available markets.",
+          "items": {
+            "$ref": "#/definitions/Market"
+          }
         }
       }
     },
@@ -5303,7 +6071,7 @@
         "username": {
           "type": "string",
           "example": "nisse@manpower.se",
-          "description": "The username (usually email) of the user."
+          "description": "The username of the user. Today only used by selected customers."
         },
         "nationalId": {
           "type": "string",
@@ -5312,37 +6080,6 @@
         }
       },
       "description": "The user model represents a unique Tink end-user and includes properties that defines the user, user profile information and user-modifiable settings. The user information can primarily be used whenever a Tink user signs up for a 3rd party service using her Tink account, or when user-modifiable settings, such as locale or currency, are needed in order to display or calculate the correct data in the 3rd party service."
-    },
-    "DeviceConfigurationDto": {
-      "type": "object",
-      "properties": {
-        "flags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "markets": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Market"
-          }
-        }
-      }
-    },
-    "SourceDestinationValidation": {
-      "type": "object",
-      "required": [
-        "canTransfer"
-      ],
-      "properties": {
-        "canTransfer": {
-          "type": "boolean",
-          "example": true,
-          "description": "Whether or not the source account can transfer money towards the destination account.",
-          "default": false
-        }
-      }
     },
     "UpdateCredentialsRequest": {
       "type": "object",
@@ -5373,63 +6110,84 @@
       "properties": {
         "accountId": {
           "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "example": "a7b67265-8030-4d65-aa42-a8f4bd287a72",
+          "description": "The internal identifier of the account which has the portfolio."
         },
         "id": {
           "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "example": "65bc7a41-a66e-4ad1-aad1-99bbfb3c5098",
+          "description": "The internal identifier of the loan."
         },
         "userId": {
           "type": "string",
-          "format": "uuid"
-        },
-        "credentialsId": {
-          "type": "string",
-          "format": "uuid"
+          "format": "uuid",
+          "example": "53559ef7-4508-4048-b322-2b175cdaab23",
+          "description": "The internal identifier of the user which owns the portfolio."
         },
         "initialBalance": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "example": -10000.0,
+          "description": "The initial loan account balance."
         },
         "initialDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "example": "1455740874875",
+          "description": "Loan issue date."
         },
         "numMonthsBound": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "example": 36,
+          "description": "Length of the interest rate fixation period expressed in number of months."
         },
         "name": {
-          "type": "string"
+          "type": "string",
+          "example": "Car Loan",
+          "description": "Descriptive label for the loan."
         },
         "interest": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "example": 0.025,
+          "description": "Interest rate."
         },
         "balance": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "example": -9000.0,
+          "description": "The current loan account balance."
         },
         "amortized": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "example": 1000.0,
+          "description": "Amount amortized to date."
         },
         "nextDayOfTermsChange": {
           "type": "string",
-          "format": "date-time"
-        },
-        "serializedLoanResponse": {
-          "type": "string"
+          "format": "date-time",
+          "example": "1455740874875",
+          "description": "Reset date for the interest rate fixation period."
         },
         "updated": {
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "example": "1553169600000",
+          "description": "Loan details last updated timestamp."
         },
         "providerName": {
-          "type": "string"
+          "type": "string",
+          "example": "handelsbanken-bankid",
+          "description": "Identifier for the loan provider."
         },
         "type": {
           "type": "string",
+          "example": "MORTGAGE",
+          "description": "The type of loan.",
           "enum": [
             "MORTGAGE",
             "BLANCO",
@@ -5442,11 +6200,15 @@
           ]
         },
         "loanNumber": {
-          "type": "string"
+          "type": "string",
+          "example": "01-123456-234567",
+          "description": "The provider's internal identifier for the loan."
         },
         "monthlyAmortization": {
           "type": "number",
-          "format": "double"
+          "format": "double",
+          "example": 100.0,
+          "description": "Fixed monthly amortization amount."
         },
         "loanDetails": {
           "$ref": "#/definitions/LoanDetails"
@@ -5457,6 +6219,17 @@
         }
       },
       "description": "Loans represent a user's loan towards a financial institution, such as a mortgage or a student loan. Technically, they can be seen as accounts, but also contain additional details such as interest rate, amortization, loan securities and applicants."
+    },
+    "OAuth2ClientRequest": {
+      "type": "object",
+      "properties": {
+        "linkClient": {
+          "$ref": "#/definitions/Client"
+        },
+        "getoAuth2Client": {
+          "$ref": "#/definitions/OAuth2Client"
+        }
+      }
     },
     "Activity": {
       "type": "object",
@@ -5575,44 +6348,6 @@
           "type": "string",
           "example": "325ee4ccf579450ca59d89ee54fa7e40",
           "description": "The account ID."
-        }
-      }
-    },
-    "AuthenticatedUser": {
-      "type": "object",
-      "properties": {
-        "method": {
-          "type": "string",
-          "enum": [
-            "SESSION",
-            "BASIC",
-            "BEARER",
-            "NON_VALID",
-            "TOKEN"
-          ]
-        },
-        "appId": {
-          "type": "string"
-        },
-        "user": {
-          "$ref": "#/definitions/User"
-        },
-        "administrativeMode": {
-          "type": "boolean",
-          "default": false
-        },
-        "scopes": {
-          "type": "array",
-          "uniqueItems": true,
-          "items": {
-            "type": "string"
-          }
-        },
-        "locale": {
-          "type": "string"
-        },
-        "oauthClientId": {
-          "type": "string"
         }
       }
     },
@@ -6342,7 +7077,7 @@
           }
         }
       },
-      "description": "A webhook can be set up to listen to certain events. The webhook itself consists of the desired events to listen to and a desired URL where the information should be received. Every time an event occurs of the desired type(s), a POST request will be sent to the URL."
+      "description": "A webhook can be set up to listen to certain events. The webhook itself consists of the desired events to listen to and a desired URL where the information should be received. Every time an event occurs of the desired type(s), a POST request will be sent to the URL. You can read more about webhooks and the available events in our [guide](https://docs.tink.com/resources/getting-started/webhooks)."
     },
     "SimilarTransactionsResponse": {
       "type": "object",
@@ -6449,37 +7184,37 @@
         "type": {
           "type": "string",
           "example": "TRANSACTION",
-          "description": "The search type.",
+          "description": "(DEPRECATED) The search type. Will always be set to TRANSACTION.",
           "enum": [
-            "STATEMENT",
-            "TRANSACTION",
-            "CATEGORY",
-            "BUDGET",
-            "GOAL",
-            "SUGGESTION"
+            "TRANSACTION"
           ]
         }
       }
     },
-    "ActivityQueryResponse": {
+    "AmountRequest": {
       "type": "object",
       "required": [
-        "activities",
-        "count"
+        "currencyCode",
+        "scale",
+        "unscaledValue"
       ],
       "properties": {
-        "activities": {
-          "type": "array",
-          "description": "The filtered list of activities matching the query",
-          "items": {
-            "$ref": "#/definitions/Activity"
-          }
+        "unscaledValue": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1050,
+          "description": "The unscaled value of the amount"
         },
-        "count": {
+        "scale": {
           "type": "integer",
           "format": "int32",
-          "example": 134,
-          "description": "The total number of activities matching the query"
+          "example": 2,
+          "description": "The scale of the amount."
+        },
+        "currencyCode": {
+          "type": "string",
+          "example": "EUR",
+          "description": "The ISO 4217 currency code of the amount"
         }
       }
     },
@@ -6505,13 +7240,25 @@
         }
       }
     },
-    "BudgetFilterCategory": {
+    "ActivityQueryResponse": {
       "type": "object",
+      "required": [
+        "activities",
+        "count"
+      ],
       "properties": {
-        "code": {
-          "type": "string",
-          "example": "expenses:food.coffee",
-          "description": "The category code."
+        "activities": {
+          "type": "array",
+          "description": "The filtered list of activities matching the query",
+          "items": {
+            "$ref": "#/definitions/Activity"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "example": 134,
+          "description": "The total number of activities matching the query"
         }
       }
     },
@@ -6552,7 +7299,7 @@
         "executionDate": {
           "type": "string",
           "example": "2019-11-20",
-          "description": "The date defining when the payment will be executed by the bank. If no execution date is given, it will be executed as soon as possible. The date follows the ISO 8601 with format yyyy-MM-dd. Note: This feature is currently only available on the Swedish market."
+          "description": "The date defining when the payment will be executed by the bank. If no execution date is given, it will be executed as soon as possible. The date follows the ISO 8601 with format yyyy-MM-dd. For more information, see the article <a href=\"/resources/payments/execute-payment-now-or-in-the-future\">Execute payment now or in the future</a>. Note: This feature is currently only available on the Swedish market."
         },
         "destinations": {
           "type": "array",
@@ -6575,34 +7322,22 @@
       },
       "description": "The payment request model represents a request for receiving payments with the recipient's payment information. Please note that it can not be used to make payments."
     },
+    "BudgetFilterCategory": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "example": "expenses:food.coffee",
+          "description": "The category code."
+        }
+      }
+    },
     "CallbackRelayedResponse": {
       "type": "object",
       "properties": {
         "appUri": {
           "type": "string",
           "description": "Registered app redirect uri"
-        }
-      }
-    },
-    "BudgetPeriod": {
-      "type": "object",
-      "properties": {
-        "start": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1549976786000",
-          "description": "Period start expressed as UTC epoch timestamp in milliseconds."
-        },
-        "end": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1552395986000",
-          "description": "Period end expressed as UTC epoch timestamp in milliseconds."
-        },
-        "spentAmount": {
-          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
-          "description": "Period spent amount.",
-          "$ref": "#/definitions/CurrencyDenominatedAmount"
         }
       }
     },
@@ -6644,6 +7379,28 @@
         }
       }
     },
+    "BudgetPeriod": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1549976786000",
+          "description": "Period start expressed as UTC epoch timestamp in milliseconds."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1552395986000",
+          "description": "Period end expressed as UTC epoch timestamp in milliseconds."
+        },
+        "spentAmount": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "Period spent amount.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        }
+      }
+    },
     "UpdateBudgetRequest": {
       "type": "object",
       "required": [
@@ -6673,18 +7430,6 @@
         "oneOffPeriodicity": {
           "description": "Periodicity configuration for a ONE_OFF budget. Required if periodicityType is set to ONE_OFF.",
           "$ref": "#/definitions/OneOffPeriodicity"
-        }
-      }
-    },
-    "CredentialsListResponse": {
-      "type": "object",
-      "properties": {
-        "credentials": {
-          "type": "array",
-          "description": "A list of credentials",
-          "items": {
-            "$ref": "#/definitions/Credentials"
-          }
         }
       }
     },
@@ -6753,61 +7498,40 @@
         }
       }
     },
-    "AuthenticationContext": {
+    "PeriodProgress": {
       "type": "object",
       "properties": {
-        "metadata": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
+        "periodStartDate": {
+          "type": "string",
+          "example": "2020-01-25",
+          "description": "The start date of the period, ISO 8601 formatted date (yyyy-MM-dd)."
+        },
+        "periodEndDate": {
+          "type": "string",
+          "example": "2020-02-25",
+          "description": "The end date of the period, ISO 8601 formatted date (yyyy-MM-dd)."
+        },
+        "amountSavedThisPeriod": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "The amount saved for the Savings Goal in this period.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        },
+        "reachedAmountForSavingsGoalThisPeriod": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "Amount saved from the Savings Goal <code>createTime</code> to the end of this period.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        }
+      }
+    },
+    "CredentialsListResponse": {
+      "type": "object",
+      "properties": {
+        "credentials": {
+          "type": "array",
+          "description": "A list of credentials",
+          "items": {
+            "$ref": "#/definitions/Credentials"
           }
-        },
-        "user": {
-          "$ref": "#/definitions/User"
-        },
-        "appId": {
-          "type": "string"
-        },
-        "userAgent": {
-          "type": "string"
-        },
-        "remoteAddress": {
-          "type": "string"
-        },
-        "authenticated": {
-          "type": "boolean",
-          "default": false
-        },
-        "userDeviceId": {
-          "type": "string"
-        },
-        "httpAuthenticationMethod": {
-          "type": "string",
-          "enum": [
-            "SESSION",
-            "BASIC",
-            "BEARER",
-            "NON_VALID",
-            "TOKEN"
-          ]
-        },
-        "oauth2Client": {
-          "$ref": "#/definitions/OAuth2Client"
-        },
-        "client": {
-          "$ref": "#/definitions/Client"
-        },
-        "clientType": {
-          "type": "string",
-          "enum": [
-            "IOS",
-            "ANDROID",
-            "OTHER"
-          ]
-        },
-        "administrativeMode": {
-          "type": "boolean",
-          "default": false
         }
       }
     },
@@ -6929,7 +7653,7 @@
         "status": {
           "type": "string",
           "example": "SENT",
-          "description": "Current status of the payment",
+          "description": "Current status of the payment. The value of this field changes during payment initiation according to <a href=\"/resources/payments/payment-status-transitions\">payment status transitions</a>.",
           "enum": [
             "AWAITING_CREDENTIALS",
             "CREATED",
@@ -6958,52 +7682,23 @@
         }
       }
     },
-    "OAuth2AuthenticationTokenResponse": {
+    "ReAllocateRequest": {
       "type": "object",
-      "required": [
-        "access_token",
-        "expires_in",
-        "refresh_token",
-        "scope",
-        "token_type"
-      ],
       "properties": {
-        "token_type": {
+        "sourceSavingsGoalId": {
           "type": "string",
-          "example": "bearer",
-          "description": "The type of authorization token returned.",
-          "readOnly": true
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The source Savings Goal ID to allocate money from."
         },
-        "expires_in": {
-          "type": "integer",
-          "format": "int32",
-          "example": 7200,
-          "description": "The amount of time in seconds for the expiration of the token.",
-          "readOnly": true
-        },
-        "access_token": {
+        "destinationSavingsGoalId": {
           "type": "string",
-          "example": "3084989d7eb94d58995217807441bdf4",
-          "description": "The access token that can be used to access an API resource. It should be treated as opaque (no defined format).",
-          "readOnly": true
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The destination Savings Goal ID to allocate money to."
         },
-        "refresh_token": {
-          "type": "string",
-          "example": "8bc289f2dd94440bb4561c55e1903845",
-          "description": "The refresh token that can be used to get a new access token. It should be treated as opaque (no defined format).",
-          "readOnly": true
-        },
-        "scope": {
-          "type": "string",
-          "example": "transactions:read,accounts:read",
-          "description": "The scope valid for the returned token.",
-          "readOnly": true
-        },
-        "id_hint": {
-          "type": "string",
-          "example": "John Doe",
-          "description": "Human readable information about the identity of user",
-          "readOnly": true
+        "amount": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "Amount to reallocate.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
         }
       }
     },
@@ -7105,7 +7800,7 @@
         "displayName": {
           "type": "string",
           "example": "Bink",
-          "description": "The display name of the provider.",
+          "description": "The name displayed in the app and what implementors will most likely use to display the provider.",
           "readOnly": true
         },
         "displayDescription": {
@@ -7132,13 +7827,13 @@
         "financialInstitutionName": {
           "type": "string",
           "example": "Bink",
-          "description": "The name of the financial institution.",
+          "description": "A name to group providers belonging the same financial institution.",
           "readOnly": true
         },
         "groupDisplayName": {
           "type": "string",
           "example": "Bink Corp.",
-          "description": "A display name for providers which are branches of a bigger group.",
+          "description": "The name of the group that several providers of the same bank can be placed in. Usually when a bank has branches and subsidiaries they are grouped under a single name.",
           "readOnly": true
         },
         "images": {
@@ -7394,14 +8089,6 @@
             "$ref": "#/definitions/TransactionPart"
           }
         },
-        "partnerPayload": {
-          "type": "object",
-          "example": "{}",
-          "description": "The payload that was previously ingested on the Connector API.",
-          "additionalProperties": {
-            "type": "object"
-          }
-        },
         "dispensableAmount": {
           "type": "number",
           "description": "The dispensable amount of the transaction."
@@ -7409,20 +8096,42 @@
         "userModified": {
           "type": "boolean",
           "default": false
+        },
+        "partnerPayload": {
+          "type": "object",
+          "example": "{}",
+          "description": "The payload that was previously ingested on the Connector API.",
+          "additionalProperties": {
+            "type": "object"
+          }
         }
       },
       "description": "An account usually contains multiple transactions (except for certain types of accounts where Tink can't access the underlying transactions, for example, certain `INVESTMENT` accounts). The transaction model represents any operation on an account, and could represent both the actual credit-card purchase on a `CREDIT_CARD` account, but also represent the transaction when you paid your credit-card bill. Most commonly, the transactions in an account should represent what the end-user typically regards as a transaction with its amount, description and date, etc."
     },
-    "DeleteUserRequest": {
+    "ListBeneficiariesResponse": {
       "type": "object",
-      "required": [
-        "userId"
-      ],
       "properties": {
-        "userId": {
+        "beneficiaries": {
+          "type": "array",
+          "description": "A list of all beneficiaries for all the accounts belonging to the authenticated user.",
+          "items": {
+            "$ref": "#/definitions/Beneficiary"
+          }
+        }
+      }
+    },
+    "ListPeriodProgressesResponse": {
+      "type": "object",
+      "properties": {
+        "periodProgresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PeriodProgress"
+          }
+        },
+        "nextPageToken": {
           "type": "string",
-          "example": "6e68cc6287704273984567b3300c5822",
-          "description": "The userId"
+          "description": "Next page token to be used for pagination, use it with the next request parameter <code>page_token</code> to request the next page of the list."
         }
       }
     },
@@ -7431,6 +8140,7 @@
       "properties": {
         "markets": {
           "type": "array",
+          "description": "List of markets.",
           "items": {
             "$ref": "#/definitions/Market"
           }
@@ -7508,6 +8218,51 @@
         }
       }
     },
+    "SearchResponseMetrics": {
+      "type": "object",
+      "required": [
+        "AVG",
+        "CATEGORIES",
+        "COUNT",
+        "NET",
+        "SUM"
+      ],
+      "properties": {
+        "COUNT": {
+          "type": "integer",
+          "format": "int32",
+          "example": 110,
+          "description": "A number representing the total number of transaction hits."
+        },
+        "NET": {
+          "type": "number",
+          "format": "double",
+          "example": 1288.45,
+          "description": "A number with the net amount of all transaction hits (income and expense). Example: A transaction with amount -42 and another with amount 9 will produce a net of -33."
+        },
+        "SUM": {
+          "type": "number",
+          "format": "double",
+          "example": 1650.0,
+          "description": "A number with the sum of all transaction hits (income and expense). Example: A transaction with amount -42 and another with amount 9 will produce a sum of 51."
+        },
+        "AVG": {
+          "type": "number",
+          "format": "double",
+          "example": 15.0,
+          "description": "A number with the arithmetic mean amount of all transaction hits (income and expense). Example: A sum of 51 from 2 transaction hits will produce an average of 25.5."
+        },
+        "CATEGORIES": {
+          "type": "object",
+          "example": "{\"0e1bade6a7e3459eb794f27b7ba4cea0\": 1.0}",
+          "description": "Key-value pairs of category id's and the proportion of the sum of all transaction hits they represent (income and expense). Example: Given a transaction with category \"A\" and amount -42 and a transaction with category \"B\" and amount 9 the result is {\"A\": 0.8235, \"B\": 0.1765}.",
+          "additionalProperties": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      }
+    },
     "AccountDetails": {
       "type": "object",
       "properties": {
@@ -7572,11 +8327,55 @@
         "events": {
           "type": "array",
           "example": "[\"signable-operation:update\"]",
-          "description": "A list of events to register web hooks for.",
+          "description": "A list of events to register web hooks for. Read more about available events [here](https://docs.tink.com/resources/getting-started/webhooks).",
           "uniqueItems": true,
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "CreateBeneficiaryRequest": {
+      "type": "object",
+      "required": [
+        "accountNumber",
+        "accountNumberType",
+        "credentialsId",
+        "name",
+        "ownerAccountId"
+      ],
+      "properties": {
+        "ownerAccountId": {
+          "type": "string",
+          "example": "bb1ca3b3080e45da97847c493914ad82",
+          "description": "The identifier of the source account that this beneficiary should be added to."
+        },
+        "credentialsId": {
+          "type": "string",
+          "example": "5c7e37de06cf42a2a0767c56b0012d48",
+          "description": "The ID of the `Credentials` used to add the beneficiary. Note that you can send in a different ID here than the credentials ID to which the account belongs. This functionality exists to support the case where you may have double credentials for one financial institution, due to PSD2 regulations."
+        },
+        "name": {
+          "type": "string",
+          "example": "Example Inc.",
+          "description": "The name chosen by the user for this beneficiary."
+        },
+        "accountNumberType": {
+          "type": "string",
+          "example": "iban",
+          "description": "The type of the `accountNumber` that this beneficiary has.",
+          "enum": [
+            "se",
+            "se-bg",
+            "se-pg",
+            "iban",
+            "sort-code"
+          ]
+        },
+        "accountNumber": {
+          "type": "string",
+          "example": "FR7630006000011234567890189",
+          "description": "The account number for the beneficiary. The structure of this field depends on the `accountNumberType`."
         }
       }
     },
@@ -7592,76 +8391,6 @@
           "type": "string",
           "example": "https://cdn.tink.se/provider-images/banners/tink.png",
           "description": "A image url for the banner."
-        }
-      }
-    },
-    "SelectInsightActionRequest": {
-      "type": "object",
-      "required": [
-        "insightAction",
-        "insightId"
-      ],
-      "properties": {
-        "insightId": {
-          "type": "string",
-          "example": "e2b746ed27c542ce846a8d693474df21",
-          "description": "The unique identifier of an existing insight."
-        },
-        "insightAction": {
-          "type": "string",
-          "example": "CREATE_TRANSFER",
-          "description": "The insight action that the user invoked for the insight."
-        }
-      }
-    },
-    "TransactionLinkSuggestionResponse": {
-      "type": "object",
-      "properties": {
-        "transactionId": {
-          "type": "string",
-          "description": "The ID of the transaction to find suggestions for."
-        },
-        "limit": {
-          "type": "integer",
-          "format": "int32",
-          "description": "The maximum amount of suggestions requested to be returned."
-        },
-        "suggestedCounterpartTransactions": {
-          "type": "array",
-          "description": "Suggested counterpart transactions.",
-          "items": {
-            "$ref": "#/definitions/Transaction"
-          }
-        }
-      }
-    },
-    "Period": {
-      "type": "object",
-      "properties": {
-        "endDate": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1464739199000",
-          "description": "Timestamp at the end of the period"
-        },
-        "name": {
-          "type": "string",
-          "example": "2016-05"
-        },
-        "resolution": {
-          "type": "string",
-          "example": "MONTHLY",
-          "description": "Resolution for the statistics. ",
-          "enum": [
-            "MONTHLY",
-            "MONTHLY_ADJUSTED"
-          ]
-        },
-        "startDate": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1462060800000",
-          "description": "Timestamp at the start of the period"
         }
       }
     },
@@ -7738,11 +8467,82 @@
       },
       "description": "A Transfer on Tink represents the tentative action of requesting a payment initiation. By consequence, its success does not represent that money has been successfully transferred from one account to another because the payment initiation relays the responsibility of properly executing the monetary reallocation to the financial institution.\r\nThe source account must belong to the authenticated user. Source and destination accounts are sent in a special URI format. See below examples."
     },
+    "SelectInsightActionRequest": {
+      "type": "object",
+      "required": [
+        "insightAction",
+        "insightId"
+      ],
+      "properties": {
+        "insightId": {
+          "type": "string",
+          "example": "e2b746ed27c542ce846a8d693474df21",
+          "description": "The unique identifier of an existing insight."
+        },
+        "insightAction": {
+          "type": "string",
+          "example": "CREATE_TRANSFER",
+          "description": "The insight action that the user invoked for the insight."
+        }
+      }
+    },
+    "TransactionLinkSuggestionResponse": {
+      "type": "object",
+      "properties": {
+        "transactionId": {
+          "type": "string",
+          "description": "The ID of the transaction to find suggestions for."
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The maximum amount of suggestions requested to be returned."
+        },
+        "suggestedCounterpartTransactions": {
+          "type": "array",
+          "description": "Suggested counterpart transactions.",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          }
+        }
+      }
+    },
+    "Period": {
+      "type": "object",
+      "properties": {
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1464739199000",
+          "description": "Timestamp at the end of the period"
+        },
+        "name": {
+          "type": "string",
+          "example": "2016-05"
+        },
+        "resolution": {
+          "type": "string",
+          "example": "MONTHLY",
+          "description": "Resolution for the statistics. ",
+          "enum": [
+            "MONTHLY",
+            "MONTHLY_ADJUSTED"
+          ]
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1462060800000",
+          "description": "Timestamp at the start of the period"
+        }
+      }
+    },
     "GdprLoginMethodListResponse": {
       "type": "object",
       "properties": {
         "gdprLoginMethods": {
           "type": "array",
+          "description": "Supported authentication methods.",
           "items": {
             "$ref": "#/definitions/GdprLoginMethod"
           }
@@ -7840,6 +8640,8 @@
         },
         "registerMethods": {
           "type": "array",
+          "example": "[\"BANKID\", \"EMAIL_AND_PASSWORD\"]",
+          "description": "Supported registration authentication methods.",
           "items": {
             "type": "string",
             "enum": [
@@ -7855,6 +8657,8 @@
         },
         "loginMethods": {
           "type": "array",
+          "example": "[\"BANKID\", \"EMAIL_AND_PASSWORD\"]",
+          "description": "Supported login authentication methods.",
           "items": {
             "type": "string",
             "enum": [
@@ -7870,6 +8674,8 @@
         },
         "gdprLoginMethods": {
           "type": "array",
+          "example": "[\"BANKID\", \"EMAIL_AND_PASSWORD\"]",
+          "description": "Supported user data control authentication methods.",
           "items": {
             "type": "string",
             "enum": [
@@ -7889,6 +8695,7 @@
       "type": "object",
       "required": [
         "count",
+        "metrics",
         "net",
         "periodAmounts",
         "query",
@@ -7899,7 +8706,11 @@
           "type": "integer",
           "format": "int32",
           "example": 110,
-          "description": "Number of results returned."
+          "description": "The total number of transactions hits."
+        },
+        "metrics": {
+          "description": "The metric object contains fields representing different metrics.",
+          "$ref": "#/definitions/SearchResponseMetrics"
         },
         "periodAmounts": {
           "type": "array",
@@ -7923,7 +8734,7 @@
           "type": "number",
           "format": "double",
           "example": 1288.45,
-          "description": "The transaction amount net of the result. Will only include the amounts from transactions which has the same currency as the user to who they belong."
+          "description": "The net amount of all transaction hits. Will only include the amounts from transactions which has the same currency as the user to who they belong."
         }
       }
     },
@@ -7968,7 +8779,7 @@
         "status": {
           "type": "string",
           "example": "SENT",
-          "description": "The transfer status.",
+          "description": "The transfer status. The value of this field changes during payment initiation according to <a href=\"/resources/payments/payment-status-transitions\">payment status transitions</a>.",
           "enum": [
             "AWAITING_CREDENTIALS",
             "CREATED",
@@ -8097,8 +8908,8 @@
         "createdTime": {
           "type": "integer",
           "format": "int64",
-          "example": 1549976786,
-          "description": "The epoch timestamp in UTC when the insight was created."
+          "example": 1549976786000,
+          "description": "The epoch timestamp in milliseconds in UTC when the insight was created."
         },
         "insightActions": {
           "type": "array",
@@ -8109,21 +8920,6 @@
         }
       },
       "description": "An actionable insight represent some kind of actionable event or insight derived from user data. It could for instance be that a user has low balance on one of their bank accounts where the action could be to transfer money to that account. Another example could be to encourage a user to save more money by creating a budget for a specific category. Read more about it [here](https://docs.tink.com/resources/pfm/actionable-insights)."
-    },
-    "ManualAuthenticationRequest": {
-      "type": "object",
-      "properties": {
-        "callbackUri": {
-          "type": "string",
-          "example": "http://my-customer-app.com/callback",
-          "description": "This URI will be used by the ASPSP to pass the authorization code. It corresponds to the redirect/callback URI in OAuth2/OpenId. This parameter is only applicable if you are a TPP."
-        },
-        "appUri": {
-          "type": "string",
-          "example": "http://my-customer-app.com/authentication",
-          "description": "The end user will be redirected to this URI after the authorization code has been delivered."
-        }
-      }
     },
     "LoanResponse": {
       "type": "object",
@@ -8141,6 +8937,21 @@
         "weightedAverageInterestRate": {
           "type": "number",
           "format": "double"
+        }
+      }
+    },
+    "ManualAuthenticationRequest": {
+      "type": "object",
+      "properties": {
+        "callbackUri": {
+          "type": "string",
+          "example": "http://my-customer-app.com/callback",
+          "description": "This URI will be used by the ASPSP to pass the authorization code. It corresponds to the redirect/callback URI in OAuth2/OpenId. This parameter is only applicable if you are a TPP."
+        },
+        "appUri": {
+          "type": "string",
+          "example": "http://my-customer-app.com/authentication",
+          "description": "The end user will be redirected to this URI after the authorization code has been delivered."
         }
       }
     },
@@ -8193,6 +9004,7 @@
         },
         "cashbackEnabled": {
           "type": "boolean",
+          "description": "(DEPRECATED) Removed feature.",
           "default": false
         },
         "notificationSettings": {
@@ -8264,12 +9076,8 @@
             "DISMISS",
             "VIEW_BUDGET",
             "CREATE_TRANSFER",
-            "VIEW_TRANSACTION",
-            "CATEGORIZE_EXPENSE",
-            "VIEW_TRANSACTIONS",
             "CATEGORIZE_TRANSACTIONS",
-            "VIEW_TRANSACTIONS_BY_CATEGORY",
-            "VIEW_EXPECTED_AND_ACTUAL_AMOUNT"
+            "VIEW_TRANSACTIONS_BY_CATEGORY"
           ]
         }
       }
@@ -8481,11 +9289,12 @@
         "description": {
           "type": "string",
           "example": "Sweden",
-          "description": "The display name of the market"
+          "description": "The display name of the market."
         },
         "auhtenticationMethod": {
           "type": "array",
-          "description": "The authentication methods valid for a specific market",
+          "example": "[\"BANKID\", \"EMAIL_AND_PASSWORD\"]",
+          "description": "The authentication methods valid for a specific market.",
           "items": {
             "type": "string",
             "enum": [
@@ -8498,6 +9307,21 @@
               "NON_VALID"
             ]
           }
+        }
+      }
+    },
+    "ListSavingsGoalsResponse": {
+      "type": "object",
+      "properties": {
+        "savingsGoals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Savings Goals"
+          }
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Next page token to be used for pagination, use it with the next request parameter <code>page_token</code> to request the next page of the list."
         }
       }
     },
@@ -8614,6 +9438,55 @@
         }
       }
     },
+    "Allocation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The ID of the new allocation.",
+          "readOnly": true
+        },
+        "sourceId": {
+          "type": "string",
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The ID of the Source."
+        },
+        "sourceType": {
+          "type": "string",
+          "description": "The type of the source.<br />- ACCOUNT: Source of type Account.<br />- SAVINGS_GOAL: Source of type Savings Goal.",
+          "enum": [
+            "ACCOUNT",
+            "SAVINGS_GOAL"
+          ]
+        },
+        "destinationId": {
+          "type": "string",
+          "example": "d9f134ee2eb44846a4e02990ecc8d32e",
+          "description": "The ID of the Destination."
+        },
+        "destinationType": {
+          "type": "string",
+          "description": "The type of the destination.<br />- ACCOUNT: Destination of type Account.<br />- SAVINGS_GOAL: Destination of type Savings Goal.",
+          "enum": [
+            "SAVINGS_GOAL",
+            "ACCOUNT"
+          ]
+        },
+        "amount": {
+          "example": "{scale: 2, unscaledValue:2000, currencyCode:EUR}",
+          "description": "Amount moved with the allocation.",
+          "$ref": "#/definitions/CurrencyDenominatedAmount"
+        },
+        "createTime": {
+          "type": "string",
+          "example": "2020-05-14T13:30:45Z",
+          "description": "Date and time in UTC in which the Allocation was made.",
+          "readOnly": true
+        }
+      },
+      "description": "An allocation is a virtual transaction withdraw from or deposit to a Savings Goal."
+    },
     "TransferDestination": {
       "type": "object",
       "properties": {
@@ -8693,18 +9566,6 @@
         }
       }
     },
-    "ProviderListResponse": {
-      "type": "object",
-      "properties": {
-        "providers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Provider"
-          }
-        }
-      },
-      "description": "The provider list response object."
-    },
     "OAuth2WebHookResponse": {
       "type": "object",
       "properties": {
@@ -8715,6 +9576,22 @@
           }
         }
       }
+    },
+    "ProviderListResponse": {
+      "type": "object",
+      "required": [
+        "providers"
+      ],
+      "properties": {
+        "providers": {
+          "type": "array",
+          "description": "List of providers that match the query",
+          "items": {
+            "$ref": "#/definitions/Provider"
+          }
+        }
+      },
+      "description": "The provider list response object."
     },
     "BusinessDaysResponse": {
       "type": "object",
@@ -8736,19 +9613,6 @@
               }
             }
           }
-        }
-      }
-    },
-    "OAuth2AuthorizeResponse": {
-      "type": "object",
-      "required": [
-        "code"
-      ],
-      "properties": {
-        "code": {
-          "type": "string",
-          "example": "c50cd6960a6f44ffb701ef60fafa7761",
-          "description": "The authorization code. It should be treated as opaque (no defined format)."
         }
       }
     },
@@ -8814,39 +9678,6 @@
         }
       }
     },
-    "OneOffPeriodicity": {
-      "type": "object",
-      "required": [
-        "end",
-        "start"
-      ],
-      "properties": {
-        "start": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1549976786000",
-          "description": "Budget start expressed as UTC epoch timestamp in milliseconds."
-        },
-        "end": {
-          "type": "string",
-          "format": "date-time",
-          "example": "1552395986000",
-          "description": "Budget end expressed as UTC epoch timestamp in milliseconds."
-        }
-      }
-    },
-    "DataExportRequestListResponse": {
-      "type": "object",
-      "properties": {
-        "dataExportRequests": {
-          "type": "array",
-          "description": "A list of data export requests",
-          "items": {
-            "$ref": "#/definitions/DataExportRequest"
-          }
-        }
-      }
-    },
     "Follow Item": {
       "type": "object",
       "required": [
@@ -8886,6 +9717,39 @@
         }
       },
       "description": "A follow item represents a budget for expense categories, search strings and savings goals. The idea behind the \"follow\" concept is that the end-user is following a category, a search string or, in the savings goal case, an account."
+    },
+    "DataExportRequestListResponse": {
+      "type": "object",
+      "properties": {
+        "dataExportRequests": {
+          "type": "array",
+          "description": "A list of data export requests",
+          "items": {
+            "$ref": "#/definitions/DataExportRequest"
+          }
+        }
+      }
+    },
+    "OneOffPeriodicity": {
+      "type": "object",
+      "required": [
+        "end",
+        "start"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1549976786000",
+          "description": "Budget start expressed as UTC epoch timestamp in milliseconds."
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time",
+          "example": "1552395986000",
+          "description": "Budget end expressed as UTC epoch timestamp in milliseconds."
+        }
+      }
     },
     "InsightProposedAction": {
       "type": "object",
@@ -9087,14 +9951,14 @@
         "dateInsightCreated": {
           "type": "integer",
           "format": "int64",
-          "example": 1549976786,
-          "description": "The epoch timestamp in UTC when the insight was created."
+          "example": 1549976786000,
+          "description": "The epoch timestamp in milliseconds in UTC when the insight was created."
         },
         "dateArchived": {
           "type": "integer",
           "format": "int64",
-          "example": 1550237520,
-          "description": "The epoch timestamp in UTC when the insight was archived."
+          "example": 1550237520000,
+          "description": "The epoch timestamp in milliseconds in UTC when the insight was archived."
         }
       }
     },
