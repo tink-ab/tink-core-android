@@ -2,6 +2,7 @@ package com.tink.service.di
 
 import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.AccountApi
+import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
@@ -63,4 +64,10 @@ internal class RetrofitModule {
     internal fun provideTransferRetrofitService(
         retrofit: Retrofit
     ): TransferApi = retrofit.create(TransferApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideBeneficiaryRetrofitService(
+        retrofit: Retrofit
+    ): BeneficiaryApi = retrofit.create(BeneficiaryApi::class.java)
 }

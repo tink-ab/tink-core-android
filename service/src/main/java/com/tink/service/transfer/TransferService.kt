@@ -3,6 +3,7 @@ package com.tink.service.transfer
 import com.tink.model.account.Account
 import com.tink.model.transfer.Beneficiary
 import com.tink.model.transfer.SignableOperation
+import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.CreateTransferRequest
 import com.tink.service.account.toCoreModel
@@ -42,6 +43,7 @@ interface TransferService {
 
 class TransferServiceImpl @Inject constructor(
     private val transferApi: TransferApi,
+    private val beneficiaryApi: BeneficiaryApi,
     private val configuration: TinkConfiguration
 ) : TransferService {
 
@@ -69,5 +71,5 @@ class TransferServiceImpl @Inject constructor(
         transferApi.getSignableOperation(transferId).toCoreModel()
 
     override suspend fun getBeneficiaries(): List<Beneficiary> =
-        transferApi.getBeneficiaries().beneficiaries.map { it.toCoreModel() }
+        beneficiaryApi.list().beneficiaries.map { it.toCoreModel() }
 }
