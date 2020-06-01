@@ -1,6 +1,7 @@
 package com.tink.service.di
 
 import android.content.Context
+import com.tink.service.account.AccountService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
 import com.tink.service.consent.ConsentService
@@ -8,6 +9,7 @@ import com.tink.service.credentials.CredentialsService
 import com.tink.service.network.NetworkModule
 import com.tink.service.network.TinkConfiguration
 import com.tink.service.provider.ProviderService
+import com.tink.service.transfer.TransferService
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Scope
@@ -26,6 +28,10 @@ abstract class ServiceComponent {
     abstract val userService: UserService
 
     abstract val consentService: ConsentService
+
+    abstract val accountService: AccountService
+
+    abstract val transferService: TransferService
 
     abstract val tinkConfiguration: TinkConfiguration
 

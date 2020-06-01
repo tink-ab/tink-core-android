@@ -7,5 +7,5 @@ internal typealias ImagesDTO = com.tink.rest.models.ImageUrls
 internal fun ImagesDTO.toImages() =
     Images(
         icon = icon.orEmpty(),
-        banner = icon.orEmpty()
+        banner = banner.orEmpty()
     )

@@ -3,6 +3,7 @@ package com.tink.core
 import android.content.Context
 import com.tink.core.provider.ProviderRepository
 import com.tink.model.user.User
+import com.tink.service.account.AccountService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
 import com.tink.service.consent.ConsentService
@@ -10,6 +11,7 @@ import com.tink.service.credentials.CredentialsService
 import com.tink.service.di.DaggerServiceComponent
 import com.tink.service.di.ServiceComponent
 import com.tink.service.network.TinkConfiguration
+import com.tink.service.transfer.TransferService
 import dagger.Component
 import javax.inject.Scope
 
@@ -64,6 +66,10 @@ abstract class TinkComponent {
     abstract val userService: UserService
 
     abstract val consentService: ConsentService
+
+    abstract val accountService: AccountService
+
+    abstract val transferService: TransferService
 
     abstract val providerRepository: ProviderRepository
 
