@@ -1,9 +1,12 @@
 package com.tink.service.di
 
 import com.tink.rest.apis.AccessApi
+import com.tink.rest.apis.AccountApi
+import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
+import com.tink.rest.apis.TransferApi
 import com.tink.rest.tools.GeneratedCodeConverters
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
@@ -11,6 +14,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.create
 
 @Module
 internal class RetrofitModule {
@@ -48,4 +52,22 @@ internal class RetrofitModule {
     internal fun provideProviderRetrofitService(
         retrofit: Retrofit
     ): ProviderApi = retrofit.create(ProviderApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun providerAccountRetrofitService(
+        retrofit: Retrofit
+    ): AccountApi = retrofit.create(AccountApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideTransferRetrofitService(
+        retrofit: Retrofit
+    ): TransferApi = retrofit.create(TransferApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideBeneficiaryRetrofitService(
+        retrofit: Retrofit
+    ): BeneficiaryApi = retrofit.create(BeneficiaryApi::class.java)
 }

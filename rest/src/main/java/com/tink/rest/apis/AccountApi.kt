@@ -6,6 +6,8 @@
 
 package com.tink.rest.apis
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.tink.rest.models.Account
 import com.tink.rest.models.AccountListResponse
 import retrofit2.http.GET
@@ -16,12 +18,14 @@ interface AccountApi {
     @GET("/api/v1/accounts")
     @Deprecated(message = "Deprecated")
     suspend fun list(): List<Account>
+
     /**
      * List accounts
      * Returns an object with a list of the authenticated user's accounts.
      */
     @GET("/api/v1/accounts/list")
     suspend fun listAccounts(): AccountListResponse
+
     /**
      * Update an Account
      * Updates mutable properties of an account. The following properties are possible to update: accountExclusion, accountNumber, excluded, favored, name, type
@@ -31,6 +35,17 @@ interface AccountApi {
     @PUT("/api/v1/accounts/{id}")
     suspend fun update(
         @retrofit2.http.Path("id") id: String,
-        @retrofit2.http.Body body: Account
+        @retrofit2.http.Body body: UpdateAccountRequest
     ): Account
 }
+
+@JsonClass(generateAdapter = true)
+data class UpdateAccountRequest(
+    @Json(name = "accountNumber") @field:Json(name = "accountNumber") var accountNumber: String? = null,
+    @Json(name = "excluded") @field:Json(name = "excluded") var excluded: Boolean? = null,
+    @Json(name = "favored") @field:Json(name = "favored") var favored: Boolean? = null,
+    @Json(name = "name") @field:Json(name = "name") var name: String? = null,
+    @Json(name = "ownership") @field:Json(name = "ownership") var ownership: Double? = null,
+    @Json(name = "type") @field:Json(name = "type") var type: Account.TypeEnum? = null,
+    @Json(name = "accountExclusion") @field:Json(name = "accountExclusion") var accountExclusion: Account.AccountExclusionEnum? = null
+)
