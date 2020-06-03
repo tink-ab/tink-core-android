@@ -3,7 +3,6 @@ package com.tink.service.transfer
 import com.tink.model.account.Account
 import com.tink.rest.models.Credentials
 
-
 /**
  * Descriptor to create a beneficiary of a transfer
  *
