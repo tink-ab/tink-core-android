@@ -10,11 +10,11 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- * @property ownerAccountId The identifier of the source account that this beneficiary should be added to.
- * @property credentialsId The ID of the &#x60;Credentials&#x60; used to add the beneficiary. Note that you can send in a different ID here than the credentials ID to which the account belongs. This functionality exists to support the case where you may have double credentials for one financial institution, due to PSD2 regulations.
- * @property name The name chosen by the user for this beneficiary.
- * @property accountNumberType The type of the &#x60;accountNumber&#x60; that this beneficiary has.
- * @property accountNumber The account number for the beneficiary. The structure of this field depends on the &#x60;accountNumberType&#x60;.
+ * @param ownerAccountId The identifier of the source account that this beneficiary should be added to.
+ * @param credentialsId The ID of the [Credentials] used to add the beneficiary. Note that you can send in a different ID here than the credentials ID to which the account belongs. This functionality exists to support the case where you may have double credentials for one financial institution, due to PSD2 regulations.
+ * @param name The name chosen by the user for this beneficiary.
+ * @param accountNumberType The type of the [accountNumber] that this beneficiary has.
+ * @param accountNumber The account number for the beneficiary. The structure of this field depends on the [accountNumberType].
  */
 @JsonClass(generateAdapter = true)
 data class CreateBeneficiaryRequest(
