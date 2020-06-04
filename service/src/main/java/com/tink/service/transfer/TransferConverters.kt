@@ -2,6 +2,7 @@ package com.tink.service.transfer
 
 import com.tink.model.transfer.Beneficiary
 import com.tink.model.transfer.SignableOperation
+import com.tink.rest.models.CreateBeneficiaryRequest
 import com.tink.service.misc.toInstant
 import com.tink.rest.models.Beneficiary as BeneficiaryDto
 import com.tink.rest.models.SignableOperation as SignableOperationDto
@@ -44,3 +45,12 @@ internal fun BeneficiaryDto.toCoreModel() = Beneficiary(
     accountNumberType = accountNumberType,
     name = name
 )
+
+internal fun CreateBeneficiaryDescriptor.toRequest() =
+    CreateBeneficiaryRequest(
+        ownerAccountId = ownerAccountId,
+        credentialsId = credentialsId,
+        accountNumber = accountNumber,
+        accountNumberType = accountNumberType,
+        name = name
+    )
