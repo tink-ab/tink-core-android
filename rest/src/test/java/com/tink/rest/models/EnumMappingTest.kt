@@ -1,12 +1,13 @@
 package com.tink.rest.models
 
 import com.tink.rest.tools.GeneratedCodeConverters
-import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 internal class EnumMappingTest {
 
-    private val providerCapabilitiesAdapter = GeneratedCodeConverters.moshi.adapter(Provider.CapabilitiesEnum::class.java)
+    private val providerCapabilitiesAdapter =
+        GeneratedCodeConverters.moshi.adapter(Provider.CapabilitiesEnum::class.java)
 
     @Test
     fun `known capability should yield the correct enum value`() {
@@ -22,5 +23,16 @@ internal class EnumMappingTest {
         val unknown = providerCapabilitiesAdapter.fromJson("\"IHOHOVJKODBNVJEOBVJEB\"")
 
         assertThat(unknown).isEqualTo(Provider.CapabilitiesEnum.UNKNOWN)
+    }
+
+    private val providerAccessTypeAdapter =
+        GeneratedCodeConverters.moshi.adapter(Provider.AccessTypeEnum::class.java)
+
+    @Test
+    fun `unknown provider access type should yield UNKNOWN`() {
+
+        val other = providerAccessTypeAdapter.fromJson("\"HNJEBNJBEJFEJBJB\"")
+
+        assertThat(other).isEqualTo(Provider.AccessTypeEnum.OTHER)
     }
 }
