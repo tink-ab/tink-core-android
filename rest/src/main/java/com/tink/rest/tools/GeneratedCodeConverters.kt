@@ -9,6 +9,7 @@ object GeneratedCodeConverters {
 
     val moshi: Moshi = Moshi.Builder()
         .add(TinkJsonAdapterFactory())
+        .addAllTinkEnumAdapters()
         .add(XNullableAdapterFactory())
         .add(KotlinJsonAdapterFactory())
         .add(TypesAdapterFactory())
@@ -23,18 +24,18 @@ object GeneratedCodeConverters {
     @JvmStatic
     fun converterFactory(): Converter.Factory {
         return WrapperConverterFactory(
-                CollectionFormatConverterFactory(),
-                EnumToValueConverterFactory(),
-                MoshiConverterFactory.create(moshi)
+            CollectionFormatConverterFactory(),
+            EnumToValueConverterFactory(),
+            MoshiConverterFactory.create(moshi)
         )
     }
 
     @JvmStatic
     fun converterFactory(moshi: Moshi): Converter.Factory {
         return WrapperConverterFactory(
-                CollectionFormatConverterFactory(),
-                EnumToValueConverterFactory(),
-                MoshiConverterFactory.create(moshi)
+            CollectionFormatConverterFactory(),
+            EnumToValueConverterFactory(),
+            MoshiConverterFactory.create(moshi)
         )
     }
 }
