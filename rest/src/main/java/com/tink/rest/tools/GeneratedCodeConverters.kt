@@ -2,13 +2,13 @@ package com.tink.rest.tools
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.tink.rest.models.Provider
 import retrofit2.Converter
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object GeneratedCodeConverters {
 
     val moshi: Moshi = Moshi.Builder()
+        .add(TinkEnumJsonAdapterFactory())
         .add(TinkJsonAdapterFactory())
         .add(XNullableAdapterFactory())
         .add(KotlinJsonAdapterFactory())

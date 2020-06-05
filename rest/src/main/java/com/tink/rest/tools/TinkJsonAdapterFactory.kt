@@ -14,11 +14,6 @@ class TinkJsonAdapterFactory : JsonAdapter.Factory {
         if (type == Credentials.SupplementalInfoWrapper::class.java) {
             return SupplementalInformationWrapperJsonAdapter(moshi)
         }
-
-        if(type is Class<*> && type.isEnum) {
-            return TinkEnumJsonAdapter.create(type as Class<out Enum<*>>)
-        }
-
         return null
     }
 }
