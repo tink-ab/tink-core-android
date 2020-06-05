@@ -22,12 +22,11 @@ class TinkEnumJsonAdapterFactory implements JsonAdapter.Factory {
 		if (rawType.isEnum()) {
 
 			Class<? extends Enum> enumClass = (Class<? extends Enum>) rawType;
-
 			Enum<?>[] values = enumClass.getEnumConstants();
 
 			Enum<?> fallback = null;
 			for (Enum<?> e : values) {
-				if(e.name().equals("UNKNOWN") || e.name().equals("OTHER")) {
+				if (e.name().equals("UNKNOWN") || e.name().equals("OTHER")) {
 					fallback = e;
 					break;
 				}
