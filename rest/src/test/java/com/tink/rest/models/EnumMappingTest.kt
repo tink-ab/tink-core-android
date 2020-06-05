@@ -29,7 +29,7 @@ internal class EnumMappingTest {
         GeneratedCodeConverters.moshi.adapter(Provider.AccessTypeEnum::class.java)
 
     @Test
-    fun `unknown provider access type should yield UNKNOWN`() {
+    fun `unknown provider access type should yield OTHER`() {
 
         val other = providerAccessTypeAdapter.fromJson("\"HNJEBNJBEJFEJBJB\"")
 
