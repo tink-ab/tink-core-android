@@ -21,6 +21,10 @@ allprojects {
         google()
         jcenter()
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
 
 tasks {
