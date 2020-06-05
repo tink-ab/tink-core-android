@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-./gradlew test -i
+./gradlew test
