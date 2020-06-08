@@ -7,13 +7,13 @@ import com.tink.rest.models.ProviderListResponse
 import com.tink.service.misc.toCoreModel
 import com.tink.service.misc.toImages
 
-internal typealias ProviderDTO = com.tink.rest.models.Provider
-internal typealias ProviderStatusDTO = com.tink.rest.models.Provider.StatusEnum
-internal typealias ProviderTypeDTO = com.tink.rest.models.Provider.TypeEnum
-internal typealias ProviderAccessTypeDTO = com.tink.rest.models.Provider.AccessTypeEnum
-internal typealias ProviderCapabilityDTO = com.tink.rest.models.Provider.CapabilitiesEnum
+internal typealias ProviderDto = com.tink.rest.models.Provider
+internal typealias ProviderStatusDto = com.tink.rest.models.Provider.StatusEnum
+internal typealias ProviderTypeDto = com.tink.rest.models.Provider.TypeEnum
+internal typealias ProviderAccessTypeDto = com.tink.rest.models.Provider.AccessTypeEnum
+internal typealias ProviderCapabilityDto = com.tink.rest.models.Provider.CapabilitiesEnum
 
-internal fun ProviderDTO.toCoreModel(): Provider =
+internal fun ProviderDto.toCoreModel(): Provider =
     Provider(
         name = name,
         displayName = displayName,
@@ -35,48 +35,48 @@ internal fun ProviderDTO.toCoreModel(): Provider =
         capabilities = capabilitiesOrEmpty()
     )
 
-internal fun ProviderStatusDTO.toProviderStatus(): Provider.Status =
+internal fun ProviderStatusDto.toProviderStatus(): Provider.Status =
     when (this) {
-        ProviderStatusDTO.DISABLED -> Provider.Status.DISABLED
-        ProviderStatusDTO.ENABLED -> Provider.Status.ENABLED
-        ProviderStatusDTO.TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
+        ProviderStatusDto.DISABLED -> Provider.Status.DISABLED
+        ProviderStatusDto.ENABLED -> Provider.Status.ENABLED
+        ProviderStatusDto.TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
     }
 
-internal fun ProviderTypeDTO.toProviderType(): Provider.Type =
+internal fun ProviderTypeDto.toProviderType(): Provider.Type =
     when (this) {
-        ProviderTypeDTO.BANK -> Provider.Type.BANK
-        ProviderTypeDTO.BROKER -> Provider.Type.BROKER
-        ProviderTypeDTO.CREDIT_CARD -> Provider.Type.CREDIT_CARD
-        ProviderTypeDTO.OTHER -> Provider.Type.OTHER
-        ProviderTypeDTO.TEST -> Provider.Type.TEST
-        ProviderTypeDTO.FRAUD -> Provider.Type.FRAUD
+        ProviderTypeDto.BANK -> Provider.Type.BANK
+        ProviderTypeDto.BROKER -> Provider.Type.BROKER
+        ProviderTypeDto.CREDIT_CARD -> Provider.Type.CREDIT_CARD
+        ProviderTypeDto.OTHER -> Provider.Type.OTHER
+        ProviderTypeDto.TEST -> Provider.Type.TEST
+        ProviderTypeDto.FRAUD -> Provider.Type.FRAUD
     }
 
-internal fun ProviderDTO.fieldsOrEmpty(): List<Field> =
+internal fun ProviderDto.fieldsOrEmpty(): List<Field> =
     fields.map { it.toCoreModel() }
 
-internal fun ProviderAccessTypeDTO.toAccessType(): Provider.AccessType =
+internal fun ProviderAccessTypeDto.toAccessType(): Provider.AccessType =
     when (this) {
-        ProviderAccessTypeDTO.OPEN_BANKING -> Provider.AccessType.OPEN_BANKING
-        ProviderAccessTypeDTO.OTHER -> Provider.AccessType.OTHER
+        ProviderAccessTypeDto.OPEN_BANKING -> Provider.AccessType.OPEN_BANKING
+        ProviderAccessTypeDto.OTHER -> Provider.AccessType.OTHER
     }
 
-internal fun ProviderDTO.capabilitiesOrEmpty(): List<Provider.Capability> =
+internal fun ProviderDto.capabilitiesOrEmpty(): List<Provider.Capability> =
     capabilities.map { it.toCoreModel() }
 
-internal fun ProviderCapabilityDTO.toCoreModel(): Provider.Capability =
+internal fun ProviderCapabilityDto.toCoreModel(): Provider.Capability =
     when (this) {
-        ProviderCapabilityDTO.UNKNOWN -> Provider.Capability.UNKNOWN
-        ProviderCapabilityDTO.TRANSFERS -> Provider.Capability.TRANSFERS
-        ProviderCapabilityDTO.EINVOICES -> Provider.Capability.EINVOICES
-        ProviderCapabilityDTO.MORTGAGE_AGGREGATION -> Provider.Capability.MORTGAGE_AGGREGATION
-        ProviderCapabilityDTO.CHECKING_ACCOUNTS -> Provider.Capability.CHECKING_ACCOUNTS
-        ProviderCapabilityDTO.SAVINGS_ACCOUNTS -> Provider.Capability.SAVINGS_ACCOUNTS
-        ProviderCapabilityDTO.CREDIT_CARDS -> Provider.Capability.CREDIT_CARDS
-        ProviderCapabilityDTO.LOANS -> Provider.Capability.LOANS
-        ProviderCapabilityDTO.INVESTMENTS -> Provider.Capability.INVESTMENTS
-        ProviderCapabilityDTO.PAYMENTS -> Provider.Capability.PAYMENTS
-        ProviderCapabilityDTO.IDENTITY_DATA -> Provider.Capability.IDENTITY_DATA
+        ProviderCapabilityDto.UNKNOWN -> Provider.Capability.UNKNOWN
+        ProviderCapabilityDto.TRANSFERS -> Provider.Capability.TRANSFERS
+        ProviderCapabilityDto.EINVOICES -> Provider.Capability.EINVOICES
+        ProviderCapabilityDto.MORTGAGE_AGGREGATION -> Provider.Capability.MORTGAGE_AGGREGATION
+        ProviderCapabilityDto.CHECKING_ACCOUNTS -> Provider.Capability.CHECKING_ACCOUNTS
+        ProviderCapabilityDto.SAVINGS_ACCOUNTS -> Provider.Capability.SAVINGS_ACCOUNTS
+        ProviderCapabilityDto.CREDIT_CARDS -> Provider.Capability.CREDIT_CARDS
+        ProviderCapabilityDto.LOANS -> Provider.Capability.LOANS
+        ProviderCapabilityDto.INVESTMENTS -> Provider.Capability.INVESTMENTS
+        ProviderCapabilityDto.PAYMENTS -> Provider.Capability.PAYMENTS
+        ProviderCapabilityDto.IDENTITY_DATA -> Provider.Capability.IDENTITY_DATA
     }
 
 internal fun ProviderListResponse.toProviderList() =
