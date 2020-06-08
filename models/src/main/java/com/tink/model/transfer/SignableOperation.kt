@@ -27,14 +27,16 @@ data class SignableOperation(
         CANCELLED,
         FAILED,
         EXECUTED,
-        AWAITING_THIRD_PARTY_APP_AUTHENTICATION;
+        AWAITING_THIRD_PARTY_APP_AUTHENTICATION,
+        UNKNOWN;
 
         fun isEndState() =
             when (this) {
                 CREATED,
                 EXECUTING,
                 AWAITING_CREDENTIALS,
-                AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> false
+                AWAITING_THIRD_PARTY_APP_AUTHENTICATION,
+                UNKNOWN -> false
                 CANCELLED,
                 FAILED,
                 EXECUTED -> true
@@ -42,6 +44,6 @@ data class SignableOperation(
     }
 
     enum class Type {
-        TRANSFER
+        TRANSFER, UNKNOWN
     }
 }

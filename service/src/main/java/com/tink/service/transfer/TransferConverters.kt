@@ -9,7 +9,7 @@ import com.tink.rest.models.SignableOperation as SignableOperationDto
 import com.tink.rest.models.SignableOperation.StatusEnum as SignableOperationStatusDto
 import com.tink.rest.models.SignableOperation.TypeEnum as SignableOperationTypeDto
 
-fun SignableOperationDto.toCoreModel(): SignableOperation =
+internal fun SignableOperationDto.toCoreModel(): SignableOperation =
     SignableOperation(
         id = id!!,
         credentialsId = credentialsId,
@@ -22,12 +22,13 @@ fun SignableOperationDto.toCoreModel(): SignableOperation =
         userId = userId!!
     )
 
-private fun SignableOperationTypeDto.toCoreModel(): SignableOperation.Type =
+internal fun SignableOperationTypeDto.toCoreModel(): SignableOperation.Type =
     when (this) {
         SignableOperationTypeDto.TRANSFER -> SignableOperation.Type.TRANSFER
+        SignableOperationTypeDto.UNKNOWN -> SignableOperation.Type.UNKNOWN
     }
 
-private fun SignableOperationStatusDto.toCoreModel(): SignableOperation.Status =
+internal fun SignableOperationStatusDto.toCoreModel(): SignableOperation.Status =
     when (this) {
         SignableOperationStatusDto.CREATED -> SignableOperation.Status.CREATED
         SignableOperationStatusDto.EXECUTING -> SignableOperation.Status.EXECUTING
@@ -37,6 +38,7 @@ private fun SignableOperationStatusDto.toCoreModel(): SignableOperation.Status =
         SignableOperationStatusDto.EXECUTED -> SignableOperation.Status.EXECUTED
         SignableOperationStatusDto.AWAITING_THIRD_PARTY_APP_AUTHENTICATION ->
             SignableOperation.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION
+        SignableOperationStatusDto.UNKNOWN -> SignableOperation.Status.UNKNOWN
     }
 
 internal fun BeneficiaryDto.toCoreModel() = Beneficiary(
