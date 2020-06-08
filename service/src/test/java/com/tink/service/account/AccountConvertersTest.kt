@@ -97,7 +97,6 @@ internal class AccountConvertersTest {
         assertThat(identifiers).contains("se://8888111111111111")
     }
 
-
     @Test
     fun `unknown type yields OTHER`() {
         val adapter = GeneratedCodeConverters.moshi.adapter(AccountDto.TypeEnum::class.java)
