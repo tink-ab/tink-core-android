@@ -40,6 +40,7 @@ internal fun ProviderStatusDto.toProviderStatus(): Provider.Status =
         ProviderStatusDto.DISABLED -> Provider.Status.DISABLED
         ProviderStatusDto.ENABLED -> Provider.Status.ENABLED
         ProviderStatusDto.TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
+        ProviderStatusDto.UNKNOWN -> Provider.Status.UNKNOWN
     }
 
 internal fun ProviderTypeDto.toProviderType(): Provider.Type =
