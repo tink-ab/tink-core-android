@@ -43,6 +43,7 @@ data class Credentials(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "PASSWORD") PASSWORD("PASSWORD"),
         @Json(name = "MOBILE_BANKID") MOBILE_BANKID("MOBILE_BANKID"),
         @Json(name = "KEYFOB") KEYFOB("KEYFOB"),
@@ -55,6 +56,7 @@ data class Credentials(
      */
     @JsonClass(generateAdapter = false)
     enum class StatusEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "CREATED") CREATED("CREATED"),
         @Json(name = "AUTHENTICATING") AUTHENTICATING("AUTHENTICATING"),
         @Json(name = "AWAITING_MOBILE_BANKID_AUTHENTICATION") AWAITING_MOBILE_BANKID_AUTHENTICATION("AWAITING_MOBILE_BANKID_AUTHENTICATION"),
