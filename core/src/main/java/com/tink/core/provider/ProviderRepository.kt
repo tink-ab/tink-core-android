@@ -4,6 +4,7 @@ import com.tink.core.TinkScope
 import com.tink.core.coroutines.launchForResult
 import com.tink.model.provider.Provider
 import com.tink.service.handler.ResultHandler
+import com.tink.service.provider.ProviderFilter
 import com.tink.service.provider.ProviderService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,10 +33,10 @@ class ProviderRepository @Inject constructor(private val service: ProviderServic
     @JvmOverloads
     fun listProviders(
         handler: ResultHandler<List<Provider>>,
-        includeDemoProviders: Boolean = false
+        filter: ProviderFilter? = null
     ) {
         scope.launchForResult(handler) {
-            service.listProviders(includeDemoProviders)
+            service.listProviders(filter)
         }
     }
 }
