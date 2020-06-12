@@ -4,6 +4,7 @@ import com.tink.model.account.Account
 import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
 import com.tink.rest.models.AccountListResponse
+import com.tink.rest.models.Account as AccountDto
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -94,5 +95,38 @@ internal class AccountConvertersTest {
         assertThat(identifiers).hasSize(2)
         assertThat(identifiers).contains("se://9999111111111111")
         assertThat(identifiers).contains("se://8888111111111111")
+    }
+
+    @Test
+    fun `unknown type yields OTHER`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(AccountDto.TypeEnum::class.java)
+        val typeDto = adapter.fromJson("\"NONSENSETYPEJHJHJJGJH\"")
+
+        assertThat(typeDto).isEqualTo(AccountDto.TypeEnum.OTHER)
+
+        val type = typeDto!!.toCoreModel()
+
+        assertThat(type).isEqualTo(Account.Type.OTHER)
+    }
+
+    @Test
+    fun `unknown exclusion type yields UNKNOWN`() {
+
+        val adapter = GeneratedCodeConverters.moshi.adapter(AccountDto.AccountExclusionEnum::class.java)
+        val exclusionTypeDto = adapter.fromJson("\"NONSENSEEXCLUSIONTYPE\"")
+
+        assertThat(exclusionTypeDto).isEqualTo(AccountDto.AccountExclusionEnum.UNKNOWN)
+
+        // TODO: check result after conversion when implemented
+    }
+
+    @Test
+    fun `unknown flag yields UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(AccountDto.FlagsEnum::class.java)
+        val flagDto = adapter.fromJson("\"NONSENSEFLAG999\"")
+
+        assertThat(flagDto).isEqualTo(AccountDto.FlagsEnum.UNKNOWN)
+
+        // TODO: check result after conversion when implemented
     }
 }
