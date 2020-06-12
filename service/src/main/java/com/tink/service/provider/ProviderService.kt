@@ -22,7 +22,7 @@ interface ProviderService {
  * By default the list will not be filtered by capability
  */
 data class ProviderFilter(
-    val includeDemoProviders: Boolean? = null,
-    val includeNonDemoProviders: Boolean? = null,
+    val includeDemoProviders: Boolean = false,
+    val includeNonDemoProviders: Boolean = true,
     val requireCapability: Provider.Capability? = null
 )
