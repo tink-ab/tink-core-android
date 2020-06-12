@@ -41,4 +41,34 @@ internal class TransferConvertersTest {
         assertThat(signableOperation.created).isEqualTo(Instant.ofEpochMilli(1471349422000))
         assertThat(signableOperation.updated).isEqualTo(Instant.ofEpochMilli(1471349422000))
     }
+
+    @Test
+    fun `unknown signable operation type yields UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(
+            SignableOperationDto.TypeEnum::class.java
+        )
+
+        val typeDto = adapter.fromJson("\"NONSENSETYPE_SIGNOP\"")
+
+        assertThat(typeDto).isEqualTo(SignableOperationDto.TypeEnum.UNKNOWN)
+
+        val type = typeDto!!.toCoreModel()
+
+        assertThat(type).isEqualTo(SignableOperation.Type.UNKNOWN)
+    }
+
+    @Test
+    fun `unknown signable operation status yields UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(
+            SignableOperationDto.StatusEnum::class.java
+        )
+
+        val statusDto = adapter.fromJson("\"NONSENSE_STATUS_SIGNOP\"")
+
+        assertThat(statusDto).isEqualTo(SignableOperationDto.StatusEnum.UNKNOWN)
+
+        val status = statusDto!!.toCoreModel()
+
+        assertThat(status).isEqualTo(SignableOperation.Status.UNKNOWN)
+    }
 }

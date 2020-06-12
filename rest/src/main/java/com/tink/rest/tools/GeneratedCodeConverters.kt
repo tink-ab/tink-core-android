@@ -8,6 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object GeneratedCodeConverters {
 
     val moshi: Moshi = Moshi.Builder()
+        .add(TinkEnumJsonAdapterFactory())
         .add(TinkJsonAdapterFactory())
         .add(XNullableAdapterFactory())
         .add(KotlinJsonAdapterFactory())
@@ -23,18 +24,18 @@ object GeneratedCodeConverters {
     @JvmStatic
     fun converterFactory(): Converter.Factory {
         return WrapperConverterFactory(
-                CollectionFormatConverterFactory(),
-                EnumToValueConverterFactory(),
-                MoshiConverterFactory.create(moshi)
+            CollectionFormatConverterFactory(),
+            EnumToValueConverterFactory(),
+            MoshiConverterFactory.create(moshi)
         )
     }
 
     @JvmStatic
     fun converterFactory(moshi: Moshi): Converter.Factory {
         return WrapperConverterFactory(
-                CollectionFormatConverterFactory(),
-                EnumToValueConverterFactory(),
-                MoshiConverterFactory.create(moshi)
+            CollectionFormatConverterFactory(),
+            EnumToValueConverterFactory(),
+            MoshiConverterFactory.create(moshi)
         )
     }
 }

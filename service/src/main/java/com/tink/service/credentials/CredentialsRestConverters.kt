@@ -92,6 +92,7 @@ fun CredentialsRestDTO.TypeEnum.toCoreModel() =
         CredentialsRestDTO.TypeEnum.KEYFOB -> Credentials.Type.KEYFOB
         CredentialsRestDTO.TypeEnum.FRAUD -> Credentials.Type.FRAUD
         CredentialsRestDTO.TypeEnum.THIRD_PARTY_APP -> Credentials.Type.THIRD_PARTY_AUTHENTICATION
+        CredentialsRestDTO.TypeEnum.UNKNOWN -> Credentials.Type.UNKNOWN
     }
 
 fun CredentialsRestDTO.StatusEnum.toCoreModel() =
@@ -108,4 +109,5 @@ fun CredentialsRestDTO.StatusEnum.toCoreModel() =
         CredentialsRestDTO.StatusEnum.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION
         CredentialsRestDTO.StatusEnum.DELETED -> Credentials.Status.DELETED
         CredentialsRestDTO.StatusEnum.SESSION_EXPIRED -> Credentials.Status.SESSION_EXPIRED
+        CredentialsRestDTO.StatusEnum.UNKNOWN -> Credentials.Status.UNKNOWN
     }

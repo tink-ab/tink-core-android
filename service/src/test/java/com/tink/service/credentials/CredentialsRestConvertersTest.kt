@@ -1,6 +1,7 @@
 package com.tink.service.credentials
 
-import com.tink.rest.models.Credentials
+import com.tink.model.credentials.Credentials
+import com.tink.rest.models.Credentials as CredentialsDto
 import com.tink.rest.tools.GeneratedCodeConverters
 import com.tink.service.misc.toCoreModel
 import org.assertj.core.api.Assertions.assertThat
@@ -23,14 +24,15 @@ internal class CredentialsRestConvertersTest {
     private val credentialsWithAutostartToken =
         "{ \"fields\": { \"username\": \"198410045701\" }, \"id\": \"6e68cc6287704273984567b3300c5822\", \"providerName\": \"handelsbanken-bankid\", \"sessionExpiryDate\": 1493379467000, \"status\": \"UPDATED\", \"statusPayload\": \"Analyzed 1,200 out of 1,200 transactions.\", \"statusUpdated\": 1493379467000, \"supplementalInformation\": \"4d13a3a4-38e9-37d8-11cc-6e89982e4b70\", \"type\": \"MOBILE_BANKID\", \"updated\": 1493379467000, \"userId\": \"c4ae034f96c740da91ae00022ddcac4d\" }"
 
+    private val credentialsJsonAdapter =
+        GeneratedCodeConverters.moshi.adapter(CredentialsDto::class.java)
+
     @Test
     fun `convert string to supplemental information`() {
 
         println(credentialsWithInfo)
 
-        val credentials = GeneratedCodeConverters.moshi
-            .adapter(Credentials::class.java)
-            .fromJson(credentialsWithInfo)
+        val credentials = credentialsJsonAdapter.fromJson(credentialsWithInfo)
 
         val resultMap = credentials?.supplementalInformation?.fieldList
             ?.map { it.toCoreModel() }
@@ -64,9 +66,7 @@ internal class CredentialsRestConvertersTest {
     @Test
     fun `convert string to third party authentication`() {
 
-        val credentials = GeneratedCodeConverters.moshi
-            .adapter(Credentials::class.java)
-            .fromJson(credentialsWithThirdParty)
+        val credentials = credentialsJsonAdapter.fromJson(credentialsWithThirdParty)
 
         val result = credentials?.supplementalInformation?.thirdPartyAuthentication?.toCoreModel()
 
@@ -83,9 +83,7 @@ internal class CredentialsRestConvertersTest {
     @Test
     fun `convert supplementalInfo to autostart token`() {
 
-        val credentials = GeneratedCodeConverters.moshi
-            .adapter(Credentials::class.java)
-            .fromJson(credentialsWithAutostartToken)
+        val credentials = credentialsJsonAdapter.fromJson(credentialsWithAutostartToken)
 
         val token = credentials?.supplementalInformation?.rawStringInfo
 
@@ -95,9 +93,33 @@ internal class CredentialsRestConvertersTest {
 
         requireNotNull(result)
 
-        assertThat(result.android?.intent).isEqualTo("bankid:///?autostarttoken=4d13a3a4-38e9-37d8-11cc-6e89982e4b70")
+        assertThat(result.android?.intent).isEqualTo("bankid:///?autostarttoken=4d13a3a4-38e9-37d8-11cc-6e89982e4b70&redirect=null")
         assertThat(result.android?.packageName).isEqualTo("com.bankid.bus")
         assertThat(result.downloadTitle).isEqualTo("Download Mobile BankID")
         assertThat(result.downloadMessage).isEqualTo("You need to install the Mobile BankID app to authenticate")
+    }
+
+    @Test
+    fun `unknown type yields UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(CredentialsDto.TypeEnum::class.java)
+        val typeDto = adapter.fromJson("\"NONSENSETYPE1234Ö\"")
+
+        assertThat(typeDto).isEqualTo(CredentialsDto.TypeEnum.UNKNOWN)
+
+        val type = typeDto!!.toCoreModel()
+
+        assertThat(type).isEqualTo(Credentials.Type.UNKNOWN)
+    }
+
+    @Test
+    fun `unknown status yields UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(CredentialsDto.StatusEnum::class.java)
+        val statusDto = adapter.fromJson("\"NONSENSESTATUS_FOO\"")
+
+        assertThat(statusDto).isEqualTo(CredentialsDto.StatusEnum.UNKNOWN)
+
+        val status = statusDto!!.toCoreModel()
+
+        assertThat(status).isEqualTo(Credentials.Status.UNKNOWN)
     }
 }

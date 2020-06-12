@@ -38,6 +38,7 @@ data class SignableOperation(
      */
     @JsonClass(generateAdapter = false)
     enum class StatusEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "CREATED") CREATED("CREATED"),
         @Json(name = "EXECUTING") EXECUTING("EXECUTING"),
         @Json(name = "AWAITING_CREDENTIALS") AWAITING_CREDENTIALS("AWAITING_CREDENTIALS"),
@@ -52,6 +53,7 @@ data class SignableOperation(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "TRANSFER") TRANSFER("TRANSFER")
     }
 }

@@ -11,8 +11,9 @@ class TinkJsonAdapterFactory : JsonAdapter.Factory {
         annotations: MutableSet<out Annotation>,
         moshi: Moshi
     ): JsonAdapter<*>? {
-        return if (type == Credentials.SupplementalInfoWrapper::class.java) {
-            SupplementalInformationWrapperJsonAdapter(moshi)
-        } else null
+        if (type == Credentials.SupplementalInfoWrapper::class.java) {
+            return SupplementalInformationWrapperJsonAdapter(moshi)
+        }
+        return null
     }
 }
