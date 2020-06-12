@@ -75,6 +75,7 @@ data class Account(
      */
     @JsonClass(generateAdapter = false)
     enum class FlagsEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "BUSINESS") BUSINESS("BUSINESS"),
         @Json(name = "MANDATE") MANDATE("MANDATE")
     }
@@ -84,6 +85,7 @@ data class Account(
      */
     @JsonClass(generateAdapter = false)
     enum class AccountExclusionEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "AGGREGATION") AGGREGATION("AGGREGATION"),
         @Json(name = "PFM_AND_SEARCH") PFM_AND_SEARCH("PFM_AND_SEARCH"),
         @Json(name = "PFM_DATA") PFM_DATA("PFM_DATA"),

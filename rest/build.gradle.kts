@@ -21,6 +21,10 @@ dependencies {
 
     implementation(Dependencies.three_ten_abp)
     implementation(Dependencies.okhttp)
+
+    testImplementation(Dependencies.Testing.test_assertj)
+    testImplementation(Dependencies.Testing.test_junit_api)
+    testRuntimeOnly(Dependencies.Testing.test_junit_engine)
 }
 
 apply(from = "../publishing.gradle")
