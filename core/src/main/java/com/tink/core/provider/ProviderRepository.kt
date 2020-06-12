@@ -26,9 +26,7 @@ class ProviderRepository @Inject constructor(private val service: ProviderServic
      * List all providers on the current market. The result will already be filtered to only contain
      * providers that are [enabled][Provider.Status.ENABLED]
      * @param handler the [ResultHandler] for processing error and success callbacks
-     * @param includeDemoProviders Set this to true if the response should contain demo providers.
-     * This is very useful for test and demonstration purposes, but should be set to `false`
-     * in the release version of the application.
+     * @param filter An optional filter that can be passed to modify the resulting list of providers
      */
     @JvmOverloads
     fun listProviders(
@@ -40,6 +38,10 @@ class ProviderRepository @Inject constructor(private val service: ProviderServic
         }
     }
 
+    /**
+     * Get the provider with the specified [name][Provider.name]. `null` will be passed to the
+     * [resultHandler] in case no provider with this name could be found.
+     */
     fun getProvider(providerName: String, resultHandler: ResultHandler<Provider?>) {
         scope.launchForResult(resultHandler) {
             service.getProvider(providerName)
