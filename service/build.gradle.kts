@@ -35,8 +35,6 @@ dependencies {
     implementation(Dependencies.kotlin_stdlib)
     implementation(Dependencies.three_ten_abp)
 
-    implementation(Dependencies.Androidx.lifecycle_extensions)
-
     implementation(Dependencies.Dagger.core)
     implementation(Dependencies.Dagger.dagger_android)
     implementation(Dependencies.Dagger.dagger_android_support)

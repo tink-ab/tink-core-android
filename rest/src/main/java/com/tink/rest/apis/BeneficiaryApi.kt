@@ -8,6 +8,7 @@ package com.tink.rest.apis
 
 import com.tink.rest.models.CreateBeneficiaryRequest
 import com.tink.rest.models.ListBeneficiariesResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -21,7 +22,7 @@ interface BeneficiaryApi {
     @POST("/api/v1/beneficiaries")
     suspend fun create(
         @retrofit2.http.Body body: CreateBeneficiaryRequest
-    )
+    ): Response<Unit>
 
     /**
      * List beneficiaries

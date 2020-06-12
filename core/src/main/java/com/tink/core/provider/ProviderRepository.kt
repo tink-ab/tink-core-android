@@ -4,6 +4,7 @@ import com.tink.core.TinkScope
 import com.tink.core.coroutines.launchForResult
 import com.tink.model.provider.Provider
 import com.tink.service.handler.ResultHandler
+import com.tink.service.provider.ProviderFilter
 import com.tink.service.provider.ProviderService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,17 +26,25 @@ class ProviderRepository @Inject constructor(private val service: ProviderServic
      * List all providers on the current market. The result will already be filtered to only contain
      * providers that are [enabled][Provider.Status.ENABLED]
      * @param handler the [ResultHandler] for processing error and success callbacks
-     * @param includeDemoProviders Set this to true if the response should contain demo providers.
-     * This is very useful for test and demonstration purposes, but should be set to `false`
-     * in the release version of the application.
+     * @param filter An optional filter that can be passed to modify the resulting list of providers
      */
     @JvmOverloads
     fun listProviders(
         handler: ResultHandler<List<Provider>>,
-        includeDemoProviders: Boolean = false
+        filter: ProviderFilter? = null
     ) {
         scope.launchForResult(handler) {
-            service.listProviders(includeDemoProviders)
+            service.listProviders(filter)
+        }
+    }
+
+    /**
+     * Get the provider with the specified [name][Provider.name]. `null` will be passed to the
+     * [resultHandler] in case no provider with this name could be found.
+     */
+    fun getProvider(providerName: String, resultHandler: ResultHandler<Provider?>) {
+        scope.launchForResult(resultHandler) {
+            service.getProvider(providerName)
         }
     }
 }

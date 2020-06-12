@@ -70,6 +70,7 @@ data class Provider(
      */
     @JsonClass(generateAdapter = false)
     enum class AuthenticationFlowEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "EMBEDDED") EMBEDDED("EMBEDDED"),
         @Json(name = "REDIRECT") REDIRECT("REDIRECT"),
         @Json(name = "DECOUPLED") DECOUPLED("DECOUPLED")
@@ -98,6 +99,7 @@ data class Provider(
      */
     @JsonClass(generateAdapter = false)
     enum class StatusEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "ENABLED") ENABLED("ENABLED"),
         @Json(name = "TEMPORARY_DISABLED") TEMPORARY_DISABLED("TEMPORARY_DISABLED"),
         @Json(name = "DISABLED") DISABLED("DISABLED")

@@ -6,6 +6,7 @@ import com.tink.model.transfer.SignableOperation
 import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.models.CreateTransferRequest
+import com.tink.rest.tools.unwrap
 import com.tink.service.account.toCoreModel
 import com.tink.service.network.TinkConfiguration
 import javax.inject.Inject
@@ -39,6 +40,11 @@ interface TransferService {
      * Lists all beneficiaries of the current user
      */
     suspend fun getBeneficiaries(): List<Beneficiary>
+
+    /**
+     * Add a new beneficiary
+     */
+    suspend fun addBeneficiary(descriptor: CreateBeneficiaryDescriptor)
 }
 
 internal class TransferServiceImpl @Inject constructor(
@@ -72,4 +78,7 @@ internal class TransferServiceImpl @Inject constructor(
 
     override suspend fun getBeneficiaries(): List<Beneficiary> =
         beneficiaryApi.list().beneficiaries.map { it.toCoreModel() }
+
+    override suspend fun addBeneficiary(descriptor: CreateBeneficiaryDescriptor) =
+        beneficiaryApi.create(descriptor.toRequest()).unwrap()
 }
