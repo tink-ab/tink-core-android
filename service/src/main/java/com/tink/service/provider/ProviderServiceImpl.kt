@@ -24,4 +24,12 @@ internal class ProviderServiceImpl @Inject constructor(
                 name = null
             )
             .toProviderList()
+
+    override suspend fun getProvider(providerName: String) =
+        api.list(
+            name = providerName,
+            capability = null,
+            includeTestProviders = null,
+            excludeNonTestProviders = null
+        ).providers?.firstOrNull()?.toCoreModel()
 }

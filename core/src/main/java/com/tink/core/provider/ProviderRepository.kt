@@ -39,4 +39,10 @@ class ProviderRepository @Inject constructor(private val service: ProviderServic
             service.listProviders(filter)
         }
     }
+
+    fun getProvider(providerName: String, resultHandler: ResultHandler<Provider?>) {
+        scope.launchForResult(resultHandler) {
+            service.getProvider(providerName)
+        }
+    }
 }

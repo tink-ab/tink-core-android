@@ -7,6 +7,8 @@ interface ProviderService {
     suspend fun listSuggestions(): List<Provider>
 
     suspend fun listProviders(filter: ProviderFilter?): List<Provider>
+
+    suspend fun getProvider(providerName: String): Provider?
 }
 
 data class ProviderFilter(
