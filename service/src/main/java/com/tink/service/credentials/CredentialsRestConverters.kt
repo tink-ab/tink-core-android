@@ -18,7 +18,7 @@ internal fun CredentialsRestDTO.toCoreModel(): Credentials {
     when (status) {
         Credentials.Status.AWAITING_MOBILE_BANKID_AUTHENTICATION -> {
             thirdPartyAuth =
-                createThirdPartyAuthFromAutostartToken(supplementalInformation?.rawStringInfo)
+                createThirdPartyAuthForMobileBankId(supplementalInformation?.rawStringInfo)
             supplementalInfo = listOf()
         }
         Credentials.Status.AWAITING_THIRD_PARTY_APP_AUTHENTICATION -> {
@@ -64,25 +64,29 @@ fun ThirdPartyAuthRestDto.toCoreModel() =
         )
     )
 
-fun createThirdPartyAuthFromAutostartToken(autostartToken: String?): ThirdPartyAppAuthentication? {
+fun createThirdPartyAuthForMobileBankId(autostartToken: String?): ThirdPartyAppAuthentication? {
     val validAutostartToken = autostartToken?.let {
         Pattern.compile("^[a-f0-9-]+\$").matcher(autostartToken).matches()
     }
-    if (validAutostartToken == true) {
-        // TODO: Localization
-        return ThirdPartyAppAuthentication(
-            downloadTitle = "Download Mobile BankID",
-            downloadMessage = "You need to install the Mobile BankID app to authenticate",
-            upgradeTitle = "",
-            upgradeMessage = "",
-            android = ThirdPartyAppAuthentication.Android(
-                intent = "bankid:///?autostarttoken=$autostartToken&redirect=null",
-                packageName = "com.bankid.bus",
-                requiredMinimumVersion = 0
-            )
-        )
+
+    val intentUri = if (validAutostartToken == true) {
+        "bankid:///?autostarttoken=$autostartToken&redirect=null"
+    } else {
+        "bankid:///?redirect=null"
     }
-    return null
+
+    // TODO: Localization
+    return ThirdPartyAppAuthentication(
+        downloadTitle = "Download Mobile BankID",
+        downloadMessage = "You need to install the Mobile BankID app to authenticate",
+        upgradeTitle = "",
+        upgradeMessage = "",
+        android = ThirdPartyAppAuthentication.Android(
+            intent = intentUri,
+            packageName = "com.bankid.bus",
+            requiredMinimumVersion = 0
+        )
+    )
 }
 
 fun CredentialsRestDTO.TypeEnum.toCoreModel() =
