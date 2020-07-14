@@ -15,7 +15,7 @@ data class User(val authorization: Authorization) : Parcelable {
 
         @JvmStatic
         fun fromSessionId(sessionId: String) = User(
-            Authorization.AccessToken(sessionId)
+            Authorization.SessionId(sessionId)
         )
     }
 }
