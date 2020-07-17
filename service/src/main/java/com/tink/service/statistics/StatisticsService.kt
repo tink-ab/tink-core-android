@@ -11,6 +11,7 @@ import com.tink.rest.models.StatisticQuery
 import com.tink.rest.models.Statistics
 import com.tink.service.observer.ChangeObserver
 import com.tink.service.time.PeriodService
+import com.tink.service.user.UserProfileService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -28,7 +29,8 @@ interface StatisticsService {
 
 internal class StatisticsServiceImpl @Inject constructor(
     private val api: StatisticsApi,
-    private val periodService: PeriodService
+    private val periodService: PeriodService,
+    private val userProfileService: UserProfileService
 ) : StatisticsService {
     override fun subscribe(listener: ChangeObserver<StatisticTree>) {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
@@ -53,22 +55,31 @@ internal class StatisticsServiceImpl @Inject constructor(
 
         val periodDescriptions = statisticDtos.map { it.period }.toSet()
 
-        val periods: Map<String, Period> = coroutineScope {
-            periodDescriptions
-                .map { async { periodService.getPeriod(it) } }
+        val periodsAsync = coroutineScope {
+            periodDescriptions.map { async { periodService.getPeriod(it) } }
+        }
+
+        val userProfileAsync = coroutineScope {
+            async { userProfileService.getProfile() }
+        }
+
+        val periods: Map<String, Period> =
+            periodsAsync
                 .awaitAll()
                 .flatten()
                 .mapNotNull { period ->
                     period.identifier.takeUnless { it.isBlank() }?.let { it to period }
-                }.toMap()
-        }
+                }
+                .toMap()
+
+        val userProfile = userProfileAsync.await()
 
         fun List<Statistics>.byDescription() =
             map {
                 StatisticDataNode(
                     identifier = it.description,
                     period = periods.getValue(it.period),
-                    value = Amount(ExactNumber(it.value), "EUR") //TODO
+                    value = Amount(ExactNumber(it.value), userProfile.currency)
                 )
             }
 
