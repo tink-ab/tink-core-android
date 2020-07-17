@@ -9,7 +9,6 @@ package com.tink.rest.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
-import org.threeten.bp.ZonedDateTime
 
 /**
  * An account usually contains multiple transactions (except for certain types of accounts where Tink can't access the underlying transactions, for example, certain `INVESTMENT` accounts). The transaction model represents any operation on an account, and could represent both the actual credit-card purchase on a `CREDIT_CARD` account, but also represent the transaction when you paid your credit-card bill. Most commonly, the transactions in an account should represent what the end-user typically regards as a transaction with its amount, description and date, etc.
@@ -46,20 +45,20 @@ data class Transaction(
     @Json(name = "categoryId") @field:Json(name = "categoryId") var categoryId: String,
     @Json(name = "categoryType") @field:Json(name = "categoryType") var categoryType: Transaction.CategoryTypeEnum,
     @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String,
-    @Json(name = "date") @field:Json(name = "date") var date: ZonedDateTime,
+    @Json(name = "date") @field:Json(name = "date") var date: Long,
     @Json(name = "description") @field:Json(name = "description") var description: String,
     @Json(name = "id") @field:Json(name = "id") var id: String,
-    @Json(name = "lastModified") @field:Json(name = "lastModified") var lastModified: ZonedDateTime,
+    @Json(name = "lastModified") @field:Json(name = "lastModified") var lastModified: Long,
     @Json(name = "notes") @field:Json(name = "notes") var notes: String,
     @Json(name = "originalAmount") @field:Json(name = "originalAmount") var originalAmount: Double,
-    @Json(name = "originalDate") @field:Json(name = "originalDate") var originalDate: ZonedDateTime,
+    @Json(name = "originalDate") @field:Json(name = "originalDate") var originalDate: Long,
     @Json(name = "originalDescription") @field:Json(name = "originalDescription") var originalDescription: String,
     @Json(name = "pending") @field:Json(name = "pending") var pending: Boolean,
     @Json(name = "timestamp") @field:Json(name = "timestamp") var timestamp: Long,
     @Json(name = "type") @field:Json(name = "type") var type: Transaction.TypeEnum,
     @Json(name = "userId") @field:Json(name = "userId") var userId: String,
     @Json(name = "payload") @field:Json(name = "payload") var payload: Map<String, String>? = null,
-    @Json(name = "upcoming") @field:Json(name = "upcoming") var upcoming: Boolean? = null,
+    @Json(name = "upcoming") @field:Json(name = "upcoming") var upcoming: Boolean,
     @Json(name = "currencyDenominatedAmount") @field:Json(name = "currencyDenominatedAmount") var currencyDenominatedAmount: CurrencyDenominatedAmount? = null,
     @Json(name = "currencyDenominatedOriginalAmount") @field:Json(name = "currencyDenominatedOriginalAmount") var currencyDenominatedOriginalAmount: CurrencyDenominatedAmount? = null,
     @Json(name = "parts") @field:Json(name = "parts") var parts: List<TransactionPart>? = null,

@@ -13,6 +13,7 @@ import com.tink.service.di.ServiceComponent
 import com.tink.service.network.TinkConfiguration
 import com.tink.service.statistics.StatisticsService
 import com.tink.service.time.PeriodService
+import com.tink.service.transaction.TransactionService
 import com.tink.service.transfer.TransferService
 import dagger.Component
 import javax.inject.Scope
@@ -77,6 +78,8 @@ abstract class TinkComponent {
     abstract val periodService: PeriodService
 
     abstract val statisticsService: StatisticsService
+
+    abstract val transactionService: TransactionService
 
     abstract val tinkConfiguration: TinkConfiguration
 

@@ -22,7 +22,7 @@ data class Transaction(
     val originalDescription: String,
     val originalAmount: Amount,
     val inserted: Instant,
-    val details: TransactionDetails
+    val details: TransactionDetails?
 ) : Parcelable
 
 @Parcelize

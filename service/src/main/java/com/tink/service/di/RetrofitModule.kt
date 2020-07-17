@@ -5,20 +5,20 @@ import com.tink.rest.apis.AccountApi
 import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.CalendarApi
 import com.tink.rest.apis.CredentialsApi
-import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
+import com.tink.rest.apis.ProviderApi
+import com.tink.rest.apis.SearchApi
 import com.tink.rest.apis.StatisticsApi
+import com.tink.rest.apis.TransactionApi
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.apis.UserApi
 import com.tink.rest.tools.GeneratedCodeConverters
-import com.tink.service.authorization.UserService
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.create
 
 @Module
 internal class RetrofitModule {
@@ -92,4 +92,16 @@ internal class RetrofitModule {
     internal fun provideStatisticsRetrofitService(
         retrofit: Retrofit
     ): StatisticsApi = retrofit.create(StatisticsApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideTransactionRetrofitService(
+        retrofit: Retrofit
+    ): TransactionApi = retrofit.create(TransactionApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideSearchRetrofitService(
+        retrofit: Retrofit
+    ): SearchApi = retrofit.create(SearchApi::class.java)
 }

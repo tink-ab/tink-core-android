@@ -28,13 +28,13 @@ data class SearchQuery(
     @Json(name = "accounts") @field:Json(name = "accounts") var accounts: List<String>? = null,
     @Json(name = "categories") @field:Json(name = "categories") var categories: List<String>? = null,
     @Json(name = "externalIds") @field:Json(name = "externalIds") var externalIds: List<String>? = null,
-    @Json(name = "endDate") @field:Json(name = "endDate") var endDate: ZonedDateTime? = null,
+    @Json(name = "endDate") @field:Json(name = "endDate") var endDate: Long? = null,
     @Json(name = "limit") @field:Json(name = "limit") var limit: Int? = null,
     @Json(name = "offset") @field:Json(name = "offset") var offset: Int? = null,
     @Json(name = "order") @field:Json(name = "order") var order: SearchQuery.OrderEnum? = null,
     @Json(name = "queryString") @field:Json(name = "queryString") var queryString: String? = null,
     @Json(name = "sort") @field:Json(name = "sort") var sort: SearchQuery.SortEnum? = null,
-    @Json(name = "startDate") @field:Json(name = "startDate") var startDate: ZonedDateTime? = null,
+    @Json(name = "startDate") @field:Json(name = "startDate") var startDate: Long? = null,
     @Json(name = "includeUpcoming") @field:Json(name = "includeUpcoming") var includeUpcoming: Boolean? = null
 ) {
     /**
