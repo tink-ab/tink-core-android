@@ -7,6 +7,7 @@ import com.tink.rest.apis.CalendarApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
+import com.tink.rest.apis.StatisticsApi
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.apis.UserApi
 import com.tink.rest.tools.GeneratedCodeConverters
@@ -85,4 +86,10 @@ internal class RetrofitModule {
     internal fun provideCalendarRetrofitService(
         retrofit: Retrofit
     ): CalendarApi = retrofit.create(CalendarApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideStatisticsRetrofitService(
+        retrofit: Retrofit
+    ): StatisticsApi = retrofit.create(StatisticsApi::class.java)
 }

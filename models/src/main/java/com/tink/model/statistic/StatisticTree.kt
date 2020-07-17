@@ -5,10 +5,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class StatisticTree(
-    val balancesByAccountId: Statistic,
-    val balancesByAccountGroupType: Statistic,
-    val leftToSpend: Statistic,
-    val leftToSpendAverage: Statistic,
-    val expensesByCategoryCode: Statistic,
-    val incomeByCategoryCode: Statistic
+    val expensesByCategoryCode: StatisticsGroupNode,
+    val incomeByCategoryCode: StatisticsGroupNode
 ) : Parcelable

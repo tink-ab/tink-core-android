@@ -11,6 +11,8 @@ import com.tink.service.credentials.CredentialsService
 import com.tink.service.di.DaggerServiceComponent
 import com.tink.service.di.ServiceComponent
 import com.tink.service.network.TinkConfiguration
+import com.tink.service.statistics.StatisticsService
+import com.tink.service.time.PeriodService
 import com.tink.service.transfer.TransferService
 import dagger.Component
 import javax.inject.Scope
@@ -71,6 +73,10 @@ abstract class TinkComponent {
     abstract val accountService: AccountService
 
     abstract val transferService: TransferService
+
+    abstract val periodService: PeriodService
+
+    abstract val statisticsService: StatisticsService
 
     abstract val tinkConfiguration: TinkConfiguration
 
