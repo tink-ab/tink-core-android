@@ -2,159 +2,70 @@ package com.tink.service.transaction
 
 import com.tink.model.time.Period
 import com.tink.model.transaction.Transaction
-import com.tink.service.handler.ResultHandler
-import com.tink.service.observer.ChangeObserver
+import com.tink.rest.apis.SearchApi
+import com.tink.rest.apis.TransactionApi
+import com.tink.rest.models.CategorizeTransactionsListRequest
+import com.tink.rest.models.CategorizeTransactionsRequest
+import com.tink.rest.models.SearchQuery
 import javax.inject.Inject
 
 interface TransactionService {
-    fun listAndSubscribeForAccountId(
-        accountId: String,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable
+    suspend fun listTransactions(
+        accountId: String? = null,
+        categoryCode: String? = null,
+        period: Period? = null
+    ): List<Transaction> //TODO: Paging
 
-    fun listAndSubscribeForCategoryCode(
-        categoryCode: String,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable
+    suspend fun getTransaction(transactionId: String): Transaction
 
-    fun listAndSubscribeForCategoryCodeAndPeriod(
-        categoryCode: String,
-        period: Period,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable
-
-    fun listAllAndSubscribeForCategoryCodeAndPeriod(
-        categoryCode: String,
-        period: Period,
-        listener: ChangeObserver<List<Transaction>>
-    )
-
-    fun listAndSubscribeForLeftToSpendAndPeriod(
-        period: Period,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable
-
-    fun listAndSubscribeForLatestTransactions(
-        includeUpcoming: Boolean,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable
-
-    fun listAndSubscribeForLatestTransactions(
-        includeUpcoming: Boolean,
-        pageSize: Int,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable
-
-    fun unsubscribe(listener: ChangeObserver<List<Transaction>>)
-
-    fun updateTransaction(
-        descriptor: TransactionUpdateDescriptor,
-        handler: ResultHandler<Transaction>
-    )
-
-    fun getTransaction(
-        transactionId: String,
-        handler: ResultHandler<Transaction>
-    )
-
-    fun categorizeTransactions(
+    suspend fun categorizeTransactions(
         transactionIds: List<String>,
-        categoryCode: String,
-        handler: ResultHandler<List<Transaction>>
-    )
+        categoryCode: String
+    ) // TODO: Should return transactions?
 
-    fun getSimilarTransactions(
-        transactionId: String,
-        handler: ResultHandler<List<Transaction>>
-    )
-
-    fun subscribe(changeObserver: ChangeObserver<List<Transaction>>)
+    suspend fun getSimilarTransactions(transactionId: String): List<Transaction>
 }
 
-class TransactionServiceImpl @Inject constructor() : TransactionService {
-    override fun listAndSubscribeForAccountId(
-        accountId: String,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+internal class TransactionServiceImpl @Inject constructor(
+    private val searchApi: SearchApi,
+    private val transactionApi: TransactionApi
+) : TransactionService {
+    override suspend fun listTransactions(
+        accountId: String?,
+        categoryCode: String?,
+        period: Period?
+    ): List<Transaction> {
+
+        fun String.asList(): List<String> = listOf(this)
+
+        val query = SearchQuery(
+            accounts = accountId?.asList(),
+            categories = categoryCode?.asList()
+        )
+
+        period?.let {
+            query.startDate = it.start.toEpochMilli()
+            query.endDate = it.end.toEpochMilli()
+        }
+
+        return searchApi.searchQuery(query).results.mapNotNull { it.transaction?.toCoreModel() }
     }
 
-    override fun listAndSubscribeForCategoryCode(
-        categoryCode: String,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
+    override suspend fun getTransaction(transactionId: String) =
+        transactionApi.getTransaction(transactionId).toCoreModel()
 
-    override fun listAndSubscribeForCategoryCodeAndPeriod(
-        categoryCode: String,
-        period: Period,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun listAllAndSubscribeForCategoryCodeAndPeriod(
-        categoryCode: String,
-        period: Period,
-        listener: ChangeObserver<List<Transaction>>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun listAndSubscribeForLeftToSpendAndPeriod(
-        period: Period,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun listAndSubscribeForLatestTransactions(
-        includeUpcoming: Boolean,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun listAndSubscribeForLatestTransactions(
-        includeUpcoming: Boolean,
-        pageSize: Int,
-        listener: ChangeObserver<List<Transaction>>
-    ): Pageable {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun unsubscribe(listener: ChangeObserver<List<Transaction>>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun updateTransaction(
-        descriptor: TransactionUpdateDescriptor,
-        handler: ResultHandler<Transaction>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getTransaction(transactionId: String, handler: ResultHandler<Transaction>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun categorizeTransactions(
+    override suspend fun categorizeTransactions(
         transactionIds: List<String>,
-        categoryCode: String,
-        handler: ResultHandler<List<Transaction>>
+        categoryCode: String
     ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        val request = CategorizeTransactionsListRequest(
+            listOf(
+                CategorizeTransactionsRequest(categoryCode, transactionIds) //TODO: code vs id?
+            )
+        )
+        transactionApi.categorize(request)
     }
 
-    override fun getSimilarTransactions(
-        transactionId: String,
-        handler: ResultHandler<List<Transaction>>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun subscribe(changeObserver: ChangeObserver<List<Transaction>>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
+    override suspend fun getSimilarTransactions(transactionId: String) =
+        transactionApi.similar(transactionId).transactions.map { it.toCoreModel() }
 }
