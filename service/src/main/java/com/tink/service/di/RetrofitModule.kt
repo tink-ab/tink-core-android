@@ -3,11 +3,14 @@ package com.tink.service.di
 import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.AccountApi
 import com.tink.rest.apis.BeneficiaryApi
+import com.tink.rest.apis.CalendarApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
 import com.tink.rest.apis.TransferApi
+import com.tink.rest.apis.UserApi
 import com.tink.rest.tools.GeneratedCodeConverters
+import com.tink.service.authorization.UserService
 import com.tink.service.network.TinkConfiguration
 import dagger.Module
 import dagger.Provides
@@ -31,7 +34,7 @@ internal class RetrofitModule {
 
     @Provides
     @ServiceScope
-    internal fun provideUserRetrofitService(
+    internal fun provideAccessRetrofitService(
         retrofit: Retrofit
     ): AccessApi = retrofit.create(AccessApi::class.java)
 
@@ -70,4 +73,16 @@ internal class RetrofitModule {
     internal fun provideBeneficiaryRetrofitService(
         retrofit: Retrofit
     ): BeneficiaryApi = retrofit.create(BeneficiaryApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideUserRetrofitService(
+        retrofit: Retrofit
+    ): UserApi = retrofit.create(UserApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideCalendarRetrofitService(
+        retrofit: Retrofit
+    ): CalendarApi = retrofit.create(CalendarApi::class.java)
 }

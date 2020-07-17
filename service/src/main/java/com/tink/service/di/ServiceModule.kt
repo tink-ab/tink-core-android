@@ -18,6 +18,8 @@ import com.tink.service.provider.ProviderService
 import com.tink.service.provider.ProviderServiceImpl
 import com.tink.service.statistics.StatisticsService
 import com.tink.service.statistics.StatisticsServiceImpl
+import com.tink.service.time.PeriodService
+import com.tink.service.time.PeriodServiceImpl
 import com.tink.service.transaction.TransactionService
 import com.tink.service.transaction.TransactionServiceImpl
 import com.tink.service.user.UserProfileService
@@ -65,4 +67,7 @@ internal abstract class ServiceModule {
 
     @Binds
     internal abstract fun transferService(implementation: TransferServiceImpl): TransferService
+
+    @Binds
+    internal abstract fun periodService(implementation: PeriodServiceImpl): PeriodService
 }
