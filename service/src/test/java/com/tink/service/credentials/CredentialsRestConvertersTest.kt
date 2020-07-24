@@ -24,6 +24,9 @@ internal class CredentialsRestConvertersTest {
     private val credentialsWithAutostartToken =
         "{ \"fields\": { \"username\": \"198410045701\" }, \"id\": \"6e68cc6287704273984567b3300c5822\", \"providerName\": \"handelsbanken-bankid\", \"sessionExpiryDate\": 1493379467000, \"status\": \"UPDATED\", \"statusPayload\": \"Analyzed 1,200 out of 1,200 transactions.\", \"statusUpdated\": 1493379467000, \"supplementalInformation\": \"4d13a3a4-38e9-37d8-11cc-6e89982e4b70\", \"type\": \"MOBILE_BANKID\", \"updated\": 1493379467000, \"userId\": \"c4ae034f96c740da91ae00022ddcac4d\" }"
 
+    private val credentialsWithMobileBankIdWithoutAutostartToken =
+        "{ \"fields\": { \"username\": \"198410045701\" }, \"id\": \"6e68cc6287704273984567b3300c5822\", \"providerName\": \"handelsbanken-bankid\", \"sessionExpiryDate\": 1493379467000, \"status\": \"UPDATED\", \"statusPayload\": \"Analyzed 1,200 out of 1,200 transactions.\", \"statusUpdated\": 1493379467000, \"type\": \"MOBILE_BANKID\", \"updated\": 1493379467000, \"userId\": \"c4ae034f96c740da91ae00022ddcac4d\" }"
+
     private val credentialsJsonAdapter =
         GeneratedCodeConverters.moshi.adapter(CredentialsDto::class.java)
 
@@ -81,7 +84,7 @@ internal class CredentialsRestConvertersTest {
     }
 
     @Test
-    fun `convert supplementalInfo to autostart token`() {
+    fun `convert supplementalInfo with autostart token to third party authentication`() {
 
         val credentials = credentialsJsonAdapter.fromJson(credentialsWithAutostartToken)
 
@@ -89,11 +92,30 @@ internal class CredentialsRestConvertersTest {
 
         assertThat(token).isNotEmpty()
 
-        val result = createThirdPartyAuthFromAutostartToken(token)
+        val result = createThirdPartyAuthForMobileBankId(token)
 
         requireNotNull(result)
 
         assertThat(result.android?.intent).isEqualTo("bankid:///?autostarttoken=4d13a3a4-38e9-37d8-11cc-6e89982e4b70&redirect=null")
+        assertThat(result.android?.packageName).isEqualTo("com.bankid.bus")
+        assertThat(result.downloadTitle).isEqualTo("Download Mobile BankID")
+        assertThat(result.downloadMessage).isEqualTo("You need to install the Mobile BankID app to authenticate")
+    }
+
+    @Test
+    fun `convert supplementalInfo to bankid third party without authentication token`() {
+
+        val credentials = credentialsJsonAdapter.fromJson(credentialsWithMobileBankIdWithoutAutostartToken)
+
+        val token = credentials?.supplementalInformation?.rawStringInfo
+
+        assertThat(token).isNull()
+
+        val result = createThirdPartyAuthForMobileBankId(token)
+
+        requireNotNull(result)
+
+        assertThat(result.android?.intent).isEqualTo("bankid:///?redirect=null")
         assertThat(result.android?.packageName).isEqualTo("com.bankid.bus")
         assertThat(result.downloadTitle).isEqualTo("Download Mobile BankID")
         assertThat(result.downloadMessage).isEqualTo("You need to install the Mobile BankID app to authenticate")
