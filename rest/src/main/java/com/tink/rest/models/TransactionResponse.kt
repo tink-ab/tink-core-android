@@ -9,7 +9,6 @@ package com.tink.rest.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property accountId The internal identifier of the account that the transaction belongs to.

@@ -2,7 +2,6 @@ package com.tink.service.user
 
 import com.tink.model.user.UserProfile
 import com.tink.rest.apis.UserApi
-import com.tink.service.handler.ResultHandler
 import javax.inject.Inject
 
 interface UserProfileService {

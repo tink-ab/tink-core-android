@@ -16,7 +16,6 @@ data class StatisticDataNode(
     val value: Amount
 ) : StatisticsTreeNode()
 
-
 @Parcelize
 data class StatisticsGroupNode(
     override val identifier: String,

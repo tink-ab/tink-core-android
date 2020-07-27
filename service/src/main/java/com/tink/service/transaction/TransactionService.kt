@@ -14,7 +14,7 @@ interface TransactionService {
         accountId: String? = null,
         categoryCode: String? = null,
         period: Period? = null
-    ): List<Transaction> //TODO: Paging
+    ): List<Transaction> // TODO: Paging
 
     suspend fun getTransaction(transactionId: String): Transaction
 
@@ -60,7 +60,7 @@ internal class TransactionServiceImpl @Inject constructor(
     ) {
         val request = CategorizeTransactionsListRequest(
             listOf(
-                CategorizeTransactionsRequest(categoryCode, transactionIds) //TODO: code vs id?
+                CategorizeTransactionsRequest(categoryCode, transactionIds) // TODO: code vs id?
             )
         )
         transactionApi.categorize(request)

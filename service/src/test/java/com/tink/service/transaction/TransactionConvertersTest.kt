@@ -11,7 +11,6 @@ import com.tink.rest.models.TransactionResponse as TransactionDto
 
 internal class TransactionConvertersTest {
 
-
     private val transactionJson = "{\n" +
             "        \"accountId\": \"3fe2d96efacd4dc5994404a950f238a9\",\n" +
             "        \"amount\": 34.5,\n" +
@@ -79,7 +78,7 @@ internal class TransactionConvertersTest {
             assertThat(originalDescription).isEqualTo("Stadium Sergelg Stockholm")
             assertThat(originalDate).isEqualTo(Instant.ofEpochMilli(1455741874975))
             assertThat(originalAmount).isEqualTo(Amount(ExactNumber(1150, 2), "EUR"))
-            //TODO categoryCode, tags, dispensable amount, inserted, details
+            // TODO categoryCode, tags, dispensable amount, inserted, details
         }
     }
 

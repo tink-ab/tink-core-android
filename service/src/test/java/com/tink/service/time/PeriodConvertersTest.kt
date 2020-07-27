@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test
 
 internal class PeriodConvertersTest {
 
-
     @Test
     fun `period name yield correct period type`() {
 
@@ -36,5 +35,4 @@ internal class PeriodConvertersTest {
             periodDto.copy(name = "2019-04-32").toCoreModel() as DayPeriod
         }
     }
-
 }

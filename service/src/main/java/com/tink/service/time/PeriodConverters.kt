@@ -10,7 +10,6 @@ import com.tink.rest.models.Period as PeriodDto
 
 internal fun PeriodDto.toCoreModel(): Period {
 
-
     val start = startDate!!.toInstant()
     val end = endDate!!.toInstant()
 
@@ -46,6 +45,4 @@ internal fun PeriodDto.toCoreModel(): Period {
         }
         else -> throw IllegalArgumentException("Unknown period type")
     }
-
-
 }

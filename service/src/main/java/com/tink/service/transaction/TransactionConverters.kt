@@ -11,7 +11,7 @@ fun TransactionDto.toCoreModel() =
         accountId = accountId,
         id = id,
         amount = currencyDenominatedAmount!!.toAmount(),
-        dispensableAmount = currencyDenominatedAmount!!.toAmount(), //TODO
+        dispensableAmount = currencyDenominatedAmount!!.toAmount(), // TODO
         description = description,
         categoryCode = categoryId,
         date = date.toInstant(),
@@ -22,7 +22,7 @@ fun TransactionDto.toCoreModel() =
         originalDate = originalDate.toInstant(),
         originalDescription = originalDescription,
         originalAmount = currencyDenominatedOriginalAmount!!.toAmount(),
-        inserted = 0L.toInstant(), //TODO
+        inserted = 0L.toInstant(), // TODO
         details = null
     )
 
@@ -31,7 +31,7 @@ fun TransactionResponse.toCoreModel() =
         accountId = accountId,
         id = id,
         amount = currencyDenominatedAmount!!.toAmount(),
-        dispensableAmount = currencyDenominatedAmount!!.toAmount(), //TODO
+        dispensableAmount = currencyDenominatedAmount!!.toAmount(), // TODO
         description = description,
         categoryCode = categoryId,
         date = date.toInstant(),
@@ -42,7 +42,6 @@ fun TransactionResponse.toCoreModel() =
         originalDate = originalDate.toInstant(),
         originalDescription = originalDescription,
         originalAmount = currencyDenominatedOriginalAmount!!.toAmount(),
-        inserted = 0L.toInstant(), //TODO
+        inserted = 0L.toInstant(), // TODO
         details = null
     )
-
