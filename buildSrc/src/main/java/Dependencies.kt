@@ -7,7 +7,7 @@ object Versions {
     const val kotlin = "1.3.72"
     const val dagger = "2.16"
     const val androidx = "1.0.2"
-    const val coroutines = "1.2.1"
+    const val coroutines = "1.3.8"
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
     const val navigation = "2.2.0"
