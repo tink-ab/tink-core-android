@@ -2,7 +2,6 @@ package com.tink.service.category
 
 import com.tink.model.category.CategoryTree
 import com.tink.rest.apis.CategoryApi
-import java.util.Locale
 import javax.inject.Inject
 
 interface CategoryService {
@@ -14,6 +13,6 @@ class CategoryServiceImpl @Inject constructor(
 ) : CategoryService {
 
     override suspend fun getCategoryTree(): CategoryTree =
-        api.list(Locale.getDefault().language).toCategoryTree()
+        api.list(null).toCategoryTree()
             ?: throw IllegalStateException("Couldn't create CategoryTree")
 }
