@@ -30,7 +30,7 @@ private fun CategoryDto.toCategoryRecursively(allCategories: List<CategoryDto>):
     return Category(
         code = code,
         id = id,
-        name = primaryName ?: secondaryName ?: typeName,
+        name = secondaryName ?: primaryName ?: typeName,
         type = type.toType(),
         parentId = parent,
         children = children,
