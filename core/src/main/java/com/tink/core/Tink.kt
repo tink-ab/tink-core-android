@@ -6,6 +6,7 @@ import com.tink.model.user.User
 import com.tink.service.account.AccountService
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.authorization.UserService
+import com.tink.service.category.CategoryService
 import com.tink.service.consent.ConsentService
 import com.tink.service.credentials.CredentialsService
 import com.tink.service.di.DaggerServiceComponent
@@ -80,6 +81,8 @@ abstract class TinkComponent {
     abstract val statisticsService: StatisticsService
 
     abstract val transactionService: TransactionService
+
+    abstract val categoryService: CategoryService
 
     abstract val tinkConfiguration: TinkConfiguration
 
