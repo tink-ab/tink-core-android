@@ -25,7 +25,7 @@ fun List<CategoryDto>.toCategoryTree(): CategoryTree? {
 
 private fun CategoryDto.toCategoryRecursively(allCategories: List<CategoryDto>): Category {
     val children = allCategories.filter { this.isParentTo(it) }
-        .map { it.toCategoryRecursively(allCategories) }
+        .map { it.toCategoryRecursively(allCategories - this) } // remove this to avoid potential circular dependencies
 
     return Category(
         code = code,
