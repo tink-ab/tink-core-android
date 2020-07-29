@@ -9,6 +9,7 @@ data class Category(
     val id: String,
     val name: String,
     val type: Type,
+    val parentId: String?,
     val children: List<Category>,
     val sortOrder: Int,
     val isDefaultChild: Boolean

@@ -1,25 +1,19 @@
 package com.tink.service.category
 
 import com.tink.model.category.CategoryTree
-import com.tink.service.observer.ChangeObserver
+import com.tink.rest.apis.CategoryApi
+import java.util.Locale
 import javax.inject.Inject
 
 interface CategoryService {
-    fun subscribe(listener: ChangeObserver<CategoryTree>)
-    fun unsubscribe(listener: ChangeObserver<CategoryTree>)
-    fun refreshCategories()
+    suspend fun getCategoryTree(): CategoryTree
 }
 
-class CategoryServiceImpl @Inject constructor() : CategoryService {
-    override fun subscribe(listener: ChangeObserver<CategoryTree>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
+class CategoryServiceImpl @Inject constructor(
+    private val api: CategoryApi
+) : CategoryService {
 
-    override fun unsubscribe(listener: ChangeObserver<CategoryTree>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun refreshCategories() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
+    override suspend fun getCategoryTree(): CategoryTree =
+        api.list(Locale.getDefault().language).toCategoryTree()
+            ?: throw IllegalStateException("Couldn't create CategoryTree")
 }
