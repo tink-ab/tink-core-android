@@ -4,6 +4,7 @@ import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.AccountApi
 import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.CalendarApi
+import com.tink.rest.apis.CategoryApi
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.apis.OAuthApi
 import com.tink.rest.apis.ProviderApi
@@ -104,4 +105,10 @@ internal class RetrofitModule {
     internal fun provideSearchRetrofitService(
         retrofit: Retrofit
     ): SearchApi = retrofit.create(SearchApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideCategoryRetrofitService(
+        retrofit: Retrofit
+    ): CategoryApi = retrofit.create(CategoryApi::class.java)
 }
