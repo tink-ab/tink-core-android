@@ -12,15 +12,16 @@ import javax.inject.Inject
 interface TransactionService {
     suspend fun listTransactions(
         accountId: String? = null,
-        categoryCode: String? = null,
-        period: Period? = null
-    ): List<Transaction> // TODO: Paging
+        categoryId: String? = null,
+        period: Period? = null,
+        offset: Int = 0
+    ): List<Transaction>
 
     suspend fun getTransaction(transactionId: String): Transaction
 
     suspend fun categorizeTransactions(
         transactionIds: List<String>,
-        categoryCode: String
+        newCategoryId: String
     ) // TODO: Should return transactions?
 
     suspend fun getSimilarTransactions(transactionId: String): List<Transaction>
@@ -32,15 +33,18 @@ internal class TransactionServiceImpl @Inject constructor(
 ) : TransactionService {
     override suspend fun listTransactions(
         accountId: String?,
-        categoryCode: String?,
-        period: Period?
+        categoryId: String?,
+        period: Period?,
+        offset: Int
     ): List<Transaction> {
 
         fun String.asList(): List<String> = listOf(this)
 
         val query = SearchQuery(
             accounts = accountId?.asList(),
-            categories = categoryCode?.asList()
+            categories = categoryId?.asList(),
+            offset = offset,
+            sort = SearchQuery.SortEnum.DATE
         )
 
         period?.let {
@@ -56,11 +60,11 @@ internal class TransactionServiceImpl @Inject constructor(
 
     override suspend fun categorizeTransactions(
         transactionIds: List<String>,
-        categoryCode: String
+        newCategoryId: String
     ) {
         val request = CategorizeTransactionsListRequest(
             listOf(
-                CategorizeTransactionsRequest(categoryCode, transactionIds) // TODO: code vs id?
+                CategorizeTransactionsRequest(newCategoryId, transactionIds)
             )
         )
         transactionApi.categorize(request)

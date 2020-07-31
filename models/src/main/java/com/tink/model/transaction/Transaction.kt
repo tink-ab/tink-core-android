@@ -11,7 +11,7 @@ data class Transaction(
     val amount: Amount,
     val dispensableAmount: Amount,
     val description: String,
-    val categoryCode: String,
+    val categoryId: String,
     val date: Instant,
     val accountId: String,
     val notes: String,
