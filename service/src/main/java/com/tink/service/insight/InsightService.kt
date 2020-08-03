@@ -1,29 +1,28 @@
 package com.tink.service.insight
 
 import com.tink.model.insights.Insight
+import com.tink.model.insights.InsightState
 import com.tink.model.insights.PerformedInsightAction
+import com.tink.rest.apis.ActionableInsightApi
 import com.tink.service.handler.ResultHandler
+import org.threeten.bp.Instant
 import javax.inject.Inject
 
 interface InsightService {
-    fun listInsights(resultHandler: ResultHandler<List<Insight>>)
-    fun listArchived(resultHandler: ResultHandler<List<Insight>>)
-    fun selectAction(performedAction: PerformedInsightAction, resultHandler: ResultHandler<Unit>)
+    suspend fun listInsights(): List<Insight>
+    suspend fun listArchived(): List<Insight>
+    suspend fun selectAction(performedAction: PerformedInsightAction)
 }
 
-class InsightServiceImpl @Inject constructor() : InsightService {
-    override fun listInsights(resultHandler: ResultHandler<List<Insight>>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
+class InsightServiceImpl @Inject constructor(
+    val api: ActionableInsightApi
+) : InsightService {
+    override suspend fun listInsights(): List<Insight> =
+        api.list().map { it.toCoreModel(InsightState.Active) }
 
-    override fun listArchived(resultHandler: ResultHandler<List<Insight>>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
+    override suspend fun listArchived(): List<Insight> = TODO()
 
-    override fun selectAction(
-        performedAction: PerformedInsightAction,
-        resultHandler: ResultHandler<Unit>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    override suspend fun selectAction(performedAction: PerformedInsightAction) {
+        TODO("not implemented")
     }
 }

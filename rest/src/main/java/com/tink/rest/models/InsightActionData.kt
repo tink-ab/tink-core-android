@@ -22,6 +22,7 @@ data class InsightActionData(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "ACKNOWLEDGE") ACKNOWLEDGE("ACKNOWLEDGE"),
         @Json(name = "DISMISS") DISMISS("DISMISS"),
         @Json(name = "VIEW_BUDGET") VIEW_BUDGET("VIEW_BUDGET"),

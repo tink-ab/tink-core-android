@@ -2,6 +2,7 @@ package com.tink.service.di
 
 import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.AccountApi
+import com.tink.rest.apis.ActionableInsightApi
 import com.tink.rest.apis.BeneficiaryApi
 import com.tink.rest.apis.CalendarApi
 import com.tink.rest.apis.CategoryApi
@@ -111,4 +112,10 @@ internal class RetrofitModule {
     internal fun provideCategoryRetrofitService(
         retrofit: Retrofit
     ): CategoryApi = retrofit.create(CategoryApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideInsightsRetrofitService(
+        retrofit: Retrofit
+    ): ActionableInsightApi = retrofit.create(ActionableInsightApi::class.java)
 }

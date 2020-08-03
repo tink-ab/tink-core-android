@@ -27,7 +27,7 @@ data class ActionableInsight(
     @Json(name = "type") @field:Json(name = "type") var type: String? = null,
     @Json(name = "title") @field:Json(name = "title") var title: String? = null,
     @Json(name = "description") @field:Json(name = "description") var description: String? = null,
-    @Json(name = "data") @field:Json(name = "data") var `data`: InsightData? = null,
+    @Json(name = "data") @field:Json(name = "data") var data: InsightData? = null,
     @Json(name = "createdTime") @field:Json(name = "createdTime") var createdTime: Long? = null,
     @Json(name = "insightActions") @field:Json(name = "insightActions") var insightActions: List<InsightProposedAction>? = null
 )
