@@ -18,9 +18,10 @@ class InsightServiceImpl @Inject constructor(
     val api: ActionableInsightApi
 ) : InsightService {
     override suspend fun listInsights(): List<Insight> =
-        api.list().map { it.toCoreModel(InsightState.Active) }
+        api.list().map { it.toCoreModel() }
 
-    override suspend fun listArchived(): List<Insight> = TODO()
+    override suspend fun listArchived(): List<Insight> =
+        api.listArchivedInsights().map { it.toCoreModel() }
 
     override suspend fun selectAction(performedAction: PerformedInsightAction) {
         TODO("not implemented")

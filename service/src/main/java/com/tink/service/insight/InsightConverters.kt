@@ -5,22 +5,36 @@ import com.tink.model.insights.InsightData
 import com.tink.model.insights.InsightState
 import com.tink.model.insights.InsightType
 import com.tink.rest.models.ActionableInsight
+import com.tink.rest.models.ArchivedInsight
+import com.tink.service.misc.toInstant
 import org.threeten.bp.Instant
 import java.lang.IllegalArgumentException
 
 
-internal fun ActionableInsight.toCoreModel(state: InsightState): Insight {
+internal fun ActionableInsight.toCoreModel(): Insight {
     return Insight(
         id = id ?: "",
         type = convertType(type),
         title = title ?: "",
         description = description ?: "",
-        state = state,
-        created = Instant.ofEpochMilli(createdTime ?: 0L),
+        state = InsightState.Active,
+        created = createdTime.toInstant(),
         data = InsightData.NoData,
         actions = listOf()
     )
 }
+
+internal fun ArchivedInsight.toCoreModel() =
+    Insight(
+        id = id ?: "",
+        type = convertType(type),
+        title = title ?: "",
+        description = description ?: "",
+        state = InsightState.Archived(dateArchived.toInstant()),
+        created = dateInsightCreated.toInstant(),
+        data = InsightData.NoData,
+        actions = listOf()
+    )
 
 private fun convertType(typeString: String?): InsightType =
     try {
