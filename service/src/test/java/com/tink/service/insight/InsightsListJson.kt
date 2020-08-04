@@ -1,6 +1,6 @@
 package com.tink.service.insight
 
-val insightTestList = "[\n" +
+internal val insightTestList = "[\n" +
         "  {\n" +
         "    \"id\": \"7d020f77e057442d8edb64e6c75d2e10\",\n" +
         "    \"userId\": \"0f0ced014ec041b5bc1bdc1f96d9d607\",\n" +
@@ -488,3 +488,40 @@ val insightTestList = "[\n" +
         "    ]\n" +
         "  }\n" +
         "]"
+
+internal val insightWithBudgetCloseNegativeData = "{\n" +
+        "  \"createdTime\": 1549976786000,\n" +
+        "  \"data\": {\n" +
+        "    \"type\": \"BUDGET_CLOSE_NEGATIVE\",\n" +
+        "    \"data\": {\n" +
+        "      \"budgetId\": \"cbbac116e43c4b21b7013091ec03d590\",\n" +
+        "      \"budgetPeriod\": {\n" +
+        "        \"start\": 1567296000000,\n" +
+        "        \"end\": 1569887999999,\n" +
+        "        \"spentAmount\": {\n" +
+        "          \"currencyCode\": \"EUR\",\n" +
+        "          \"amount\": 114.31\n" +
+        "        },\n" +
+        "        \"budgetAmount\": {\n" +
+        "          \"currencyCode\": \"EUR\",\n" +
+        "          \"amount\": 120.00\n" +
+        "        }\n" +
+        "      },\n" +
+        "      \"currentTime\": 1569593745000,\n" +
+        "      \"periodUnit\": \"MONTH\"\n" +
+        "    }\n" +
+        "  },\n" +
+        "  \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
+        "  \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
+        "  \"insightActions\": [\n" +
+        "    {\n" +
+        "      \"data\": {\n" +
+        "        \"type\": \"CREATE_TRANSFER\"\n" +
+        "      },\n" +
+        "      \"label\": \"Make transfer\"\n" +
+        "    }\n" +
+        "  ],\n" +
+        "  \"title\": \"Your balance on bank account x is low\",\n" +
+        "  \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
+        "  \"userId\": \"d9f134ee2eb44846a4e02990ecc8d32e\"\n" +
+        "}\n"

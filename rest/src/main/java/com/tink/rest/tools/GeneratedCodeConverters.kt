@@ -10,6 +10,7 @@ object GeneratedCodeConverters {
     val moshi: Moshi = Moshi.Builder()
         .add(TinkEnumJsonAdapterFactory())
         .add(TinkJsonAdapterFactory())
+        .add(TinkPolymorphicInsightsDataAdapterFactory.create())
         .add(XNullableAdapterFactory())
         .add(KotlinJsonAdapterFactory())
         .add(TypesAdapterFactory())

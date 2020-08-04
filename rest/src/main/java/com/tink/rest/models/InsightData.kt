@@ -8,12 +8,14 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.tink.rest.models.insightdata.AccountBalanceLowData
+import com.tink.rest.models.insightdata.BudgetCloseNegativeData
 
 /**
  * @property type The insight type
  */
-@JsonClass(generateAdapter = true)
-data class InsightData(
+@JsonClass(generateAdapter = false)
+sealed class InsightData(
     @Json(name = "type") @field:Json(name = "type") var type: InsightData.TypeEnum? = null
 ) {
     /**
@@ -39,4 +41,19 @@ data class InsightData(
         @Json(name = "LEFT_TO_SPEND_NEGATIVE") LEFT_TO_SPEND_NEGATIVE("LEFT_TO_SPEND_NEGATIVE"),
         @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN")
     }
+
+    @JsonClass(generateAdapter = true)
+    data class AccountBalanceLow(
+        @Json(name = "data")
+        val data: AccountBalanceLowData
+    ) : InsightData(TypeEnum.ACCOUNT_BALANCE_LOW)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetCloseNegative(
+        @Json(name = "data")
+        val data: BudgetCloseNegativeData
+    ) : InsightData(TypeEnum.BUDGET_CLOSE_NEGATIVE)
 }
+
+
+

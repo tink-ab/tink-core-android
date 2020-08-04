@@ -8,27 +8,34 @@ import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class InsightConvertersTest {
+internal val insightJson = "{\n" +
+        "    \"createdTime\": 1549976786000,\n" +
+        "    \"data\": {\n" +
+        "      \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
+        "      \"data\": {\n" +
+        "        \"accountId\": \"c6f26025fbb949a08348e2f73f0ae12c\",\n" +
+        "        \"balance\": {\n" +
+        "          \"currencyCode\": \"EUR\",\n" +
+        "          \"amount\": 2.42\n" +
+        "          }\n" +
+        "        }\n" +
+        "    },\n" +
+        "    \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
+        "    \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
+        "    \"insightActions\": [\n" +
+        "      {\n" +
+        "        \"data\": {\n" +
+        "          \"type\": \"CREATE_TRANSFER\"\n" +
+        "        },\n" +
+        "        \"label\": \"Make transfer\"\n" +
+        "      }\n" +
+        "    ],\n" +
+        "    \"title\": \"Your balance on bank account x is low\",\n" +
+        "    \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
+        "    \"userId\": \"d9f134ee2eb44846a4e02990ecc8d32e\"\n" +
+        "  }"
 
-    private val insightJson = "{\n" +
-            "    \"createdTime\": 1549976786000,\n" +
-            "    \"data\": {\n" +
-            "      \"type\": \"ACCOUNT_BALANCE_LOW\"\n" +
-            "    },\n" +
-            "    \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
-            "    \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
-            "    \"insightActions\": [\n" +
-            "      {\n" +
-            "        \"data\": {\n" +
-            "          \"type\": \"CREATE_TRANSFER\"\n" +
-            "        },\n" +
-            "        \"label\": \"Make transfer\"\n" +
-            "      }\n" +
-            "    ],\n" +
-            "    \"title\": \"Your balance on bank account x is low\",\n" +
-            "    \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
-            "    \"userId\": \"d9f134ee2eb44846a4e02990ecc8d32e\"\n" +
-            "  }"
+internal class InsightConvertersTest {
 
     private val archivedInsightJson = "{\n" +
             "    \"data\": {\n" +
@@ -42,6 +49,7 @@ internal class InsightConvertersTest {
             "    \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
             "    \"userId\": \"d9f134ee2eb44846a4e02990ecc8d32e\"\n" +
             "  }"
+
     @Test
     fun `simple insight conversion`() {
 
