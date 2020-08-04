@@ -1,6 +1,6 @@
 package com.tink.service.insight
 
-internal val insightTestList = "[\n" +
+internal const val insightTestList = "[\n" +
         "  {\n" +
         "    \"id\": \"7d020f77e057442d8edb64e6c75d2e10\",\n" +
         "    \"userId\": \"0f0ced014ec041b5bc1bdc1f96d9d607\",\n" +
@@ -489,7 +489,7 @@ internal val insightTestList = "[\n" +
         "  }\n" +
         "]"
 
-internal val insightWithBudgetCloseNegativeData = "{\n" +
+internal const val insightWithBudgetCloseNegativeData = "{\n" +
         "  \"createdTime\": 1549976786000,\n" +
         "  \"data\": {\n" +
         "    \"type\": \"BUDGET_CLOSE_NEGATIVE\",\n" +

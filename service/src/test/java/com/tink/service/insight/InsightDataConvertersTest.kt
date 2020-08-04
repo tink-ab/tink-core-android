@@ -42,4 +42,40 @@ internal class InsightDataConvertersTest {
         assertThat(data.currentTime).isEqualTo(1569593745000)
         assertThat(data.periodUnit).isEqualTo("MONTH")
     }
+
+    private val monthlySummaryExpensesByCategoryDataJson = "{\n" +
+            "  \"type\": \"MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY\",\n" +
+            "  \"data\": {\n" +
+            "    \"month\": {\n" +
+            "      \"month\": 1,\n" +
+            "      \"year\": 2020 \n" +
+            "    },\n" +
+            "    \"expensesByCategory\": [\n" +
+            "      {\n" +
+            "        \"categoryCode\": \"expenses:food.coffee\",\n" +
+            "        \"spentAmount\": {\n" +
+            "          \"currencyCode\": \"EUR\",\n" +
+            "          \"amount\": 28.0\n" +
+            "        }\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"categoryCode\": \"expenses:food.groceries\",\n" +
+            "        \"spentAmount\": {\n" +
+            "          \"currencyCode\": \"EUR\",\n" +
+            "          \"amount\": 115.75\n" +
+            "        }\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  }\n" +
+            "}"
+
+    @Test
+    fun `monthly summary expenses by category conversion`() {
+
+        val dataDto = GeneratedCodeConverters.moshi
+            .adapter(InsightDataDto::class.java)
+            .fromJson(monthlySummaryExpensesByCategoryDataJson)
+
+        assert(dataDto is InsightDataDto.MonthlySummaryExpensesByCategory)
+    }
 }
