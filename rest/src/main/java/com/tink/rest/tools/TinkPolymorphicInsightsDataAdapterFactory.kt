@@ -7,7 +7,9 @@ import com.tink.rest.models.InsightData.TypeEnum
 object TinkPolymorphicInsightsDataAdapterFactory {
 
     fun create(): PolymorphicJsonAdapterFactory<InsightData> =
-        PolymorphicJsonAdapterFactory.of(InsightData::class.java, "type")
+        PolymorphicJsonAdapterFactory
+            .of(InsightData::class.java, "type")
+            .withDefaultValue(InsightData.Unknown)
             .withSubtype(
                 InsightData.AccountBalanceLow::class.java,
                 TypeEnum.ACCOUNT_BALANCE_LOW.value
@@ -67,9 +69,5 @@ object TinkPolymorphicInsightsDataAdapterFactory {
             .withSubtype(
                 InsightData.LeftToSpendNegative::class.java,
                 TypeEnum.LEFT_TO_SPEND_NEGATIVE.value
-            )
-            .withSubtype(
-                InsightData.Unknown::class.java,
-                TypeEnum.UNKNOWN.value
             )
 }

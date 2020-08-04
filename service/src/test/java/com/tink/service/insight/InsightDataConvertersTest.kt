@@ -78,4 +78,30 @@ internal class InsightDataConvertersTest {
 
         assert(dataDto is InsightDataDto.MonthlySummaryExpensesByCategory)
     }
+
+    private val insightDataWithUnknownType = "{\n" +
+            "  \"type\": \"RANDOM_TYPE_SPQR\",\n" +
+            "  \"data\": {\n" +
+            "    \"menu\": {\n" +
+            "      \"id\": \"file\",\n" +
+            "      \"value\": \"File\",\n" +
+            "      \"popup\": {\n" +
+            "        \"menuitem\": [\n" +
+            "          {\"value\": \"New\", \"onclick\": \"CreateNewDoc()\"},\n" +
+            "          {\"value\": \"Open\", \"onclick\": \"OpenDoc()\"},\n" +
+            "          {\"value\": \"Close\", \"onclick\": \"CloseDoc()\"}\n" +
+            "        ]\n" +
+            "      }\n" +
+            "    }\n" +
+            "  }\n" +
+            "}\n"
+    @Test
+    fun `unknown type can contain any type of data`() {
+
+        val dataDto = GeneratedCodeConverters.moshi
+            .adapter(InsightDataDto::class.java)
+            .fromJson(insightDataWithUnknownType)
+
+        assert(dataDto is InsightDataDto.Unknown)
+    }
 }

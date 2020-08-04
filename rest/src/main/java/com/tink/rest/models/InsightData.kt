@@ -161,12 +161,5 @@ sealed class InsightData(
         val data: LeftToSpendNegativeData
     ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE)
 
-    @JsonClass(generateAdapter = true)
-    data class Unknown(
-        @Json(name = "data")
-        val data: Any
-    ) : InsightData(TypeEnum.UNKNOWN)
+    object Unknown : InsightData(TypeEnum.UNKNOWN)
 }
-
-
-
