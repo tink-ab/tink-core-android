@@ -1,6 +1,5 @@
 package com.tink.rest.models.insightdata
 
-
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

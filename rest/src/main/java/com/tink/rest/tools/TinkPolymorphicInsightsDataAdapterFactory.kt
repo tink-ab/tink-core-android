@@ -72,5 +72,4 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 InsightData.Unknown::class.java,
                 TypeEnum.UNKNOWN.value
             )
-
 }

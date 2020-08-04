@@ -7,9 +7,7 @@ import com.tink.model.insights.InsightType
 import com.tink.rest.models.ActionableInsight
 import com.tink.rest.models.ArchivedInsight
 import com.tink.service.misc.toInstant
-import org.threeten.bp.Instant
 import java.lang.IllegalArgumentException
-
 
 internal fun ActionableInsight.toCoreModel(): Insight {
     return Insight(

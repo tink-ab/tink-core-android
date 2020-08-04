@@ -6,13 +6,13 @@ import com.tink.model.misc.ExactNumber
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
 import com.tink.rest.models.InsightData as InsightDataDto
 
-fun InsightDataDto.toCoreModel() : InsightData {
+fun InsightDataDto.toCoreModel(): InsightData {
     return when (this) {
         is com.tink.rest.models.InsightData.AccountBalanceLow -> InsightData.AccountBalanceLowData(
             data.accountId,
             data.balance.toAmount()
         )
-        else -> InsightData.NoData //TODO
+        else -> InsightData.NoData // TODO
     }
 }
 
