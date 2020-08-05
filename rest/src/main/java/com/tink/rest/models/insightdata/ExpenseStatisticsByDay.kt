@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ExpenseStatisticsByDay(
     @Json(name = "date")
-    val date: String,
+    val date: List<Int>,
     @Json(name = "expenseStatistics")
     val expenseStatistics: ExpenseStatistics
 )

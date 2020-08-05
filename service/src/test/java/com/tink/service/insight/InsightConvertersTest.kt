@@ -8,16 +8,14 @@ import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal val insightJson = "{\n" +
+internal const val insightJson = "{\n" +
         "    \"createdTime\": 1549976786000,\n" +
         "    \"data\": {\n" +
         "      \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
-        "      \"data\": {\n" +
-        "        \"accountId\": \"c6f26025fbb949a08348e2f73f0ae12c\",\n" +
-        "        \"balance\": {\n" +
-        "          \"currencyCode\": \"EUR\",\n" +
-        "          \"amount\": 2.42\n" +
-        "          }\n" +
+        "      \"accountId\": \"c6f26025fbb949a08348e2f73f0ae12c\",\n" +
+        "      \"balance\": {\n" +
+        "        \"currencyCode\": \"EUR\",\n" +
+        "        \"amount\": 2.42\n" +
         "        }\n" +
         "    },\n" +
         "    \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
@@ -38,9 +36,6 @@ internal val insightJson = "{\n" +
 internal class InsightConvertersTest {
 
     private val archivedInsightJson = "{\n" +
-            "    \"data\": {\n" +
-            "      \"type\": \"ACCOUNT_BALANCE_LOW\"\n" +
-            "    },\n" +
             "    \"dateArchived\": 1550237520000,\n" +
             "    \"dateInsightCreated\": 1549976786000,\n" +
             "    \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +

@@ -30,7 +30,7 @@ internal class InsightDataConvertersTest {
             .adapter(ActionableInsight::class.java)
             .fromJson(insightWithBudgetCloseNegativeData)
 
-        val data = (insightDto!!.data as InsightDataDto.BudgetCloseNegative).data
+        val data = (insightDto!!.data as InsightDataDto.BudgetCloseNegativeData)
 
         assertThat(data.budgetId).isEqualTo("cbbac116e43c4b21b7013091ec03d590")
         assertThat(data.budgetPeriod.budgetAmount.currencyCode).isEqualTo("EUR")
@@ -45,7 +45,6 @@ internal class InsightDataConvertersTest {
 
     private val monthlySummaryExpensesByCategoryDataJson = "{\n" +
             "  \"type\": \"MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY\",\n" +
-            "  \"data\": {\n" +
             "    \"month\": {\n" +
             "      \"month\": 1,\n" +
             "      \"year\": 2020 \n" +
@@ -66,7 +65,6 @@ internal class InsightDataConvertersTest {
             "        }\n" +
             "      }\n" +
             "    ]\n" +
-            "  }\n" +
             "}"
 
     @Test
@@ -76,12 +74,11 @@ internal class InsightDataConvertersTest {
             .adapter(InsightDataDto::class.java)
             .fromJson(monthlySummaryExpensesByCategoryDataJson)
 
-        assert(dataDto is InsightDataDto.MonthlySummaryExpensesByCategory)
+        assert(dataDto is InsightDataDto.MonthlySummaryExpensesByCategoryData)
     }
 
     private val insightDataWithUnknownType = "{\n" +
             "  \"type\": \"RANDOM_TYPE_SPQR\",\n" +
-            "  \"data\": {\n" +
             "    \"menu\": {\n" +
             "      \"id\": \"file\",\n" +
             "      \"value\": \"File\",\n" +
@@ -93,8 +90,8 @@ internal class InsightDataConvertersTest {
             "        ]\n" +
             "      }\n" +
             "    }\n" +
-            "  }\n" +
             "}\n"
+
     @Test
     fun `unknown type can contain any type of data`() {
 

@@ -17,7 +17,7 @@ internal fun ActionableInsight.toCoreModel(): Insight {
         description = description ?: "",
         state = InsightState.Active,
         created = createdTime.toInstant(),
-        data = InsightData.NoData,
+        data = data?.toCoreModel() ?: InsightData.NoData,
         actions = listOf()
     )
 }
@@ -30,7 +30,7 @@ internal fun ArchivedInsight.toCoreModel() =
         description = description ?: "",
         state = InsightState.Archived(dateArchived.toInstant()),
         created = dateInsightCreated.toInstant(),
-        data = InsightData.NoData,
+        data = data?.toCoreModel() ?: InsightData.NoData,
         actions = listOf()
     )
 

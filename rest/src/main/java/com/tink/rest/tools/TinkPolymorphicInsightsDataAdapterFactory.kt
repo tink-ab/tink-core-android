@@ -11,63 +11,63 @@ object TinkPolymorphicInsightsDataAdapterFactory {
             .of(InsightData::class.java, "type")
             .withDefaultValue(InsightData.Unknown)
             .withSubtype(
-                InsightData.AccountBalanceLow::class.java,
+                InsightData.AccountBalanceLowData::class.java,
                 TypeEnum.ACCOUNT_BALANCE_LOW.value
             )
             .withSubtype(
-                InsightData.BudgetOverspent::class.java,
+                InsightData.BudgetOverspentData::class.java,
                 TypeEnum.BUDGET_OVERSPENT.value
             )
             .withSubtype(
-                InsightData.BudgetCloseNegative::class.java,
+                InsightData.BudgetCloseNegativeData::class.java,
                 TypeEnum.BUDGET_CLOSE_NEGATIVE.value
             )
             .withSubtype(
-                InsightData.BudgetClosePositive::class.java,
+                InsightData.BudgetClosePositiveData::class.java,
                 TypeEnum.BUDGET_CLOSE_POSITIVE.value
             )
             .withSubtype(
-                InsightData.BudgetSuccess::class.java,
+                InsightData.BudgetSuccessData::class.java,
                 TypeEnum.BUDGET_SUCCESS.value
             )
             .withSubtype(
-                InsightData.BudgetSummaryAchieved::class.java,
+                InsightData.BudgetSummaryAchievedData::class.java,
                 TypeEnum.BUDGET_SUMMARY_ACHIEVED.value
             )
             .withSubtype(
-                InsightData.BudgetSummaryOverspent::class.java,
+                InsightData.BudgetSummaryOverspentData::class.java,
                 TypeEnum.BUDGET_SUMMARY_OVERSPENT.value
             )
             .withSubtype(
-                InsightData.LargeExpense::class.java,
+                InsightData.LargeExpenseData::class.java,
                 TypeEnum.LARGE_EXPENSE.value
             )
             .withSubtype(
-                InsightData.SingleUncategorizedTransaction::class.java,
+                InsightData.SingleUncategorizedTransactionData::class.java,
                 TypeEnum.SINGLE_UNCATEGORIZED_TRANSACTION.value
             )
             .withSubtype(
-                InsightData.DoubleCharge::class.java,
+                InsightData.DoubleChargeData::class.java,
                 TypeEnum.DOUBLE_CHARGE.value
             )
             .withSubtype(
-                InsightData.WeeklyUncategorizedTransactions::class.java,
+                InsightData.WeeklyUncategorizedTransactionsData::class.java,
                 TypeEnum.WEEKLY_UNCATEGORIZED_TRANSACTIONS.value
             )
             .withSubtype(
-                InsightData.WeeklySummaryExpensesByCategory::class.java,
+                InsightData.WeeklySummaryExpensesByCategoryData::class.java,
                 TypeEnum.WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY.value
             )
             .withSubtype(
-                InsightData.WeeklySummaryExpensesByDay::class.java,
+                InsightData.WeeklySummaryExpensesByDayData::class.java,
                 TypeEnum.WEEKLY_SUMMARY_EXPENSES_BY_DAY.value
             )
             .withSubtype(
-                InsightData.MonthlySummaryExpensesByCategory::class.java,
+                InsightData.MonthlySummaryExpensesByCategoryData::class.java,
                 TypeEnum.MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY.value
             )
             .withSubtype(
-                InsightData.LeftToSpendNegative::class.java,
+                InsightData.LeftToSpendNegativeData::class.java,
                 TypeEnum.LEFT_TO_SPEND_NEGATIVE.value
             )
 }

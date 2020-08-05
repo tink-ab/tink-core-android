@@ -493,7 +493,6 @@ internal const val insightWithBudgetCloseNegativeData = "{\n" +
         "  \"createdTime\": 1549976786000,\n" +
         "  \"data\": {\n" +
         "    \"type\": \"BUDGET_CLOSE_NEGATIVE\",\n" +
-        "    \"data\": {\n" +
         "      \"budgetId\": \"cbbac116e43c4b21b7013091ec03d590\",\n" +
         "      \"budgetPeriod\": {\n" +
         "        \"start\": 1567296000000,\n" +
@@ -509,7 +508,6 @@ internal const val insightWithBudgetCloseNegativeData = "{\n" +
         "      },\n" +
         "      \"currentTime\": 1569593745000,\n" +
         "      \"periodUnit\": \"MONTH\"\n" +
-        "    }\n" +
         "  },\n" +
         "  \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
         "  \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
