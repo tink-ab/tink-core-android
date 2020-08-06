@@ -8,8 +8,6 @@ import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-
-
 internal class InsightConvertersTest {
 
     private val insightJson = "{\n" +
