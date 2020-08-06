@@ -9,6 +9,7 @@ package com.tink.rest.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insights.actions.TransactionIdWithType
 import com.tink.rest.models.insights.actions.TransactionIds
 
 /**
@@ -95,7 +96,7 @@ sealed class InsightActionData(
     @JsonClass(generateAdapter = true)
     data class ViewTransactionsActionData(
         @Json(name = "transactionIds")
-        val transactionIds: List<String>
+        val transactionIds: List<TransactionIdWithType>
     ) : InsightActionData(TypeEnum.VIEW_TRANSACTIONS)
 
     class Acknowledge : InsightActionData(TypeEnum.ACKNOWLEDGE)

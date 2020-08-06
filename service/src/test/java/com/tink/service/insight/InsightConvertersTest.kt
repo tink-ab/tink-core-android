@@ -23,9 +23,17 @@ internal const val insightJson = "{\n" +
         "    \"insightActions\": [\n" +
         "      {\n" +
         "        \"data\": {\n" +
-        "          \"type\": \"CREATE_TRANSFER\"\n" +
-        "        },\n" +
-        "        \"label\": \"Make transfer\"\n" +
+        "          \"type\": \"CREATE_TRANSFER\",\n" +
+        "          \"sourceAccount\": \"iban://SE9832691627751644451227\",\n" +
+        "          \"destinationAccount\": \"iban://NL41INGB1822913977\",\n" +
+        "          \"amount\": {\n" +
+        "               \"currencyCode\": \"EUR\",\n" +
+        "               \"amount\": 30.00\n" +
+        "           },\n" +
+        "           \"sourceAccountNumber\": \"1234567890\",\n" +
+        "           \"destinationAccountNumber\": \"1234098765\"" +
+        "           },\n" +
+        "          \"label\": \"Make transfer\"\n" +
         "      }\n" +
         "    ],\n" +
         "    \"title\": \"Your balance on bank account x is low\",\n" +

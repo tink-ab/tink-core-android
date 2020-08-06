@@ -18,7 +18,7 @@ internal fun ActionableInsight.toCoreModel(): Insight {
         state = InsightState.Active,
         created = createdTime.toInstant(),
         data = data?.toCoreModel() ?: InsightData.NoData,
-        actions = listOf()
+        actions = insightActions?.map { it.toCoreModel() } ?: listOf()
     )
 }
 

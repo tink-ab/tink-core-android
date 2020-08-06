@@ -1,5 +1,9 @@
 package com.tink.service.insight
 
+import com.tink.model.insights.InsightAction
+import com.tink.model.misc.Amount
+import com.tink.model.misc.ExactNumber
+import com.tink.rest.models.ActionableInsight
 import com.tink.rest.models.InsightActionData
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
@@ -58,5 +62,19 @@ class InsightActionConvertersTest {
             .fromJson(acknowledgeActionData)
 
         assertThat(data is InsightActionData.Acknowledge)
+    }
+
+    @Test
+    fun `convert basic insight`() {
+        val insight = GeneratedCodeConverters.moshi
+            .adapter(ActionableInsight::class.java)
+            .fromJson(insightJson)!!
+            .toCoreModel()
+
+        val data = insight.actions.first().data as InsightAction.Data.CreateTransfer
+
+        assertThat(data.amount).isEqualTo(Amount(ExactNumber(30.00), "EUR"))
+        assertThat(data.sourceUri).isEqualTo("iban://SE9832691627751644451227")
+        assertThat(data.destinationUri).isEqualTo("iban://NL41INGB1822913977")
     }
 }
