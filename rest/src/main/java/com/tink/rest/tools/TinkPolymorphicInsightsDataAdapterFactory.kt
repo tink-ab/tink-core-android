@@ -113,6 +113,4 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 InsightActionData.ViewTransactionsByCategoryActionData::class.java,
                 ActionType.VIEW_TRANSACTIONS_BY_CATEGORY.value
             )
-
-
 }

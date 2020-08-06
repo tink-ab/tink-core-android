@@ -52,7 +52,6 @@ class InsightActionConvertersTest {
             .contains("c4d0f21822e84b7db54d54f7f33f0b47")
     }
 
-
     private val acknowledgeActionData = "{\n \"type\": \"ACKNOWLEDGE\"\n}"
 
     @Test
