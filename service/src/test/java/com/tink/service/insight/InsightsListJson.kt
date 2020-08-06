@@ -512,12 +512,6 @@ internal const val insightWithBudgetCloseNegativeData = "{\n" +
         "  \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
         "  \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
         "  \"insightActions\": [\n" +
-        "    {\n" +
-        "      \"data\": {\n" +
-        "        \"type\": \"CREATE_TRANSFER\"\n" +
-        "      },\n" +
-        "      \"label\": \"Make transfer\"\n" +
-        "    }\n" +
         "  ],\n" +
         "  \"title\": \"Your balance on bank account x is low\",\n" +
         "  \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
