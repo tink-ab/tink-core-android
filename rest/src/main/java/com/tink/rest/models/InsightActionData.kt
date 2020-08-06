@@ -8,12 +8,14 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insights.actions.TransactionIds
 
 /**
  * @property type The action type
  */
-@JsonClass(generateAdapter = true)
-data class InsightActionData(
+@JsonClass(generateAdapter = false)
+sealed class InsightActionData(
     @Json(name = "type") @field:Json(name = "type") var type: InsightActionData.TypeEnum? = null
 ) {
     /**
@@ -22,16 +24,81 @@ data class InsightActionData(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
-        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
-        @Json(name = "ACKNOWLEDGE") ACKNOWLEDGE("ACKNOWLEDGE"),
-        @Json(name = "DISMISS") DISMISS("DISMISS"),
-        @Json(name = "VIEW_BUDGET") VIEW_BUDGET("VIEW_BUDGET"),
-        @Json(name = "CREATE_TRANSFER") CREATE_TRANSFER("CREATE_TRANSFER"),
-        @Json(name = "VIEW_TRANSACTION") VIEW_TRANSACTION("VIEW_TRANSACTION"),
-        @Json(name = "CATEGORIZE_EXPENSE") CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
-        @Json(name = "VIEW_TRANSACTIONS") VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
-        @Json(name = "CATEGORIZE_TRANSACTIONS") CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
-        @Json(name = "VIEW_TRANSACTIONS_BY_CATEGORY") VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY"),
-        @Json(name = "VIEW_EXPECTED_AND_ACTUAL_AMOUNT") VIEW_EXPECTED_AND_ACTUAL_AMOUNT("VIEW_EXPECTED_AND_ACTUAL_AMOUNT")
+        @Json(name = "UNKNOWN")
+        UNKNOWN("UNKNOWN"),
+        @Json(name = "ACKNOWLEDGE")
+        ACKNOWLEDGE("ACKNOWLEDGE"),
+        @Json(name = "DISMISS")
+        DISMISS("DISMISS"),
+        @Json(name = "VIEW_BUDGET")
+        VIEW_BUDGET("VIEW_BUDGET"),
+        @Json(name = "CREATE_TRANSFER")
+        CREATE_TRANSFER("CREATE_TRANSFER"),
+        @Json(name = "VIEW_TRANSACTION")
+        VIEW_TRANSACTION("VIEW_TRANSACTION"),
+        @Json(name = "CATEGORIZE_EXPENSE")
+        CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
+        @Json(name = "VIEW_TRANSACTIONS")
+        VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
+        @Json(name = "CATEGORIZE_TRANSACTIONS")
+        CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
+        @Json(name = "VIEW_TRANSACTIONS_BY_CATEGORY")
+        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
     }
+
+    @JsonClass(generateAdapter = true)
+    data class CreateTransferActionData(
+        @Json(name = "amount")
+        val amount: AmountWithCurrencyCode,
+        @Json(name = "destinationAccount")
+        val destinationAccount: String,
+        @Json(name = "destinationAccountNumber")
+        val destinationAccountNumber: String,
+        @Json(name = "sourceAccount")
+        val sourceAccount: String,
+        @Json(name = "sourceAccountNumber")
+        val sourceAccountNumber: String
+    ) : InsightActionData(TypeEnum.CREATE_TRANSFER)
+
+    @JsonClass(generateAdapter = true)
+    data class ViewBudgetActionData(
+        @Json(name = "budgetId")
+        val budgetId: String,
+        @Json(name = "budgetPeriodStartTime")
+        val budgetPeriodStartTime: Long
+    ) : InsightActionData(TypeEnum.VIEW_BUDGET)
+
+    @JsonClass(generateAdapter = true)
+    data class CategorizeTransactionsActionData(
+        @Json(name = "transactionIds")
+        val transactionIds: List<String>
+    ) : InsightActionData(TypeEnum.CATEGORIZE_TRANSACTIONS)
+
+    @JsonClass(generateAdapter = true)
+    data class ViewTransactionsByCategoryActionData(
+        @Json(name = "transactionIdsByCategory")
+        val transactionIdsByCategory: Map<String, TransactionIds>
+    ) : InsightActionData(TypeEnum.VIEW_TRANSACTIONS_BY_CATEGORY)
+
+    @JsonClass(generateAdapter = true)
+    data class ViewTransactionActionData(
+        @Json(name = "transactionId")
+        val transactionId: String
+    ) : InsightActionData(TypeEnum.VIEW_TRANSACTION)
+
+    @JsonClass(generateAdapter = true)
+    data class CategorizeExpenseActionData(
+        @Json(name = "transactionId")
+        val transactionId: String
+    ) : InsightActionData(TypeEnum.CATEGORIZE_EXPENSE)
+
+    @JsonClass(generateAdapter = true)
+    data class ViewTransactionsActionData(
+        @Json(name = "transactionIds")
+        val transactionIds: List<String>
+    ) : InsightActionData(TypeEnum.VIEW_TRANSACTIONS)
+
+    class Acknowledge : InsightActionData(TypeEnum.ACKNOWLEDGE)
+    class Dismiss : InsightActionData(TypeEnum.DISMISS)
+    object Unknown : InsightActionData(TypeEnum.UNKNOWN)
 }
