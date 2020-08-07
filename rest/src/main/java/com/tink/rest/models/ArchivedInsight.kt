@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 data class ArchivedInsight(
     @Json(name = "userId") @field:Json(name = "userId") var userId: String,
     @Json(name = "id") @field:Json(name = "id") var id: String? = null,
-    @Json(name = "type") @field:Json(name = "type") var type: String? = null,
+    @Json(name = "insightType") @field:Json(name = "insightType") var type: String? = null,
     @Json(name = "title") @field:Json(name = "title") var title: String? = null,
     @Json(name = "description") @field:Json(name = "description") var description: String? = null,
     @Json(name = "data") @field:Json(name = "data") var `data`: InsightData? = null,
