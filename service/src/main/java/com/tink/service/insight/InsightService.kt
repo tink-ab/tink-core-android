@@ -3,6 +3,7 @@ package com.tink.service.insight
 import com.tink.model.insights.Insight
 import com.tink.model.insights.PerformedInsightAction
 import com.tink.rest.apis.ActionableInsightApi
+import com.tink.rest.models.SelectInsightActionRequest
 import javax.inject.Inject
 
 interface InsightService {
@@ -21,6 +22,10 @@ class InsightServiceImpl @Inject constructor(
         api.listArchivedInsights().map { it.toCoreModel() }
 
     override suspend fun selectAction(performedAction: PerformedInsightAction) {
-        TODO("not implemented")
+        api.selectInsightAction(
+            SelectInsightActionRequest(
+                insightId = performedAction.insightId, insightAction = "" // TODO
+            )
+        )
     }
 }
