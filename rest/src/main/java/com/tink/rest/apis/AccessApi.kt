@@ -44,7 +44,7 @@ data class AuthenticationRequest(
 @JsonClass(generateAdapter = true)
 data class AuthenticationResponse(
     @field:Json(name = "accessToken") val accessToken: String,
-    @field:Json(name = "Scope") val scope: String
+    @field:Json(name = "scope") val scope: String
 )
 
 @JsonClass(generateAdapter = true)
