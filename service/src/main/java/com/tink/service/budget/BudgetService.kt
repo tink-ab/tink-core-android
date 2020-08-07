@@ -5,81 +5,58 @@ import com.tink.model.budget.BudgetPeriod
 import com.tink.model.budget.BudgetSpecification
 import com.tink.model.budget.BudgetSummary
 import com.tink.model.budget.BudgetTransaction
-import com.tink.service.handler.ResultHandler
 import org.threeten.bp.Instant
 import javax.inject.Inject
 
 interface BudgetService {
-    fun createBudget(
-        descriptor: BudgetCreateOrUpdateDescriptor,
-        mutationHandler: ResultHandler<BudgetSpecification>
-    )
+    suspend fun createBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification
+    suspend fun updateBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification
+    suspend fun deleteBudget(id: String)
+    suspend fun listBudgets(): List<BudgetSummary>
 
-    fun updateBudget(
-        descriptor: BudgetCreateOrUpdateDescriptor,
-        mutationHandler: ResultHandler<BudgetSpecification>
-    )
-
-    fun deleteBudget(
-        id: String,
-        mutationHandler: ResultHandler<Unit>
-    )
-
-    fun listBudgets(mutationHandler: ResultHandler<List<BudgetSummary>>)
-
-    fun listTransactionsForBudget(
+    suspend fun listTransactionsForBudget(
         budgetId: String,
         start: Instant,
-        end: Instant,
-        mutationHandler: ResultHandler<List<BudgetTransaction>>
-    )
+        end: Instant
+    ): List<BudgetTransaction>
 
-    fun budgetPeriodDetails(
+    suspend fun budgetPeriodDetails(
         budgetId: String,
         start: Instant,
-        end: Instant,
-        mutationHandler: ResultHandler<Pair<BudgetSpecification, List<BudgetPeriod>>>
-    )
+        end: Instant
+    ): Pair<BudgetSpecification, List<BudgetPeriod>>
 }
 
 class BudgetServiceImpl @Inject constructor() : BudgetService {
-    override fun createBudget(
-        descriptor: BudgetCreateOrUpdateDescriptor,
-        mutationHandler: ResultHandler<BudgetSpecification>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    override suspend fun createBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification {
+        TODO("Not yet implemented")
     }
 
-    override fun updateBudget(
-        descriptor: BudgetCreateOrUpdateDescriptor,
-        mutationHandler: ResultHandler<BudgetSpecification>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    override suspend fun updateBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification {
+        TODO("Not yet implemented")
     }
 
-    override fun deleteBudget(id: String, mutationHandler: ResultHandler<Unit>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    override suspend fun deleteBudget(id: String) {
+        TODO("Not yet implemented")
     }
 
-    override fun listBudgets(mutationHandler: ResultHandler<List<BudgetSummary>>) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    override suspend fun listBudgets(): List<BudgetSummary> {
+        TODO("Not yet implemented")
     }
 
-    override fun listTransactionsForBudget(
+    override suspend fun listTransactionsForBudget(
         budgetId: String,
         start: Instant,
-        end: Instant,
-        mutationHandler: ResultHandler<List<BudgetTransaction>>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        end: Instant
+    ): List<BudgetTransaction> {
+        TODO("Not yet implemented")
     }
 
-    override fun budgetPeriodDetails(
+    override suspend fun budgetPeriodDetails(
         budgetId: String,
         start: Instant,
-        end: Instant,
-        mutationHandler: ResultHandler<Pair<BudgetSpecification, List<BudgetPeriod>>>
-    ) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        end: Instant
+    ): Pair<BudgetSpecification, List<BudgetPeriod>> {
+        TODO("Not yet implemented")
     }
 }
