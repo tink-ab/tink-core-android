@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property start Budget start expressed as UTC epoch timestamp in milliseconds.
@@ -16,6 +15,6 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class OneOffPeriodicity(
-    @Json(name = "start") @field:Json(name = "start") var start: ZonedDateTime,
-    @Json(name = "end") @field:Json(name = "end") var end: ZonedDateTime
+    @Json(name = "start") @field:Json(name = "start") var start: Long,
+    @Json(name = "end") @field:Json(name = "end") var end: Long
 )
