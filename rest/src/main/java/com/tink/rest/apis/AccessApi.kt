@@ -37,6 +37,7 @@ data class AuthorizationResponse(
 
 @JsonClass(generateAdapter = true)
 data class AuthenticationRequest(
+    @field:Json(name = "clientId") val clientId: String,
     @field:Json(name = "code") val code: String
 )
 
