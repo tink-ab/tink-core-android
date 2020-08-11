@@ -4,10 +4,10 @@ import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
 import com.tink.model.statistics.Statistics
 import com.tink.model.time.Period
+import com.tink.model.user.PeriodMode
 import com.tink.rest.apis.StatisticsApi
 import com.tink.rest.models.StatisticQuery
 import com.tink.service.time.PeriodService
-import com.tink.service.user.UserProfileService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -17,20 +17,25 @@ private const val EXPENSES_IDENTIFIER = "expenses-by-category"
 private const val INCOME_IDENTIFIER = "income-by-category"
 
 interface StatisticsService {
-    suspend fun query(): List<Statistics>
+    suspend fun query(queryDescriptor: StatisticsQueryDescriptor): List<Statistics>
 }
+
+data class StatisticsQueryDescriptor(val periodMode: PeriodMode, val currencyCode: String)
 
 internal class StatisticsServiceImpl @Inject constructor(
     private val api: StatisticsApi,
-    private val periodService: PeriodService,
-    private val userProfileService: UserProfileService
+    private val periodService: PeriodService
 ) : StatisticsService {
 
-    override suspend fun query(): List<Statistics> {
-
+    override suspend fun query(queryDescriptor: StatisticsQueryDescriptor): List<Statistics> {
+        val resolution =
+            when (queryDescriptor.periodMode) {
+                is PeriodMode.Monthly -> StatisticQuery.ResolutionEnum.MONTHLY
+                is PeriodMode.MonthlyAdjusted -> StatisticQuery.ResolutionEnum.MONTHLY_ADJUSTED
+            }
         val statisticDtos = api.query(
             StatisticQuery(
-                resolution = StatisticQuery.ResolutionEnum.MONTHLY,
+                resolution = resolution,
                 types = listOf(EXPENSES_IDENTIFIER, INCOME_IDENTIFIER)
             )
         )
@@ -39,10 +44,6 @@ internal class StatisticsServiceImpl @Inject constructor(
 
         val periodsAsync = coroutineScope {
             periodDescriptions.map { async { periodService.getPeriod(it) } }
-        }
-
-        val userProfileAsync = coroutineScope {
-            async { userProfileService.getProfile() }
         }
 
         val periods: Map<String, Period> =
@@ -54,14 +55,12 @@ internal class StatisticsServiceImpl @Inject constructor(
                 }
                 .toMap()
 
-        val userProfile = userProfileAsync.await()
-
         return statisticDtos.map {
             Statistics(
                 identifier = it.description,
                 type = it.type,
                 period = periods.getValue(it.period),
-                value = Amount(ExactNumber(it.value), userProfile.currency)
+                value = Amount(ExactNumber(it.value), queryDescriptor.currencyCode)
             )
         }
     }
