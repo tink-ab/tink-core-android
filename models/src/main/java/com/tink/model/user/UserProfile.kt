@@ -11,6 +11,7 @@ data class UserProfile(
     val market: String,
     val timeZone: String,
     val currency: String,
+    val periodMode: PeriodMode,
     val authorizedLoginMethods: Set<AuthenticationMethod>,
     val availableAuthenticationMethods: Set<AuthenticationMethod>
 ) : Parcelable {
@@ -18,4 +19,13 @@ data class UserProfile(
         return authorizedLoginMethods
             .contains(AuthenticationMethod.EMAIL_AND_PASSWORD)
     }
+}
+
+sealed class PeriodMode : Parcelable {
+
+    @Parcelize
+    object Monthly : PeriodMode()
+
+    @Parcelize
+    data class MonthlyAdjusted(val periodAdjustedDayOfMonth: Int) : PeriodMode()
 }
