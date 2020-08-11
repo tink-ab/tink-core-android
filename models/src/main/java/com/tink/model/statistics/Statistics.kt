@@ -8,7 +8,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Statistics(
     val identifier: String,
-    val type: String,
+    val type: Type,
     val period: Period,
     val value: Amount
-) : Parcelable
+) : Parcelable {
+
+    enum class Type(val value: String) {
+        EXPENSES("expenses-by-category"),
+        INCOME("income-by-category"),
+        UNKNOWN("")
+    }
+}

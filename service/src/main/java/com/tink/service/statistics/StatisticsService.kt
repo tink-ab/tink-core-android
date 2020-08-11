@@ -7,6 +7,7 @@ import com.tink.model.time.Period
 import com.tink.model.user.PeriodMode
 import com.tink.rest.apis.StatisticsApi
 import com.tink.rest.models.StatisticQuery
+import com.tink.rest.models.Statistics as StatisticsDto
 import com.tink.service.time.PeriodService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -36,7 +37,7 @@ internal class StatisticsServiceImpl @Inject constructor(
         val statisticDtos = api.query(
             StatisticQuery(
                 resolution = resolution,
-                types = listOf(EXPENSES_IDENTIFIER, INCOME_IDENTIFIER)
+                types = listOf(Statistics.Type.EXPENSES.value, Statistics.Type.INCOME.value)
             )
         )
 
@@ -58,10 +59,17 @@ internal class StatisticsServiceImpl @Inject constructor(
         return statisticDtos.map {
             Statistics(
                 identifier = it.description,
-                type = it.type,
+                type = it.getType(),
                 period = periods.getValue(it.period),
                 value = Amount(ExactNumber(it.value), queryDescriptor.currencyCode)
             )
         }
     }
+
+    private fun StatisticsDto.getType(): Statistics.Type =
+        when (type) {
+            EXPENSES_IDENTIFIER -> Statistics.Type.EXPENSES
+            INCOME_IDENTIFIER -> Statistics.Type.INCOME
+            else -> Statistics.Type.UNKNOWN
+        }
 }
