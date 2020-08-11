@@ -37,7 +37,10 @@ internal class StatisticsServiceImpl @Inject constructor(
         val statisticDtos = api.query(
             StatisticQuery(
                 resolution = resolution,
-                types = listOf(Statistics.Type.EXPENSES.value, Statistics.Type.INCOME.value)
+                types = listOf(
+                    Statistics.Type.EXPENSES_BY_CATEGORY.value,
+                    Statistics.Type.INCOME_BY_CATEGORY.value
+                )
             )
         )
 
@@ -68,8 +71,8 @@ internal class StatisticsServiceImpl @Inject constructor(
 
     private fun StatisticsDto.getType(): Statistics.Type =
         when (type) {
-            EXPENSES_IDENTIFIER -> Statistics.Type.EXPENSES
-            INCOME_IDENTIFIER -> Statistics.Type.INCOME
+            EXPENSES_IDENTIFIER -> Statistics.Type.EXPENSES_BY_CATEGORY
+            INCOME_IDENTIFIER -> Statistics.Type.INCOME_BY_CATEGORY
             else -> Statistics.Type.UNKNOWN
         }
 }

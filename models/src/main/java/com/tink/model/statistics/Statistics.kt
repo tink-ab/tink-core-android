@@ -14,8 +14,8 @@ data class Statistics(
 ) : Parcelable {
 
     enum class Type(val value: String) {
-        EXPENSES("expenses-by-category"),
-        INCOME("income-by-category"),
+        EXPENSES_BY_CATEGORY("expenses-by-category"),
+        INCOME_BY_CATEGORY("income-by-category"),
         UNKNOWN("")
     }
 }
