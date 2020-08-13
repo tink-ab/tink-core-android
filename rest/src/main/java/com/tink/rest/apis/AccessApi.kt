@@ -37,13 +37,14 @@ data class AuthorizationResponse(
 
 @JsonClass(generateAdapter = true)
 data class AuthenticationRequest(
+    @field:Json(name = "clientId") val clientId: String,
     @field:Json(name = "code") val code: String
 )
 
 @JsonClass(generateAdapter = true)
 data class AuthenticationResponse(
     @field:Json(name = "accessToken") val accessToken: String,
-    @field:Json(name = "Scope") val scope: String
+    @field:Json(name = "scope") val scope: String
 )
 
 @JsonClass(generateAdapter = true)
