@@ -27,6 +27,7 @@ internal class UserServiceImpl @Inject constructor(
     override suspend fun authenticate(authenticationCode: String) =
         api.authenticate(
             AuthenticationRequest(
+                tinkConfiguration.oAuthClientId,
                 authenticationCode
             )
         ).accessToken
