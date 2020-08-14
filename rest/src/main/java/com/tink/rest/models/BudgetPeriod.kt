@@ -17,7 +17,7 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class BudgetPeriod(
-    @Json(name = "start") @field:Json(name = "start") var start: ZonedDateTime? = null,
-    @Json(name = "end") @field:Json(name = "end") var end: ZonedDateTime? = null,
+    @Json(name = "start") @field:Json(name = "start") var start: Long = 0,
+    @Json(name = "end") @field:Json(name = "end") var end: Long = 0,
     @Json(name = "spentAmount") @field:Json(name = "spentAmount") var spentAmount: CurrencyDenominatedAmount? = null
 )

@@ -3,15 +3,20 @@ package com.tink.service.budget
 import com.tink.model.budget.Budget
 import com.tink.model.budget.Budget.Periodicity.Recurring.PeriodUnit
 import com.tink.model.budget.Budget.Specification.Filter
+import com.tink.model.budget.BudgetPeriod
 import com.tink.model.budget.BudgetSpecification
+import com.tink.model.budget.BudgetSummary
 import com.tink.model.budget.OneOffPeriodicity
 import com.tink.model.budget.RecurringPeriodicity
+import com.tink.model.misc.Amount
 import com.tink.rest.models.BudgetFilterAccount
 import com.tink.rest.models.BudgetFilterCategory
 import com.tink.rest.models.BudgetFilterTag
 import com.tink.service.misc.toAmount
 import com.tink.service.misc.toInstant
 import com.tink.rest.models.Budget as BudgetDto
+import com.tink.rest.models.BudgetPeriod as BudgetPeriodDto
+import com.tink.rest.models.BudgetSummary as BudgetSummaryDto
 import com.tink.rest.models.Filter as BudgetFilterDto
 import com.tink.rest.models.OneOffPeriodicity as OneOffPeriodicityDto
 import com.tink.rest.models.RecurringPeriodicity as RecurringPeriodicityDto
@@ -76,3 +81,17 @@ fun BudgetDto.toCoreModel(): BudgetSpecification {
         filter = filter!!.toCoreModel()
     )
 }
+
+fun BudgetSummaryDto.toCoreModel() =
+    BudgetSummary(
+        budgetSpecification!!.toCoreModel(),
+        budgetPeriods!!.toCoreModel(budgetSpecification!!.amount!!.toAmount())
+    )
+
+private fun BudgetPeriodDto.toCoreModel(budgetAmount: Amount) = BudgetPeriod(
+    start = start.toInstant(),
+    end = end.toInstant(),
+    spentAmount = this.spentAmount!!.toAmount(),
+    budgetAmount = budgetAmount
+)
+
