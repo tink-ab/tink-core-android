@@ -24,7 +24,8 @@ class InsightServiceImpl @Inject constructor(
     override suspend fun selectAction(performedAction: PerformedInsightAction) {
         api.selectInsightAction(
             SelectInsightActionRequest(
-                insightId = performedAction.insightId, insightAction = "" // TODO
+                insightId = performedAction.insightId,
+                insightAction = performedAction.actionType.value
             )
         )
     }
