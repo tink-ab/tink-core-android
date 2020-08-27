@@ -31,6 +31,7 @@ data class Insight(
 @Parcelize
 data class InsightAction(
     val label: String,
+    val actionType: Type,
     val data: Data
 ) : Parcelable {
 
@@ -70,6 +71,19 @@ data class InsightAction(
         data class ViewTransactionsByCategory(
             val transactionsByCategory: Map<String, List<String>>
         ) : Data()
+    }
+
+    enum class Type(val value: String) {
+        UNKNOWN("UNKNOWN"),
+        ACKNOWLEDGE("ACKNOWLEDGE"),
+        DISMISS("DISMISS"),
+        VIEW_BUDGET("VIEW_BUDGET"),
+        CREATE_TRANSFER("CREATE_TRANSFER"),
+        VIEW_TRANSACTION("VIEW_TRANSACTION"),
+        CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
+        VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
+        CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
+        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
     }
 }
 

@@ -103,10 +103,12 @@ class InsightActionConvertersTest {
             .fromJson(insightJson)!!
             .toCoreModel()
 
-        val data = insight.actions.first().data as InsightAction.Data.CreateTransfer
+        val action = insight.actions.first()
+        val data = action.data as InsightAction.Data.CreateTransfer
 
         assertThat(data.amount).isEqualTo(Amount(ExactNumber(30.00), "EUR"))
         assertThat(data.sourceUri).isEqualTo("iban://SE9832691627751644451227")
         assertThat(data.destinationUri).isEqualTo("iban://NL41INGB1822913977")
+        assertThat(action.actionType).isEqualTo(InsightAction.Type.CREATE_TRANSFER)
     }
 }

@@ -8,6 +8,7 @@ import com.tink.service.misc.toInstant
 fun InsightProposedAction.toCoreModel() =
     InsightAction(
         label ?: "",
+        data?.type?.convertType() ?: InsightAction.Type.UNKNOWN,
         data.toCoreModel()
     )
 
@@ -40,4 +41,18 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.CategorizeTransactionsActionData,
         InsightActionData.Unknown,
         null -> InsightAction.Data.NoData
+    }
+
+private fun InsightActionData.TypeEnum.convertType(): InsightAction.Type =
+    when (this) {
+        InsightActionData.TypeEnum.ACKNOWLEDGE -> InsightAction.Type.ACKNOWLEDGE
+        InsightActionData.TypeEnum.DISMISS -> InsightAction.Type.DISMISS
+        InsightActionData.TypeEnum.VIEW_BUDGET -> InsightAction.Type.VIEW_BUDGET
+        InsightActionData.TypeEnum.CREATE_TRANSFER -> InsightAction.Type.CREATE_TRANSFER
+        InsightActionData.TypeEnum.VIEW_TRANSACTION -> InsightAction.Type.VIEW_TRANSACTION
+        InsightActionData.TypeEnum.CATEGORIZE_EXPENSE -> InsightAction.Type.CATEGORIZE_EXPENSE
+        InsightActionData.TypeEnum.VIEW_TRANSACTIONS -> InsightAction.Type.VIEW_TRANSACTIONS
+        InsightActionData.TypeEnum.CATEGORIZE_TRANSACTIONS -> InsightAction.Type.CATEGORIZE_TRANSACTIONS
+        InsightActionData.TypeEnum.VIEW_TRANSACTIONS_BY_CATEGORY -> InsightAction.Type.VIEW_TRANSACTIONS_BY_CATEGORY
+        InsightActionData.TypeEnum.UNKNOWN -> InsightAction.Type.UNKNOWN
     }
