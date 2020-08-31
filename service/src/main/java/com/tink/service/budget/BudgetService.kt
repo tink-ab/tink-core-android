@@ -10,6 +10,7 @@ import com.tink.model.budget.RecurringPeriodicity
 import com.tink.rest.apis.BudgetApi
 import com.tink.rest.models.CreateOneOffBudgetRequest
 import com.tink.rest.models.CreateRecurringBudgetRequest
+import com.tink.rest.models.UpdateBudgetRequest
 import com.tink.service.misc.toDto
 import org.threeten.bp.Instant
 import javax.inject.Inject
@@ -60,7 +61,29 @@ class BudgetServiceImpl @Inject constructor(
     }
 
     override suspend fun updateBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification {
-        TODO("Not yet implemented")
+        requireNotNull(descriptor.id) { throw IllegalArgumentException("Budget id cannot be null for request to update budget") }
+        return with(descriptor) {
+            when (val periodicity = this.periodicity) {
+                is OneOffPeriodicity -> api.update(
+                    id = id!!,
+                    body = UpdateBudgetRequest(
+                        name = name,
+                        amount = targetAmount.toDto(),
+                        filter = filter.toDto(),
+                        oneOffPeriodicity = periodicity.toDto()
+                    )
+                )
+                is RecurringPeriodicity -> api.update(
+                    id = id!!,
+                    body = UpdateBudgetRequest(
+                        name = name,
+                        amount = targetAmount.toDto(),
+                        filter = filter.toDto(),
+                        recurringPeriodicity = periodicity.toDto()
+                    )
+                )
+            }.budgetSpecification!!.toCoreModel()
+        }
     }
 
     override suspend fun deleteBudget(id: String) {
