@@ -90,7 +90,7 @@ fun BudgetSummaryDto.toCoreModel() =
         budgetPeriods!!.toCoreModel(budgetSpecification!!.amount!!.toAmount())
     )
 
-private fun BudgetPeriodDto.toCoreModel(budgetAmount: Amount) = BudgetPeriod(
+fun BudgetPeriodDto.toCoreModel(budgetAmount: Amount) = BudgetPeriod(
     start = start.toInstant(),
     end = end.toInstant(),
     spentAmount = this.spentAmount!!.toAmount(),

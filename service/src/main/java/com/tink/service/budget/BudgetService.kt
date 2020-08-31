@@ -109,6 +109,17 @@ class BudgetServiceImpl @Inject constructor(
         start: Instant,
         end: Instant
     ): Pair<BudgetSpecification, List<BudgetPeriod>> {
-        TODO("Not yet implemented")
+        return api.getDetails(
+            id = budgetId,
+            start = start.toEpochMilli(),
+            end = end.toEpochMilli()
+        ).let { response ->
+            val budgetSpecification = response.budgetSpecification!!.toCoreModel()
+            val budgetPeriods =
+                response.budgetPeriods
+                    ?.map { it.toCoreModel(budgetSpecification.amount) }
+                    ?: emptyList()
+            budgetSpecification to budgetPeriods
+        }
     }
 }
