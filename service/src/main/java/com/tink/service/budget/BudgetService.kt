@@ -90,9 +90,8 @@ class BudgetServiceImpl @Inject constructor(
         api.delete(id)
     }
 
-    override suspend fun listBudgets(): List<BudgetSummary> {
+    override suspend fun listBudgets(): List<BudgetSummary> =
         api.listSummaries(includeArchived = false).budgetSummaries!!.map { it.toCoreModel() }
-    }
 
     override suspend fun listTransactionsForBudget(
         budgetId: String,
