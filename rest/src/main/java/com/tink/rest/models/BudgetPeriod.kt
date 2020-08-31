@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property start Period start expressed as UTC epoch timestamp in milliseconds.

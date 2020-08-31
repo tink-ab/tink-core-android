@@ -107,4 +107,3 @@ fun BudgetTransactionDto.toCoreModel() =
         description = description ?: "",
         date = date.toInstant()
     )
-
