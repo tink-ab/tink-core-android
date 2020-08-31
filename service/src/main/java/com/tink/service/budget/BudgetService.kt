@@ -87,7 +87,7 @@ class BudgetServiceImpl @Inject constructor(
     }
 
     override suspend fun deleteBudget(id: String) {
-        TODO("Not yet implemented")
+        api.delete(id)
     }
 
     override suspend fun listBudgets(): List<BudgetSummary> {
