@@ -4,6 +4,7 @@ import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.AccountApi
 import com.tink.rest.apis.ActionableInsightApi
 import com.tink.rest.apis.BeneficiaryApi
+import com.tink.rest.apis.BudgetApi
 import com.tink.rest.apis.CalendarApi
 import com.tink.rest.apis.CategoryApi
 import com.tink.rest.apis.CredentialsApi
@@ -118,4 +119,10 @@ internal class RetrofitModule {
     internal fun provideInsightsRetrofitService(
         retrofit: Retrofit
     ): ActionableInsightApi = retrofit.create(ActionableInsightApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideBudgetRetrofitService(
+        retrofit: Retrofit
+    ): BudgetApi = retrofit.create(BudgetApi::class.java)
 }
