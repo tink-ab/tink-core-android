@@ -6,6 +6,7 @@ import com.tink.model.budget.Budget.Specification.Filter
 import com.tink.model.budget.BudgetPeriod
 import com.tink.model.budget.BudgetSpecification
 import com.tink.model.budget.BudgetSummary
+import com.tink.model.budget.BudgetTransaction
 import com.tink.model.budget.OneOffPeriodicity
 import com.tink.model.budget.RecurringPeriodicity
 import com.tink.model.misc.Amount
@@ -17,6 +18,7 @@ import com.tink.service.misc.toInstant
 import com.tink.rest.models.Budget as BudgetDto
 import com.tink.rest.models.BudgetPeriod as BudgetPeriodDto
 import com.tink.rest.models.BudgetSummary as BudgetSummaryDto
+import com.tink.rest.models.BudgetTransaction as BudgetTransactionDto
 import com.tink.rest.models.Filter as BudgetFilterDto
 import com.tink.rest.models.OneOffPeriodicity as OneOffPeriodicityDto
 import com.tink.rest.models.RecurringPeriodicity as RecurringPeriodicityDto
@@ -94,4 +96,15 @@ private fun BudgetPeriodDto.toCoreModel(budgetAmount: Amount) = BudgetPeriod(
     spentAmount = this.spentAmount!!.toAmount(),
     budgetAmount = budgetAmount
 )
+
+fun BudgetTransactionDto.toCoreModel() =
+    BudgetTransaction(
+        id = id ?: "",
+        accountId = accountId ?: "",
+        amount = amount!!.toAmount(),
+        dispensableAmount = dispensableAmount!!.toAmount(),
+        categoryCode = categoryCode ?: "",
+        description = description ?: "",
+        date = date.toInstant()
+    )
 

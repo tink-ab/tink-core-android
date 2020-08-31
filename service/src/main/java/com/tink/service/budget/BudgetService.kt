@@ -97,9 +97,12 @@ class BudgetServiceImpl @Inject constructor(
         budgetId: String,
         start: Instant,
         end: Instant
-    ): List<BudgetTransaction> {
-        TODO("Not yet implemented")
-    }
+    ): List<BudgetTransaction> =
+        api.getTransactions(
+            id = budgetId,
+            start = start.toEpochMilli(),
+            end = end.toEpochMilli()
+        ).transactions?.map { it.toCoreModel() } ?: emptyList()
 
     override suspend fun budgetPeriodDetails(
         budgetId: String,
