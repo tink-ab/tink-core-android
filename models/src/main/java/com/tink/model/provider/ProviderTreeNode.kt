@@ -8,6 +8,7 @@ import com.tink.model.provider.ProviderTreeNode.AccessTypeNode
 import com.tink.model.provider.ProviderTreeNode.CredentialsTypeNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionNode
+import com.tink.model.provider.ProviderTreeNode.AuthenticationUserTypeNode
 
 /**
  * This class represents a tree structure of [FinancialInstitutionGroupNode] objects with children.
@@ -41,17 +42,33 @@ sealed class ProviderTreeNode : Parcelable {
     }
 
     /**
-     * A parent node of the tree structure, with a list of [AccessTypeNode] children.
+     * A parent node of the tree structure, with a list of [AuthenticationUserTypeNode] children.
      *
      * @param financialInstitution The `financialInstitution` that this node represents.
-     * @param accessTypes The list of child nodes.
+     * @param authenticationUserTypes The list of child nodes.
      */
     @Parcelize
     data class FinancialInstitutionNode(
         val financialInstitution: Provider.FinancialInstitution,
-        val accessTypes: @RawValue List<AccessTypeNode>
+        val authenticationUserTypes: @RawValue List<AuthenticationUserTypeNode>
     ) : ProviderTreeNode() {
         override val name: String get() = financialInstitution.name
+        override val icon: String?
+            get() = authenticationUserTypes.first().icon
+    }
+
+    /**
+     * A parent node of the tree structure, with a list of [AccessTypeNode] children.
+     *
+     * @param authenticationUserType The `authenticationUserType` that this node represents.
+     * @param accessTypes The list of child nodes.
+     */
+    @Parcelize
+    data class AuthenticationUserTypeNode(
+        val authenticationUserType: Provider.AuthenticationUserType,
+        val accessTypes: @RawValue List<AccessTypeNode>
+    ) : ProviderTreeNode() {
+        override val name: String? get() = null
         override val icon: String?
             get() = accessTypes.first().icon
     }
@@ -120,9 +137,16 @@ fun List<Provider>.toProviderTree(): List<ProviderTreeNode> =
 private fun List<Provider>.groupByFinancialInstitution(): List<FinancialInstitutionNode> =
     groupBy { it.financialInstitution }
         .map { (financialInstitution, providers) ->
-            FinancialInstitutionNode(financialInstitution, providers.groupByAccessType())
+            FinancialInstitutionNode(financialInstitution, providers.groupByAuthenticationUserType())
         }
         .sortedBy { it.name }
+
+private fun List<Provider>.groupByAuthenticationUserType(): List<AuthenticationUserTypeNode> =
+    groupBy { it.authenticationUserType }
+        .map { (authenticationUserType, providers) ->
+            AuthenticationUserTypeNode(authenticationUserType, providers.groupByAccessType())
+        }
+        .sortedBy { it.authenticationUserType.ordinal }
 
 private fun List<Provider>.groupByAccessType(): List<AccessTypeNode> =
     groupBy { it.accessType }
