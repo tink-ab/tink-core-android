@@ -25,7 +25,7 @@ internal fun ActionableInsight.toCoreModel(): Insight {
 internal fun ArchivedInsight.toCoreModel() =
     Insight(
         id = id ?: "",
-        type = convertType(type),
+        type = convertType(insightType),
         title = title ?: "",
         description = description ?: "",
         state = InsightState.Archived(dateArchived.toInstant()),

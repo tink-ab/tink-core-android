@@ -49,7 +49,7 @@ internal class InsightConvertersTest {
             "    \"description\": \"The balance on your bank account x is low. \\nDo you want to transfer money to this account?\",\n" +
             "    \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
             "    \"title\": \"Your balance on bank account x is low\",\n" +
-            "    \"type\": \"ACCOUNT_BALANCE_LOW\",\n" +
+            "    \"insightType\": \"ACCOUNT_BALANCE_LOW\",\n" +
             "    \"userId\": \"d9f134ee2eb44846a4e02990ecc8d32e\"\n" +
             "  }"
 
