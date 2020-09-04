@@ -61,8 +61,7 @@ class BudgetServiceImpl @Inject constructor(
     }
 
     override suspend fun updateBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification {
-        val descriptorId = descriptor.id
-        requireNotNull(descriptorId) { throw IllegalArgumentException("Budget id cannot be null for request to update budget") }
+        val descriptorId = requireNotNull(descriptor.id) { throw IllegalArgumentException("Budget id cannot be null for request to update budget") }
         return with(descriptor) {
             when (val periodicity = this.periodicity) {
                 is OneOffPeriodicity -> api.update(
