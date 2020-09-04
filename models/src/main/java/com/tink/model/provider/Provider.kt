@@ -104,10 +104,10 @@ data class Provider(
      * Indicates if a user authenticates toward the bank as a person or a business.
      */
     enum class AuthenticationUserType {
-        UNKNOWN,
         PERSONAL,
         BUSINESS,
-        CORPORATE
+        CORPORATE,
+        UNKNOWN
     }
 
     /**
