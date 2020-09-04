@@ -8,23 +8,25 @@ import org.junit.jupiter.api.Test
 internal class BudgetTransactionConvertersTest {
 
     private val budgetTransactionJson =
-        "{\n" +
-                "      \"accountId\": \"325ee4ccf579450ca59d89ee54fa7e40\",\n" +
-                "      \"amount\": {\n" +
-                "        \"currencyCode\": \"EUR\",\n" +
-                "        \"scale\": 2,\n" +
-                "        \"unscaledValue\": 1250\n" +
-                "      },\n" +
-                "      \"categoryCode\": \"expenses:food.coffee\",\n" +
-                "      \"date\": 1549976786000,\n" +
-                "      \"description\": \"Monmouth Coffee Company\",\n" +
-                "      \"dispensableAmount\": {\n" +
-                "        \"currencyCode\": \"EUR\",\n" +
-                "        \"scale\": 2,\n" +
-                "        \"unscaledValue\": 1050\n" +
-                "      },\n" +
-                "      \"id\": \"e2b746ed27c542ce846a8d693474df21\"\n" +
-                "    }"
+        """
+        {
+            "accountId": "325ee4ccf579450ca59d89ee54fa7e40",
+            "amount": {
+                "currencyCode": "EUR",
+                "scale": 2,
+                "unscaledValue": 1250
+            },
+            "categoryCode": "expenses:food.coffee",
+            "date": 1549976786000,
+            "description": "Monmouth Coffee Company",
+            "dispensableAmount": {
+                "currencyCode": "EUR",
+                "scale": 2,
+                "unscaledValue": 1050
+            },
+            "id": "e2b746ed27c542ce846a8d693474df21"
+        }
+        """
 
     private val budgetTransactionJsonAdapter =
         GeneratedCodeConverters.moshi.adapter(BudgetTransactionDto::class.java)

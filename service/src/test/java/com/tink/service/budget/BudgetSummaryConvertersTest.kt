@@ -9,53 +9,55 @@ import org.junit.jupiter.api.Test
 internal class BudgetSummaryConvertersTest {
 
     private val budgetSummaryJson =
-        "{\n" +
-                "      \"budgetPeriods\": {\n" +
-                "        \"end\": 1552395986000,\n" +
-                "        \"spentAmount\": {\n" +
-                "          \"currencyCode\": \"EUR\",\n" +
-                "          \"scale\": 2,\n" +
-                "          \"unscaledValue\": 1050\n" +
-                "        },\n" +
-                "        \"start\": 1549976786000\n" +
-                "      },\n" +
-                "      \"budgetSpecification\": {\n" +
-                "        \"amount\": {\n" +
-                "          \"currencyCode\": \"EUR\",\n" +
-                "          \"scale\": 2,\n" +
-                "          \"unscaledValue\": 1250\n" +
-                "        },\n" +
-                "        \"archived\": false,\n" +
-                "        \"filter\": {\n" +
-                "          \"accounts\": [\n" +
-                "            {\n" +
-                "              \"id\": \"325ee4ccf579450ca59d89ee54fa7e40\"\n" +
-                "            }\n" +
-                "          ],\n" +
-                "          \"categories\": [\n" +
-                "            {\n" +
-                "              \"code\": \"expenses:food.coffee\"\n" +
-                "            }\n" +
-                "          ],\n" +
-                "          \"freeTextQuery\": \"Monmouth Coffee\",\n" +
-                "          \"tags\": [\n" +
-                "            {\n" +
-                "              \"key\": \"coffee\"\n" +
-                "            }\n" +
-                "          ]\n" +
-                "        },\n" +
-                "        \"id\": \"e2b746ed27c542ce846a8d693474df21\",\n" +
-                "        \"name\": \"Coffee budget\",\n" +
-                "        \"oneOffPeriodicity\": {\n" +
-                "          \"end\": 1552395986000,\n" +
-                "          \"start\": 1549976786000\n" +
-                "        },\n" +
-                "        \"periodicityType\": \"ONE_OFF\",\n" +
-                "        \"recurringPeriodicity\": {\n" +
-                "          \"periodUnit\": \"WEEK\"\n" +
-                "        }\n" +
-                "      }\n" +
-                "    }"
+        """
+        {
+            "budgetPeriods": {
+                "end": 1552395986000,
+                "spentAmount": {
+                    "currencyCode": "EUR",
+                    "scale": 2,
+                    "unscaledValue": 1050
+                },
+                "start": 1549976786000
+            },
+            "budgetSpecification": {
+                "amount": {
+                    "currencyCode": "EUR",
+                        "scale": 2,
+                        "unscaledValue": 1250
+                },
+                "archived": false,
+                "filter": {
+                    "accounts": [
+                        {
+                            "id": "325ee4ccf579450ca59d89ee54fa7e40"
+                        }
+                    ],
+                    "categories": [
+                        {
+                            "code": "expenses:food.coffee"
+                        }
+                    ],
+                    "freeTextQuery": "Monmouth Coffee",
+                    "tags": [
+                        {
+                            "key": "coffee"
+                        }
+                    ]
+                },
+                "id": "e2b746ed27c542ce846a8d693474df21",
+                "name": "Coffee budget",
+                "oneOffPeriodicity": {
+                    "end": 1552395986000,
+                    "start": 1549976786000
+                },
+                "periodicityType": "ONE_OFF",
+                "recurringPeriodicity": {
+                    "periodUnit": "WEEK"
+                }
+            }
+        }
+        """
 
     private val budgetSummaryJsonAdapter =
         GeneratedCodeConverters.moshi.adapter(BudgetSummaryDto::class.java)
