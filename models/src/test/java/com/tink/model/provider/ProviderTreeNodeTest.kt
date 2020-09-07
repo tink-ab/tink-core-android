@@ -28,7 +28,52 @@ internal class ProviderTreeNodeTest {
             id = "dde2463acf40501389de4fca5a3693a4",
             name = "Nordea"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
+    )
+
+    private val nordeaBankIdBusiness = Provider(
+        name = "nordea-bankid",
+        displayName = "Nordea",
+        type = Provider.Type.BANK,
+        status = Provider.Status.ENABLED,
+        credentialsType = Credentials.Type.MOBILE_BANKID,
+        helpText = "",
+        isPopular = true,
+        fields = emptyList(),
+        groupDisplayName = "Nordea",
+        images = null,
+        displayDescription = "Mobile BankID",
+        marketCode = "SE",
+        accessType = Provider.AccessType.OTHER,
+        financialInstitution = Provider.FinancialInstitution(
+            id = "dde2463acf40501389de4fca5a3693a4",
+            name = "Nordea"
+        ),
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.BUSINESS
+    )
+
+    private val nordeaBankIdCorporate = Provider(
+        name = "nordea-bankid",
+        displayName = "Nordea",
+        type = Provider.Type.BANK,
+        status = Provider.Status.ENABLED,
+        credentialsType = Credentials.Type.MOBILE_BANKID,
+        helpText = "",
+        isPopular = true,
+        fields = emptyList(),
+        groupDisplayName = "Nordea",
+        images = null,
+        displayDescription = "Mobile BankID",
+        marketCode = "SE",
+        accessType = Provider.AccessType.OTHER,
+        financialInstitution = Provider.FinancialInstitution(
+            id = "dde2463acf40501389de4fca5a3693a4",
+            name = "Nordea"
+        ),
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.CORPORATE
     )
 
     private val nordeaPassword = Provider(
@@ -49,7 +94,30 @@ internal class ProviderTreeNodeTest {
             id = "dde2463acf40501389de4fca5a3693a4",
             name = "Nordea"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
+    )
+
+    private val nordeaPasswordBusiness = Provider(
+        name = "nordea-password",
+        displayName = "Nordea",
+        type = Provider.Type.BANK,
+        status = Provider.Status.ENABLED,
+        credentialsType = Credentials.Type.PASSWORD,
+        helpText = "",
+        isPopular = true,
+        fields = emptyList(),
+        groupDisplayName = "Nordea",
+        images = null,
+        displayDescription = "Password",
+        marketCode = "SE",
+        accessType = Provider.AccessType.OTHER,
+        financialInstitution = Provider.FinancialInstitution(
+            id = "dde2463acf40501389de4fca5a3693a4",
+            name = "Nordea"
+        ),
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.BUSINESS
     )
 
     private val nordeaOpenBanking = Provider(
@@ -70,7 +138,8 @@ internal class ProviderTreeNodeTest {
             id = "dde2463acf40501389de4fca5a3693a4",
             name = "Nordea"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
     )
 
     private val sparbankernaBankID = Provider(
@@ -91,7 +160,8 @@ internal class ProviderTreeNodeTest {
             id = "a0afa9bbc85c52aba1b1b8d6a04bc57c",
             name = "Sparbankerna"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
     )
     private val sparbankernaPassword = Provider(
         name = "savingsbank-token",
@@ -111,7 +181,8 @@ internal class ProviderTreeNodeTest {
             id = "a0afa9bbc85c52aba1b1b8d6a04bc57c",
             name = "Sparbankerna"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
     )
 
     private val swedbankBankID = Provider(
@@ -132,7 +203,8 @@ internal class ProviderTreeNodeTest {
             id = "6c1749b4475e5677a83e9fa4bb60a18a",
             name = "Swedbank"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
     )
     private val swedbankPassword = Provider(
         name = "swedbank-token",
@@ -152,7 +224,8 @@ internal class ProviderTreeNodeTest {
             id = "6c1749b4475e5677a83e9fa4bb60a18a",
             name = "Swedbank"
         ),
-        capabilities = emptyList()
+        capabilities = emptyList(),
+        authenticationUserType = Provider.AuthenticationUserType.PERSONAL
     )
 
     private val nordeaFinancialInstitution = Condition<FinancialInstitutionNode>(
@@ -170,6 +243,16 @@ internal class ProviderTreeNodeTest {
         "FinancialInstitution is 'Sparbankerna'"
     )
 
+    private val nordeaOpenBankingAccessType = Condition<ProviderTreeNode.AccessTypeNode>(
+        Predicate<ProviderTreeNode.AccessTypeNode> { it.type == Provider.AccessType.OPEN_BANKING },
+        "AccessType is OPEN_BANKING"
+    )
+
+    private val nordeaOtherAccessType = Condition<ProviderTreeNode.AccessTypeNode>(
+        Predicate<ProviderTreeNode.AccessTypeNode> { it.type == Provider.AccessType.OTHER },
+        "AccessType is OTHER"
+    )
+
     @Test
     fun `test credentials types grouping`() {
         val providers = listOf(nordeaBankId, nordeaPassword)
@@ -184,7 +267,8 @@ internal class ProviderTreeNodeTest {
             (groupDisplayNameNode as FinancialInstitutionGroupNode).financialInstitutions
         assertThat(financialInstitutions).hasSize(1)
 
-        val accessTypes = financialInstitutions.first().accessTypes
+        val authenticationUserTypes = financialInstitutions.first().authenticationUserTypes
+        val accessTypes = authenticationUserTypes.first().accessTypes
         assertThat(accessTypes).hasSize(1)
 
         val credentialsTypes = accessTypes.first().credentialsTypes
@@ -208,7 +292,8 @@ internal class ProviderTreeNodeTest {
             (groupDisplayNameNode as FinancialInstitutionGroupNode).financialInstitutions
         assertThat(financialInstitutions).hasSize(1)
 
-        val accessTypes = financialInstitutions.first().accessTypes
+        val authenticationUserTypes = financialInstitutions.first().authenticationUserTypes
+        val accessTypes = authenticationUserTypes.first().accessTypes
         assertThat(accessTypes)
             .hasSize(2)
             .anySatisfy { assertThat(it.type).isEqualTo(Provider.AccessType.OPEN_BANKING) }
@@ -263,5 +348,70 @@ internal class ProviderTreeNodeTest {
             .hasSize(2)
             .haveExactly(1, swedbankFinancialInstitution)
             .haveExactly(1, sparbankernaFinancialInstitution)
+    }
+
+    @Test
+    fun `test authentication user type grouping`() {
+        val providers = listOf(nordeaBankId, nordeaBankIdBusiness, nordeaBankIdCorporate, nordeaPassword, nordeaPasswordBusiness, nordeaOpenBanking)
+        val groups = providers.toProviderTree()
+        assertThat(groups).hasSize(1)
+
+        val groupDisplayNameNode = groups.first()
+        assertThat(groupDisplayNameNode)
+            .isInstanceOf(FinancialInstitutionGroupNode::class.java)
+
+        val financialInstitutions =
+            (groupDisplayNameNode as FinancialInstitutionGroupNode).financialInstitutions
+        assertThat(financialInstitutions).hasSize(1)
+
+        val authenticationUserTypes = financialInstitutions.first().authenticationUserTypes
+        assertThat(authenticationUserTypes)
+            .hasSize(3)
+            .anySatisfy { assertThat(it.authenticationUserType).isEqualTo(Provider.AuthenticationUserType.PERSONAL) }
+            .anySatisfy { assertThat(it.authenticationUserType).isEqualTo(Provider.AuthenticationUserType.BUSINESS) }
+            .anySatisfy { assertThat(it.authenticationUserType).isEqualTo(Provider.AuthenticationUserType.CORPORATE) }
+    }
+
+    @Test
+    fun `test sort order of authentication user type grouping`() {
+        val providers = listOf(nordeaBankId, nordeaBankIdBusiness, nordeaBankIdCorporate, nordeaPassword, nordeaPasswordBusiness, nordeaOpenBanking)
+        val groups = providers.toProviderTree()
+        val groupDisplayNameNode = groups.first()
+        val financialInstitutions =
+            (groupDisplayNameNode as FinancialInstitutionGroupNode).financialInstitutions
+        val authenticationUserTypes = financialInstitutions.first().authenticationUserTypes
+
+        val firstNode = authenticationUserTypes.first()
+        val secondNode = authenticationUserTypes[1]
+        val thirdNode = authenticationUserTypes[2]
+
+        assertThat(firstNode.authenticationUserType).isEqualTo(Provider.AuthenticationUserType.PERSONAL)
+        assertThat(secondNode.authenticationUserType).isEqualTo(Provider.AuthenticationUserType.BUSINESS)
+        assertThat(thirdNode.authenticationUserType).isEqualTo(Provider.AuthenticationUserType.CORPORATE)
+    }
+
+    @Test
+    fun `test access type grouping within authentication user type group`() {
+        val providers = listOf(nordeaBankId, nordeaBankIdBusiness, nordeaBankIdCorporate, nordeaPassword, nordeaPasswordBusiness, nordeaOpenBanking)
+        val groups = providers.toProviderTree()
+        val groupDisplayNameNode = groups.first()
+        val financialInstitutions =
+            (groupDisplayNameNode as FinancialInstitutionGroupNode).financialInstitutions
+        val authenticationUserTypes = financialInstitutions.first().authenticationUserTypes
+
+        val personalGroup = authenticationUserTypes.first { it.authenticationUserType == Provider.AuthenticationUserType.PERSONAL }
+        val businessGroup = authenticationUserTypes.first { it.authenticationUserType == Provider.AuthenticationUserType.BUSINESS }
+        val corporateGroup = authenticationUserTypes.first { it.authenticationUserType == Provider.AuthenticationUserType.CORPORATE }
+
+        assertThat(personalGroup.accessTypes)
+            .hasSize(2)
+            .haveExactly(1, nordeaOpenBankingAccessType)
+            .haveExactly(1, nordeaOtherAccessType)
+        assertThat(businessGroup.accessTypes)
+            .hasSize(1)
+            .haveExactly(1, nordeaOtherAccessType)
+        assertThat(corporateGroup.accessTypes)
+            .hasSize(1)
+            .haveExactly(1, nordeaOtherAccessType)
     }
 }

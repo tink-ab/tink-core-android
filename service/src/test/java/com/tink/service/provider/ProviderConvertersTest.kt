@@ -65,4 +65,16 @@ internal class ProviderConvertersTest {
 
         // TODO: Add when converter is implemented
     }
+
+    @Test
+    fun `unknown authentication user type should yield UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(ProviderAuthenticationUserTypeDto::class.java)
+        val authenticationUserTypeDto = adapter.fromJson("\"NONSENSE_AUTHENTICATION_USER_TYPE\"")
+
+        assertThat(authenticationUserTypeDto).isEqualTo(ProviderAuthenticationUserTypeDto.UNKNOWN)
+
+        val authenticationUserType = authenticationUserTypeDto!!.toCoreModel()
+
+        assertThat(authenticationUserType).isEqualTo(Provider.AuthenticationUserType.UNKNOWN)
+    }
 }
