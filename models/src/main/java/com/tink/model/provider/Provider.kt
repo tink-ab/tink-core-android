@@ -46,7 +46,8 @@ data class Provider(
     val images: Images? = null,
     val financialInstitution: FinancialInstitution,
     val accessType: AccessType,
-    val capabilities: List<Capability>
+    val capabilities: List<Capability>,
+    val authenticationUserType: AuthenticationUserType
 ) : Comparable<Provider>, Parcelable {
 
     /**
@@ -97,6 +98,16 @@ data class Provider(
         INVESTMENTS,
         PAYMENTS,
         IDENTITY_DATA
+    }
+
+    /**
+     * Indicates if a user authenticates toward the bank as a person or a business.
+     */
+    enum class AuthenticationUserType {
+        PERSONAL,
+        BUSINESS,
+        CORPORATE,
+        UNKNOWN
     }
 
     /**

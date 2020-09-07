@@ -12,6 +12,7 @@ internal typealias ProviderStatusDto = com.tink.rest.models.Provider.StatusEnum
 internal typealias ProviderTypeDto = com.tink.rest.models.Provider.TypeEnum
 internal typealias ProviderAccessTypeDto = com.tink.rest.models.Provider.AccessTypeEnum
 internal typealias ProviderCapabilityDto = com.tink.rest.models.Provider.CapabilitiesEnum
+internal typealias ProviderAuthenticationUserTypeDto = com.tink.rest.models.Provider.AuthenticationUserTypeEnum
 
 internal fun ProviderDto.toCoreModel(): Provider =
     Provider(
@@ -32,7 +33,8 @@ internal fun ProviderDto.toCoreModel(): Provider =
             financialInstitutionName
         ),
         accessType = this.accessType.toAccessType(),
-        capabilities = capabilitiesOrEmpty()
+        capabilities = capabilitiesOrEmpty(),
+        authenticationUserType = authenticationUserType.toCoreModel()
     )
 
 internal fun ProviderStatusDto.toProviderStatus(): Provider.Status =
@@ -78,6 +80,14 @@ internal fun ProviderCapabilityDto.toCoreModel(): Provider.Capability =
         ProviderCapabilityDto.INVESTMENTS -> Provider.Capability.INVESTMENTS
         ProviderCapabilityDto.PAYMENTS -> Provider.Capability.PAYMENTS
         ProviderCapabilityDto.IDENTITY_DATA -> Provider.Capability.IDENTITY_DATA
+    }
+
+internal fun ProviderAuthenticationUserTypeDto.toCoreModel(): Provider.AuthenticationUserType =
+    when (this) {
+        ProviderAuthenticationUserTypeDto.UNKNOWN -> Provider.AuthenticationUserType.UNKNOWN
+        ProviderAuthenticationUserTypeDto.PERSONAL -> Provider.AuthenticationUserType.PERSONAL
+        ProviderAuthenticationUserTypeDto.BUSINESS -> Provider.AuthenticationUserType.BUSINESS
+        ProviderAuthenticationUserTypeDto.CORPORATE -> Provider.AuthenticationUserType.CORPORATE
     }
 
 internal fun ProviderListResponse.toProviderList() =

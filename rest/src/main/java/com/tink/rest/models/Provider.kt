@@ -37,6 +37,7 @@ data class Provider(
     @Json(name = "accessType") @field:Json(name = "accessType") var accessType: Provider.AccessTypeEnum,
     @Json(name = "capabilities") @field:Json(name = "capabilities") var capabilities: List<Provider.CapabilitiesEnum>,
     @Json(name = "credentialsType") @field:Json(name = "credentialsType") var credentialsType: Credentials.TypeEnum,
+    @Json(name = "authenticationUserType") @field:Json(name = "authenticationUserType") var authenticationUserType: AuthenticationUserTypeEnum,
     @Json(name = "currency") @field:Json(name = "currency") var currency: String,
     @Json(name = "displayName") @field:Json(name = "displayName") var displayName: String,
     @Json(name = "fields") @field:Json(name = "fields") var fields: List<Field>,
@@ -116,5 +117,17 @@ data class Provider(
         @Json(name = "TEST") TEST("TEST"),
         @Json(name = "FRAUD") FRAUD("FRAUD"),
         @Json(name = "OTHER") OTHER("OTHER")
+    }
+
+    /**
+     * Indicates if a user authenticates toward the bank as a person or a business.
+     * Values: PERSONAL, BUSINESS, CORPORATE
+     */
+    @JsonClass(generateAdapter = false)
+    enum class AuthenticationUserTypeEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
+        @Json(name = "PERSONAL") PERSONAL("PERSONAL"),
+        @Json(name = "BUSINESS") BUSINESS("BUSINESS"),
+        @Json(name = "CORPORATE") CORPORATE("CORPORATE")
     }
 }
