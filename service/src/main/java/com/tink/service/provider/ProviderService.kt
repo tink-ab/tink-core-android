@@ -1,6 +1,8 @@
 package com.tink.service.provider
 
+import android.os.Parcelable
 import com.tink.model.provider.Provider
+import kotlinx.android.parcel.Parcelize
 
 interface ProviderService {
 
@@ -21,8 +23,9 @@ interface ProviderService {
  * @property requireCapability Use the capability to only list providers with a specific capability.
  * By default the list will not be filtered by capability
  */
+@Parcelize
 data class ProviderFilter(
     val includeDemoProviders: Boolean = false,
     val includeNonDemoProviders: Boolean = true,
     val requireCapability: Provider.Capability? = null
-)
+) : Parcelable
