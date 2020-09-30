@@ -58,6 +58,7 @@ internal class CredentialsServiceImpl @Inject constructor(
             descriptor.id,
             RefreshCredentialsRequest(),
             items = descriptor.refreshableItems?.map { it.item },
+            authenticate = descriptor.authenticate,
             optIn = null
         ).unwrap()
 
