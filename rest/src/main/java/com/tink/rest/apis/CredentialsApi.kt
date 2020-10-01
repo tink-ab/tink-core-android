@@ -89,6 +89,7 @@ interface CredentialsApi {
      * @param id The internal identifier of the &#x60;Credentials&#x60; object to refresh. (required)
      * @param body (optional)
      * @param items The data types to aggregate from the Provider. Multiple items are allowed. If omitted, all data types are aggregated. (optional)
+     * @param authenticate Force an authentication before the refresh, designed for open banking credentials. Defaults to false. (optional)
      * @param optIn Set to true to trigger an opt-in of accounts before doing the refresh. Today only available for enterprise customers. (optional)
      */
     @POST("/api/v1/credentials/{id}/refresh")
@@ -96,6 +97,7 @@ interface CredentialsApi {
         @retrofit2.http.Path("id") id: String,
         @retrofit2.http.Body body: RefreshCredentialsRequest,
         @retrofit2.http.Query("items") items: List<String>?,
+        @retrofit2.http.Query("authenticate") authenticate: Boolean?,
         @retrofit2.http.Query("optIn") optIn: Boolean?
     ): Response<Unit>
 
