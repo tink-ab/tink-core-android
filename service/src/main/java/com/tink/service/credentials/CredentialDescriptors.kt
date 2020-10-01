@@ -21,7 +21,8 @@ data class CredentialsUpdateDescriptor(
 
 data class CredentialsRefreshDescriptor(
     val id: String,
-    val refreshableItems: Collection<RefreshableItem>? = null
+    val refreshableItems: Collection<RefreshableItem>? = null,
+    val authenticate: Boolean? = null
 )
 
 data class CredentialsAuthenticateDescriptor(
