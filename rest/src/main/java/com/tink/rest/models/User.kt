@@ -22,6 +22,7 @@ import com.squareup.moshi.JsonClass
 data class User(
     @Json(name = "created") @field:Json(name = "created") var created: Long,
     @Json(name = "id") @field:Json(name = "id") var id: String,
+    @Json(name = "appId") @field:Json(name = "appId") var appId: String,
     @Json(name = "profile") @field:Json(name = "profile") var profile: UserProfile,
     @Json(name = "flags") @field:Json(name = "flags") var flags: List<String>? = null,
     @Json(name = "username") @field:Json(name = "username") var username: String? = null,
