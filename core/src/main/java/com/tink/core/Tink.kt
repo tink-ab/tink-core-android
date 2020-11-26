@@ -21,6 +21,8 @@ object Tink {
 
     private var currentUser: User? = null
 
+    private var tinkConfiguration: TinkConfiguration? = null
+
     @JvmStatic
     fun init(config: TinkConfiguration, context: Context) {
         val serviceComponent = DaggerServiceComponent
@@ -28,6 +30,8 @@ object Tink {
             .tinkConfiguration(config)
             .applicationContext(context.applicationContext)
             .build()
+
+        tinkConfiguration = config
 
         component = DaggerTinkComponent
             .builder()
@@ -44,6 +48,11 @@ object Tink {
     @JvmStatic
     fun getUser(): User? {
         return currentUser
+    }
+
+    @JvmStatic
+    fun getConfiguration(): TinkConfiguration? {
+        return tinkConfiguration
     }
 
     @JvmStatic
