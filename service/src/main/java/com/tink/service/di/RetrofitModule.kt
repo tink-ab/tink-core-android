@@ -44,6 +44,12 @@ internal class RetrofitModule {
 
     @Provides
     @ServiceScope
+    internal fun provideUserRetrofitService(
+        retrofit: Retrofit
+    ): UserApi = retrofit.create(UserApi::class.java)
+
+    @Provides
+    @ServiceScope
     internal fun provideCredentialsRetrofitService(
         retrofit: Retrofit
     ): CredentialsApi = retrofit.create(CredentialsApi::class.java)
@@ -77,12 +83,6 @@ internal class RetrofitModule {
     internal fun provideBeneficiaryRetrofitService(
         retrofit: Retrofit
     ): BeneficiaryApi = retrofit.create(BeneficiaryApi::class.java)
-
-    @Provides
-    @ServiceScope
-    internal fun provideUserRetrofitService(
-        retrofit: Retrofit
-    ): UserApi = retrofit.create(UserApi::class.java)
 
     @Provides
     @ServiceScope

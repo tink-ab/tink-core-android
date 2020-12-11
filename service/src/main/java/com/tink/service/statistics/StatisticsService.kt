@@ -4,7 +4,7 @@ import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
 import com.tink.model.statistics.Statistics
 import com.tink.model.time.Period
-import com.tink.model.user.PeriodMode
+import com.tink.model.user.UserProfile
 import com.tink.rest.apis.StatisticsApi
 import com.tink.rest.models.StatisticQuery
 import com.tink.rest.models.Statistics as StatisticsDto
@@ -21,7 +21,7 @@ interface StatisticsService {
     suspend fun query(queryDescriptor: StatisticsQueryDescriptor): List<Statistics>
 }
 
-data class StatisticsQueryDescriptor(val periodMode: PeriodMode, val currencyCode: String)
+data class StatisticsQueryDescriptor(val periodMode: UserProfile.PeriodMode, val currencyCode: String)
 
 internal class StatisticsServiceImpl @Inject constructor(
     private val api: StatisticsApi,
@@ -31,8 +31,8 @@ internal class StatisticsServiceImpl @Inject constructor(
     override suspend fun query(queryDescriptor: StatisticsQueryDescriptor): List<Statistics> {
         val resolution =
             when (queryDescriptor.periodMode) {
-                is PeriodMode.Monthly -> StatisticQuery.ResolutionEnum.MONTHLY
-                is PeriodMode.MonthlyAdjusted -> StatisticQuery.ResolutionEnum.MONTHLY_ADJUSTED
+                is UserProfile.PeriodMode.Monthly -> StatisticQuery.ResolutionEnum.MONTHLY
+                is UserProfile.PeriodMode.MonthlyAdjusted -> StatisticQuery.ResolutionEnum.MONTHLY_ADJUSTED
             }
         val statisticDtos = api.query(
             StatisticQuery(
