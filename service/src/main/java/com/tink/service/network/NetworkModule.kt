@@ -25,7 +25,7 @@ internal class NetworkModule {
     ): OkHttpClient =
         OkHttpClient.Builder()
             .apply {
-                tinkConfiguration.environment.restSSLKey?.let { sslKey ->
+                tinkConfiguration.environment.sslCertificate?.let { sslKey ->
                     sslSocketFactory(
                         TLSHelper.getSslSocketFactory(ByteArrayInputStream(sslKey.toByteArray())),
                         TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
@@ -77,11 +77,11 @@ data class TinkConfiguration(
  * Represents the environment you want to connect to.
  *
  * @property restUrl The url for the REST endpoint
- * @property restSSLKey An optional ssl certificate associated with the [restUrl]
+ * @property sslCertificate An optional ssl pinning certificate associated with the [restUrl]
  */
 sealed class Environment(
     val restUrl: String,
-    val restSSLKey: String? = null
+    val sslCertificate: String? = null
 ) {
 
     /**
@@ -93,19 +93,19 @@ sealed class Environment(
      * Represents a custom environment you want to connect to.
      */
     class Custom(
-        restApiUrl: String,
-        restApiSSLKey: String? = null
+        restUrl: String,
+        sslCertificate: String? = null
     ) : Environment(
-        restUrl = restApiUrl,
-        restSSLKey = restApiSSLKey
+        restUrl = restUrl,
+        sslCertificate = sslCertificate
     )
 }
 
 /**
  * Creates an environment with the [Environment.Production] rest URL and the specified [sslKey].
  */
-fun Environment.Production.withSSLKey(sslKey: String) =
+fun Environment.Production.withSslKey(sslKey: String) =
     Environment.Custom(
-        restApiUrl = "https://api.tink.com",
-        restApiSSLKey = sslKey
+        restUrl = "https://api.tink.com",
+        sslCertificate = sslKey
     )
