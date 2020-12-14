@@ -102,10 +102,10 @@ sealed class Environment(
 }
 
 /**
- * Creates an environment with the [Environment.Production] rest URL and the specified [sslKey].
+ * Creates an environment with the [Environment.Production] rest URL and the specified [sslCertificate].
  */
-fun Environment.Production.withSslKey(sslKey: String) =
+fun Environment.Production.withSslKey(sslCertificate: String) =
     Environment.Custom(
         restUrl = "https://api.tink.com",
-        sslCertificate = sslKey
+        sslCertificate = sslCertificate
     )
