@@ -9,7 +9,6 @@ import org.threeten.bp.Instant
 data class Transaction(
     val id: String,
     val amount: Amount,
-    val dispensableAmount: Amount,
     val description: String,
     val categoryId: String,
     val date: Instant,
