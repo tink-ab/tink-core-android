@@ -83,7 +83,6 @@ internal class TransactionConvertersTest {
             assertThat(originalAmount).isEqualTo(Amount(ExactNumber(1150, 2), "EUR"))
             assertThat(inserted).isEqualTo(Instant.ofEpochMilli(1464543093494))
             assertThat(tags).isEmpty()
-            assertThat(details).isNull()
         }
     }
 

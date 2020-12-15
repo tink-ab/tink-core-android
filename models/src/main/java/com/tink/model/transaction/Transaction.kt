@@ -20,12 +20,8 @@ data class Transaction(
     val originalDate: Instant,
     val originalDescription: String,
     val originalAmount: Amount,
-    val inserted: Instant,
-    val details: TransactionDetails?
+    val inserted: Instant
 ) : Parcelable
 
 @Parcelize
 data class Tag(val name: String) : Parcelable
-
-@Parcelize
-data class TransactionDetails(val transferId: String) : Parcelable

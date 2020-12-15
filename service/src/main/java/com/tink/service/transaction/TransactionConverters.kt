@@ -21,8 +21,7 @@ fun TransactionDto.toCoreModel() =
         originalDate = originalDate.toInstant(),
         originalDescription = originalDescription,
         originalAmount = currencyDenominatedOriginalAmount!!.toAmount(),
-        inserted = timestamp.toInstant(),
-        details = null
+        inserted = timestamp.toInstant()
     )
 
 fun TransactionResponse.toCoreModel() =
@@ -40,6 +39,5 @@ fun TransactionResponse.toCoreModel() =
         originalDate = originalDate.toInstant(),
         originalDescription = originalDescription,
         originalAmount = currencyDenominatedOriginalAmount!!.toAmount(),
-        inserted = timestamp.toInstant(),
-        details = null
+        inserted = timestamp.toInstant()
     )
