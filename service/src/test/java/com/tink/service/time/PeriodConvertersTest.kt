@@ -2,6 +2,7 @@ package com.tink.service.time
 
 import com.tink.model.time.DayPeriod
 import com.tink.model.time.MonthPeriod
+import com.tink.model.time.WeekPeriod
 import com.tink.model.time.YearPeriod
 import com.tink.rest.models.Period
 import org.assertj.core.api.Assertions.assertThat
@@ -30,6 +31,10 @@ internal class PeriodConvertersTest {
         assertThat(dayPeriod.year).isEqualTo(2018)
         assertThat(dayPeriod.monthOfYear).isEqualTo(7)
         assertThat(dayPeriod.dayOfMonth).isEqualTo(3)
+
+        val weekPeriod = periodDto.copy(name = "2014:45").toCoreModel() as WeekPeriod
+        assertThat(weekPeriod.weekOfYear).isEqualTo(45)
+        assertThat(weekPeriod.year).isEqualTo(2014)
 
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             periodDto.copy(name = "2019-04-32").toCoreModel() as DayPeriod

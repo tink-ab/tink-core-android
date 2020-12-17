@@ -45,3 +45,12 @@ data class DayPeriod(
         require(monthOfYear in 1..12)
     }
 }
+
+@Parcelize
+data class WeekPeriod(
+    val weekOfYear: Int,
+    val year: Int,
+    override val identifier: String,
+    override val start: Instant,
+    override val end: Instant
+) : Period()
