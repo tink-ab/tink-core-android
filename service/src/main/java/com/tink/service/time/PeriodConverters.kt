@@ -4,6 +4,7 @@ import com.tink.model.time.DayPeriod
 import com.tink.model.time.MonthPeriod
 import com.tink.model.time.Period
 import com.tink.model.time.YearPeriod
+import com.tink.model.time.WeekPeriod
 import com.tink.service.misc.toInstant
 import java.lang.IllegalArgumentException
 import com.tink.rest.models.Period as PeriodDto
@@ -38,8 +39,14 @@ internal fun PeriodDto.toCoreModel(): Period {
         1 -> {
             components[0].split(":")
                 .takeIf { it.size == 2 }
-                ?.let {
-                    TODO("Week period")
+                ?.let { str ->
+                    WeekPeriod(
+                        str[1].toInt(),
+                        str[0].toInt(),
+                        identifier,
+                        start,
+                        end
+                    )
                 }
                 ?: YearPeriod(components[0].toInt(), identifier, start, end)
         }
