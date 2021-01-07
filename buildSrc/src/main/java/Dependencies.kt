@@ -6,11 +6,9 @@ object Versions {
 
     const val kotlin = "1.4.10"
     const val dagger = "2.16"
-    const val androidx = "1.0.2"
     const val coroutines = "1.4.2"
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
-    const val navigation = "2.2.0"
 
     const val moshi = "1.11.0"
 
@@ -18,15 +16,6 @@ object Versions {
 }
 
 object Dependencies {
-    object Androidx {
-        const val appcompat = "androidx.appcompat:appcompat:${Versions.androidx}"
-        const val core_ktx = "androidx.core:core-ktx:${Versions.androidx}"
-        const val constraint_layout = "androidx.constraintlayout:constraintlayout:1.1.3"
-        const val test_runner = "androidx.test:runner:1.2.0"
-        const val test_espresso = "androidx.test.espresso:espresso-core:3.2.0"
-        const val navigation_fragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
-        const val navigation_ui = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
-    }
 
     object Coroutines {
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
@@ -64,8 +53,6 @@ object Dependencies {
         const val test_mockk = "io.mockk:mockk:1.8.7"
         const val test_assertj = "org.assertj:assertj-core:3.11.1"
     }
-
-    const val material_components = "com.google.android.material:material:1.1.0-beta01"
 
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
