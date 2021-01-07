@@ -4,15 +4,15 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
 
-    const val kotlin = "1.3.72"
+    const val kotlin = "1.4.10"
     const val dagger = "2.16"
     const val androidx = "1.0.2"
-    const val coroutines = "1.3.8"
+    const val coroutines = "1.4.2"
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
     const val navigation = "2.2.0"
 
-    const val moshi = "1.9.2"
+    const val moshi = "1.11.0"
 
     const val junit = "5.6.2"
 }
