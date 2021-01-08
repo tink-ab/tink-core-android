@@ -6,5 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class PerformedInsightAction(
     val insightId: String,
-    val userId: String
+    val userId: String,
+    val actionType: InsightAction.Type
 ) : Parcelable

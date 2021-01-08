@@ -9,13 +9,15 @@ data class UserProfile(
     val market: String,
     val timeZone: String,
     val currency: String,
-    val periodAdjustedDay: Int,
     val periodMode: PeriodMode
 ) : Parcelable {
 
-    enum class PeriodMode {
-        UNKNOWN,
-        MONTHLY,
-        MONTHLY_ADJUSTED
+    sealed class PeriodMode : Parcelable {
+
+        @Parcelize
+        object Monthly : PeriodMode()
+
+        @Parcelize
+        data class MonthlyAdjusted(val periodAdjustedDayOfMonth: Int) : PeriodMode()
     }
 }

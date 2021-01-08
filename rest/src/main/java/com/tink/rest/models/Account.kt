@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
  * @property identifiers All possible ways to uniquely identify this &#x60;Account&#x60;. An se-identifier is built up like: &#x60;se://{clearingnumber}{accountnumber}&#x60;.
  * @property transferDestinations The destinations this Account can transfer money to, be that payment or bank transfer recipients. This field is only populated if account data is requested via GET /transfer/accounts.
  * @property details Details contains information only applicable for accounts of the types loans and mortgages. All banks do not offer detail information about their loan and mortgages therefore will details not be present on all accounts of the types loan and mortgages.
- * @property holderName The name of the account holder
+ * @property holderName The name of the account holder.
  * @property closed A closed account indicates that it was no longer available from the connected financial institution, most likely due to it having been closed by the user.
  * @property flags A list of flags specifying attributes on an account.
  * @property accountExclusion Indicates features this account should be excluded from. Possible values are: &#x60;NONE&#x60;: No features are excluded from this account, &#x60;PFM_DATA&#x60;: Personal Finance Management Features, like statistics and activities are excluded, &#x60;PFM_AND_SEARCH&#x60;: Personal Finance Management Features are excluded, and transactions belonging to this account are not searchable. This is the equivalent of the, now deprecated, boolean flag &#39;excluded&#39;, &#x60;AGGREGATION&#x60;: No data will be aggregated for this account and, all data associated with the account is removed (except account name and account number). This property can be updated in a update account request.
@@ -38,6 +38,7 @@ data class Account(
     @Json(name = "credentialsId") @field:Json(name = "credentialsId") var credentialsId: String,
     @Json(name = "excluded") @field:Json(name = "excluded") var excluded: Boolean,
     @Json(name = "favored") @field:Json(name = "favored") var favored: Boolean,
+    @Json(name = "flags") @field:Json(name = "flags") var flags: String? = null,
     @Json(name = "id") @field:Json(name = "id") var id: String,
     @Json(name = "name") @field:Json(name = "name") var name: String,
     @Json(name = "ownership") @field:Json(name = "ownership") var ownership: Double,
@@ -46,11 +47,10 @@ data class Account(
     @Json(name = "identifiers") @field:Json(name = "identifiers") var identifiers: String? = null,
     @Json(name = "transferDestinations") @field:Json(name = "transferDestinations") var transferDestinations: List<TransferDestination>? = null,
     @Json(name = "details") @field:Json(name = "details") var details: AccountDetails? = null,
-    @Json(name = "images") @field:Json(name = "images") var imageUrls: ImageUrls,
     @Json(name = "holderName") @field:Json(name = "holderName") var holderName: String? = null,
     @Json(name = "closed") @field:Json(name = "closed") var closed: Boolean? = null,
     @Json(name = "currencyDenominatedBalance") @field:Json(name = "currencyDenominatedBalance") var currencyDenominatedBalance: CurrencyDenominatedAmount? = null,
-    @Json(name = "refreshed") @field:Json(name = "refreshed") var refreshed: Long?,
+    @Json(name = "refreshed") @field:Json(name = "refreshed") var refreshed: Long? = null,
     @Json(name = "financialInstitutionId") @field:Json(name = "financialInstitutionId") var financialInstitutionId: String? = null
 ) {
     /**
@@ -59,6 +59,7 @@ data class Account(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "CHECKING") CHECKING("CHECKING"),
         @Json(name = "SAVINGS") SAVINGS("SAVINGS"),
         @Json(name = "INVESTMENT") INVESTMENT("INVESTMENT"),
