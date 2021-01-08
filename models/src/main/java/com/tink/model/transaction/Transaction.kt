@@ -9,9 +9,8 @@ import org.threeten.bp.Instant
 data class Transaction(
     val id: String,
     val amount: Amount,
-    val dispensableAmount: Amount,
     val description: String,
-    val categoryCode: String,
+    val categoryId: String,
     val date: Instant,
     val accountId: String,
     val notes: String,
@@ -21,12 +20,8 @@ data class Transaction(
     val originalDate: Instant,
     val originalDescription: String,
     val originalAmount: Amount,
-    val inserted: Instant,
-    val details: TransactionDetails
+    val inserted: Instant
 ) : Parcelable
 
 @Parcelize
 data class Tag(val name: String) : Parcelable
-
-@Parcelize
-data class TransactionDetails(val transferId: String) : Parcelable

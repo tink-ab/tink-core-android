@@ -32,7 +32,7 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlin_stdlib)
-    implementation(Dependencies.three_ten_abp)
+    api(Dependencies.three_ten_abp)
 
     testImplementation(Dependencies.Testing.test_assertj)
     testImplementation(Dependencies.Testing.test_junit_api)

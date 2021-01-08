@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.Instant
 
 sealed class Period : Parcelable {
+    abstract val identifier: String
     abstract val start: Instant
     abstract val end: Instant
 }
@@ -12,6 +13,7 @@ sealed class Period : Parcelable {
 @Parcelize
 data class YearPeriod(
     val year: Int,
+    override val identifier: String,
     override val start: Instant,
     override val end: Instant
 ) : Period()
@@ -20,6 +22,7 @@ data class YearPeriod(
 data class MonthPeriod(
     val monthOfYear: Int,
     val year: Int,
+    override val identifier: String,
     override val start: Instant,
     override val end: Instant
 ) : Period() {
@@ -33,6 +36,7 @@ data class DayPeriod(
     val dayOfMonth: Int,
     val monthOfYear: Int,
     val year: Int,
+    override val identifier: String,
     override val start: Instant,
     override val end: Instant
 ) : Period() {
@@ -41,3 +45,12 @@ data class DayPeriod(
         require(monthOfYear in 1..12)
     }
 }
+
+@Parcelize
+data class WeekPeriod(
+    val weekOfYear: Int,
+    val year: Int,
+    override val identifier: String,
+    override val start: Instant,
+    override val end: Instant
+) : Period()

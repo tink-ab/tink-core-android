@@ -23,12 +23,11 @@ internal fun UserProfileDto.toCoreModel(): UserProfile =
         market = market,
         timeZone = timeZone,
         currency = currency,
-        periodAdjustedDay = periodAdjustedDay,
-        periodMode = periodMode.toCoreModel()
+        periodMode = periodMode.toCoreModel(periodAdjustedDay)
     )
 
-internal fun UserProfileDto.PeriodModeEnum.toCoreModel() =
+internal fun UserProfileDto.PeriodModeEnum.toCoreModel(periodAdjustedDay: Int) =
     when (this) {
-        UserProfileDto.PeriodModeEnum.MONTHLY -> UserProfile.PeriodMode.MONTHLY
-        UserProfileDto.PeriodModeEnum.MONTHLY_ADJUSTED -> UserProfile.PeriodMode.MONTHLY_ADJUSTED
+        UserProfileDto.PeriodModeEnum.MONTHLY -> UserProfile.PeriodMode.Monthly
+        UserProfileDto.PeriodModeEnum.MONTHLY_ADJUSTED -> UserProfile.PeriodMode.MonthlyAdjusted(periodAdjustedDay)
     }
