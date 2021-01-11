@@ -23,7 +23,7 @@ import com.squareup.moshi.JsonClass
 data class Statistics(
     @Json(name = "description") @field:Json(name = "description") var description: String,
     @Json(name = "period") @field:Json(name = "period") var period: String,
-    @Json(name = "resolution") @field:Json(name = "resolution") var resolution: Statistics.ResolutionEnum,
+//    @Json(name = "resolution") @field:Json(name = "resolution") var resolution: Statistics.ResolutionEnum,
     @Json(name = "type") @field:Json(name = "type") var type: String,
     @Json(name = "userId") @field:Json(name = "userId") var userId: String,
     @Json(name = "value") @field:Json(name = "value") var value: Double,

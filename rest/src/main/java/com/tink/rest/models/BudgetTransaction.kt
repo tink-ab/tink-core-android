@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property id The ID of the transaction.
@@ -24,7 +23,7 @@ data class BudgetTransaction(
     @Json(name = "id") @field:Json(name = "id") var id: String? = null,
     @Json(name = "amount") @field:Json(name = "amount") var amount: CurrencyDenominatedAmount? = null,
     @Json(name = "dispensableAmount") @field:Json(name = "dispensableAmount") var dispensableAmount: CurrencyDenominatedAmount? = null,
-    @Json(name = "date") @field:Json(name = "date") var date: ZonedDateTime? = null,
+    @Json(name = "date") @field:Json(name = "date") var date: Long = 0,
     @Json(name = "description") @field:Json(name = "description") var description: String? = null,
     @Json(name = "categoryCode") @field:Json(name = "categoryCode") var categoryCode: String? = null,
     @Json(name = "accountId") @field:Json(name = "accountId") var accountId: String? = null

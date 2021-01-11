@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property interest Interest of the account. Applicable for loans and savings accounts.
@@ -21,7 +20,7 @@ data class AccountDetails(
     @Json(name = "interest") @field:Json(name = "interest") var interest: Double? = null,
     @Json(name = "numMonthsBound") @field:Json(name = "numMonthsBound") var numMonthsBound: Int? = null,
     @Json(name = "type") @field:Json(name = "type") var type: AccountDetails.TypeEnum? = null,
-    @Json(name = "nextDayOfTermsChange") @field:Json(name = "nextDayOfTermsChange") var nextDayOfTermsChange: ZonedDateTime? = null
+    @Json(name = "nextDayOfTermsChange") @field:Json(name = "nextDayOfTermsChange") var nextDayOfTermsChange: Long? = null
 ) {
     /**
      * Account subtype.
@@ -29,6 +28,7 @@ data class AccountDetails(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
         @Json(name = "MORTGAGE") MORTGAGE("MORTGAGE"),
         @Json(name = "BLANCO") BLANCO("BLANCO"),
         @Json(name = "MEMBERSHIP") MEMBERSHIP("MEMBERSHIP"),

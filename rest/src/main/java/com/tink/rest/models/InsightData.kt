@@ -8,12 +8,19 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insightdata.BudgetIdToPeriod
+import com.tink.rest.models.insightdata.BudgetPeriod
+import com.tink.rest.models.insightdata.ExpenseByCategoryCode
+import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
+import com.tink.rest.models.insightdata.Month
+import com.tink.rest.models.insightdata.Week
 
 /**
  * @property type The insight type
  */
-@JsonClass(generateAdapter = true)
-data class InsightData(
+@JsonClass(generateAdapter = false)
+sealed class InsightData(
     @Json(name = "type") @field:Json(name = "type") var type: InsightData.TypeEnum? = null
 ) {
     /**
@@ -22,20 +29,188 @@ data class InsightData(
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
-        @Json(name = "ACCOUNT_BALANCE_LOW") ACCOUNT_BALANCE_LOW("ACCOUNT_BALANCE_LOW"),
-        @Json(name = "BUDGET_OVERSPENT") BUDGET_OVERSPENT("BUDGET_OVERSPENT"),
-        @Json(name = "BUDGET_CLOSE_NEGATIVE") BUDGET_CLOSE_NEGATIVE("BUDGET_CLOSE_NEGATIVE"),
-        @Json(name = "BUDGET_CLOSE_POSITIVE") BUDGET_CLOSE_POSITIVE("BUDGET_CLOSE_POSITIVE"),
-        @Json(name = "BUDGET_SUCCESS") BUDGET_SUCCESS("BUDGET_SUCCESS"),
-        @Json(name = "BUDGET_SUMMARY_ACHIEVED") BUDGET_SUMMARY_ACHIEVED("BUDGET_SUMMARY_ACHIEVED"),
-        @Json(name = "BUDGET_SUMMARY_OVERSPENT") BUDGET_SUMMARY_OVERSPENT("BUDGET_SUMMARY_OVERSPENT"),
-        @Json(name = "LARGE_EXPENSE") LARGE_EXPENSE("LARGE_EXPENSE"),
-        @Json(name = "SINGLE_UNCATEGORIZED_TRANSACTION") SINGLE_UNCATEGORIZED_TRANSACTION("SINGLE_UNCATEGORIZED_TRANSACTION"),
-        @Json(name = "DOUBLE_CHARGE") DOUBLE_CHARGE("DOUBLE_CHARGE"),
-        @Json(name = "WEEKLY_UNCATEGORIZED_TRANSACTIONS") WEEKLY_UNCATEGORIZED_TRANSACTIONS("WEEKLY_UNCATEGORIZED_TRANSACTIONS"),
-        @Json(name = "WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY") WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY("WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY"),
-        @Json(name = "WEEKLY_SUMMARY_EXPENSES_BY_DAY") WEEKLY_SUMMARY_EXPENSES_BY_DAY("WEEKLY_SUMMARY_EXPENSES_BY_DAY"),
-        @Json(name = "MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY") MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY("MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY"),
-        @Json(name = "LEFT_TO_SPEND_NEGATIVE") LEFT_TO_SPEND_NEGATIVE("LEFT_TO_SPEND_NEGATIVE")
+        @Json(name = "ACCOUNT_BALANCE_LOW")
+        ACCOUNT_BALANCE_LOW("ACCOUNT_BALANCE_LOW"),
+
+        @Json(name = "BUDGET_OVERSPENT")
+        BUDGET_OVERSPENT("BUDGET_OVERSPENT"),
+
+        @Json(name = "BUDGET_CLOSE_NEGATIVE")
+        BUDGET_CLOSE_NEGATIVE("BUDGET_CLOSE_NEGATIVE"),
+
+        @Json(name = "BUDGET_CLOSE_POSITIVE")
+        BUDGET_CLOSE_POSITIVE("BUDGET_CLOSE_POSITIVE"),
+
+        @Json(name = "BUDGET_SUCCESS")
+        BUDGET_SUCCESS("BUDGET_SUCCESS"),
+
+        @Json(name = "BUDGET_SUMMARY_ACHIEVED")
+        BUDGET_SUMMARY_ACHIEVED("BUDGET_SUMMARY_ACHIEVED"),
+
+        @Json(name = "BUDGET_SUMMARY_OVERSPENT")
+        BUDGET_SUMMARY_OVERSPENT("BUDGET_SUMMARY_OVERSPENT"),
+
+        @Json(name = "LARGE_EXPENSE")
+        LARGE_EXPENSE("LARGE_EXPENSE"),
+
+        @Json(name = "SINGLE_UNCATEGORIZED_TRANSACTION")
+        SINGLE_UNCATEGORIZED_TRANSACTION("SINGLE_UNCATEGORIZED_TRANSACTION"),
+
+        @Json(name = "DOUBLE_CHARGE")
+        DOUBLE_CHARGE("DOUBLE_CHARGE"),
+
+        @Json(name = "WEEKLY_UNCATEGORIZED_TRANSACTIONS")
+        WEEKLY_UNCATEGORIZED_TRANSACTIONS("WEEKLY_UNCATEGORIZED_TRANSACTIONS"),
+
+        @Json(name = "WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY")
+        WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY("WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY"),
+
+        @Json(name = "WEEKLY_SUMMARY_EXPENSES_BY_DAY")
+        WEEKLY_SUMMARY_EXPENSES_BY_DAY("WEEKLY_SUMMARY_EXPENSES_BY_DAY"),
+
+        @Json(name = "MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY")
+        MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY("MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY"),
+
+        @Json(name = "LEFT_TO_SPEND_NEGATIVE")
+        LEFT_TO_SPEND_NEGATIVE("LEFT_TO_SPEND_NEGATIVE"),
+
+        @Json(name = "UNKNOWN")
+        UNKNOWN("UNKNOWN")
     }
+
+    @JsonClass(generateAdapter = true)
+    data class AccountBalanceLowData(
+        @Json(name = "accountId")
+        val accountId: String,
+        @Json(name = "balance")
+        val balance: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.ACCOUNT_BALANCE_LOW)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetOverspentData(
+        @Json(name = "budgetId")
+        val budgetId: String,
+        @Json(name = "budgetPeriod")
+        val budgetPeriod: BudgetPeriod
+    ) : InsightData(TypeEnum.BUDGET_OVERSPENT)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetCloseNegativeData(
+        @Json(name = "budgetId")
+        val budgetId: String,
+        @Json(name = "budgetPeriod")
+        val budgetPeriod: BudgetPeriod,
+        @Json(name = "currentTime")
+        val currentTime: Long,
+        @Json(name = "periodUnit")
+        val periodUnit: String
+    ) : InsightData(TypeEnum.BUDGET_CLOSE_NEGATIVE)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetClosePositiveData(
+        @Json(name = "budgetId")
+        val budgetId: String,
+        @Json(name = "budgetPeriod")
+        val budgetPeriod: BudgetPeriod,
+        @Json(name = "currentTime")
+        val currentTime: Long,
+        @Json(name = "periodUnit")
+        val periodUnit: String
+    ) : InsightData(TypeEnum.BUDGET_CLOSE_POSITIVE)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetSuccessData(
+        @Json(name = "budgetId")
+        val budgetId: String,
+        @Json(name = "budgetPeriod")
+        val budgetPeriod: BudgetPeriod
+    ) : InsightData(TypeEnum.BUDGET_SUCCESS)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetSummaryAchievedData(
+        @Json(name = "achievedBudgets")
+        val achievedBudgets: List<BudgetIdToPeriod>,
+        @Json(name = "overspentBudgets")
+        val overspentBudgets: List<BudgetIdToPeriod>,
+        @Json(name = "periodUnit")
+        val periodUnit: String,
+        @Json(name = "savedAmount")
+        val savedAmount: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.BUDGET_SUMMARY_ACHIEVED)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetSummaryOverspentData(
+        @Json(name = "achievedBudgets")
+        val achievedBudgets: List<BudgetIdToPeriod>,
+        @Json(name = "overspentAmount")
+        val overspentAmount: AmountWithCurrencyCode,
+        @Json(name = "overspentBudgets")
+        val overspentBudgets: List<BudgetIdToPeriod>,
+        @Json(name = "periodUnit")
+        val periodUnit: String
+    ) : InsightData(TypeEnum.BUDGET_SUMMARY_OVERSPENT)
+
+    @JsonClass(generateAdapter = true)
+    data class LargeExpenseData(
+        @Json(name = "amount")
+        val amount: AmountWithCurrencyCode,
+        @Json(name = "transactionId")
+        val transactionId: String
+    ) : InsightData(TypeEnum.LARGE_EXPENSE)
+
+    @JsonClass(generateAdapter = true)
+    data class SingleUncategorizedTransactionData(
+        @Json(name = "transactionId")
+        val transactionId: String
+    ) : InsightData(TypeEnum.SINGLE_UNCATEGORIZED_TRANSACTION)
+
+    @JsonClass(generateAdapter = true)
+    data class DoubleChargeData(
+        @Json(name = "transactionIds")
+        val transactionIds: List<String>
+    ) : InsightData(TypeEnum.DOUBLE_CHARGE)
+
+    @JsonClass(generateAdapter = true)
+    data class WeeklyUncategorizedTransactionsData(
+        @Json(name = "transactionIds")
+        val transactionIds: List<String>,
+        @Json(name = "week")
+        val week: Week
+    ) : InsightData(TypeEnum.WEEKLY_UNCATEGORIZED_TRANSACTIONS)
+
+    @JsonClass(generateAdapter = true)
+    data class WeeklySummaryExpensesByCategoryData(
+        @Json(name = "expensesByCategory")
+        val expensesByCategory: List<ExpenseByCategoryCode>,
+        @Json(name = "week")
+        val week: Week
+    ) : InsightData(TypeEnum.WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY)
+
+    @JsonClass(generateAdapter = true)
+    data class WeeklySummaryExpensesByDayData(
+        @Json(name = "expenseStatisticsByDay")
+        val expenseStatisticsByDay: List<ExpenseStatisticsByDay>,
+        @Json(name = "week")
+        val week: Week
+    ) : InsightData(TypeEnum.WEEKLY_SUMMARY_EXPENSES_BY_DAY)
+
+    @JsonClass(generateAdapter = true)
+    data class MonthlySummaryExpensesByCategoryData(
+        @Json(name = "expensesByCategory")
+        val expensesByCategory: List<ExpenseByCategoryCode>,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendNegativeData(
+        @Json(name = "createdAt")
+        val createdAt: Long,
+        @Json(name = "leftToSpend")
+        val leftToSpend: AmountWithCurrencyCode,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE)
+
+    object Unknown : InsightData(TypeEnum.UNKNOWN)
 }
