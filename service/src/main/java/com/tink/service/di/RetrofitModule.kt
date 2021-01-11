@@ -2,10 +2,17 @@ package com.tink.service.di
 
 import com.tink.rest.apis.AccessApi
 import com.tink.rest.apis.AccountApi
+import com.tink.rest.apis.ActionableInsightApi
 import com.tink.rest.apis.BeneficiaryApi
+import com.tink.rest.apis.BudgetApi
+import com.tink.rest.apis.CalendarApi
+import com.tink.rest.apis.CategoryApi
 import com.tink.rest.apis.CredentialsApi
-import com.tink.rest.apis.ProviderApi
 import com.tink.rest.apis.OAuthApi
+import com.tink.rest.apis.ProviderApi
+import com.tink.rest.apis.SearchApi
+import com.tink.rest.apis.StatisticsApi
+import com.tink.rest.apis.TransactionApi
 import com.tink.rest.apis.TransferApi
 import com.tink.rest.apis.UserApi
 import com.tink.rest.tools.GeneratedCodeConverters
@@ -76,4 +83,46 @@ internal class RetrofitModule {
     internal fun provideBeneficiaryRetrofitService(
         retrofit: Retrofit
     ): BeneficiaryApi = retrofit.create(BeneficiaryApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideCalendarRetrofitService(
+        retrofit: Retrofit
+    ): CalendarApi = retrofit.create(CalendarApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideStatisticsRetrofitService(
+        retrofit: Retrofit
+    ): StatisticsApi = retrofit.create(StatisticsApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideTransactionRetrofitService(
+        retrofit: Retrofit
+    ): TransactionApi = retrofit.create(TransactionApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideSearchRetrofitService(
+        retrofit: Retrofit
+    ): SearchApi = retrofit.create(SearchApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideCategoryRetrofitService(
+        retrofit: Retrofit
+    ): CategoryApi = retrofit.create(CategoryApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideInsightsRetrofitService(
+        retrofit: Retrofit
+    ): ActionableInsightApi = retrofit.create(ActionableInsightApi::class.java)
+
+    @Provides
+    @ServiceScope
+    internal fun provideBudgetRetrofitService(
+        retrofit: Retrofit
+    ): BudgetApi = retrofit.create(BudgetApi::class.java)
 }

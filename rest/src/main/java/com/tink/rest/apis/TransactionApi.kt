@@ -86,8 +86,8 @@ interface TransactionApi {
     @GET("/api/v1/transactions/{id}/similar")
     suspend fun similar(
         @retrofit2.http.Path("id") id: String,
-        @retrofit2.http.Query("categoryId") categoryId: String?,
-        @retrofit2.http.Query("includeSelf") includeSelf: Boolean?
+        @retrofit2.http.Query("categoryId") categoryId: String? = null,
+        @retrofit2.http.Query("includeSelf") includeSelf: Boolean? = null
     ): SimilarTransactionsResponse
     /**
      * Get categorization clusters

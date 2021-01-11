@@ -4,6 +4,8 @@ import android.os.Parcelable
 import com.tink.model.budget.Budget
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
+import com.tink.model.relations.ExpensesByDay
+import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
 import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.Instant
@@ -29,6 +31,7 @@ data class Insight(
 @Parcelize
 data class InsightAction(
     val label: String,
+    val actionType: Type,
     val data: Data
 ) : Parcelable {
 
@@ -69,6 +72,19 @@ data class InsightAction(
             val transactionsByCategory: Map<String, List<String>>
         ) : Data()
     }
+
+    enum class Type(val value: String) {
+        UNKNOWN("UNKNOWN"),
+        ACKNOWLEDGE("ACKNOWLEDGE"),
+        DISMISS("DISMISS"),
+        VIEW_BUDGET("VIEW_BUDGET"),
+        CREATE_TRANSFER("CREATE_TRANSFER"),
+        VIEW_TRANSACTION("VIEW_TRANSACTION"),
+        CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
+        VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
+        CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
+        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
+    }
 }
 
 enum class InsightType {
@@ -97,7 +113,9 @@ enum class InsightType {
     LARGE_EXPENSE,
     DOUBLE_CHARGE,
     WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY,
-    WEEKLY_UNCATEGORIZED_TRANSACTIONS
+    WEEKLY_SUMMARY_EXPENSES_BY_DAY,
+    WEEKLY_UNCATEGORIZED_TRANSACTIONS,
+    MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY
 }
 
 sealed class InsightState : Parcelable {
@@ -175,6 +193,18 @@ sealed class InsightData : Parcelable {
     data class WeeklyUncategorizedTransactionsData(
         val week: YearWeek,
         val transactionIds: List<String>
+    ) : InsightData()
+
+    @Parcelize
+    data class WeeklyExpensesByDayData(
+        val week: YearWeek,
+        val expensesByDay: List<ExpensesByDay>
+    ) : InsightData()
+
+    @Parcelize
+    data class MonthlySummaryExpensesByCategoryData(
+        val month: YearMonth,
+        val expenses: List<AmountByCategory>
     ) : InsightData()
 
     // Simple data holders

@@ -8,10 +8,17 @@ data class Category(
     val code: String,
     val id: String,
     val name: String,
+    val type: Type,
+    val parentId: String?,
     val children: List<Category>,
     val sortOrder: Int,
     val isDefaultChild: Boolean
-) : Parcelable
+) : Parcelable {
+
+    enum class Type {
+        EXPENSE, INCOME, TRANSFER
+    }
+}
 
 @Parcelize
 data class CategoryTree(

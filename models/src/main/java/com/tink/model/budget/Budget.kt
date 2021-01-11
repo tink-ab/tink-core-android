@@ -41,7 +41,6 @@ class Budget {
     data class Specification(
         val id: String,
         val name: String,
-        val description: String,
         val amount: Amount,
         val periodicity: Periodicity,
         val archived: Boolean,
@@ -76,8 +75,7 @@ class Budget {
 
         @Parcelize
         data class Recurring(
-            val unit: PeriodUnit,
-            val quantity: Int
+            val unit: PeriodUnit
         ) : Periodicity() {
             enum class PeriodUnit { UNKNOWN, WEEK, MONTH, YEAR }
         }

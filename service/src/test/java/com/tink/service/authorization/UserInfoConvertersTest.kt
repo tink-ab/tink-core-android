@@ -70,13 +70,15 @@ internal class UserInfoConvertersTest {
             Assertions.assertThat(profile.market).isEqualTo("SE")
             Assertions.assertThat(profile.currency).isEqualTo("SEK")
             Assertions.assertThat(profile.timeZone).isEqualTo("Europe/Stockholm")
-            Assertions.assertThat(profile.periodAdjustedDay).isEqualTo(25)
-            Assertions.assertThat(profile.periodMode).isEqualTo(UserProfile.PeriodMode.MONTHLY_ADJUSTED)
             Assertions.assertThat(flags).isNotEmpty
             Assertions.assertThat(flags[0]).isEqualTo("TRANSFERS")
             Assertions.assertThat(flags[1]).isEqualTo("TEST_PINK_ONBOARDING")
             Assertions.assertThat(username).isEqualTo("tinker@example.com")
             Assertions.assertThat(nationalId).isEqualTo("198410045701")
+
+            Assertions.assertThat(profile.periodMode).isInstanceOf(UserProfile.PeriodMode.MonthlyAdjusted::class.java)
+            val periodAdjustedDay = (profile.periodMode as UserProfile.PeriodMode.MonthlyAdjusted).periodAdjustedDayOfMonth
+            Assertions.assertThat(periodAdjustedDay).isEqualTo(25)
         }
     }
 }
