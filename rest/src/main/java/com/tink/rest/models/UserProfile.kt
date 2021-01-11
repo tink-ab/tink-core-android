@@ -27,7 +27,7 @@ data class UserProfile(
     @Json(name = "periodAdjustedDay") @field:Json(name = "periodAdjustedDay") var periodAdjustedDay: Int,
     @Json(name = "periodMode") @field:Json(name = "periodMode") var periodMode: UserProfile.PeriodModeEnum,
     @Json(name = "timeZone") @field:Json(name = "timeZone") var timeZone: String,
-    @Json(name = "notificationSettings") @field:Json(name = "notificationSettings") var notificationSettings: NotificationSettings,
+    @Json(name = "notificationSettings") @field:Json(name = "notificationSettings") var notificationSettings: NotificationSettings?,
     @Json(name = "cashbackEnabled") @field:Json(name = "cashbackEnabled") var cashbackEnabled: Boolean? = null
 ) {
     /**

@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property date The date the transaction part was created.
@@ -23,9 +22,9 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class TransactionPart(
-    @Json(name = "date") @field:Json(name = "date") var date: ZonedDateTime,
+    @Json(name = "date") @field:Json(name = "date") var date: Long,
     @Json(name = "id") @field:Json(name = "id") var id: String,
-    @Json(name = "lastModified") @field:Json(name = "lastModified") var lastModified: ZonedDateTime,
+    @Json(name = "lastModified") @field:Json(name = "lastModified") var lastModified: Long,
     @Json(name = "categoryId") @field:Json(name = "categoryId") var categoryId: String,
     @Json(name = "counterpartId") @field:Json(name = "counterpartId") var counterpartId: String,
     @Json(name = "counterpartTransactionId") @field:Json(name = "counterpartTransactionId") var counterpartTransactionId: String,

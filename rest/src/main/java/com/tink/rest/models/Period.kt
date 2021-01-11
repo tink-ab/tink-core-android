@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property endDate Timestamp at the end of the period
@@ -18,10 +17,10 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class Period(
-    @Json(name = "endDate") @field:Json(name = "endDate") var endDate: ZonedDateTime? = null,
+    @Json(name = "endDate") @field:Json(name = "endDate") var endDate: Long? = null,
     @Json(name = "name") @field:Json(name = "name") var name: String? = null,
     @Json(name = "resolution") @field:Json(name = "resolution") var resolution: Period.ResolutionEnum? = null,
-    @Json(name = "startDate") @field:Json(name = "startDate") var startDate: ZonedDateTime? = null
+    @Json(name = "startDate") @field:Json(name = "startDate") var startDate: Long? = null
 ) {
     /**
      * Resolution for the statistics.
