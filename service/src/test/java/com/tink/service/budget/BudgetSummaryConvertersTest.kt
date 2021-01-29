@@ -11,7 +11,7 @@ internal class BudgetSummaryConvertersTest {
     private val budgetSummaryJson =
         """
         {
-            "budgetPeriods": {
+            "budgetPeriod": {
                 "end": 1552395986000,
                 "spentAmount": {
                     "currencyCode": "EUR",
