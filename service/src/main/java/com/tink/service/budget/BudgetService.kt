@@ -18,7 +18,6 @@ import javax.inject.Inject
 interface BudgetService {
     suspend fun createBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification
     suspend fun updateBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification
-    suspend fun deleteBudget(id: String)
     suspend fun archiveBudget(id: String): BudgetSpecification
     suspend fun listBudgets(): List<BudgetSummary>
 
@@ -85,10 +84,6 @@ class BudgetServiceImpl @Inject constructor(
                 )
             }.budgetSpecification!!.toCoreModel()
         }
-    }
-
-    override suspend fun deleteBudget(id: String) {
-        api.delete(id)
     }
 
     override suspend fun archiveBudget(id: String): BudgetSpecification =
