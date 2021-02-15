@@ -19,7 +19,7 @@ interface BudgetService {
     suspend fun createBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification
     suspend fun updateBudget(descriptor: BudgetCreateOrUpdateDescriptor): BudgetSpecification
     suspend fun deleteBudget(id: String)
-    suspend fun archiveBudget(id: String)
+    suspend fun archiveBudget(id: String): BudgetSpecification
     suspend fun listBudgets(): List<BudgetSummary>
 
     suspend fun listTransactionsForBudget(
