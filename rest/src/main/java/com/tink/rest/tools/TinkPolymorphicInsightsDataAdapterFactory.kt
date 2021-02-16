@@ -41,6 +41,14 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 DataType.BUDGET_SUMMARY_OVERSPENT.value
             )
             .withSubtype(
+                InsightData.BudgetSuggestCreateTopCategoryData::class.java,
+                DataType.BUDGET_SUGGEST_CREATE_TOP_CATEGORY.value
+            )
+            .withSubtype(
+                InsightData.BudgetSuggestCreateTopPrimaryCategoryData::class.java,
+                DataType.BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY.value
+            )
+            .withSubtype(
                 InsightData.LargeExpenseData::class.java,
                 DataType.LARGE_EXPENSE.value
             )

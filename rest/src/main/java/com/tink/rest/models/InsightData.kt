@@ -50,6 +50,15 @@ sealed class InsightData(
         @Json(name = "BUDGET_SUMMARY_OVERSPENT")
         BUDGET_SUMMARY_OVERSPENT("BUDGET_SUMMARY_OVERSPENT"),
 
+        @Json(name = "BUDGET_SUGGEST_CREATE_TOP_CATEGORY")
+        BUDGET_SUGGEST_CREATE_TOP_CATEGORY("BUDGET_SUGGEST_CREATE_TOP_CATEGORY"),
+
+        @Json(name = "BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY")
+        BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY("BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY"),
+
+        @Json(name = "BUDGET_SUGGEST_CREATE_FIRST")
+        BUDGET_SUGGEST_CREATE_FIRST("BUDGET_SUGGEST_CREATE_FIRST"),
+
         @Json(name = "LARGE_EXPENSE")
         LARGE_EXPENSE("LARGE_EXPENSE"),
 
@@ -149,6 +158,24 @@ sealed class InsightData(
         @Json(name = "periodUnit")
         val periodUnit: String
     ) : InsightData(TypeEnum.BUDGET_SUMMARY_OVERSPENT)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetSuggestCreateTopCategoryData(
+        @Json(name = "categorySpending")
+        val categorySpending: ExpenseByCategoryCode,
+        @Json(name = "suggestedBudgetAmount")
+        val suggestedBudgetAmount: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.BUDGET_SUGGEST_CREATE_TOP_CATEGORY)
+
+    @JsonClass(generateAdapter = true)
+    data class BudgetSuggestCreateTopPrimaryCategoryData(
+        @Json(name = "categorySpending")
+        val categorySpending: ExpenseByCategoryCode,
+        @Json(name = "suggestedBudgetAmount")
+        val suggestedBudgetAmount: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY)
+
+    object BudgetSuggestCreateFirstData : InsightData(TypeEnum.BUDGET_SUGGEST_CREATE_FIRST)
 
     @JsonClass(generateAdapter = true)
     data class LargeExpenseData(

@@ -20,7 +20,6 @@ import com.tink.rest.models.insightdata.BudgetIdToPeriod as BudgetIdToPeriodDto
 
 internal fun InsightDataDto.toCoreModel(): InsightData =
     when (this) {
-
         is InsightDataDto.AccountBalanceLowData -> InsightData.AccountBalanceLowData(
             accountId,
             balance.toAmount()
@@ -53,6 +52,15 @@ internal fun InsightDataDto.toCoreModel(): InsightData =
             overspentBudgets = overspentBudgets.map { it.toCoreModel() },
             overspentAmount = overspentAmount.toAmount()
         )
+        is InsightDataDto.BudgetSuggestCreateFirstData -> InsightData.BudgetSuggestCreateFirstData
+        is InsightDataDto.BudgetSuggestCreateTopCategoryData -> InsightData.BudgetSuggestCreateTopCategoryData(
+            categorySpending.toAmountByCategory(),
+            suggestedBudgetAmount.toAmount()
+        )
+        is InsightDataDto.BudgetSuggestCreateTopPrimaryCategoryData -> InsightData.BudgetSuggestCreateTopPrimaryCategoryData(
+            categorySpending.toAmountByCategory(),
+            suggestedBudgetAmount.toAmount()
+        )
         is InsightDataDto.LargeExpenseData -> InsightData.LargeExpenseData(transactionId)
         is InsightDataDto.SingleUncategorizedTransactionData -> InsightData.UncategorizedTransactionData(
             transactionId
@@ -76,6 +84,7 @@ internal fun InsightDataDto.toCoreModel(): InsightData =
         )
         is InsightDataDto.LeftToSpendNegativeData,
         InsightDataDto.Unknown -> InsightData.NoData
+        else -> InsightData.NoData
     }
 
 internal fun AmountWithCurrencyCode.toAmount() = Amount(ExactNumber(amount), currencyCode)

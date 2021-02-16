@@ -119,6 +119,9 @@ enum class InsightType {
     BUDGET_SUCCESS,
     BUDGET_SUMMARY_OVERSPENT,
     BUDGET_SUMMARY_ACHIEVED,
+    BUDGET_SUGGEST_CREATE_TOP_CATEGORY,
+    BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY,
+    BUDGET_SUGGEST_CREATE_FIRST,
     SINGLE_EXPENSE_UNCATEGORIZED,
     LARGE_EXPENSE,
     DOUBLE_CHARGE,
@@ -169,6 +172,21 @@ sealed class InsightData : Parcelable {
         val achievedBudgets: List<BudgetIdToPeriod>,
         val overspentBudgets: List<BudgetIdToPeriod>,
         val overspentAmount: Amount
+    ) : InsightData()
+
+    @Parcelize
+    object BudgetSuggestCreateFirstData : InsightData()
+
+    @Parcelize
+    data class BudgetSuggestCreateTopCategoryData(
+        val categorySpending: AmountByCategory,
+        val suggestedBudgetAmount: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class BudgetSuggestCreateTopPrimaryCategoryData(
+        val categorySpending: AmountByCategory,
+        val suggestedBudgetAmount: Amount
     ) : InsightData()
 
     @Parcelize
