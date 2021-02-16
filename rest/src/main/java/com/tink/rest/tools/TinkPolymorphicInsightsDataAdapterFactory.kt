@@ -90,6 +90,10 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 ActionType.VIEW_BUDGET.value
             )
             .withSubtype(
+                InsightActionData.CreateBudgetActionData::class.java,
+                ActionType.CREATE_BUDGET.value
+            )
+            .withSubtype(
                 InsightActionData.CreateTransferActionData::class.java,
                 ActionType.CREATE_TRANSFER.value
             )
