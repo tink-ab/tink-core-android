@@ -9,6 +9,7 @@ package com.tink.rest.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insights.actions.BudgetSuggestion
 import com.tink.rest.models.insights.actions.TransactionIdWithType
 import com.tink.rest.models.insights.actions.TransactionIds
 
@@ -21,7 +22,7 @@ sealed class InsightActionData(
 ) {
     /**
      * The action type
-     * Values: ACKNOWLEDGE, DISMISS, VIEW_BUDGET, CREATE_TRANSFER, VIEW_TRANSACTION, CATEGORIZE_EXPENSE, VIEW_TRANSACTIONS, CATEGORIZE_TRANSACTIONS, VIEW_TRANSACTIONS_BY_CATEGORY, VIEW_EXPECTED_AND_ACTUAL_AMOUNT
+     * Values: ACKNOWLEDGE, DISMISS, VIEW_BUDGET, CREATE_BUDGET, CREATE_TRANSFER, VIEW_TRANSACTION, CATEGORIZE_EXPENSE, VIEW_TRANSACTIONS, CATEGORIZE_TRANSACTIONS, VIEW_TRANSACTIONS_BY_CATEGORY, VIEW_EXPECTED_AND_ACTUAL_AMOUNT
      */
     @JsonClass(generateAdapter = false)
     enum class TypeEnum(val value: String) {
@@ -33,6 +34,8 @@ sealed class InsightActionData(
         DISMISS("DISMISS"),
         @Json(name = "VIEW_BUDGET")
         VIEW_BUDGET("VIEW_BUDGET"),
+        @Json(name = "CREATE_BUDGET")
+        CREATE_BUDGET("CREATE_BUDGET"),
         @Json(name = "CREATE_TRANSFER")
         CREATE_TRANSFER("CREATE_TRANSFER"),
         @Json(name = "VIEW_TRANSACTION")
@@ -68,6 +71,12 @@ sealed class InsightActionData(
         @Json(name = "budgetPeriodStartTime")
         val budgetPeriodStartTime: Long
     ) : InsightActionData(TypeEnum.VIEW_BUDGET)
+
+    @JsonClass(generateAdapter = true)
+    data class CreateBudgetActionData(
+        @Json(name = "budgetSuggestion")
+        val budgetSuggestion: BudgetSuggestion
+    ) : InsightActionData(TypeEnum.CREATE_BUDGET)
 
     @JsonClass(generateAdapter = true)
     data class CategorizeTransactionsActionData(
