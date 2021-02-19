@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.ZonedDateTime
 
 /**
  * @property budgetSpecification The budget.
@@ -22,8 +21,8 @@ import org.threeten.bp.ZonedDateTime
 data class BudgetDetailsResponse(
     @Json(name = "budgetSpecification") @field:Json(name = "budgetSpecification") var budgetSpecification: Budget? = null,
     @Json(name = "budgetPeriods") @field:Json(name = "budgetPeriods") var budgetPeriods: List<BudgetPeriod>? = null,
-    @Json(name = "start") @field:Json(name = "start") var start: ZonedDateTime? = null,
-    @Json(name = "end") @field:Json(name = "end") var end: ZonedDateTime? = null,
+    @Json(name = "start") @field:Json(name = "start") var start: Long = 0,
+    @Json(name = "end") @field:Json(name = "end") var end: Long = 0,
     @Json(name = "totalSpentAmount") @field:Json(name = "totalSpentAmount") var totalSpentAmount: CurrencyDenominatedAmount? = null,
     @Json(name = "averageSpentAmount") @field:Json(name = "averageSpentAmount") var averageSpentAmount: CurrencyDenominatedAmount? = null
 )

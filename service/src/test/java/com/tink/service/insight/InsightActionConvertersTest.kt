@@ -111,4 +111,73 @@ class InsightActionConvertersTest {
         assertThat(data.sourceUri).isEqualTo("iban://SE9832691627751644451227")
         assertThat(data.destinationUri).isEqualTo("iban://NL41INGB1822913977")
     }
+
+    private val viewBudgetActionDataJson =
+        """
+            {
+                "type": "VIEW_BUDGET",
+                "budgetId": "cbbac116e43c4b21b7013091ec03d590",
+                "budgetPeriodStartTime": 1567296000000
+            }
+        """.trimIndent()
+
+    @Test
+    fun `convert ViewBudgetActionData`() {
+        val data = GeneratedCodeConverters.moshi
+            .adapter(InsightActionData::class.java)
+            .fromJson(viewBudgetActionDataJson)
+                as InsightActionData.ViewBudgetActionData
+        val budgetId = data.budgetId
+        val periodStartTime = data.budgetPeriodStartTime
+        assertThat(budgetId).isEqualTo("cbbac116e43c4b21b7013091ec03d590")
+        assertThat(periodStartTime).isEqualTo(1567296000000)
+    }
+
+    private val createBudgetActionDataJson =
+        """
+            {
+                "type": "CREATE_BUDGET",
+                "budgetSuggestion": {
+                  "filter": {
+                    "categories": ["expenses:food.bars"],
+                    "accounts": ["d2b49640cbba4d8899a4886b6e8892f8"]
+                  },
+                  "amount": {
+                    "currencyCode": "EUR",
+                    "amount": 300.0
+                  },
+                  "periodicityType": "BUDGET_PERIODICITY_TYPE_RECURRING",
+                  "recurringPeriodicityData": {
+                    "periodUnit": "MONTH"
+                  }
+                }
+            }
+        """.trimIndent()
+
+    @Test
+    fun `convert CreateBudgetActionData`() {
+        val data = GeneratedCodeConverters.moshi
+            .adapter(InsightActionData::class.java)
+            .fromJson(createBudgetActionDataJson)
+                as InsightActionData.CreateBudgetActionData
+
+        val suggestedAmount = data.budgetSuggestion.amount
+        val suggestedFilter = data.budgetSuggestion.filter
+        val periodicityType = data.budgetSuggestion.periodicityType
+        val recurringPeriodicity = data.budgetSuggestion.recurringPeriodicityData
+        val oneOffPeriodicity = data.budgetSuggestion.oneOffPeriodicityData
+
+        assertThat(suggestedAmount!!.amount).isEqualTo(300.0)
+        assertThat(suggestedAmount.currencyCode).isEqualTo("EUR")
+
+        assertThat(suggestedFilter!!.categories).asList().contains("expenses:food.bars")
+        assertThat(suggestedFilter.accounts).asList().contains("d2b49640cbba4d8899a4886b6e8892f8")
+
+        assertThat(periodicityType!!.value).isEqualTo("BUDGET_PERIODICITY_TYPE_RECURRING")
+
+        assertThat(oneOffPeriodicity).isNull()
+
+        assertThat(recurringPeriodicity).isNotNull
+        assertThat(recurringPeriodicity!!.periodUnit.value).isEqualTo("MONTH")
+    }
 }
