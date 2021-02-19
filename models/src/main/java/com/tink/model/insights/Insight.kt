@@ -2,6 +2,8 @@ package com.tink.model.insights
 
 import android.os.Parcelable
 import com.tink.model.budget.Budget
+import com.tink.model.budget.BudgetFilter
+import com.tink.model.budget.BudgetPeriodicity
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
@@ -53,6 +55,13 @@ data class InsightAction(
         data class ViewBudget(val budgetId: String, val periodStartDate: Instant) : Data()
 
         @Parcelize
+        data class CreateBudget(
+            val budgetFilter: BudgetFilter?,
+            val amount: Amount?,
+            val periodicity: BudgetPeriodicity?
+        ) : Data()
+
+        @Parcelize
         data class CreateTransfer(
             val sourceUri: String,
             val destinationUri: String,
@@ -78,6 +87,7 @@ data class InsightAction(
         ACKNOWLEDGE("ACKNOWLEDGE"),
         DISMISS("DISMISS"),
         VIEW_BUDGET("VIEW_BUDGET"),
+        CREATE_BUDGET("CREATE_BUDGET"),
         CREATE_TRANSFER("CREATE_TRANSFER"),
         VIEW_TRANSACTION("VIEW_TRANSACTION"),
         CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
@@ -109,6 +119,9 @@ enum class InsightType {
     BUDGET_SUCCESS,
     BUDGET_SUMMARY_OVERSPENT,
     BUDGET_SUMMARY_ACHIEVED,
+    BUDGET_SUGGEST_CREATE_TOP_CATEGORY,
+    BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY,
+    BUDGET_SUGGEST_CREATE_FIRST,
     SINGLE_EXPENSE_UNCATEGORIZED,
     LARGE_EXPENSE,
     DOUBLE_CHARGE,
@@ -159,6 +172,21 @@ sealed class InsightData : Parcelable {
         val achievedBudgets: List<BudgetIdToPeriod>,
         val overspentBudgets: List<BudgetIdToPeriod>,
         val overspentAmount: Amount
+    ) : InsightData()
+
+    @Parcelize
+    object BudgetSuggestCreateFirstData : InsightData()
+
+    @Parcelize
+    data class BudgetSuggestCreateTopCategoryData(
+        val categorySpending: AmountByCategory,
+        val suggestedBudgetAmount: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class BudgetSuggestCreateTopPrimaryCategoryData(
+        val categorySpending: AmountByCategory,
+        val suggestedBudgetAmount: Amount
     ) : InsightData()
 
     @Parcelize
