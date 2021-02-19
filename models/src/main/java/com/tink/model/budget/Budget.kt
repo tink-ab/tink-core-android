@@ -9,6 +9,8 @@ typealias BudgetSummary = Budget.Summary
 typealias BudgetPeriod = Budget.Period
 typealias BudgetTransaction = Budget.Transaction
 typealias BudgetSpecification = Budget.Specification
+typealias BudgetFilter = Budget.Specification.Filter
+typealias BudgetPeriodicity = Budget.Periodicity
 typealias RecurringPeriodicity = Budget.Periodicity.Recurring
 typealias OneOffPeriodicity = Budget.Periodicity.OneOff
 
