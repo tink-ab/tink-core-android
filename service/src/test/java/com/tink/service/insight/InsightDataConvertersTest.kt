@@ -163,4 +163,181 @@ internal class InsightDataConvertersTest {
 
         assert(dataDto is InsightDataDto.Unknown)
     }
+
+    private val budgetSuggestCreateTopCategoryInsightJson =
+        """
+         {
+          "id" : "a0f465d81f414eefada4ad0dcab3a1fe",
+          "userId" : "89b7858c052c4fd88024e4581dab6506",
+          "type" : "BUDGET_SUGGEST_CREATE_TOP_CATEGORY",
+          "title" : "Set up a budget for your top expense: Restaurants.",
+          "description" : "You spent SEK 20,030 on Restaurants last month. How about setting up a budget of SEK 18,027 to help save more money?",
+          "data" : {
+            "categorySpending" : {
+              "categoryCode" : "expenses:food.restaurants",
+              "spentAmount" : {
+                "currencyCode" : "SEK",
+                "amount" : 20030.0
+              }
+            },
+            "suggestedBudgetAmount" : {
+              "currencyCode" : "SEK",
+              "amount" : 18027.0
+            },
+            "type" : "BUDGET_SUGGEST_CREATE_TOP_CATEGORY"
+          },
+          "createdTime" : 1602230327079,
+          "insightActions" : [ {
+            "label" : "Create Budget",
+            "data" : {
+              "budgetSuggestion" : {
+                "filter" : {
+                  "accounts" : null,
+                  "categories" : [ "expenses:food.restaurants" ]
+                },
+                "periodicityType" : "BUDGET_PERIODICITY_TYPE_RECURRING",
+                "oneOffPeriodicityData" : null,
+                "recurringPeriodicityData" : {
+                  "periodUnit" : "MONTH"
+                },
+                "amount" : {
+                  "currencyCode" : "SEK",
+                  "amount" : 18027.0
+                }
+              },
+              "type" : "CREATE_BUDGET"
+            }
+          }, {
+            "label" : "Archive",
+            "data" : {
+              "type" : "DISMISS"
+            }
+          } ]
+        }
+        """.trimIndent()
+
+    @Test
+    fun `budget suggest create top category conversion`() {
+        val insightDto = GeneratedCodeConverters.moshi
+            .adapter(ActionableInsight::class.java)
+            .fromJson(budgetSuggestCreateTopCategoryInsightJson)
+
+        val data = (insightDto!!.data as InsightDataDto.BudgetSuggestCreateTopCategoryData)
+        val categorySpending = data.categorySpending.spentAmount
+        val suggestedBudgetAmount = data.suggestedBudgetAmount
+        assertThat(categorySpending.amount).isEqualTo(20030.0)
+        assertThat(categorySpending.currencyCode).isEqualTo("SEK")
+        assertThat(suggestedBudgetAmount.amount).isEqualTo(18027.0)
+        assertThat(suggestedBudgetAmount.currencyCode).isEqualTo("SEK")
+    }
+
+    private val budgetSuggestCreateTopPrimaryCategoryInsightJson =
+        """
+        {
+          "id" : "a0f465d81f414eefada4ad0dcab3a1fe",
+          "userId" : "89b7858c052c4fd88024e4581dab6506",
+          "type" : "BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY",
+          "title" : "Set up a budget for your top expense: Restaurants.",
+          "description" : "You spent SEK 20,030 on Restaurants last month. How about setting up a budget of SEK 18,027 to help save more money?",
+          "data" : {
+            "categorySpending" : {
+              "categoryCode" : "expenses:food.restaurants",
+              "spentAmount" : {
+                "currencyCode" : "SEK",
+                "amount" : 20030.0
+              }
+            },
+            "suggestedBudgetAmount" : {
+              "currencyCode" : "SEK",
+              "amount" : 18027.0
+            },
+            "type" : "BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY"
+          },
+          "createdTime" : 1602230327079,
+          "insightActions" : [ {
+            "label" : "Create Budget",
+            "data" : {
+              "budgetSuggestion" : {
+                "filter" : {
+                  "accounts" : null,
+                  "categories" : [ "expenses:food.restaurants" ]
+                },
+                "periodicityType" : "BUDGET_PERIODICITY_TYPE_RECURRING",
+                "oneOffPeriodicityData" : null,
+                "recurringPeriodicityData" : {
+                  "periodUnit" : "MONTH"
+                },
+                "amount" : {
+                  "currencyCode" : "SEK",
+                  "amount" : 18027.0
+                }
+              },
+              "type" : "CREATE_BUDGET"
+            }
+          }, {
+            "label" : "Archive",
+            "data" : {
+              "type" : "DISMISS"
+            }
+          } ]
+        }
+        """.trimIndent()
+
+    @Test
+    fun `budget suggest create top primary category conversion`() {
+        val insightDto = GeneratedCodeConverters.moshi
+            .adapter(ActionableInsight::class.java)
+            .fromJson(budgetSuggestCreateTopPrimaryCategoryInsightJson)
+
+        val data = (insightDto!!.data as InsightDataDto.BudgetSuggestCreateTopPrimaryCategoryData)
+        val categorySpending = data.categorySpending.spentAmount
+        val suggestedBudgetAmount = data.suggestedBudgetAmount
+        assertThat(categorySpending.amount).isEqualTo(20030.0)
+        assertThat(categorySpending.currencyCode).isEqualTo("SEK")
+        assertThat(suggestedBudgetAmount.amount).isEqualTo(18027.0)
+        assertThat(suggestedBudgetAmount.currencyCode).isEqualTo("SEK")
+    }
+
+    private val budgetSuggestCreateFirstInsightJson =
+        """
+            {
+              "id" : "c78aceecbc67459b9494ff934e0f6abc",
+              "userId" : "89b7858c052c4fd88024e4581dab6506",
+              "type" : "BUDGET_SUGGEST_CREATE_FIRST",
+              "title" : "Set up your first budget to help you keep track of expenses.",
+              "description" : "Creating budgets can help you stay on top of your spending – give it a go.",
+              "data" : {
+                "type" : "BUDGET_SUGGEST_CREATE_FIRST"
+              },
+              "createdTime" : 1602230327090,
+              "insightActions" : [ {
+                "label" : "Create Budget",
+                "data" : {
+                  "budgetSuggestion" : {
+                    "filter" : null,
+                    "periodicityType" : "BUDGET_PERIODICITY_TYPE_RECURRING",
+                    "oneOffPeriodicityData" : null,
+                    "recurringPeriodicityData" : {
+                      "periodUnit" : "MONTH"
+                    },
+                    "amount" : null
+                  },
+                  "type" : "CREATE_BUDGET"
+                }
+              }, {
+                "label" : "Archive",
+                "data" : {
+                  "type" : "DISMISS"
+                }
+              } ]
+            }
+        """.trimIndent()
+
+    @Test
+    fun `budget suggest create first conversion`() {
+        val insightDto = GeneratedCodeConverters.moshi
+            .adapter(ActionableInsight::class.java)
+            .fromJson(budgetSuggestCreateFirstInsightJson)
+        assertThat(insightDto!!.data is InsightDataDto.BudgetSuggestCreateFirstData)
+    }
 }

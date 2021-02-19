@@ -11,10 +11,10 @@ import com.squareup.moshi.JsonClass
 
 /**
  * @property budgetSpecification The budget.
- * @property budgetPeriods The current running period.
+ * @property budgetPeriod The current running period.
  */
 @JsonClass(generateAdapter = true)
 data class BudgetSummary(
     @Json(name = "budgetSpecification") @field:Json(name = "budgetSpecification") var budgetSpecification: Budget? = null,
-    @Json(name = "budgetPeriods") @field:Json(name = "budgetPeriods") var budgetPeriods: BudgetPeriod? = null
+    @Json(name = "budgetPeriod") @field:Json(name = "budgetPeriod") var budgetPeriod: BudgetPeriod? = null
 )

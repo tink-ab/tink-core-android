@@ -87,7 +87,7 @@ fun BudgetDto.toCoreModel(): BudgetSpecification {
 fun BudgetSummaryDto.toCoreModel() =
     BudgetSummary(
         budgetSpecification!!.toCoreModel(),
-        budgetPeriods!!.toCoreModel(budgetSpecification!!.amount!!.toAmount())
+        budgetPeriod!!.toCoreModel(budgetSpecification!!.amount!!.toAmount())
     )
 
 fun BudgetPeriodDto.toCoreModel(budgetAmount: Amount) = BudgetPeriod(
