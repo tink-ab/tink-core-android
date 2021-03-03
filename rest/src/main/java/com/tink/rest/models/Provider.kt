@@ -12,25 +12,27 @@ import com.squareup.moshi.JsonClass
 /**
  * The provider model represents financial institutions to where Tink can connect. It specifies how Tink accesses the financial institution, metadata about the financialinstitution, and what financial information that can be accessed.
  * @property accessType What Tink uses to access the data.
- * @property authenticationFlow For providers with access type &#x60;OPEN_BANKING&#x60;, indicates what type of authentication flow is used to access the data.
  * @property capabilities Indicates what this provider is capable of, in terms of financial data it can aggregate and if it can execute payments.
  * @property credentialsType When creating a new credential connected to the provider this will be the credentials type.
+ * @property authenticationUserType The type of authentication to use
  * @property currency The default currency of the provider.
  * @property displayName The display name of the provider.
- * @property displayDescription Short displayable description of the authentication type used.
  * @property fields List of fields which need to be provided when creating a credential connected to the provider.
  * @property financialInstitutionId A unique identifier to group providers belonging the same financial institution.
  * @property financialInstitutionName The name of the financial institution.
- * @property groupDisplayName A display name for providers which are branches of a bigger group.
- * @property images Image urls for the provider.
  * @property market The market of the provider. Each provider is unique per market.
  * @property multiFactor Indicates if the provider requires multi-factor authentication.
  * @property name The unique identifier of the provider. This is used when creating new credentials.
- * @property passwordHelpText Short description of how to authenticate when creating a new credential for connected to the provider.
  * @property popular Indicates if the provider is popular. This is normally set to true for the biggest financial institutions on a market.
  * @property status Indicates the current status of the provider. It is only possible to perform credentials create or refresh actions on providers which are enabled.
+ * @property releaseStatus Indicates the release status of the provider
  * @property transactional Indicates if Tink can aggregate transactions for this provider.
  * @property type Indicates what type of financial institution the provider represents.
+ * @property authenticationFlow For providers with access type &#x60;OPEN_BANKING&#x60;, indicates what type of authentication flow is used to access the data.
+ * @property displayDescription Short displayable description of the authentication type used.
+ * @property groupDisplayName A display name for providers which are branches of a bigger group.
+ * @property images Image urls for the provider.
+ * @property passwordHelpText Short description of how to authenticate when creating a new credential for connected to the provider.
  */
 @JsonClass(generateAdapter = true)
 data class Provider(
@@ -48,6 +50,7 @@ data class Provider(
     @Json(name = "name") @field:Json(name = "name") var name: String,
     @Json(name = "popular") @field:Json(name = "popular") var popular: Boolean,
     @Json(name = "status") @field:Json(name = "status") var status: Provider.StatusEnum,
+    @Json(name = "releaseStatus") @field:Json(name = "releaseStatus") var releaseStatus: Provider.ReleaseStatusEnum,
     @Json(name = "transactional") @field:Json(name = "transactional") var transactional: Boolean,
     @Json(name = "type") @field:Json(name = "type") var type: Provider.TypeEnum,
     @Json(name = "authenticationFlow") @field:Json(name = "authenticationFlow") var authenticationFlow: Provider.AuthenticationFlowEnum? = null,
@@ -104,6 +107,15 @@ data class Provider(
         @Json(name = "ENABLED") ENABLED("ENABLED"),
         @Json(name = "TEMPORARY_DISABLED") TEMPORARY_DISABLED("TEMPORARY_DISABLED"),
         @Json(name = "DISABLED") DISABLED("DISABLED")
+    }
+    /**
+     * Indicates the current release status of the provider
+     * Values: BETA
+     */
+    @JsonClass(generateAdapter = false)
+    enum class ReleaseStatusEnum(val value: String) {
+        @Json(name = "UNKNOWN") UNKNOWN("UNKNOWN"),
+        @Json(name = "BETA") BETA("BETA")
     }
     /**
      * Indicates what type of financial institution the provider represents.

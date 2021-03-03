@@ -18,6 +18,7 @@ import com.tink.model.misc.Field
  * @property displayName the formatted name of this provider, meant for display to the end user
  * @property type The type of the provider. See [Type]
  * @property status The status of the provider. See [Status]
+ * @property releaseStatus The release status of the provider. See [ReleaseStatus]
  * @property credentialsType Indicates which method will be used to connect this provider, for example with username/password or a third party app.
  * @property helpText a small help text that you can display to the user for further information on how to connect this provider
  * @property isPopular Indicates whether the provider is one of the major providers in a market. This can be used to provide shortcuts for the end user, for example by putting this provider on the top of the list.
@@ -36,6 +37,7 @@ data class Provider(
     val displayName: String,
     val type: Type,
     val status: Status,
+    val releaseStatus: ReleaseStatus,
     val credentialsType: Credentials.Type,
     val helpText: String,
     val isPopular: Boolean = false,
@@ -72,6 +74,14 @@ data class Provider(
         DISABLED,
         TEMPORARY_DISABLED,
         OBSOLETE
+    }
+
+    /**
+     * Indicates the current release status of the provider. See [Provider.releaseStatus]
+     */
+    enum class ReleaseStatus {
+        UNKNOWN,
+        BETA
     }
 
     /**

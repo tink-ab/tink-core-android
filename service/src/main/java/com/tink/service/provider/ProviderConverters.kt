@@ -9,6 +9,7 @@ import com.tink.service.misc.toImages
 
 internal typealias ProviderDto = com.tink.rest.models.Provider
 internal typealias ProviderStatusDto = com.tink.rest.models.Provider.StatusEnum
+internal typealias ProviderReleaseStatusDto = com.tink.rest.models.Provider.ReleaseStatusEnum
 internal typealias ProviderTypeDto = com.tink.rest.models.Provider.TypeEnum
 internal typealias ProviderAccessTypeDto = com.tink.rest.models.Provider.AccessTypeEnum
 internal typealias ProviderCapabilityDto = com.tink.rest.models.Provider.CapabilitiesEnum
@@ -20,6 +21,7 @@ internal fun ProviderDto.toCoreModel(): Provider =
         displayName = displayName,
         type = type.toProviderType(),
         status = status.toProviderStatus(),
+        releaseStatus = releaseStatus.toProviderReleaseStatus(),
         credentialsType = credentialsType.toCoreModel(),
         helpText = passwordHelpText.orEmpty(),
         isPopular = popular,
@@ -43,6 +45,12 @@ internal fun ProviderStatusDto.toProviderStatus(): Provider.Status =
         ProviderStatusDto.ENABLED -> Provider.Status.ENABLED
         ProviderStatusDto.TEMPORARY_DISABLED -> Provider.Status.TEMPORARY_DISABLED
         ProviderStatusDto.UNKNOWN -> Provider.Status.UNKNOWN
+    }
+
+internal fun ProviderReleaseStatusDto.toProviderReleaseStatus(): Provider.ReleaseStatus =
+    when (this) {
+        ProviderReleaseStatusDto.UNKNOWN -> Provider.ReleaseStatus.UNKNOWN
+        ProviderReleaseStatusDto.BETA -> Provider.ReleaseStatus.BETA
     }
 
 internal fun ProviderTypeDto.toProviderType(): Provider.Type =
