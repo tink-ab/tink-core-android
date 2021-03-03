@@ -37,7 +37,7 @@ data class Provider(
     val displayName: String,
     val type: Type,
     val status: Status,
-    val releaseStatus: ReleaseStatus,
+    val releaseStatus: ReleaseStatus? = null,
     val credentialsType: Credentials.Type,
     val helpText: String,
     val isPopular: Boolean = false,

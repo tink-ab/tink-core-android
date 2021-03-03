@@ -50,7 +50,7 @@ data class Provider(
     @Json(name = "name") @field:Json(name = "name") var name: String,
     @Json(name = "popular") @field:Json(name = "popular") var popular: Boolean,
     @Json(name = "status") @field:Json(name = "status") var status: Provider.StatusEnum,
-    @Json(name = "releaseStatus") @field:Json(name = "releaseStatus") var releaseStatus: Provider.ReleaseStatusEnum,
+    @Json(name = "releaseStatus") @field:Json(name = "releaseStatus") var releaseStatus: Provider.ReleaseStatusEnum? = null,
     @Json(name = "transactional") @field:Json(name = "transactional") var transactional: Boolean,
     @Json(name = "type") @field:Json(name = "type") var type: Provider.TypeEnum,
     @Json(name = "authenticationFlow") @field:Json(name = "authenticationFlow") var authenticationFlow: Provider.AuthenticationFlowEnum? = null,
