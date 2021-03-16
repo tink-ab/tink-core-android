@@ -61,4 +61,5 @@ if (project.hasProperty("kapt")) {
     }
 }
 
-apply(from = "../publishing.gradle")
+//apply(from = "../publishing.gradle")
+apply(from = "../maven-publishing.gradle")
