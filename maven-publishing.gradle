@@ -94,38 +94,38 @@ publishing {
 //        create<MavenPublication>("mavenJava") {
 //            from(components["java"])
             pom {
-                name.set(POM_NAME)
-                description.set(POM_DESCRIPTION)
-                url.set(POM_URL)
+                name = POM_NAME
+                description = POM_DESCRIPTION
+                url = POM_URL
                 licenses {
                     license {
-                        name.set(POM_LICENSE_NAME)
-                        url.set(POM_LICENSE_URL)
+                        name = POM_LICENSE_NAME
+                        url = POM_LICENSE_URL
                     }
                 }
                 developers {
                     developer {
-                        id.set(POM_DEVELOPER_ID)
-                        name.set(POM_DEVELOPER_NAME)
-                        email.set(POM_DEVELOPER_EMAIL)
+                        id = POM_DEVELOPER_ID
+                        name = POM_DEVELOPER_NAME
+                        email = POM_DEVELOPER_EMAIL
                     }
                 }
                 scm {
-                    connection.set(POM_GIT_URL)
-                    developerConnection.set(POM_GIT_URL)
-                    url.set(POM_URL)
+                    connection = POM_GIT_URL
+                    developerConnection = POM_GIT_URL
+                    url = POM_URL
                 }
                 // This generates POM.xml with proper dependencies.
                 withXml {
                     def dependenciesNode = asNode().appendNode('dependencies')
                     // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
-                    configurations.implementation.allDependencies.each {
+                    configurations.implementation.allDependencies.each { dependency ->
                         // Ensure dependencies such as fileTree are not included.
-                        if (it.name != 'unspecified') {
+                        if (dependency.name != 'unspecified') {
                             def dependencyNode = dependenciesNode.appendNode('dependency')
-                            dependencyNode.appendNode('groupId', it.group)
-                            dependencyNode.appendNode('artifactId', it.name)
-                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('groupId', dependency.group)
+                            dependencyNode.appendNode('artifactId', dependency.name)
+                            dependencyNode.appendNode('version', dependency.version)
                         }
                     }
                 }
@@ -134,11 +134,11 @@ publishing {
     }
     repositories {
         maven {
-            name = "OSSRH"
-            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            name = OSSRH_STAGING_NAME
+            url = OSSRH_STAGING_URL
             credentials {
-                username = System.getenv("OSSRH_USER")
-                password = System.getenv("OSSRH_PASSWORD")
+                username = OSSRH_USER
+                password = OSSRH_PASSWORD
             }
         }
     }
