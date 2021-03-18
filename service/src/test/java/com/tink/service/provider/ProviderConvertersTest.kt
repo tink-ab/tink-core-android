@@ -57,6 +57,18 @@ internal class ProviderConvertersTest {
     }
 
     @Test
+    fun `unknown release status should yield UNKNOWN`() {
+        val adapter = GeneratedCodeConverters.moshi.adapter(ProviderReleaseStatusDto::class.java)
+        val releaseStatusDto = adapter.fromJson("\"NONSENSESTATUS_FOO\"")
+
+        assertThat(releaseStatusDto).isEqualTo(ProviderReleaseStatusDto.UNKNOWN)
+
+        val releaseStatus = releaseStatusDto!!.toProviderReleaseStatus()
+
+        assertThat(releaseStatus).isEqualTo(Provider.ReleaseStatus.UNKNOWN)
+    }
+
+    @Test
     fun `unknown authentication flow should yield UNKNOWN`() {
         val adapter = GeneratedCodeConverters.moshi.adapter(AuthenticationFlowDto::class.java)
         val authenticationFlowDto = adapter.fromJson("\"NONSENSE_AUTHENTICATION_FLOW\"")
