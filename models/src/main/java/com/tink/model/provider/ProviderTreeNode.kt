@@ -24,6 +24,8 @@ sealed class ProviderTreeNode : Parcelable {
     abstract val name: String?
     /** An optional url linking to a visual description of the node. */
     abstract val icon: String?
+    /** Denotes that there is at least one underlying Provider in beta. */
+    abstract val isBeta: Boolean
 
     /**
      * The top level node of the tree structure, with a list of [FinancialInstitutionNode] children.
@@ -39,6 +41,8 @@ sealed class ProviderTreeNode : Parcelable {
     ) : ProviderTreeNode() {
         override val icon: String?
             get() = financialInstitutions.first().icon
+        override val isBeta: Boolean
+            get() = financialInstitutions.any { it.isBeta }
     }
 
     /**
@@ -55,6 +59,8 @@ sealed class ProviderTreeNode : Parcelable {
         override val name: String get() = financialInstitution.name
         override val icon: String?
             get() = authenticationUserTypes.first().icon
+        override val isBeta: Boolean
+            get() = authenticationUserTypes.any { it.isBeta }
     }
 
     /**
@@ -71,6 +77,8 @@ sealed class ProviderTreeNode : Parcelable {
         override val name: String? get() = null
         override val icon: String?
             get() = accessTypes.first().icon
+        override val isBeta: Boolean
+            get() = accessTypes.any { it.isBeta }
     }
 
     /**
@@ -87,6 +95,8 @@ sealed class ProviderTreeNode : Parcelable {
         override val name: String? get() = null
         override val icon: String?
             get() = credentialsTypes.first().icon
+        override val isBeta: Boolean
+            get() = credentialsTypes.any { it.isBeta }
     }
 
     /**
@@ -103,6 +113,8 @@ sealed class ProviderTreeNode : Parcelable {
     ) : ProviderTreeNode() {
         override val icon
             get() = providers.first().icon
+        override val isBeta
+            get() = providers.any { it.isBeta }
     }
 
     /**
@@ -116,6 +128,8 @@ sealed class ProviderTreeNode : Parcelable {
             get() = provider.displayName
         override val icon
             get() = provider.images?.icon
+        override val isBeta: Boolean
+            get() = provider.releaseStatus == Provider.ReleaseStatus.BETA
     }
 }
 
