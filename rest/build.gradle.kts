@@ -27,6 +27,5 @@ dependencies {
     testRuntimeOnly(Dependencies.Testing.test_junit_engine)
 }
 
-//apply(from = "../publishing.gradle")
-apply(from = "../maven-publishing.gradle")
+apply(from = "../publishing.gradle")
 apply(from = "swagger.gradle")
