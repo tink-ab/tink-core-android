@@ -44,7 +44,8 @@ internal class TransactionServiceImpl @Inject constructor(
             accounts = accountId?.asList(),
             categories = categoryId?.asList(),
             offset = offset,
-            sort = SearchQuery.SortEnum.DATE
+            sort = SearchQuery.SortEnum.DATE,
+            includeUpcoming = true
         )
 
         period?.let {
