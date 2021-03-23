@@ -8,7 +8,6 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.math.BigDecimal
 
 /**
  * @property accountId The internal identifier of the account that the transaction belongs to.
@@ -23,7 +22,6 @@ import java.math.BigDecimal
  * @property originalAmount The original amount that was received from the provider, before the user changed it.
  * @property originalDate The original date that was received from the provider, before the user changed it.
  * @property originalDescription The original description that was received from the provider, before the user changed it.
- * @property payload Meta data about the transaction, in key value format with Strings.
  * @property pending Indicates if this transaction has been settled or is still pending.
  * @property timestamp The timestamp of when the transaction was first saved to database.
  * @property type The type of the transaction.
@@ -31,10 +29,7 @@ import java.math.BigDecimal
  * @property upcoming Indicates if this is an upcoming transaction not booked yet.
  * @property currencyDenominatedAmount The amount of the transaction represented as a scale and unscaled value together with the ISO 4217 currency code of the amount. The amount can be modified by the user but not the currency code.
  * @property currencyDenominatedOriginalAmount The original amount that was received from the provider, before the user changed it. The amount is represented as a scale and unscaled value together with the ISO 4217 currency code of the amount.
- * @property parts TransactionResponse parts (Beta). Available if the transaction is divided into more than one part.
- * @property partnerPayload The payload that was previously ingested on the Connector API.
  * @property dispensableAmount The dispensable amount of the transaction.
- * @property userModified
  */
 @JsonClass(generateAdapter = true)
 data class TransactionResponse(
@@ -46,7 +41,7 @@ data class TransactionResponse(
     @Json(name = "description") @field:Json(name = "description") var description: String,
     @Json(name = "id") @field:Json(name = "id") var id: String,
     @Json(name = "lastModified") @field:Json(name = "lastModified") var lastModified: Long,
-    @Json(name = "notes") @field:Json(name = "notes") var notes: String,
+    @Json(name = "notes") @field:Json(name = "notes") var notes: String?,
     @Json(name = "originalAmount") @field:Json(name = "originalAmount") var originalAmount: Double,
     @Json(name = "originalDate") @field:Json(name = "originalDate") var originalDate: Long,
     @Json(name = "originalDescription") @field:Json(name = "originalDescription") var originalDescription: String,
@@ -54,14 +49,10 @@ data class TransactionResponse(
     @Json(name = "timestamp") @field:Json(name = "timestamp") var timestamp: Long,
     @Json(name = "type") @field:Json(name = "type") var type: TransactionResponse.TypeEnum,
     @Json(name = "userId") @field:Json(name = "userId") var userId: String,
-    @Json(name = "payload") @field:Json(name = "payload") var payload: Map<String, String>? = null,
     @Json(name = "upcoming") @field:Json(name = "upcoming") var upcoming: Boolean,
     @Json(name = "currencyDenominatedAmount") @field:Json(name = "currencyDenominatedAmount") var currencyDenominatedAmount: CurrencyDenominatedAmount? = null,
     @Json(name = "currencyDenominatedOriginalAmount") @field:Json(name = "currencyDenominatedOriginalAmount") var currencyDenominatedOriginalAmount: CurrencyDenominatedAmount? = null,
-    @Json(name = "parts") @field:Json(name = "parts") var parts: List<TransactionPart>? = null,
-    @Json(name = "partnerPayload") @field:Json(name = "partnerPayload") var partnerPayload: Map<String, Map<String, Any?>>? = null,
-    @Json(name = "dispensableAmount") @field:Json(name = "dispensableAmount") var dispensableAmount: BigDecimal? = null,
-    @Json(name = "userModified") @field:Json(name = "userModified") var userModified: Boolean? = null
+    @Json(name = "dispensableAmount") @field:Json(name = "dispensableAmount") var dispensableAmount: Double? = null
 ) {
     /**
      * The category type of the transaction.
