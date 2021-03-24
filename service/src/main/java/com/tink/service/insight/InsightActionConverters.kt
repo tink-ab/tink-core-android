@@ -38,12 +38,14 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.CategorizeExpenseActionData -> InsightAction.Data.CategorizeExpense(
             transactionId
         )
+        is InsightActionData.CategorizeTransactionsActionData -> InsightAction.Data.CategorizeTransactions(
+            transactionIds
+        )
         is InsightActionData.ViewTransactionsActionData -> InsightAction.Data.ViewTransactions(
             transactionIds.map { it.id }
         )
         is InsightActionData.Acknowledge -> InsightAction.Data.Acknowledge
         is InsightActionData.Dismiss -> InsightAction.Data.Dismiss
-        is InsightActionData.CategorizeTransactionsActionData,
         InsightActionData.Unknown,
         null -> InsightAction.Data.NoData
         else -> InsightAction.Data.NoData
