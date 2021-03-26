@@ -126,4 +126,4 @@ fun Environment.Production.withSslKey(sslCertificate: String) =
         sslCertificate = sslCertificate
     )
 
-private fun Context.isDebuggable() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+private fun Context.isDebuggable() = applicationInfo != null && (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
