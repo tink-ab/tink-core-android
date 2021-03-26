@@ -1,11 +1,14 @@
 package com.tink.service.network
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.net.Uri
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.di.ServiceScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.conscrypt.Conscrypt
 import java.io.ByteArrayInputStream
 import java.security.Security
@@ -19,27 +22,40 @@ internal class NetworkModule {
 
     @Provides
     @ServiceScope
+    fun provideHttpLoggingInterceptor(context: Context): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().apply {
+            level =
+                if (context.isDebuggable())
+                    HttpLoggingInterceptor.Level.BODY
+                else
+                    HttpLoggingInterceptor.Level.NONE
+        }
+
+    @Provides
+    @ServiceScope
     internal fun provideOkHttpClient(
         tinkConfiguration: TinkConfiguration,
-        userEventBus: UserEventBus
+        userEventBus: UserEventBus,
+        httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
-            .apply {
-                tinkConfiguration.environment.sslCertificate?.let { sslKey ->
-                    sslSocketFactory(
-                        TLSHelper.getSslSocketFactory(ByteArrayInputStream(sslKey.toByteArray())),
-                        TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
-                    )
-                }
-                addInterceptor(
-                    HeaderInterceptor(
-                        tinkConfiguration.oAuthClientId,
-                        userEventBus,
-                        null
-                    )
+        .apply {
+            tinkConfiguration.environment.sslCertificate?.let { sslKey ->
+                sslSocketFactory(
+                    TLSHelper.getSslSocketFactory(ByteArrayInputStream(sslKey.toByteArray())),
+                    TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
                 )
             }
-            .build()
+            addInterceptor(httpLoggingInterceptor)
+            addInterceptor(
+                HeaderInterceptor(
+                    tinkConfiguration.oAuthClientId,
+                    userEventBus,
+                    null
+                )
+            )
+        }
+        .build()
 
     /**
      * Use Conscrypt TLS implementation
@@ -109,3 +125,5 @@ fun Environment.Production.withSslKey(sslCertificate: String) =
         restUrl = "https://api.tink.com",
         sslCertificate = sslCertificate
     )
+
+private fun Context.isDebuggable() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
