@@ -4,15 +4,22 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
 
-    const val kotlin = "1.4.10"
-    const val dagger = "2.16"
+    const val conscrypt = "2.4.0"
     const val coroutines = "1.4.2"
+    const val dagger = "2.16"
+    const val kotlin = "1.4.10"
+    const val moshi = "1.11.0"
+    const val okhttp = "4.4.0"
+    const val pinterestktlint = "0.33.0"
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
+    const val threetenabp = "1.2.1"
+    const val timber = "4.7.1"
 
-    const val moshi = "1.11.0"
-
+    // test
+    const val assertj = "3.11.1"
     const val junit = "5.6.2"
+    const val mockk = "1.8.7"
 }
 
 object Dependencies {
@@ -50,17 +57,18 @@ object Dependencies {
         const val test_junit_api = "org.junit.jupiter:junit-jupiter-api:${Versions.junit}"
         const val test_junit_engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit}"
         const val test_junit_params = "org.junit.jupiter:junit-jupiter-params:${Versions.junit}"
-        const val test_mockk = "io.mockk:mockk:1.8.7"
-        const val test_assertj = "org.assertj:assertj-core:3.11.1"
+        const val test_mockk = "io.mockk:mockk:${Versions.mockk}"
+        const val test_assertj = "org.assertj:assertj-core:${Versions.assertj}"
     }
 
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
-    const val three_ten_abp = "com.jakewharton.threetenabp:threetenabp:1.2.1"
-    const val timber = "com.jakewharton.timber:timber:4.7.1"
+    const val three_ten_abp = "com.jakewharton.threetenabp:threetenabp:${Versions.threetenabp}"
+    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
-    const val ktlint = "com.pinterest:ktlint:0.33.0"
+    const val ktlint = "com.pinterest:ktlint:${Versions.pinterestktlint}"
 
-    const val okhttp = "com.squareup.okhttp3:okhttp:4.4.0"
-    const val conscrypt = "org.conscrypt:conscrypt-android:2.4.0"
+    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+    const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
+    const val conscrypt = "org.conscrypt:conscrypt-android:${Versions.conscrypt}"
 }
