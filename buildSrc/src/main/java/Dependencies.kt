@@ -10,7 +10,7 @@ object Versions {
     const val kotlin = "1.4.10"
     const val moshi = "1.11.0"
     const val okhttp = "4.4.0"
-    const val pinterestktlint = "0.41.0"
+    const val pinterestktlint = "0.33.0"
     const val retrofit = "2.6.2"
     const val rxjava = "2.1.9"
     const val threetenabp = "1.3.0"
