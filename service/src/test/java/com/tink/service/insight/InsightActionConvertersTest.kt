@@ -180,4 +180,28 @@ class InsightActionConvertersTest {
         assertThat(recurringPeriodicity).isNotNull
         assertThat(recurringPeriodicity!!.periodUnit.value).isEqualTo("MONTH")
     }
+
+    private val categorizeTransactionsActionDataJson = """
+        {
+            "type": "CATEGORIZE_TRANSACTIONS",
+            "transactionIds": [
+                "d2b49640cbba4d8899a4886b6e8892f8",
+                "e8d668ddbe8d49ff81f40c8fb3b47c5d"
+            ]
+        }
+    """.trimIndent()
+
+    @Test
+    fun `convert CategorizeTransactionsData`() {
+
+        val data = GeneratedCodeConverters.moshi
+            .adapter(InsightActionData::class.java)
+            .fromJson(categorizeTransactionsActionDataJson)
+                as InsightActionData.CategorizeTransactionsActionData
+
+        val transactions = data.transactionIds
+
+        assertThat(transactions).asList().contains("d2b49640cbba4d8899a4886b6e8892f8")
+        assertThat(transactions).asList().contains("e8d668ddbe8d49ff81f40c8fb3b47c5d")
+    }
 }
