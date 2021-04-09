@@ -72,6 +72,9 @@ data class InsightAction(
         data class CategorizeExpense(val transactionId: String) : Data()
 
         @Parcelize
+        data class CategorizeTransactions(val transactionIds: List<String>) : Data()
+
+        @Parcelize
         data class ViewTransactions(val transactionIds: List<String>) : Data() {
             constructor(transactionId: String) : this(listOf(transactionId))
         }
