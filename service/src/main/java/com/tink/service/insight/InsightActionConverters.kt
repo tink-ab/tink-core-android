@@ -17,7 +17,7 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.CreateTransferActionData -> InsightAction.Data.CreateTransfer(
             sourceAccount,
             destinationAccount,
-            amount.toAmount()
+            amount?.toAmount()
         )
         is InsightActionData.ViewBudgetActionData -> InsightAction.Data.ViewBudget(
             budgetId,
