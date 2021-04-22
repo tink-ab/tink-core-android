@@ -53,15 +53,15 @@ sealed class InsightActionData(
     @JsonClass(generateAdapter = true)
     data class CreateTransferActionData(
         @Json(name = "amount")
-        val amount: AmountWithCurrencyCode,
+        val amount: AmountWithCurrencyCode? = null,
         @Json(name = "destinationAccount")
-        val destinationAccount: String,
+        val destinationAccount: String? = null,
         @Json(name = "destinationAccountNumber")
-        val destinationAccountNumber: String,
+        val destinationAccountNumber: String? = null,
         @Json(name = "sourceAccount")
-        val sourceAccount: String,
+        val sourceAccount: String? = null,
         @Json(name = "sourceAccountNumber")
-        val sourceAccountNumber: String
+        val sourceAccountNumber: String? = null
     ) : InsightActionData(TypeEnum.CREATE_TRANSFER)
 
     @JsonClass(generateAdapter = true)
