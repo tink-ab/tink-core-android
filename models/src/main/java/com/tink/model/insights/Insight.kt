@@ -63,9 +63,11 @@ data class InsightAction(
 
         @Parcelize
         data class CreateTransfer(
-            val sourceUri: String,
-            val destinationUri: String,
-            val amount: Amount
+            val sourceUri: String? = null,
+            val destinationUri: String? = null,
+            val amount: Amount? = null,
+            val sourceAccountNumber: String? = null,
+            val destinationAccountNumber: String? = null
         ) : Data()
 
         @Parcelize
