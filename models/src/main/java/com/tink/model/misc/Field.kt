@@ -125,13 +125,15 @@ data class Field(
      * @property hint The text giving the user a suggestion of how the input would look (e.g. YYYYMMDDNNNN for SSN)
      * @property helpText Additional information, possibly longer, to guide the user in adding input. This might be empty.
      * @property inputType Contains information about the input type for this field that can be applied to the field input view.
+     * @property selectOptions A list of options where the user should select one.
      */
     @Parcelize
     data class Attributes(
         val description: String,
         val hint: String,
         val helpText: String,
-        val inputType: InputType
+        val inputType: InputType,
+        val selectOptions: List<SelectOption>
     ) : Parcelable
 
     /**
@@ -146,6 +148,20 @@ data class Field(
         val isMasked: Boolean,
         val isNumeric: Boolean,
         val isImmutable: Boolean
+    ) : Parcelable
+
+    /**
+     * Represents an option that can be selected by the user.
+     *
+     * @property iconUrl A URL the client can optionally use to show an icon to represent the option.
+     * @property text The human-readable description of this option to display to the user.
+     * @property value The machine-readable value to send if the user picks this option.
+     */
+    @Parcelize
+    data class SelectOption(
+        val iconUrl: String,
+        val text: String,
+        val value: String
     ) : Parcelable
 
     /**
