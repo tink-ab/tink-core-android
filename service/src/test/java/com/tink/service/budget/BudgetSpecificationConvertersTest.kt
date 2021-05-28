@@ -37,6 +37,7 @@ internal class BudgetSpecificationConvertersTest {
             },
             "id": "e2b746ed27c542ce846a8d693474df21",
             "name": "Coffee budget",
+            "created": 1552395986000,
             "oneOffPeriodicity": {
                 "end": 1552395986000,
                 "start": 1549976786000
@@ -59,6 +60,7 @@ internal class BudgetSpecificationConvertersTest {
 
         assertThat(budgetSpecification.id).isEqualTo("e2b746ed27c542ce846a8d693474df21")
         assertThat(budgetSpecification.name).isEqualTo("Coffee budget")
+        assertThat(budgetSpecification.created.toEpochMilli()).isEqualTo(1552395986000)
         assertThat(budgetSpecification.amount.currencyCode).isEqualTo("EUR")
         assertThat(budgetSpecification.amount.value.scale).isEqualTo(2)
         assertThat(budgetSpecification.amount.value.unscaledValue).isEqualTo(1050)
