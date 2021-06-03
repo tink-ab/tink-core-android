@@ -1,6 +1,7 @@
 package com.tink.service.misc
 
 import com.tink.model.misc.Field
+import com.tink.rest.models.SelectOption as SelectOptionDto
 import com.tink.rest.models.Field as FieldDTO
 
 internal fun List<Field>.toFieldMap() = map { it.name to it.value }.toMap()
@@ -24,7 +25,15 @@ internal fun FieldDTO.toCoreModel(): Field {
                 isMasked = masked ?: false,
                 isNumeric = numeric ?: false,
                 isImmutable = immutable ?: false
-            )
+            ),
+            selectOptions = selectOptions?.map { it.toCoreModel() } ?: listOf()
         )
     )
 }
+
+internal fun SelectOptionDto.toCoreModel(): Field.SelectOption =
+    Field.SelectOption(
+        iconUrl = iconUrl ?: "",
+        text = text ?: "",
+        value = value ?: ""
+    )

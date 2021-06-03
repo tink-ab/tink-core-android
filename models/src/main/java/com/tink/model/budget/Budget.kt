@@ -43,6 +43,7 @@ class Budget {
     data class Specification(
         val id: String,
         val name: String,
+        val created: Instant,
         val amount: Amount,
         val periodicity: Periodicity,
         val archived: Boolean,
