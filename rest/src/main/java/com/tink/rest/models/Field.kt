@@ -28,6 +28,7 @@ import com.squareup.moshi.JsonClass
  * @property sensitive Controls whether or not the field should be sensitive.
  * @property checkbox Display boolean value as checkbox
  * @property additionalInfo A serialized JSON containing additional information that could be useful
+ * @property selectOptions A list of options where the user should select one.
  */
 @JsonClass(generateAdapter = true)
 data class Field(
@@ -48,5 +49,6 @@ data class Field(
     @Json(name = "value") @field:Json(name = "value") var value: String? = null,
     @Json(name = "sensitive") @field:Json(name = "sensitive") var sensitive: Boolean? = null,
     @Json(name = "checkbox") @field:Json(name = "checkbox") var checkbox: Boolean? = null,
-    @Json(name = "additionalInfo") @field:Json(name = "additionalInfo") var additionalInfo: String? = null
+    @Json(name = "additionalInfo") @field:Json(name = "additionalInfo") var additionalInfo: String? = null,
+    @Json(name = "selectOptions") @field:Json(name = "selectOptions") var selectOptions: List<SelectOption>? = null
 )
