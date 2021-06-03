@@ -2,6 +2,7 @@ plugins {
     id("com.yelp.codegen.plugin") version "1.4.1"
     kotlin("jvm")
     kotlin("kapt")
+    id("com.github.ben-manes.versions") version "0.38.0"
 }
 
 tasks.jar {
