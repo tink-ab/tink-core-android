@@ -77,6 +77,7 @@ fun BudgetDto.toCoreModel(): BudgetSpecification {
     return BudgetSpecification(
         id = id ?: "",
         name = name ?: "",
+        created = created.toInstant(),
         amount = amount!!.toAmount(),
         archived = archived ?: false,
         periodicity = periodicity,

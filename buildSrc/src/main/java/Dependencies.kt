@@ -4,16 +4,16 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 30
 
-    const val conscrypt = "2.4.0"
-    const val coroutines = "1.4.2"
+    const val conscrypt = "2.5.2"
+    const val coroutines = "1.4.3"
     const val dagger = "2.24"
-    const val kotlin = "1.4.10"
-    const val moshi = "1.11.0"
-    const val okhttp = "4.4.0"
+    const val kotlin = "1.4.32"
+    const val moshi = "1.12.0"
+    const val okhttp = "4.9.1"
     const val pinterestktlint = "0.33.0"
     const val retrofit = "2.6.2"
-    const val rxjava = "2.1.9"
-    const val threetenabp = "1.3.0"
+    const val rxjava = "2.2.21"
+    const val threetenabp = "1.3.1"
     const val timber = "4.7.1"
 
     // test
