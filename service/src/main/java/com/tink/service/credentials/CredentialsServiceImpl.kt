@@ -62,6 +62,15 @@ internal class CredentialsServiceImpl @Inject constructor(
             optIn = null
         ).unwrap()
 
+    override suspend fun refresh(descriptor: CredentialsRefreshDescriptor, callbackUri: String, appUri: String) =
+        api.refresh(
+            descriptor.id,
+            RefreshCredentialsRequest(callbackUri, appUri),
+            items = descriptor.refreshableItems?.map { it.item },
+            authenticate = descriptor.authenticate,
+            optIn = null
+        ).unwrap()
+
     override suspend fun authenticate(descriptor: CredentialsAuthenticateDescriptor) =
         api.manualAuthentication(
             descriptor.id, ManualAuthenticationRequest(
