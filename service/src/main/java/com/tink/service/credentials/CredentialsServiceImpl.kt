@@ -10,13 +10,15 @@ import com.tink.rest.models.RefreshCredentialsRequest
 import com.tink.rest.models.SupplementalInformation
 import com.tink.rest.models.UpdateCredentialsRequest
 import com.tink.rest.tools.unwrap
+import com.tink.service.network.TinkConfiguration
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import javax.inject.Inject
 
 @ServiceScope
 internal class CredentialsServiceImpl @Inject constructor(
-    private val api: CredentialsApi
+    private val api: CredentialsApi,
+    private val tinkConfiguration: TinkConfiguration
 ) : CredentialsService {
 
     override fun list(): Stream<List<Credentials>> {
@@ -62,10 +64,10 @@ internal class CredentialsServiceImpl @Inject constructor(
             optIn = null
         ).unwrap()
 
-    override suspend fun refresh(descriptor: CredentialsRefreshDescriptor, callbackUri: String, appUri: String) =
+    override suspend fun refresh(descriptor: CredentialsRefreshDescriptor, callbackUri: String) =
         api.refresh(
             descriptor.id,
-            RefreshCredentialsRequest(callbackUri, appUri),
+            RefreshCredentialsRequest(callbackUri, tinkConfiguration.redirectUri.toString()),
             items = descriptor.refreshableItems?.map { it.item },
             authenticate = descriptor.authenticate,
             optIn = null
