@@ -38,7 +38,8 @@ internal class CredentialsServiceImpl @Inject constructor(
             CreateCredentialsRequest(
                 providerName = descriptor.providerName,
                 fields = descriptor.fields,
-                appUri = descriptor.appUri.toString()
+                appUri = descriptor.appUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
             ),
             items = descriptor.refreshableItems?.map { it.item }
         ).toCoreModel()
@@ -51,23 +52,18 @@ internal class CredentialsServiceImpl @Inject constructor(
             UpdateCredentialsRequest(
                 providerName = descriptor.providerName,
                 fields = descriptor.fields,
-                appUri = descriptor.appUri.toString()
+                appUri = descriptor.appUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
             )
         ).toCoreModel()
 
     override suspend fun refresh(descriptor: CredentialsRefreshDescriptor) =
         api.refresh(
             descriptor.id,
-            RefreshCredentialsRequest(),
-            items = descriptor.refreshableItems?.map { it.item },
-            authenticate = descriptor.authenticate,
-            optIn = null
-        ).unwrap()
-
-    override suspend fun refresh(descriptor: CredentialsRefreshDescriptor, callbackUri: String) =
-        api.refresh(
-            descriptor.id,
-            RefreshCredentialsRequest(callbackUri, tinkConfiguration.redirectUri.toString()),
+            RefreshCredentialsRequest(
+                appUri = tinkConfiguration.redirectUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
+            ),
             items = descriptor.refreshableItems?.map { it.item },
             authenticate = descriptor.authenticate,
             optIn = null
@@ -76,7 +72,8 @@ internal class CredentialsServiceImpl @Inject constructor(
     override suspend fun authenticate(descriptor: CredentialsAuthenticateDescriptor) =
         api.manualAuthentication(
             descriptor.id, ManualAuthenticationRequest(
-                appUri = descriptor.appUri.toString()
+                appUri = descriptor.appUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
             )
         ).unwrap()
 

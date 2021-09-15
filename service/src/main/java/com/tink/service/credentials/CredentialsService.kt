@@ -8,10 +8,7 @@ interface CredentialsService {
     suspend fun create(descriptor: CredentialsCreationDescriptor): Credentials
     suspend fun delete(credentialsId: String)
     suspend fun update(descriptor: CredentialsUpdateDescriptor): Credentials
-    @Deprecated(message = "You have to pass callbackUri to successfully refresh credentials",
-        level = DeprecationLevel.WARNING)
     suspend fun refresh(descriptor: CredentialsRefreshDescriptor)
-    suspend fun refresh(descriptor: CredentialsRefreshDescriptor, callbackUri: String)
     suspend fun authenticate(descriptor: CredentialsAuthenticateDescriptor)
     suspend fun enable(credentialsId: String)
     suspend fun disable(credentialsId: String)
