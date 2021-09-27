@@ -26,7 +26,7 @@ data class Account(
     val financialInstitutionID: String? = null,
     val identifiers: List<String>,
     val transferDestinations: List<String>,
-    val firstSeen: Instant? = null
+    val firstSeen: Long? = null
 ) : Parcelable {
 
     enum class Type {
