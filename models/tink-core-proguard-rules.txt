@@ -1,0 +1,2 @@
+-keep class com.tink.rest.models.** { *; }
+-keepclassmembers class com.tink.rest.models.** { *; }

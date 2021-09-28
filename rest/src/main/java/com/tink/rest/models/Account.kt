@@ -51,7 +51,8 @@ data class Account(
     @Json(name = "closed") @field:Json(name = "closed") var closed: Boolean? = null,
     @Json(name = "currencyDenominatedBalance") @field:Json(name = "currencyDenominatedBalance") var currencyDenominatedBalance: CurrencyDenominatedAmount? = null,
     @Json(name = "refreshed") @field:Json(name = "refreshed") var refreshed: Long? = null,
-    @Json(name = "financialInstitutionId") @field:Json(name = "financialInstitutionId") var financialInstitutionId: String? = null
+    @Json(name = "financialInstitutionId") @field:Json(name = "financialInstitutionId") var financialInstitutionId: String? = null,
+    @Json(name = "firstSeen") @field:Json(name = "firstSeen") var firstSeen: Long? = null
 ) {
     /**
      * The type of the account. This property can be updated in a update account request.

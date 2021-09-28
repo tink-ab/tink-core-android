@@ -34,7 +34,8 @@ fun AccountDto.toCoreModel(): Account =
         refreshed = refreshed.toInstant(),
         financialInstitutionID = financialInstitutionId,
         identifiers = convertJsonStringArrayToList(identifiers),
-        transferDestinations = transferDestinations?.mapNotNull { it.uri } ?: emptyList()
+        transferDestinations = transferDestinations?.mapNotNull { it.uri } ?: emptyList(),
+        firstSeen = firstSeen
     )
 
 internal fun AccountTypeDto.toCoreModel() =

@@ -18,6 +18,7 @@ android {
         targetSdkVersion(Versions.targetSdk)
         versionCode = Version.code
         versionName = Version.name
+        consumerProguardFile("tink-core-proguard-rules.txt")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
