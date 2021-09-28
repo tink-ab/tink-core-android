@@ -75,10 +75,11 @@ internal class NetworkModule {
  * @param redirectUri The URI to redirect back to your app from a browser or third party app.
  * Refer to the [third party authorization guide][https://github.com/tink-ab/tink-link-sdk-android/blob/master/third-party-authentication.md] for details.
  */
-data class TinkConfiguration(
+data class TinkConfiguration @JvmOverloads constructor(
     val environment: Environment,
     val oAuthClientId: String,
-    val redirectUri: Uri
+    val redirectUri: Uri,
+    val callbackUri: String? = null
 ) {
     init {
         with(redirectUri) {
