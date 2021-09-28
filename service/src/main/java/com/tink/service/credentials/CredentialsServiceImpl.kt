@@ -10,13 +10,15 @@ import com.tink.rest.models.RefreshCredentialsRequest
 import com.tink.rest.models.SupplementalInformation
 import com.tink.rest.models.UpdateCredentialsRequest
 import com.tink.rest.tools.unwrap
+import com.tink.service.network.TinkConfiguration
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
 import javax.inject.Inject
 
 @ServiceScope
 internal class CredentialsServiceImpl @Inject constructor(
-    private val api: CredentialsApi
+    private val api: CredentialsApi,
+    private val tinkConfiguration: TinkConfiguration
 ) : CredentialsService {
 
     override fun list(): Stream<List<Credentials>> {
@@ -36,7 +38,8 @@ internal class CredentialsServiceImpl @Inject constructor(
             CreateCredentialsRequest(
                 providerName = descriptor.providerName,
                 fields = descriptor.fields,
-                appUri = descriptor.appUri.toString()
+                appUri = descriptor.appUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
             ),
             items = descriptor.refreshableItems?.map { it.item }
         ).toCoreModel()
@@ -49,14 +52,18 @@ internal class CredentialsServiceImpl @Inject constructor(
             UpdateCredentialsRequest(
                 providerName = descriptor.providerName,
                 fields = descriptor.fields,
-                appUri = descriptor.appUri.toString()
+                appUri = descriptor.appUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
             )
         ).toCoreModel()
 
     override suspend fun refresh(descriptor: CredentialsRefreshDescriptor) =
         api.refresh(
             descriptor.id,
-            RefreshCredentialsRequest(),
+            RefreshCredentialsRequest(
+                appUri = tinkConfiguration.redirectUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
+            ),
             items = descriptor.refreshableItems?.map { it.item },
             authenticate = descriptor.authenticate,
             optIn = null
@@ -65,7 +72,8 @@ internal class CredentialsServiceImpl @Inject constructor(
     override suspend fun authenticate(descriptor: CredentialsAuthenticateDescriptor) =
         api.manualAuthentication(
             descriptor.id, ManualAuthenticationRequest(
-                appUri = descriptor.appUri.toString()
+                appUri = descriptor.appUri.toString(),
+                callbackUri = tinkConfiguration.callbackUri
             )
         ).unwrap()
 
