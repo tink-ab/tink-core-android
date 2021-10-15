@@ -46,14 +46,14 @@ fun TransactionResponse.toCoreModel() =
     )
 
 private fun com.tink.rest.models.Transaction.CategoryTypeEnum.toCategoryType(): CategoryType =
-    when(this) {
+    when (this) {
         com.tink.rest.models.Transaction.CategoryTypeEnum.INCOME -> CategoryType.INCOME
         com.tink.rest.models.Transaction.CategoryTypeEnum.EXPENSES -> CategoryType.EXPENSES
         com.tink.rest.models.Transaction.CategoryTypeEnum.TRANSFERS -> CategoryType.TRANSFERS
     }
 
 private fun TransactionResponse.CategoryTypeEnum.toCategoryType(): CategoryType =
-    when(this) {
+    when (this) {
         TransactionResponse.CategoryTypeEnum.INCOME -> CategoryType.INCOME
         TransactionResponse.CategoryTypeEnum.EXPENSES -> CategoryType.EXPENSES
         TransactionResponse.CategoryTypeEnum.TRANSFERS -> CategoryType.TRANSFERS
