@@ -10,5 +10,5 @@ data class TransactionSummary(
     @Json(name = "totalExpenses")
     val totalExpenses: AmountWithCurrencyCode,
     @Json(name = "largestExpense")
-    val largestExpense: LargestExpense)
-
+    val largestExpense: LargestExpense
+)

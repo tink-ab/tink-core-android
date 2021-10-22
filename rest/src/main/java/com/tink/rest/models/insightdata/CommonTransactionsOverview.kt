@@ -10,4 +10,5 @@ data class CommonTransactionsOverview(
     @Json(name = "totalNumberOfTransactions")
     val totalNumberOfTransactions: Int,
     @Json(name = "mostCommonTransactionCount")
-    val mostCommonTransactionCount: Int)
+    val mostCommonTransactionCount: Int
+)

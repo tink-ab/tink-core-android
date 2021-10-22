@@ -12,4 +12,5 @@ data class LargestExpense(
     @Json(name = "description")
     val description: String,
     @Json(name = "id")
-    val id: String)
+    val id: String
+)
