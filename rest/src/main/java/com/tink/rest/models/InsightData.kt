@@ -11,7 +11,6 @@ import com.squareup.moshi.JsonClass
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
 import com.tink.rest.models.insightdata.BudgetIdToPeriod
 import com.tink.rest.models.insightdata.BudgetPeriod
-import com.tink.rest.models.insightdata.Credential
 import com.tink.rest.models.insightdata.ExpenseByCategoryCode
 import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
 import com.tink.rest.models.insightdata.Month
