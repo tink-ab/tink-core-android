@@ -80,6 +80,14 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 InsightData.LeftToSpendNegativeData::class.java,
                 DataType.LEFT_TO_SPEND_NEGATIVE.value
             )
+            .withSubtype(
+                InsightData.MonthlySummaryExpenseTransactions::class.java,
+                DataType.MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS.value
+            )
+            .withSubtype(
+                InsightData.WeeklySummaryExpenseTransactions::class.java,
+                DataType.WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS.value
+            )
 
     fun createActionDataFactory(): PolymorphicJsonAdapterFactory<InsightActionData> =
         PolymorphicJsonAdapterFactory

@@ -7,6 +7,7 @@ import com.tink.model.budget.BudgetPeriodicity
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
+import com.tink.model.relations.TransactionSummary
 import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
 import kotlinx.android.parcel.Parcelize
@@ -242,6 +243,18 @@ sealed class InsightData : Parcelable {
     data class MonthlySummaryExpensesByCategoryData(
         val month: YearMonth,
         val expenses: List<AmountByCategory>
+    ) : InsightData()
+
+    @Parcelize
+    data class MonthlyExpenseTransactionsData(
+        val month: YearMonth,
+        val transactionSummary: TransactionSummary
+    ) : InsightData()
+
+    @Parcelize
+    data class WeeklyExpenseTransactionsData(
+        val week: YearWeek,
+        val transactionSummary: TransactionSummary
     ) : InsightData()
 
     // Simple data holders

@@ -11,9 +11,11 @@ import com.squareup.moshi.JsonClass
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
 import com.tink.rest.models.insightdata.BudgetIdToPeriod
 import com.tink.rest.models.insightdata.BudgetPeriod
+import com.tink.rest.models.insightdata.Credential
 import com.tink.rest.models.insightdata.ExpenseByCategoryCode
 import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
 import com.tink.rest.models.insightdata.Month
+import com.tink.rest.models.insightdata.TransactionSummary
 import com.tink.rest.models.insightdata.Week
 
 /**
@@ -76,6 +78,12 @@ sealed class InsightData(
 
         @Json(name = "WEEKLY_SUMMARY_EXPENSES_BY_DAY")
         WEEKLY_SUMMARY_EXPENSES_BY_DAY("WEEKLY_SUMMARY_EXPENSES_BY_DAY"),
+
+        @Json(name = "WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS")
+        WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS("WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS"),
+
+        @Json(name = "MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS")
+        MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS("MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS"),
 
         @Json(name = "MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY")
         MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY("MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY"),
@@ -238,6 +246,22 @@ sealed class InsightData(
         @Json(name = "month")
         val month: Month
     ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE)
+
+    @JsonClass(generateAdapter = true)
+    data class MonthlySummaryExpenseTransactions(
+        @Json(name = "month")
+        val month: Month,
+        @Json(name = "transactionSummary")
+        val transactionSummary: TransactionSummary
+    ) : InsightData(TypeEnum.MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS)
+
+    @JsonClass(generateAdapter = true)
+    data class WeeklySummaryExpenseTransactions(
+        @Json(name = "week")
+        val week: Week,
+        @Json(name = "transactionSummary")
+        val transactionSummary: TransactionSummary
+    ) : InsightData(TypeEnum.WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS)
 
     object Unknown : InsightData(TypeEnum.UNKNOWN)
 }
