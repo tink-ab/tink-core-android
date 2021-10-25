@@ -7,6 +7,7 @@ import com.tink.model.budget.BudgetPeriodicity
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
+import com.tink.model.relations.TransactionSummary
 import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
 import kotlinx.android.parcel.Parcelize
@@ -88,52 +89,56 @@ data class InsightAction(
     }
 
     enum class Type(val value: String) {
-        UNKNOWN("UNKNOWN"),
         ACKNOWLEDGE("ACKNOWLEDGE"),
-        DISMISS("DISMISS"),
-        VIEW_BUDGET("VIEW_BUDGET"),
+        CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
+        CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
         CREATE_BUDGET("CREATE_BUDGET"),
         CREATE_TRANSFER("CREATE_TRANSFER"),
+        DISMISS("DISMISS"),
+        UNKNOWN("UNKNOWN"),
+        VIEW_BUDGET("VIEW_BUDGET"),
         VIEW_TRANSACTION("VIEW_TRANSACTION"),
-        CATEGORIZE_EXPENSE("CATEGORIZE_EXPENSE"),
         VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
-        CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
         VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
     }
 }
 
 enum class InsightType {
-    UNKNOWN,
-    LEFT_TO_SPEND_HIGH,
-    LEFT_TO_SPEND_LOW,
     ACCOUNT_BALANCE_LOW,
-    INCREASE_CATEGORIZATION_LEVEL,
-    ALL_BANKS_CONNECTED,
-    EINVOICE,
-    GENERIC_FRAUD,
-    HIGHER_INCOME_THAN_CERTAIN_PERCENTILE,
-    RATE_THIS_APP,
-    RESIDENCE_DO_YOU_OWN_IT,
-    MONTHLY_SUMMARY,
-    WEEKLY_SUMMARY,
-    EINVOICE_OVERDUE,
-    BUDGET_OVERSPENT,
+    AGGREGATION_REFRESH_PSD2_CREDENTIAL,
     BUDGET_CLOSE_NEGATIVE,
     BUDGET_CLOSE_POSITIVE,
-    BUDGET_STREAK,
+    BUDGET_OVERSPENT,
     BUDGET_SUCCESS,
-    BUDGET_SUMMARY_OVERSPENT,
-    BUDGET_SUMMARY_ACHIEVED,
+    BUDGET_SUGGEST_CREATE_FIRST,
     BUDGET_SUGGEST_CREATE_TOP_CATEGORY,
     BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY,
-    BUDGET_SUGGEST_CREATE_FIRST,
-    SINGLE_EXPENSE_UNCATEGORIZED,
-    LARGE_EXPENSE,
+    BUDGET_SUMMARY_ACHIEVED,
+    BUDGET_SUMMARY_OVERSPENT,
+    CREDIT_CARD_LIMIT_CLOSE,
+    CREDIT_CARD_LIMIT_REACHED,
     DOUBLE_CHARGE,
+    LARGE_EXPENSE,
+    LEFT_TO_SPEND_NEGATIVE,
+    LEFT_TO_SPEND_NEGATIVE_BEGINNING_MONTH,
+    LEFT_TO_SPEND_NEGATIVE_MID_MONTH,
+    LEFT_TO_SPEND_NEGATIVE_SUMMARY,
+    LEFT_TO_SPEND_POSITIVE_BEGINNING_MONTH,
+    LEFT_TO_SPEND_POSITIVE_FINAL_WEEK,
+    LEFT_TO_SPEND_POSITIVE_MID_MONTH,
+    LEFT_TO_SPEND_POSITIVE_SUMMARY_SAVINGS_ACCOUNT,
+    MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY,
+    MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS,
+    NEW_INCOME_TRANSACTION,
+    SINGLE_UNCATEGORIZED_TRANSACTION,
+    SPENDING_BY_CATEGORY_INCREASED,
+    SPENDING_BY_PRIMARY_CATEGORY_INCREASED,
+    SUGGEST_SET_UP_SAVINGS_ACCOUNT,
+    UNKNOWN,
     WEEKLY_SUMMARY_EXPENSES_BY_CATEGORY,
     WEEKLY_SUMMARY_EXPENSES_BY_DAY,
-    WEEKLY_UNCATEGORIZED_TRANSACTIONS,
-    MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY
+    WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS,
+    WEEKLY_UNCATEGORIZED_TRANSACTIONS
 }
 
 sealed class InsightState : Parcelable {
@@ -238,6 +243,18 @@ sealed class InsightData : Parcelable {
     data class MonthlySummaryExpensesByCategoryData(
         val month: YearMonth,
         val expenses: List<AmountByCategory>
+    ) : InsightData()
+
+    @Parcelize
+    data class MonthlyExpenseTransactionsData(
+        val month: YearMonth,
+        val transactionSummary: TransactionSummary
+    ) : InsightData()
+
+    @Parcelize
+    data class WeeklyExpenseTransactionsData(
+        val week: YearWeek,
+        val transactionSummary: TransactionSummary
     ) : InsightData()
 
     // Simple data holders
