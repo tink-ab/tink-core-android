@@ -20,8 +20,16 @@ data class Transaction(
     val originalDate: Instant,
     val originalDescription: String,
     val originalAmount: Amount,
-    val inserted: Instant
+    val inserted: Instant,
+    val categoryType: CategoryType
 ) : Parcelable
 
 @Parcelize
 data class Tag(val name: String) : Parcelable
+
+@Parcelize
+enum class CategoryType : Parcelable {
+    INCOME,
+    EXPENSES,
+    TRANSFERS
+}
