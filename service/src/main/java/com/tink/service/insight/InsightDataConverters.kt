@@ -82,10 +82,27 @@ internal fun InsightDataDto.toCoreModel(): InsightData =
             month.toYearMonth(),
             expensesByCategory.map { it.toAmountByCategory() }
         )
+        is InsightDataDto.MonthlySummaryExpenseTransactions -> InsightData.MonthlyExpenseTransactionsData(
+            month.toYearMonth(),
+            transactionSummary.toTransactionSummaryDto()
+        )
+        is InsightDataDto.WeeklySummaryExpenseTransactions -> InsightData.WeeklyExpenseTransactionsData(
+            week.toYearWeek(),
+            transactionSummary.toTransactionSummaryDto()
+        )
         is InsightDataDto.LeftToSpendNegativeData,
         InsightDataDto.Unknown -> InsightData.NoData
         else -> InsightData.NoData
     }
+
+internal fun TransactionSummary.toTransactionSummaryDto(): com.tink.model.relations.TransactionSummary =
+    com.tink.model.relations.TransactionSummary(commonTransactionsOverview.toCommonTransactionsOverviewDto(), totalExpenses.toAmount(), largestExpense.toLargestExpenseDto())
+
+internal fun CommonTransactionsOverview.toCommonTransactionsOverviewDto(): com.tink.model.relations.CommonTransactionsOverview =
+    com.tink.model.relations.CommonTransactionsOverview(mostCommonTransactionDescription, totalNumberOfTransactions, mostCommonTransactionCount)
+
+internal fun LargestExpense.toLargestExpenseDto(): com.tink.model.relations.LargestExpense =
+    com.tink.model.relations.LargestExpense(date, amount.toAmount(), description, id)
 
 internal fun AmountWithCurrencyCode.toAmount() = Amount(ExactNumber(amount), currencyCode)
 
