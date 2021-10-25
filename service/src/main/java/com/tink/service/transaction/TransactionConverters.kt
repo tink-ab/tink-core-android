@@ -1,5 +1,6 @@
 package com.tink.service.transaction
 
+import com.tink.model.transaction.CategoryType
 import com.tink.model.transaction.Transaction
 import com.tink.rest.models.TransactionResponse
 import com.tink.service.misc.toAmount
@@ -21,7 +22,8 @@ fun TransactionDto.toCoreModel() =
         originalDate = originalDate.toInstant(),
         originalDescription = originalDescription,
         originalAmount = currencyDenominatedOriginalAmount!!.toAmount(),
-        inserted = timestamp.toInstant()
+        inserted = timestamp.toInstant(),
+        categoryType = categoryType.toCategoryType()
     )
 
 fun TransactionResponse.toCoreModel() =
@@ -39,5 +41,20 @@ fun TransactionResponse.toCoreModel() =
         originalDate = originalDate.toInstant(),
         originalDescription = originalDescription,
         originalAmount = currencyDenominatedOriginalAmount!!.toAmount(),
-        inserted = timestamp.toInstant()
+        inserted = timestamp.toInstant(),
+        categoryType = categoryType.toCategoryType()
     )
+
+private fun com.tink.rest.models.Transaction.CategoryTypeEnum.toCategoryType(): CategoryType =
+    when (this) {
+        com.tink.rest.models.Transaction.CategoryTypeEnum.INCOME -> CategoryType.INCOME
+        com.tink.rest.models.Transaction.CategoryTypeEnum.EXPENSES -> CategoryType.EXPENSES
+        com.tink.rest.models.Transaction.CategoryTypeEnum.TRANSFERS -> CategoryType.TRANSFERS
+    }
+
+private fun TransactionResponse.CategoryTypeEnum.toCategoryType(): CategoryType =
+    when (this) {
+        TransactionResponse.CategoryTypeEnum.INCOME -> CategoryType.INCOME
+        TransactionResponse.CategoryTypeEnum.EXPENSES -> CategoryType.EXPENSES
+        TransactionResponse.CategoryTypeEnum.TRANSFERS -> CategoryType.TRANSFERS
+    }
