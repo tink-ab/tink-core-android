@@ -3,8 +3,8 @@ package com.tink.rest.tools
 import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.tink.rest.models.InsightActionData
 import com.tink.rest.models.InsightData
-import com.tink.rest.models.InsightData.TypeEnum as DataType
 import com.tink.rest.models.InsightActionData.TypeEnum as ActionType
+import com.tink.rest.models.InsightData.TypeEnum as DataType
 
 object TinkPolymorphicInsightsDataAdapterFactory {
 

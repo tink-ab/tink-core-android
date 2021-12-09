@@ -1,7 +1,6 @@
 package com.tink.service.credentials
 
 import com.tink.model.credentials.Credentials
-import com.tink.service.di.ServiceScope
 import com.tink.rest.apis.CredentialsApi
 import com.tink.rest.models.CallbackRelayedRequest
 import com.tink.rest.models.CreateCredentialsRequest
@@ -10,6 +9,7 @@ import com.tink.rest.models.RefreshCredentialsRequest
 import com.tink.rest.models.SupplementalInformation
 import com.tink.rest.models.UpdateCredentialsRequest
 import com.tink.rest.tools.unwrap
+import com.tink.service.di.ServiceScope
 import com.tink.service.network.TinkConfiguration
 import com.tink.service.streaming.PollingHandler
 import com.tink.service.streaming.publisher.Stream
@@ -71,7 +71,8 @@ internal class CredentialsServiceImpl @Inject constructor(
 
     override suspend fun authenticate(descriptor: CredentialsAuthenticateDescriptor) =
         api.manualAuthentication(
-            descriptor.id, ManualAuthenticationRequest(
+            descriptor.id,
+            ManualAuthenticationRequest(
                 appUri = descriptor.appUri.toString(),
                 callbackUri = tinkConfiguration.callbackUri
             )

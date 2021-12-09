@@ -1,10 +1,10 @@
 package com.tink.service.budget
 
 import com.tink.model.budget.OneOffPeriodicity
-import com.tink.rest.models.BudgetSummary as BudgetSummaryDto
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import com.tink.rest.models.BudgetSummary as BudgetSummaryDto
 
 internal class BudgetSummaryConvertersTest {
 

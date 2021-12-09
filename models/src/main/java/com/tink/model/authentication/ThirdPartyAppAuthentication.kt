@@ -1,8 +1,8 @@
 package com.tink.model.authentication
 
-import android.os.Parcelable
-import android.net.Uri
 import android.content.Intent
+import android.net.Uri
+import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**

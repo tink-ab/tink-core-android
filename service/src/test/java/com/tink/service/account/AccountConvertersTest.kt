@@ -5,10 +5,10 @@ import com.tink.model.account.AccountDetails
 import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
 import com.tink.rest.models.AccountListResponse
-import com.tink.rest.models.Account as AccountDto
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import com.tink.rest.models.Account as AccountDto
 
 internal class AccountConvertersTest {
 

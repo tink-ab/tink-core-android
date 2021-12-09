@@ -22,10 +22,10 @@ import com.tink.service.time.PeriodService
 import com.tink.service.time.PeriodServiceImpl
 import com.tink.service.transaction.TransactionService
 import com.tink.service.transaction.TransactionServiceImpl
-import com.tink.service.user.UserProfileService
-import com.tink.service.user.UserProfileServiceImpl
 import com.tink.service.transfer.TransferService
 import com.tink.service.transfer.TransferServiceImpl
+import com.tink.service.user.UserProfileService
+import com.tink.service.user.UserProfileServiceImpl
 import dagger.Binds
 import dagger.Module
 
