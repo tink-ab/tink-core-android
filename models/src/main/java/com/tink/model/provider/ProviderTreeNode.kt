@@ -1,14 +1,14 @@
 package com.tink.model.provider
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-import kotlinx.android.parcel.RawValue
 import com.tink.model.credentials.Credentials
 import com.tink.model.provider.ProviderTreeNode.AccessTypeNode
+import com.tink.model.provider.ProviderTreeNode.AuthenticationUserTypeNode
 import com.tink.model.provider.ProviderTreeNode.CredentialsTypeNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionGroupNode
 import com.tink.model.provider.ProviderTreeNode.FinancialInstitutionNode
-import com.tink.model.provider.ProviderTreeNode.AuthenticationUserTypeNode
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 /**
  * This class represents a tree structure of [FinancialInstitutionGroupNode] objects with children.
@@ -187,7 +187,8 @@ private fun List<Provider>.groupByCredentialsType(): List<CredentialsTypeNode> =
                     CredentialsTypeNode(
                         name = displayDescription.takeIf { it.isNotEmpty() },
                         type = type,
-                        providers = providerList.map { ProviderTreeNode.ProviderNode(it) })
+                        providers = providerList.map { ProviderTreeNode.ProviderNode(it) }
+                    )
                 }
         }
         .sortedBy { it.name }

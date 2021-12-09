@@ -1,9 +1,9 @@
 package com.tink.model.transfer
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 import com.tink.model.account.Account
 import kotlinx.android.parcel.IgnoredOnParcel
+import kotlinx.android.parcel.Parcelize
 
 /**
  * A beneficiary is a payment or transfer destination account which has been authorized by the bank.
