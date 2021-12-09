@@ -1,9 +1,9 @@
 package com.tink.rest.tools
 
 import com.squareup.moshi.Json
-import java.lang.reflect.Type
 import retrofit2.Converter
 import retrofit2.Retrofit
+import java.lang.reflect.Type
 
 internal class EnumToValueConverterFactory : Converter.Factory() {
 

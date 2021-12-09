@@ -3,8 +3,8 @@ package com.tink.service.provider
 import com.tink.model.provider.Provider
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
-import com.tink.rest.models.Provider.AuthenticationFlowEnum as AuthenticationFlowDto
 import org.junit.jupiter.api.Test
+import com.tink.rest.models.Provider.AuthenticationFlowEnum as AuthenticationFlowDto
 
 internal class ProviderConvertersTest {
 

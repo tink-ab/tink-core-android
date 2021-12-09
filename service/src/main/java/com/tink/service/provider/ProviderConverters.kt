@@ -2,8 +2,8 @@ package com.tink.service.provider
 
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
-import com.tink.service.credentials.toCoreModel
 import com.tink.rest.models.ProviderListResponse
+import com.tink.service.credentials.toCoreModel
 import com.tink.service.misc.toCoreModel
 import com.tink.service.misc.toImages
 

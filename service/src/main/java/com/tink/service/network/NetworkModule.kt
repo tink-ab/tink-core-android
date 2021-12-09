@@ -39,23 +39,23 @@ internal class NetworkModule {
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
-        .apply {
-            tinkConfiguration.environment.sslCertificate?.let { sslKey ->
-                sslSocketFactory(
-                    TLSHelper.getSslSocketFactory(ByteArrayInputStream(sslKey.toByteArray())),
-                    TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
+            .apply {
+                tinkConfiguration.environment.sslCertificate?.let { sslKey ->
+                    sslSocketFactory(
+                        TLSHelper.getSslSocketFactory(ByteArrayInputStream(sslKey.toByteArray())),
+                        TLSHelper.getFirstTrustManager(ByteArrayInputStream(sslKey.toByteArray()))
+                    )
+                }
+                addInterceptor(httpLoggingInterceptor)
+                addInterceptor(
+                    HeaderInterceptor(
+                        tinkConfiguration.oAuthClientId,
+                        userEventBus,
+                        null
+                    )
                 )
             }
-            addInterceptor(httpLoggingInterceptor)
-            addInterceptor(
-                HeaderInterceptor(
-                    tinkConfiguration.oAuthClientId,
-                    userEventBus,
-                    null
-                )
-            )
-        }
-        .build()
+            .build()
 
     /**
      * Use Conscrypt TLS implementation
