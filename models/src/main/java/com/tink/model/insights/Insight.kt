@@ -78,6 +78,9 @@ data class InsightAction(
         data class CategorizeTransactions(val transactionIds: List<String>) : Data()
 
         @Parcelize
+        data class RefreshCredential(val credentialId: String) : Data()
+
+        @Parcelize
         data class ViewTransactions(val transactionIds: List<String>) : Data() {
             constructor(transactionId: String) : this(listOf(transactionId))
         }
@@ -99,7 +102,8 @@ data class InsightAction(
         VIEW_BUDGET("VIEW_BUDGET"),
         VIEW_TRANSACTION("VIEW_TRANSACTION"),
         VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
-        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
+        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY"),
+        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL")
     }
 }
 
@@ -162,6 +166,13 @@ sealed class InsightData : Parcelable {
     data class AccountBalanceLowData(
         val accountId: String,
         val balance: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class AggregationRefreshPsd2CredentialData(
+        val id: String,
+        val credential: Credential,
+        val sessionExpiryDate: Long
     ) : InsightData()
 
     @Parcelize
@@ -263,5 +274,17 @@ sealed class InsightData : Parcelable {
     data class BudgetIdToPeriod(
         val budgetId: String,
         val budgetPeriod: Budget.Period
+    ) : Parcelable
+
+    @Parcelize
+    data class Credential(
+        val id: String,
+        val provider: ProviderSlim
+    ) : Parcelable
+
+    @Parcelize
+    data class ProviderSlim(
+        val name: String,
+        val displayName: String
     ) : Parcelable
 }
