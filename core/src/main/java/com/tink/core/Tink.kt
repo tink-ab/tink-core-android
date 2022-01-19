@@ -21,6 +21,7 @@ import com.tink.service.transfer.TransferService
 import com.tink.service.user.UserProfileService
 import dagger.Component
 import javax.inject.Scope
+import kotlin.jvm.Throws
 
 object Tink {
 
@@ -30,8 +31,21 @@ object Tink {
 
     private var tinkConfiguration: TinkConfiguration? = null
 
+    private var isInitialized = false
+
+    /**
+     * Initializes Tink in the application and should be called before the usage of Tink components.
+     * This should only be called once.
+     *
+     * @throws IllegalStateException Thrown if this method is called more than once.
+     */
     @JvmStatic
+    @Throws(IllegalStateException::class)
     fun init(config: TinkConfiguration, context: Context) {
+        if (isInitialized) {
+            throw IllegalStateException("Tink has already been initialized, you cannot call Tink.init more than once")
+        }
+
         val serviceComponent = DaggerServiceComponent
             .builder()
             .tinkConfiguration(config)
@@ -44,6 +58,8 @@ object Tink {
             .builder()
             .serviceComponent(serviceComponent)
             .build()
+
+        isInitialized = true
     }
 
     @JvmStatic
