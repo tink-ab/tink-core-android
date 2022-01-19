@@ -1,6 +1,5 @@
 package com.tink.service.network
 
-import com.tink.service.BuildConfig
 import com.tink.service.authentication.UserEventBus
 import com.tink.model.user.Authorization
 import com.tink.model.user.User
@@ -16,12 +15,7 @@ private const val OAUTH_CLIENT_ID_HEADER_NAME = "X-Tink-OAuth-Client-ID"
 private const val REMOTE_ADDRESS = "X-Forwarded-For"
 private const val USER_AGENT = "User-Agent"
 
-var coreClient: SdkClient = SdkClient.TINK_LINK
-
-enum class SdkClient(val clientName: String) {
-    TINK_LINK("Tink Link Android"),
-    MONEY_MANAGER("Tink PFM Android")
-}
+var coreSdkInformation: SdkInformation? = null
 
 internal class HeaderInterceptor(
     private val oauthClientId: String,
@@ -47,8 +41,8 @@ internal class HeaderInterceptor(
         chain.request()
             .newBuilder()
             .addHeader(OAUTH_CLIENT_ID_HEADER_NAME, oauthClientId)
-            .addHeader(SDK_NAME_HEADER_NAME, coreClient.clientName)
-            .addHeader(SDK_VERSION_HEADER_NAME, BuildConfig.VERSION_NAME)
+            .addHeader(SDK_NAME_HEADER_NAME, coreSdkInformation?.sdkClient?.clientName.orEmpty())
+            .addHeader(SDK_VERSION_HEADER_NAME, coreSdkInformation?.version.orEmpty())
             .addHeaderIfNotNull(AUTHORIZATION, getAuthorization())
             .addHeaderIfNotNull(DEVICE_ID_HEADER_NAME, deviceId)
             .build()
