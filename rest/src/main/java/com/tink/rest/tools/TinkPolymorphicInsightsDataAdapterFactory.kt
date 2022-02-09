@@ -17,6 +17,10 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 DataType.ACCOUNT_BALANCE_LOW.value
             )
             .withSubtype(
+                InsightData.AggregateRefreshP2d2Credentials::class.java,
+                DataType.AGGREGATION_REFRESH_PSD2_CREDENTIAL.value
+            )
+            .withSubtype(
                 InsightData.BudgetOverspentData::class.java,
                 DataType.BUDGET_OVERSPENT.value
             )
@@ -132,5 +136,9 @@ object TinkPolymorphicInsightsDataAdapterFactory {
             .withSubtype(
                 InsightActionData.ViewTransactionsByCategoryActionData::class.java,
                 ActionType.VIEW_TRANSACTIONS_BY_CATEGORY.value
+            )
+            .withSubtype(
+                InsightActionData.RefreshCredentialActionData::class.java,
+                ActionType.REFRESH_CREDENTIAL.value
             )
 }
