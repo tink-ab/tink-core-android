@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
 import com.tink.model.budget.BudgetPeriodicity
+import com.tink.model.credentials.RefreshCredential
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
@@ -170,9 +171,7 @@ sealed class InsightData : Parcelable {
 
     @Parcelize
     data class AggregationRefreshPsd2CredentialData(
-        val id: String,
-        val credential: Credential,
-        val sessionExpiryDate: Long
+        val credential: RefreshCredential
     ) : InsightData()
 
     @Parcelize
@@ -274,17 +273,5 @@ sealed class InsightData : Parcelable {
     data class BudgetIdToPeriod(
         val budgetId: String,
         val budgetPeriod: Budget.Period
-    ) : Parcelable
-
-    @Parcelize
-    data class Credential(
-        val id: String,
-        val provider: ProviderSlim
-    ) : Parcelable
-
-    @Parcelize
-    data class ProviderSlim(
-        val name: String,
-        val displayName: String
     ) : Parcelable
 }

@@ -8,14 +8,8 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.tink.rest.models.insightdata.AmountWithCurrencyCode
-import com.tink.rest.models.insightdata.BudgetIdToPeriod
+import com.tink.rest.models.insightdata.*
 import com.tink.rest.models.insightdata.BudgetPeriod
-import com.tink.rest.models.insightdata.ExpenseByCategoryCode
-import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
-import com.tink.rest.models.insightdata.Month
-import com.tink.rest.models.insightdata.TransactionSummary
-import com.tink.rest.models.insightdata.Week
 
 /**
  * @property type The insight type
@@ -32,6 +26,9 @@ sealed class InsightData(
     enum class TypeEnum(val value: String) {
         @Json(name = "ACCOUNT_BALANCE_LOW")
         ACCOUNT_BALANCE_LOW("ACCOUNT_BALANCE_LOW"),
+
+        @Json(name = "AGGREGATION_REFRESH_PSD2_CREDENTIAL")
+        AGGREGATION_REFRESH_PSD2_CREDENTIAL("AGGREGATION_REFRESH_PSD2_CREDENTIAL"),
 
         @Json(name = "BUDGET_OVERSPENT")
         BUDGET_OVERSPENT("BUDGET_OVERSPENT"),
@@ -101,6 +98,12 @@ sealed class InsightData(
         @Json(name = "balance")
         val balance: AmountWithCurrencyCode
     ) : InsightData(TypeEnum.ACCOUNT_BALANCE_LOW)
+
+    @JsonClass(generateAdapter = true)
+    data class AggregateRefreshP2d2Credentials(
+        @Json(name = "credential")
+        val credential: RefreshCredential
+    ) : InsightData(TypeEnum.AGGREGATION_REFRESH_PSD2_CREDENTIAL)
 
     @JsonClass(generateAdapter = true)
     data class BudgetOverspentData(
