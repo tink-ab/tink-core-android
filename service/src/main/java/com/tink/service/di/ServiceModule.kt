@@ -29,7 +29,7 @@ import com.tink.service.transfer.TransferServiceImpl
 import dagger.Binds
 import dagger.Module
 
-@Module(includes = [RetrofitModule::class, CoroutineModule::class])
+@Module(includes = [RetrofitModule::class])
 internal abstract class ServiceModule {
 
     @Binds
