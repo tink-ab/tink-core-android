@@ -47,7 +47,9 @@ sealed class InsightActionData(
         @Json(name = "CATEGORIZE_TRANSACTIONS")
         CATEGORIZE_TRANSACTIONS("CATEGORIZE_TRANSACTIONS"),
         @Json(name = "VIEW_TRANSACTIONS_BY_CATEGORY")
-        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
+        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY"),
+        @Json(name = "REFRESH_CREDENTIAL")
+        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL")
     }
 
     @JsonClass(generateAdapter = true)
@@ -107,6 +109,12 @@ sealed class InsightActionData(
         @Json(name = "transactionIds")
         val transactionIds: List<TransactionIdWithType>
     ) : InsightActionData(TypeEnum.VIEW_TRANSACTIONS)
+
+    @JsonClass(generateAdapter = true)
+    data class RefreshCredentialActionData(
+        @Json(name = "credentialId")
+        val credentialId: String
+    ) : InsightActionData(TypeEnum.REFRESH_CREDENTIAL)
 
     class Acknowledge : InsightActionData(TypeEnum.ACKNOWLEDGE)
     class Dismiss : InsightActionData(TypeEnum.DISMISS)
