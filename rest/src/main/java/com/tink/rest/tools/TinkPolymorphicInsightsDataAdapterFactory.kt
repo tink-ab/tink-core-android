@@ -126,6 +126,10 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 ActionType.CATEGORIZE_EXPENSE.value
             )
             .withSubtype(
+                InsightActionData.ViewAccountActionData::class.java,
+                ActionType.VIEW_ACCOUNT.value
+            )
+            .withSubtype(
                 InsightActionData.ViewTransactionsActionData::class.java,
                 ActionType.VIEW_TRANSACTIONS.value
             )
