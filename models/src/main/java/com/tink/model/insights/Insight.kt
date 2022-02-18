@@ -82,6 +82,9 @@ data class InsightAction(
         data class RefreshCredential(val credentialId: String) : Data()
 
         @Parcelize
+        data class ViewAccount(val accountId: String) : Data()
+
+        @Parcelize
         data class ViewTransactions(val transactionIds: List<String>) : Data() {
             constructor(transactionId: String) : this(listOf(transactionId))
         }
@@ -100,6 +103,7 @@ data class InsightAction(
         CREATE_TRANSFER("CREATE_TRANSFER"),
         DISMISS("DISMISS"),
         UNKNOWN("UNKNOWN"),
+        VIEW_ACCOUNT("VIEW_ACCOUNT"),
         VIEW_BUDGET("VIEW_BUDGET"),
         VIEW_TRANSACTION("VIEW_TRANSACTION"),
         VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
