@@ -2,7 +2,6 @@ package com.tink.service.account
 
 import com.tink.model.account.Account
 import com.tink.rest.apis.AccountApi
-import java.util.Locale
 import javax.inject.Inject
 
 interface AccountService {
@@ -19,9 +18,6 @@ class AccountServiceImpl @Inject constructor(
             it.toCoreModel()
         }
             .orEmpty()
-            .sortedWith(compareBy(
-                { it.firstSeen }, { it.name.toLowerCase(Locale.getDefault()) })
-            )
 
     override suspend fun update(descriptor: UpdateAccountDescriptor): Account =
         api.update(descriptor.id, descriptor.toRequest()).toCoreModel()
