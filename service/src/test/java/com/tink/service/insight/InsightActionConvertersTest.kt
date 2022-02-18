@@ -133,6 +133,24 @@ class InsightActionConvertersTest {
         assertThat(periodStartTime).isEqualTo(1567296000000)
     }
 
+    private val viewAccountActionDataJson =
+        """
+            {
+                "type": "VIEW_ACCOUNT",
+                "accountId": "42f6f233ce394138897e9afff1464f5d"
+            }
+        """.trimIndent()
+
+    @Test
+    fun `convert ViewAccountActionData`() {
+        val data = GeneratedCodeConverters.moshi
+            .adapter(InsightActionData::class.java)
+            .fromJson(viewAccountActionDataJson)
+                as InsightActionData.ViewAccountActionData
+        val accountId = data.accountId
+        assertThat(accountId).isEqualTo("42f6f233ce394138897e9afff1464f5d")
+    }
+
     private val createBudgetActionDataJson =
         """
             {
