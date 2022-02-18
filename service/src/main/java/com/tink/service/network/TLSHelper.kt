@@ -2,6 +2,7 @@ package com.tink.service.network
 
 import java.io.InputStream
 import java.security.KeyStore
+import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
@@ -33,9 +34,13 @@ internal object TLSHelper {
             return SSLSocketFactory.getDefault() as SSLSocketFactory
         }
 
-        val context = SSLContext.getInstance("TLS")
-        context.init(null, getTrustManagers(ca), null)
-        return context.socketFactory
+        val sslContext: SSLContext = try {
+            SSLContext.getInstance("TLSv1.3")
+        } catch (e: NoSuchAlgorithmException) {
+            SSLContext.getInstance("TLSv1.2")
+        }
+        sslContext.init(null, getTrustManagers(ca), null)
+        return sslContext.socketFactory
     }
 
     fun getFirstTrustManager(ca: InputStream): X509TrustManager {
