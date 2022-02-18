@@ -32,6 +32,8 @@ sealed class InsightActionData(
         ACKNOWLEDGE("ACKNOWLEDGE"),
         @Json(name = "DISMISS")
         DISMISS("DISMISS"),
+        @Json(name = "VIEW_ACCOUNT")
+        VIEW_ACCOUNT("VIEW_ACCOUNT"),
         @Json(name = "VIEW_BUDGET")
         VIEW_BUDGET("VIEW_BUDGET"),
         @Json(name = "CREATE_BUDGET")
@@ -103,6 +105,12 @@ sealed class InsightActionData(
         @Json(name = "transactionId")
         val transactionId: String
     ) : InsightActionData(TypeEnum.CATEGORIZE_EXPENSE)
+
+    @JsonClass(generateAdapter = true)
+    data class ViewAccountActionData(
+        @Json(name = "accountId")
+        val accountId: String
+    ) : InsightActionData(TypeEnum.VIEW_ACCOUNT)
 
     @JsonClass(generateAdapter = true)
     data class ViewTransactionsActionData(

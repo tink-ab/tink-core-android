@@ -43,6 +43,9 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.CategorizeTransactionsActionData -> InsightAction.Data.CategorizeTransactions(
             transactionIds
         )
+        is InsightActionData.ViewAccountActionData -> InsightAction.Data.ViewAccount(
+            accountId
+        )
         is InsightActionData.ViewTransactionsActionData -> InsightAction.Data.ViewTransactions(
             transactionIds.map { it.id }
         )
@@ -60,6 +63,7 @@ private fun InsightActionData.TypeEnum.convertType(): InsightAction.Type =
     when (this) {
         InsightActionData.TypeEnum.ACKNOWLEDGE -> InsightAction.Type.ACKNOWLEDGE
         InsightActionData.TypeEnum.DISMISS -> InsightAction.Type.DISMISS
+        InsightActionData.TypeEnum.VIEW_ACCOUNT -> InsightAction.Type.VIEW_ACCOUNT
         InsightActionData.TypeEnum.VIEW_BUDGET -> InsightAction.Type.VIEW_BUDGET
         InsightActionData.TypeEnum.CREATE_BUDGET -> InsightAction.Type.CREATE_BUDGET
         InsightActionData.TypeEnum.CREATE_TRANSFER -> InsightAction.Type.CREATE_TRANSFER
