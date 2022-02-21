@@ -1,5 +1,6 @@
 package com.tink.service.insight
 
+import com.tink.model.account.AccountWithName
 import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
 import com.tink.model.credentials.RefreshCredential
@@ -18,6 +19,7 @@ import com.tink.rest.models.insights.actions.BudgetFilter as BudgetFilterInsight
 import com.tink.service.misc.toInstant
 import org.threeten.bp.LocalDate
 import com.tink.rest.models.InsightData as InsightDataDto
+import com.tink.rest.models.insightdata.AccountWithName as AccountWithNameDto
 import com.tink.rest.models.insightdata.BudgetIdToPeriod as BudgetIdToPeriodDto
 import com.tink.rest.models.insightdata.RefreshCredential as RefreshCredentialDto
 import com.tink.rest.models.insightdata.RefreshProvider as RefreshProviderDto
@@ -68,6 +70,13 @@ internal fun InsightDataDto.toCoreModel(): InsightData =
             categorySpending.toAmountByCategory(),
             suggestedBudgetAmount.toAmount()
         )
+        is InsightDataDto.CreditCardLimitCloseData -> InsightData.CreditCardLimitCloseData(
+            account.toAccountWithName(),
+            availableCredit.toAmount()
+        )
+        is InsightDataDto.CreditCardLimitReachedData -> InsightData.CreditCardLimitReachedData(
+            account.toAccountWithName()
+        )
         is InsightDataDto.LargeExpenseData -> InsightData.LargeExpenseData(transactionId)
         is InsightDataDto.SingleUncategorizedTransactionData -> InsightData.UncategorizedTransactionData(
             transactionId
@@ -112,6 +121,8 @@ internal fun LargestExpense.toLargestExpenseDto(): com.tink.model.relations.Larg
     com.tink.model.relations.LargestExpense(date, amount.toAmount(), description, id)
 
 internal fun AmountWithCurrencyCode.toAmount() = Amount(ExactNumber(amount), currencyCode)
+
+internal fun AccountWithNameDto.toAccountWithName() = AccountWithName(accountId, accountName)
 
 internal fun BudgetPeriod.toCoreModel() =
     Budget.Period(
