@@ -57,6 +57,12 @@ sealed class InsightData(
         @Json(name = "BUDGET_SUGGEST_CREATE_FIRST")
         BUDGET_SUGGEST_CREATE_FIRST("BUDGET_SUGGEST_CREATE_FIRST"),
 
+        @Json(name = "CREDIT_CARD_LIMIT_CLOSE")
+        CREDIT_CARD_LIMIT_CLOSE("CREDIT_CARD_LIMIT_CLOSE"),
+
+        @Json(name = "CREDIT_CARD_LIMIT_REACHED")
+        CREDIT_CARD_LIMIT_REACHED("CREDIT_CARD_LIMIT_REACHED"),
+
         @Json(name = "LARGE_EXPENSE")
         LARGE_EXPENSE("LARGE_EXPENSE"),
 
@@ -186,6 +192,20 @@ sealed class InsightData(
     ) : InsightData(TypeEnum.BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY)
 
     object BudgetSuggestCreateFirstData : InsightData(TypeEnum.BUDGET_SUGGEST_CREATE_FIRST)
+
+    @JsonClass(generateAdapter = true)
+    data class CreditCardLimitCloseData(
+        @Json(name = "account")
+        val account: AccountWithName,
+        @Json(name = "availableCredit")
+        val availableCredit: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.CREDIT_CARD_LIMIT_CLOSE)
+
+    @JsonClass(generateAdapter = true)
+    data class CreditCardLimitReachedData(
+        @Json(name = "account")
+        val account: AccountWithName
+    ) : InsightData(TypeEnum.CREDIT_CARD_LIMIT_REACHED)
 
     @JsonClass(generateAdapter = true)
     data class LargeExpenseData(

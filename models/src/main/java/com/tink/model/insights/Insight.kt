@@ -1,6 +1,7 @@
 package com.tink.model.insights
 
 import android.os.Parcelable
+import com.tink.model.account.AccountWithName
 import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
 import com.tink.model.budget.BudgetPeriodicity
@@ -218,6 +219,17 @@ sealed class InsightData : Parcelable {
         val budgetId: String,
         val budgetPeriod: Budget.Period,
         val currentTime: Instant
+    ) : InsightData()
+
+    @Parcelize
+    data class CreditCardLimitCloseData(
+        val account: AccountWithName,
+        val availableCredit: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class CreditCardLimitReachedData(
+        val account: AccountWithName
     ) : InsightData()
 
     @Parcelize
