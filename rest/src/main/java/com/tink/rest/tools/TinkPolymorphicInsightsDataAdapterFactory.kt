@@ -53,6 +53,14 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 DataType.BUDGET_SUGGEST_CREATE_TOP_PRIMARY_CATEGORY.value
             )
             .withSubtype(
+                InsightData.CreditCardLimitCloseData::class.java,
+                DataType.CREDIT_CARD_LIMIT_CLOSE.value
+            )
+            .withSubtype(
+                InsightData.CreditCardLimitReachedData::class.java,
+                DataType.CREDIT_CARD_LIMIT_REACHED.value
+            )
+            .withSubtype(
                 InsightData.LargeExpenseData::class.java,
                 DataType.LARGE_EXPENSE.value
             )
@@ -124,6 +132,10 @@ object TinkPolymorphicInsightsDataAdapterFactory {
             .withSubtype(
                 InsightActionData.CategorizeExpenseActionData::class.java,
                 ActionType.CATEGORIZE_EXPENSE.value
+            )
+            .withSubtype(
+                InsightActionData.ViewAccountActionData::class.java,
+                ActionType.VIEW_ACCOUNT.value
             )
             .withSubtype(
                 InsightActionData.ViewTransactionsActionData::class.java,
