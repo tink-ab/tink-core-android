@@ -5,9 +5,9 @@ object Versions {
     const val targetSdk = 30
 
     const val conscrypt = "2.5.2"
-    const val coroutines = "1.4.3"
+    const val coroutines = "1.5.2"
     const val dagger = "2.40.5"
-    const val kotlin = "1.4.32"
+    const val kotlin = "1.5.31"
     const val moshi = "1.12.0"
     const val okhttp = "4.9.2"
     const val pinterestktlint = "0.33.0"
