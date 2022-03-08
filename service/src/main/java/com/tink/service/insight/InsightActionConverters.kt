@@ -43,8 +43,14 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.CategorizeTransactionsActionData -> InsightAction.Data.CategorizeTransactions(
             transactionIds
         )
+        is InsightActionData.ViewAccountActionData -> InsightAction.Data.ViewAccount(
+            accountId
+        )
         is InsightActionData.ViewTransactionsActionData -> InsightAction.Data.ViewTransactions(
             transactionIds.map { it.id }
+        )
+        is InsightActionData.RefreshCredentialActionData -> InsightAction.Data.RefreshCredential(
+            credentialId
         )
         is InsightActionData.Acknowledge -> InsightAction.Data.Acknowledge
         is InsightActionData.Dismiss -> InsightAction.Data.Dismiss
@@ -57,6 +63,7 @@ private fun InsightActionData.TypeEnum.convertType(): InsightAction.Type =
     when (this) {
         InsightActionData.TypeEnum.ACKNOWLEDGE -> InsightAction.Type.ACKNOWLEDGE
         InsightActionData.TypeEnum.DISMISS -> InsightAction.Type.DISMISS
+        InsightActionData.TypeEnum.VIEW_ACCOUNT -> InsightAction.Type.VIEW_ACCOUNT
         InsightActionData.TypeEnum.VIEW_BUDGET -> InsightAction.Type.VIEW_BUDGET
         InsightActionData.TypeEnum.CREATE_BUDGET -> InsightAction.Type.CREATE_BUDGET
         InsightActionData.TypeEnum.CREATE_TRANSFER -> InsightAction.Type.CREATE_TRANSFER
@@ -65,5 +72,6 @@ private fun InsightActionData.TypeEnum.convertType(): InsightAction.Type =
         InsightActionData.TypeEnum.VIEW_TRANSACTIONS -> InsightAction.Type.VIEW_TRANSACTIONS
         InsightActionData.TypeEnum.CATEGORIZE_TRANSACTIONS -> InsightAction.Type.CATEGORIZE_TRANSACTIONS
         InsightActionData.TypeEnum.VIEW_TRANSACTIONS_BY_CATEGORY -> InsightAction.Type.VIEW_TRANSACTIONS_BY_CATEGORY
+        InsightActionData.TypeEnum.REFRESH_CREDENTIAL -> InsightAction.Type.REFRESH_CREDENTIAL
         InsightActionData.TypeEnum.UNKNOWN -> InsightAction.Type.UNKNOWN
     }

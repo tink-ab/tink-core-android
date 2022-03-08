@@ -1,9 +1,11 @@
 package com.tink.model.insights
 
 import android.os.Parcelable
+import com.tink.model.account.AccountWithName
 import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
 import com.tink.model.budget.BudgetPeriodicity
+import com.tink.model.credentials.RefreshCredential
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
@@ -78,6 +80,12 @@ data class InsightAction(
         data class CategorizeTransactions(val transactionIds: List<String>) : Data()
 
         @Parcelize
+        data class RefreshCredential(val credentialId: String) : Data()
+
+        @Parcelize
+        data class ViewAccount(val accountId: String) : Data()
+
+        @Parcelize
         data class ViewTransactions(val transactionIds: List<String>) : Data() {
             constructor(transactionId: String) : this(listOf(transactionId))
         }
@@ -96,10 +104,12 @@ data class InsightAction(
         CREATE_TRANSFER("CREATE_TRANSFER"),
         DISMISS("DISMISS"),
         UNKNOWN("UNKNOWN"),
+        VIEW_ACCOUNT("VIEW_ACCOUNT"),
         VIEW_BUDGET("VIEW_BUDGET"),
         VIEW_TRANSACTION("VIEW_TRANSACTION"),
         VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
-        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY")
+        VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY"),
+        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL")
     }
 }
 
@@ -165,6 +175,11 @@ sealed class InsightData : Parcelable {
     ) : InsightData()
 
     @Parcelize
+    data class AggregationRefreshPsd2CredentialData(
+        val credential: RefreshCredential
+    ) : InsightData()
+
+    @Parcelize
     data class BudgetResultData(
         val budgetId: String,
         val budgetPeriod: Budget.Period
@@ -204,6 +219,17 @@ sealed class InsightData : Parcelable {
         val budgetId: String,
         val budgetPeriod: Budget.Period,
         val currentTime: Instant
+    ) : InsightData()
+
+    @Parcelize
+    data class CreditCardLimitCloseData(
+        val account: AccountWithName,
+        val availableCredit: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class CreditCardLimitReachedData(
+        val account: AccountWithName
     ) : InsightData()
 
     @Parcelize

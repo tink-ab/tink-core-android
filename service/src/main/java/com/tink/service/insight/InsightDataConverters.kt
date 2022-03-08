@@ -1,10 +1,13 @@
 package com.tink.service.insight
 
+import com.tink.model.account.AccountWithName
 import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
+import com.tink.model.credentials.RefreshCredential
 import com.tink.model.insights.InsightData
 import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
+import com.tink.model.provider.RefreshProvider
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
 import com.tink.model.time.YearMonth
@@ -16,13 +19,19 @@ import com.tink.rest.models.insights.actions.BudgetFilter as BudgetFilterInsight
 import com.tink.service.misc.toInstant
 import org.threeten.bp.LocalDate
 import com.tink.rest.models.InsightData as InsightDataDto
+import com.tink.rest.models.insightdata.AccountWithName as AccountWithNameDto
 import com.tink.rest.models.insightdata.BudgetIdToPeriod as BudgetIdToPeriodDto
+import com.tink.rest.models.insightdata.RefreshCredential as RefreshCredentialDto
+import com.tink.rest.models.insightdata.RefreshProvider as RefreshProviderDto
 
 internal fun InsightDataDto.toCoreModel(): InsightData =
     when (this) {
         is InsightDataDto.AccountBalanceLowData -> InsightData.AccountBalanceLowData(
             accountId,
             balance.toAmount()
+        )
+        is InsightDataDto.AggregateRefreshP2d2Credentials -> InsightData.AggregationRefreshPsd2CredentialData(
+            credential = credential.toCoreModel()
         )
         is InsightDataDto.BudgetOverspentData -> InsightData.BudgetResultData(
             budgetId,
@@ -60,6 +69,13 @@ internal fun InsightDataDto.toCoreModel(): InsightData =
         is InsightDataDto.BudgetSuggestCreateTopPrimaryCategoryData -> InsightData.BudgetSuggestCreateTopPrimaryCategoryData(
             categorySpending.toAmountByCategory(),
             suggestedBudgetAmount.toAmount()
+        )
+        is InsightDataDto.CreditCardLimitCloseData -> InsightData.CreditCardLimitCloseData(
+            account.toAccountWithName(),
+            availableCredit.toAmount()
+        )
+        is InsightDataDto.CreditCardLimitReachedData -> InsightData.CreditCardLimitReachedData(
+            account.toAccountWithName()
         )
         is InsightDataDto.LargeExpenseData -> InsightData.LargeExpenseData(transactionId)
         is InsightDataDto.SingleUncategorizedTransactionData -> InsightData.UncategorizedTransactionData(
@@ -106,6 +122,8 @@ internal fun LargestExpense.toLargestExpenseDto(): com.tink.model.relations.Larg
 
 internal fun AmountWithCurrencyCode.toAmount() = Amount(ExactNumber(amount), currencyCode)
 
+internal fun AccountWithNameDto.toAccountWithName() = AccountWithName(accountId, accountName)
+
 internal fun BudgetPeriod.toCoreModel() =
     Budget.Period(
         start.toInstant(),
@@ -116,6 +134,19 @@ internal fun BudgetPeriod.toCoreModel() =
 
 internal fun BudgetIdToPeriodDto.toCoreModel() =
     InsightData.BudgetIdToPeriod(budgetId, budgetPeriod.toCoreModel())
+
+internal fun RefreshCredentialDto.toCoreModel() =
+    RefreshCredential(
+        id = id,
+        provider = provider.toCoreModel(),
+        sessionExpiryDate = sessionExpiryDate.toInstant()
+    )
+
+internal fun RefreshProviderDto.toCoreModel() =
+    RefreshProvider(
+        name = name,
+        displayName = displayName
+    )
 
 internal fun Week.toYearWeek() = YearWeek(year, week)
 internal fun Month.toYearMonth(): YearMonth = YearMonth(year, month)

@@ -340,4 +340,62 @@ internal class InsightDataConvertersTest {
             .fromJson(budgetSuggestCreateFirstInsightJson)
         assertThat(insightDto!!.data is InsightDataDto.BudgetSuggestCreateFirstData)
     }
+
+    private val creditCardLimitCloseInsightJson =
+        """
+            {
+                "type": "CREDIT_CARD_LIMIT_CLOSE",
+                "userId": 1234,
+                "id": 21,
+                "title": "You are close at exceeding the credit limit on American Express Gold Card",
+                "description": "You have €34 of available credit on your card. Spend with care.",
+                "createdTime": 1111111,
+                "insightActions": [],
+                "data": {
+                    "type": "CREDIT_CARD_LIMIT_CLOSE",
+                    "account": {
+                        "accountId": "42f6f233ce394138897e9afff1464f5d",
+                        "accountName": "Personal credit account"
+                    },
+                    "availableCredit": {
+                        "amount": 100,
+                        "currencyCode": "EUR"
+                    }
+                }
+            }""".trimIndent()
+
+    @Test
+    fun `credit card limit close conversion`() {
+        val insightDto = GeneratedCodeConverters.moshi
+            .adapter(ActionableInsight::class.java)
+            .fromJson(creditCardLimitCloseInsightJson)
+        assertThat(insightDto!!.data is InsightDataDto.CreditCardLimitCloseData)
+    }
+
+    private val creditCardLimitReachedInsightJson =
+        """
+            {
+                "type": "CREDIT_CARD_LIMIT_REACHED",
+                "userId": 1234,
+                "id": 21,
+                "title": "You just reached your credit limit on American Express Gold Card",
+                "description": "Your credit card is maxed out. You’ll be able to use it again after paying your invoice.",
+                "createdTime": 1111111,
+                "insightActions": [],
+                "data": {
+                    "type": "CREDIT_CARD_LIMIT_REACHED",
+                    "account": {
+                        "accountId": "42f6f233ce394138897e9afff1464f5d",
+                        "accountName": "Personal credit account"
+                    }
+                }
+            }""".trimIndent()
+
+    @Test
+    fun `credit card limit reached conversion`() {
+        val insightDto = GeneratedCodeConverters.moshi
+            .adapter(ActionableInsight::class.java)
+            .fromJson(creditCardLimitReachedInsightJson)
+        assertThat(insightDto!!.data is InsightDataDto.CreditCardLimitReachedData)
+    }
 }
