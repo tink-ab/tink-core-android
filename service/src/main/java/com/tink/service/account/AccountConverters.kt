@@ -4,14 +4,14 @@ import androidx.annotation.VisibleForTesting
 import com.tink.model.account.Account
 import com.tink.model.account.AccountDetails
 import com.tink.rest.apis.UpdateAccountRequest
-import com.tink.service.misc.*
+import com.tink.service.misc.toAmount
 import com.tink.service.misc.toDouble
 import com.tink.service.misc.toExactNumber
 import com.tink.service.misc.toInstant
 import com.tink.rest.models.Account as AccountDto
-import com.tink.rest.models.Account.TypeEnum as AccountTypeDto
 import com.tink.rest.models.Account.AccountExclusionEnum as AccountExclusionDto
 import com.tink.rest.models.Account.FlagsEnum as AccountFlagsDto
+import com.tink.rest.models.Account.TypeEnum as AccountTypeDto
 import com.tink.rest.models.AccountDetails as AccountDetailsDto
 import com.tink.rest.models.AccountDetails.TypeEnum as AccountDetailsTypeDto
 

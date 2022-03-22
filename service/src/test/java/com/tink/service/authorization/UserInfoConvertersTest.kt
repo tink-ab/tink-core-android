@@ -2,51 +2,51 @@ package com.tink.service.authorization
 
 import com.tink.model.user.UserProfile
 import com.tink.rest.tools.GeneratedCodeConverters
-import com.tink.rest.models.User as UserDto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Instant
+import com.tink.rest.models.User as UserDto
 
 internal class UserInfoConvertersTest {
 
     private val userInfoString =
         "{\n" +
-                "  \"appId\": \"56a33be25eb9443fbb696f7c61eabd94\",\n" +
-                "  \"created\": 1471349422000,\n" +
-                "  \"externalUserId\": \"2d3bd65493b549e1927d97a2d0683ab8\",\n" +
-                "  \"flags\": [\n" +
-                "    \"TRANSFERS\",\n" +
-                "    \"TEST_PINK_ONBOARDING\"\n" +
-                "  ],\n" +
-                "  \"id\": \"6e68cc6287704273984567b3300c5822\",\n" +
-                "  \"nationalId\": \"198410045701\",\n" +
-                "  \"profile\": {\n" +
-                "    \"cashbackEnabled\": false,\n" +
-                "    \"currency\": \"SEK\",\n" +
-                "    \"locale\": \"sv_SE\",\n" +
-                "    \"market\": \"SE\",\n" +
-                "    \"notificationSettings\": {\n" +
-                "      \"balance\": false,\n" +
-                "      \"budget\": false,\n" +
-                "      \"doubleCharge\": false,\n" +
-                "      \"einvoices\": false,\n" +
-                "      \"fraud\": false,\n" +
-                "      \"income\": false,\n" +
-                "      \"largeExpense\": false,\n" +
-                "      \"leftToSpend\": false,\n" +
-                "      \"loanUpdate\": false,\n" +
-                "      \"summaryMonthly\": false,\n" +
-                "      \"summaryWeekly\": false,\n" +
-                "      \"transaction\": false,\n" +
-                "      \"unusualAccount\": false,\n" +
-                "      \"unusualCategory\": false\n" +
-                "    },\n" +
-                "    \"periodAdjustedDay\": 25,\n" +
-                "    \"periodMode\": \"MONTHLY_ADJUSTED\",\n" +
-                "    \"timeZone\": \"Europe/Stockholm\"\n" +
-                "  },\n" +
-                "  \"username\": \"tinker@example.com\"\n" +
-                "}"
+            "  \"appId\": \"56a33be25eb9443fbb696f7c61eabd94\",\n" +
+            "  \"created\": 1471349422000,\n" +
+            "  \"externalUserId\": \"2d3bd65493b549e1927d97a2d0683ab8\",\n" +
+            "  \"flags\": [\n" +
+            "    \"TRANSFERS\",\n" +
+            "    \"TEST_PINK_ONBOARDING\"\n" +
+            "  ],\n" +
+            "  \"id\": \"6e68cc6287704273984567b3300c5822\",\n" +
+            "  \"nationalId\": \"198410045701\",\n" +
+            "  \"profile\": {\n" +
+            "    \"cashbackEnabled\": false,\n" +
+            "    \"currency\": \"SEK\",\n" +
+            "    \"locale\": \"sv_SE\",\n" +
+            "    \"market\": \"SE\",\n" +
+            "    \"notificationSettings\": {\n" +
+            "      \"balance\": false,\n" +
+            "      \"budget\": false,\n" +
+            "      \"doubleCharge\": false,\n" +
+            "      \"einvoices\": false,\n" +
+            "      \"fraud\": false,\n" +
+            "      \"income\": false,\n" +
+            "      \"largeExpense\": false,\n" +
+            "      \"leftToSpend\": false,\n" +
+            "      \"loanUpdate\": false,\n" +
+            "      \"summaryMonthly\": false,\n" +
+            "      \"summaryWeekly\": false,\n" +
+            "      \"transaction\": false,\n" +
+            "      \"unusualAccount\": false,\n" +
+            "      \"unusualCategory\": false\n" +
+            "    },\n" +
+            "    \"periodAdjustedDay\": 25,\n" +
+            "    \"periodMode\": \"MONTHLY_ADJUSTED\",\n" +
+            "    \"timeZone\": \"Europe/Stockholm\"\n" +
+            "  },\n" +
+            "  \"username\": \"tinker@example.com\"\n" +
+            "}"
 
     private val userInfoJsonAdapter =
         GeneratedCodeConverters.moshi.adapter(UserDto::class.java)

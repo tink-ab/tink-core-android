@@ -12,10 +12,10 @@ import com.tink.service.insight.InsightService
 import com.tink.service.network.NetworkModule
 import com.tink.service.network.TinkConfiguration
 import com.tink.service.provider.ProviderService
-import com.tink.service.transfer.TransferService
 import com.tink.service.statistics.StatisticsService
 import com.tink.service.time.PeriodService
 import com.tink.service.transaction.TransactionService
+import com.tink.service.transfer.TransferService
 import com.tink.service.user.UserProfileService
 import dagger.BindsInstance
 import dagger.Component

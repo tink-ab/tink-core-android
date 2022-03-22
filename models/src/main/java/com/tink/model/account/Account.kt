@@ -1,9 +1,9 @@
 package com.tink.model.account
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
+import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.Instant
 
 @Parcelize
