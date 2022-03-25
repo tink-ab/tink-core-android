@@ -1,10 +1,10 @@
 package com.tink.model.provider
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 import com.tink.model.Images
 import com.tink.model.credentials.Credentials
 import com.tink.model.misc.Field
+import kotlinx.android.parcel.Parcelize
 
 /**
  * The provider model represents a way of connecting to different banks or other financial institutions in Tink.

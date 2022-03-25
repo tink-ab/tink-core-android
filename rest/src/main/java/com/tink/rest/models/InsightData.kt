@@ -8,8 +8,16 @@ package com.tink.rest.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import com.tink.rest.models.insightdata.*
+import com.tink.rest.models.insightdata.AccountWithName
+import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insightdata.BudgetIdToPeriod
 import com.tink.rest.models.insightdata.BudgetPeriod
+import com.tink.rest.models.insightdata.ExpenseByCategoryCode
+import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
+import com.tink.rest.models.insightdata.Month
+import com.tink.rest.models.insightdata.RefreshCredential
+import com.tink.rest.models.insightdata.TransactionSummary
+import com.tink.rest.models.insightdata.Week
 
 /**
  * @property type The insight type

@@ -23,5 +23,5 @@ class ResultHandler<T>(
      * ```
      */
     constructor(onSuccess: Consumer<T>, onError: Consumer<Throwable>) :
-            this(onSuccess::accept, onError::accept)
+        this(onSuccess::accept, onError::accept)
 }

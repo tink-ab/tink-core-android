@@ -7,12 +7,12 @@ import com.tink.model.time.Period
 import com.tink.model.user.UserProfile
 import com.tink.rest.apis.StatisticsApi
 import com.tink.rest.models.StatisticQuery
-import com.tink.rest.models.Statistics as StatisticsDto
 import com.tink.service.time.PeriodService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
+import com.tink.rest.models.Statistics as StatisticsDto
 
 private const val EXPENSES_IDENTIFIER = "expenses-by-category"
 private const val INCOME_IDENTIFIER = "income-by-category"

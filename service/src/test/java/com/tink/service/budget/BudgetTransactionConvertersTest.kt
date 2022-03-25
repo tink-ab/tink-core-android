@@ -1,9 +1,9 @@
 package com.tink.service.budget
 
-import com.tink.rest.models.BudgetTransaction as BudgetTransactionDto
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import com.tink.rest.models.BudgetTransaction as BudgetTransactionDto
 
 internal class BudgetTransactionConvertersTest {
 
