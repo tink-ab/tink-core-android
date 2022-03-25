@@ -41,11 +41,9 @@ interface AccountApi {
 
 @JsonClass(generateAdapter = true)
 data class UpdateAccountRequest(
-    @Json(name = "accountNumber") @field:Json(name = "accountNumber") var accountNumber: String? = null,
     @Json(name = "excluded") @field:Json(name = "excluded") var excluded: Boolean? = null,
     @Json(name = "favored") @field:Json(name = "favored") var favored: Boolean? = null,
     @Json(name = "name") @field:Json(name = "name") var name: String? = null,
     @Json(name = "ownership") @field:Json(name = "ownership") var ownership: Double? = null,
-    @Json(name = "type") @field:Json(name = "type") var type: Account.TypeEnum? = null,
-    @Json(name = "accountExclusion") @field:Json(name = "accountExclusion") var accountExclusion: Account.AccountExclusionEnum? = null
+    @Json(name = "type") @field:Json(name = "type") var type: Account.TypeEnum? = null
 )
