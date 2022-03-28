@@ -73,6 +73,12 @@ data class Credentials(
         DELETED
     }
 
+    fun hasError(): Boolean {
+        return status == Status.TEMPORARY_ERROR ||
+                status == Status.AUTHENTICATION_ERROR ||
+                status == Status.PERMANENT_ERROR
+    }
+
     private fun isThirdPartyRefreshable(): Boolean =
         sessionExpiryDate?.let {
             // Only credentials of Open Banking connections has sessionExpiryDate.
