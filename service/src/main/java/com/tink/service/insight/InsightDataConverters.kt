@@ -13,9 +13,16 @@ import com.tink.model.relations.ExpensesByDay
 import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
 import com.tink.rest.models.RecurringPeriodicity
-import com.tink.rest.models.insightdata.*
+import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insightdata.BudgetPeriod
+import com.tink.rest.models.insightdata.CommonTransactionsOverview
+import com.tink.rest.models.insightdata.ExpenseByCategoryCode
+import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
+import com.tink.rest.models.insightdata.LargestExpense
+import com.tink.rest.models.insightdata.Month
+import com.tink.rest.models.insightdata.TransactionSummary
+import com.tink.rest.models.insightdata.Week
 import com.tink.rest.models.insights.actions.BudgetSuggestion
-import com.tink.rest.models.insights.actions.BudgetFilter as BudgetFilterInsightData
 import com.tink.service.misc.toInstant
 import org.threeten.bp.LocalDate
 import com.tink.rest.models.InsightData as InsightDataDto
@@ -23,6 +30,7 @@ import com.tink.rest.models.insightdata.AccountWithName as AccountWithNameDto
 import com.tink.rest.models.insightdata.BudgetIdToPeriod as BudgetIdToPeriodDto
 import com.tink.rest.models.insightdata.RefreshCredential as RefreshCredentialDto
 import com.tink.rest.models.insightdata.RefreshProvider as RefreshProviderDto
+import com.tink.rest.models.insights.actions.BudgetFilter as BudgetFilterInsightData
 
 internal fun InsightDataDto.toCoreModel(): InsightData =
     when (this) {

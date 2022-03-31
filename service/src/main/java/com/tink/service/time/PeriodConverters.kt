@@ -3,8 +3,8 @@ package com.tink.service.time
 import com.tink.model.time.DayPeriod
 import com.tink.model.time.MonthPeriod
 import com.tink.model.time.Period
-import com.tink.model.time.YearPeriod
 import com.tink.model.time.WeekPeriod
+import com.tink.model.time.YearPeriod
 import com.tink.service.misc.toInstant
 import java.lang.IllegalArgumentException
 import com.tink.rest.models.Period as PeriodDto

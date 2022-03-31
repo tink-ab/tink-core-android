@@ -14,6 +14,7 @@ import com.tink.service.di.DaggerServiceComponent
 import com.tink.service.di.ServiceComponent
 import com.tink.service.insight.InsightService
 import com.tink.service.network.TinkConfiguration
+import com.tink.service.provider.ProviderService
 import com.tink.service.statistics.StatisticsService
 import com.tink.service.time.PeriodService
 import com.tink.service.transaction.TransactionService
@@ -94,6 +95,8 @@ annotation class TinkScope
 abstract class TinkComponent {
 
     abstract val credentialsService: CredentialsService
+
+    abstract val providerService: ProviderService
 
     abstract val providerRepository: ProviderRepository
 

@@ -1,11 +1,11 @@
 package com.tink.service.credentials
 
 import com.tink.model.credentials.Credentials
-import com.tink.rest.models.Credentials as CredentialsDto
 import com.tink.rest.tools.GeneratedCodeConverters
 import com.tink.service.misc.toCoreModel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import com.tink.rest.models.Credentials as CredentialsDto
 
 internal class CredentialsRestConvertersTest {
 

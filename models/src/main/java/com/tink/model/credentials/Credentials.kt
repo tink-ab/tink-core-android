@@ -1,12 +1,12 @@
 package com.tink.model.credentials
 
 import android.os.Parcelable
-import org.threeten.bp.Instant
-import org.threeten.bp.temporal.ChronoUnit
 import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
 import kotlinx.android.parcel.Parcelize
+import org.threeten.bp.Instant
+import org.threeten.bp.temporal.ChronoUnit
 
 /**
  * This model represents how users are connected to a [Provider] to access their financial data.
@@ -73,6 +73,12 @@ data class Credentials(
         DELETED
     }
 
+    fun hasError(): Boolean {
+        return status == Status.TEMPORARY_ERROR ||
+            status == Status.AUTHENTICATION_ERROR ||
+            status == Status.PERMANENT_ERROR
+    }
+
     private fun isThirdPartyRefreshable(): Boolean =
         sessionExpiryDate?.let {
             // Only credentials of Open Banking connections has sessionExpiryDate.
@@ -83,8 +89,8 @@ data class Credentials(
     private fun manuallyRefreshableStatus(): Boolean {
         // Only allow the user to manually refresh BankID based credentials (as regular once will be automatically updated).
         return type == Type.MOBILE_BANKID && isBankIdRefreshable() ||
-                type == Type.THIRD_PARTY_AUTHENTICATION &&
-                isThirdPartyRefreshable()
+            type == Type.THIRD_PARTY_AUTHENTICATION &&
+            isThirdPartyRefreshable()
     }
 
     private fun isBankIdRefreshable(): Boolean =
