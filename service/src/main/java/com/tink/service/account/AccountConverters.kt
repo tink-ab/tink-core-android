@@ -121,11 +121,20 @@ internal fun AccountDetailsTypeDto.toCoreModel(): AccountDetails.Type =
 internal fun UpdateAccountDescriptor.toRequest() =
     UpdateAccountRequest(
         name = name,
-        excluded = excluded,
         favored = favored,
         ownership = ownership?.toDouble(),
-        type = type?.toDto()
+        type = type?.toDto(),
+        accountExclusion = getAccountExclusionEnumFromBoolean(accountExclusion)
     )
+
+private fun getAccountExclusionEnumFromBoolean(
+    excluded: Boolean?
+): AccountExclusionDto =
+    if (excluded == true) {
+        AccountExclusionDto.PFM_AND_SEARCH
+    } else {
+        AccountExclusionDto.NONE
+    }
 
 /**
  *   Converts a Json string containing a list of string to an actual string list
