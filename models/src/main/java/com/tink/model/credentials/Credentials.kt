@@ -75,8 +75,8 @@ data class Credentials(
 
     fun hasError(): Boolean {
         return status == Status.TEMPORARY_ERROR ||
-                status == Status.AUTHENTICATION_ERROR ||
-                status == Status.PERMANENT_ERROR
+            status == Status.AUTHENTICATION_ERROR ||
+            status == Status.PERMANENT_ERROR
     }
 
     private fun isThirdPartyRefreshable(): Boolean =
