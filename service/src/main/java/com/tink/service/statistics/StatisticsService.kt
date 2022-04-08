@@ -44,7 +44,9 @@ internal class StatisticsServiceImpl @Inject constructor(
             )
         )
 
-        val periodDescriptions = statisticDtos.map { it.period }.toSet()
+        val periodDescriptions = statisticDtos.map {
+            getYearFromPeriodString(it.period)
+        }.toSet()
 
         val periodsAsync = coroutineScope {
             periodDescriptions.map { async { periodService.getPeriod(it) } }
@@ -68,6 +70,13 @@ internal class StatisticsServiceImpl @Inject constructor(
             )
         }
     }
+
+    private fun getYearFromPeriodString(period: String): String =
+        if (period.length >= 4) {
+            period.substring(0, 4)
+        } else {
+            period
+        }
 
     private fun StatisticsDto.getType(): Statistics.Type =
         when (type) {
