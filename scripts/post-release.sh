@@ -14,7 +14,7 @@ fi
 
 git checkout -b release-"$newVersion"
 
-rm . secrets.baseline
+rm .secrets.baseline
 rm -r .buildkite/
 
 git add .secrets.baseline
