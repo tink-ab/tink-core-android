@@ -13,7 +13,6 @@ object Versions {
     const val pinterestktlint = "0.45.1"
     const val retrofit = "2.9.0"
     const val rxjava = "2.2.21"
-    const val threetenabp = "1.3.1"
     const val timber = "4.7.1"
 
     // test
@@ -63,7 +62,6 @@ object Dependencies {
 
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
-    const val three_ten_abp = "com.jakewharton.threetenabp:threetenabp:${Versions.threetenabp}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     const val ktlint = "com.pinterest:ktlint:${Versions.pinterestktlint}"

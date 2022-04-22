@@ -3,7 +3,7 @@ package com.tink.model.transaction
 import android.os.Parcelable
 import com.tink.model.misc.Amount
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 @Parcelize
 data class Transaction(

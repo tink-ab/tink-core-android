@@ -1,5 +1,5 @@
 package com.tink.service.misc
 
-import org.threeten.bp.Instant
+import java.time.Instant
 
 internal fun Long?.toInstant() = Instant.ofEpochMilli(this ?: 0)

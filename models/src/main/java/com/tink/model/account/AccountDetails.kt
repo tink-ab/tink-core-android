@@ -3,7 +3,7 @@ package com.tink.model.account
 import android.os.Parcelable
 import com.tink.model.misc.ExactNumber
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 @Parcelize
 data class AccountDetails(

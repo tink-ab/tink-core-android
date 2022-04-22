@@ -2,7 +2,7 @@ package com.tink.model.user
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 @Parcelize
 data class UserInfo(

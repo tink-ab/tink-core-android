@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-./gradlew assembleDebug
+./gradlew assemble

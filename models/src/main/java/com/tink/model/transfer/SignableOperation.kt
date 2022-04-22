@@ -2,7 +2,7 @@ package com.tink.model.transfer
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 @Parcelize
 data class SignableOperation(

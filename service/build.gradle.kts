@@ -35,7 +35,6 @@ dependencies {
     implementation(project(":rest"))
 
     implementation(Dependencies.kotlin_stdlib)
-    api(Dependencies.three_ten_abp)
 
     implementation(Dependencies.Dagger.core)
     implementation(Dependencies.Dagger.dagger_android)
