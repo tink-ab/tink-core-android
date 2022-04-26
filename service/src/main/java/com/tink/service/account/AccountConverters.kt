@@ -75,6 +75,15 @@ internal fun AccountExclusionDto.toCoreModel() =
         else -> Account.AccountExclusion.UNKNOWN
     }
 
+internal fun Account.AccountExclusion.toDto() =
+    when (this) {
+        Account.AccountExclusion.AGGREGATION -> AccountExclusionDto.AGGREGATION
+        Account.AccountExclusion.PFM_AND_SEARCH -> AccountExclusionDto.PFM_AND_SEARCH
+        Account.AccountExclusion.PFM_DATA -> AccountExclusionDto.PFM_DATA
+        Account.AccountExclusion.NONE -> AccountExclusionDto.NONE
+        else -> AccountExclusionDto.UNKNOWN
+    }
+
 internal fun AccountDto.flagsOrEmpty(): List<Account.Flags> =
     flags
         ?.takeIf { it.isNotEmpty() }
@@ -124,17 +133,8 @@ internal fun UpdateAccountDescriptor.toRequest() =
         favored = favored,
         ownership = ownership?.toDouble(),
         type = type?.toDto(),
-        accountExclusion = getAccountExclusionEnumFromBoolean(accountExclusion)
+        accountExclusion = accountExclusion?.toDto()
     )
-
-private fun getAccountExclusionEnumFromBoolean(
-    excluded: Boolean?
-): AccountExclusionDto =
-    if (excluded == true) {
-        AccountExclusionDto.PFM_DATA
-    } else {
-        AccountExclusionDto.NONE
-    }
 
 /**
  *   Converts a Json string containing a list of string to an actual string list
