@@ -131,7 +131,7 @@ private fun getAccountExclusionEnumFromBoolean(
     excluded: Boolean?
 ): AccountExclusionDto =
     if (excluded == true) {
-        AccountExclusionDto.PFM_AND_SEARCH
+        AccountExclusionDto.PFM_DATA
     } else {
         AccountExclusionDto.NONE
     }
