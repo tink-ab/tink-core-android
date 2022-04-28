@@ -3,7 +3,6 @@ package com.tink.service.network
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.net.Uri
-import android.util.Log
 import com.tink.service.authentication.UserEventBus
 import com.tink.service.di.ServiceScope
 import dagger.Module
@@ -16,8 +15,6 @@ import java.security.Security
 
 @Module
 internal class NetworkModule {
-
-    var requestCounter = 0
 
     init {
         insertConscryptSecurityProvider()
@@ -51,11 +48,6 @@ internal class NetworkModule {
                 }
                 addInterceptor(httpLoggingInterceptor)
 
-                addInterceptor {
-                    requestCounter++
-                    Log.d("REQUEST_COUNT", "provideOkHttpClient: " + requestCounter)
-                    return@addInterceptor it.proceed(it.request())
-                }
                 addInterceptor(
                     HeaderInterceptor(
                         tinkConfiguration.oAuthClientId,
