@@ -5,14 +5,14 @@ import com.tink.model.time.MonthPeriod
 import com.tink.model.time.Period
 import com.tink.model.time.WeekPeriod
 import com.tink.model.time.YearPeriod
-import com.tink.service.misc.toInstant
+import com.tink.service.misc.toInstantFromZone
 import java.lang.IllegalArgumentException
 import com.tink.rest.models.Period as PeriodDto
 
-internal fun PeriodDto.toCoreModel(): Period {
+internal fun PeriodDto.toCoreModel(userTimeZoneId: String): Period {
 
-    val start = startDate!!.toInstant()
-    val end = endDate!!.toInstant()
+    val start = startDate!!.toInstantFromZone(userTimeZoneId)
+    val end = endDate!!.toInstantFromZone(userTimeZoneId)
 
     val identifier = name ?: ""
 

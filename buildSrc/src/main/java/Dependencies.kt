@@ -14,6 +14,7 @@ object Versions {
     const val retrofit = "2.9.0"
     const val rxjava = "2.2.21"
     const val timber = "4.7.1"
+    const val desugar = "1.1.5"
 
     // test
     const val assertj = "3.19.0"
@@ -69,4 +70,5 @@ object Dependencies {
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     const val conscrypt = "org.conscrypt:conscrypt-android:${Versions.conscrypt}"
+    const val desugar = "com.android.tools:desugar_jdk_libs:${Versions.desugar}"
 }

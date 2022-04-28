@@ -1,38 +1,12 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-    id("kotlin-kapt")
-    id("com.github.ben-manes.versions") version "0.38.0"
     id("com.yelp.codegen.plugin") version "1.4.1"
+    kotlin("jvm")
+    kotlin("kapt")
+    id("com.github.ben-manes.versions") version "0.38.0"
 }
 
-android {
-    compileSdk = Versions.compileSdk
-    buildToolsVersion = Versions.buildTools
-
-    defaultConfig {
-        minSdk = Versions.minSdk
-        targetSdk = Versions.targetSdk
-        buildConfigField("long", "VERSION_CODE", "${Version.code}")
-        buildConfigField("String","VERSION_NAME","\"${Version.name}\"")
-    }
-
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
+tasks.jar {
+    archiveName = "rest.jar"
 }
 
 dependencies {
