@@ -14,7 +14,7 @@ fi
 
 git checkout -b release-"$newVersion"
 
-rm . secrets.baseline
+rm .secrets.baseline
 rm -r .buildkite/
 
 git add .secrets.baseline
@@ -29,7 +29,8 @@ read -p "Press enter when merged with [private]/public-master"
 
 git checkout public-master
 git fetch
+git fetch public
 git pull
 git checkout -b public-release-"$newVersion"
 git rebase --onto public/master HEAD^1
-git push --set-upstream public release-"$newVersion"
+git push --set-upstream public public-release-"$newVersion"

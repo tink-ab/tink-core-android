@@ -1,7 +1,7 @@
 package com.tink.service.transaction
 
 import com.tink.model.transaction.Tag
-import org.threeten.bp.Instant
+import java.time.Instant
 
 data class TransactionUpdateDescriptor(
     val transactionId: String,

@@ -6,7 +6,7 @@ import com.tink.rest.models.SearchQuery
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.threeten.bp.Instant
+import java.time.Instant
 import com.tink.rest.models.TransactionResponse as TransactionDto
 
 internal class TransactionConvertersTest {

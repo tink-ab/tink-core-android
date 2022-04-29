@@ -5,8 +5,8 @@ import com.tink.model.authentication.ThirdPartyAppAuthentication
 import com.tink.model.misc.Field
 import com.tink.model.provider.Provider
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
-import org.threeten.bp.temporal.ChronoUnit
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 /**
  * This model represents how users are connected to a [Provider] to access their financial data.
