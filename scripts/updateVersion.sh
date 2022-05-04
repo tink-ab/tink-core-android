@@ -13,10 +13,12 @@ else
   exit
 fi
 
+branchName=version-bump-"$newVersion"
+
 git checkout development
 git fetch
 git pull
-git checkout -b version-bump-"$newVersion"
+git checkout -b "$branchName"
 
 major=$(echo "$newVersion" | cut -d. -f1)
 minor=$(echo "$newVersion" | cut -d. -f2)
@@ -44,6 +46,8 @@ echo "object Version {
 
 git add $versionFilePath
 git commit -m "Version bump to $newVersion"
-git push --set-upstream origin release-"$newVersion"
+git push --set-upstream origin "$branchName"
 
 echo "Version bumped to $newVersion!"
+echo "Merge $branchName to development and then development to master"
+echo "Then launch the pre-release.sh script"
