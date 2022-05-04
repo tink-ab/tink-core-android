@@ -20,7 +20,6 @@ dependencies {
     implementation(Dependencies.Retrofit.retrofit)
     implementation(Dependencies.Retrofit.retrofit_converter_moshi)
 
-    implementation(Dependencies.three_ten_abp)
     implementation(Dependencies.okhttp)
 
     testImplementation(Dependencies.Testing.test_assertj)

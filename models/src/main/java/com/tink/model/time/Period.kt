@@ -2,7 +2,7 @@ package com.tink.model.time
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 sealed class Period : Parcelable {
     abstract val identifier: String
