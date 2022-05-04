@@ -1,8 +1,8 @@
 object Versions {
-    const val compileSdk = 30
+    const val compileSdk = 32
     const val buildTools = "30.0.3"
     const val minSdk = 21
-    const val targetSdk = 30
+    const val targetSdk = 32
 
     const val conscrypt = "2.5.2"
     const val coroutines = "1.5.2"
@@ -13,8 +13,8 @@ object Versions {
     const val pinterestktlint = "0.45.1"
     const val retrofit = "2.9.0"
     const val rxjava = "2.2.21"
-    const val threetenabp = "1.3.1"
     const val timber = "4.7.1"
+    const val desugar = "1.1.5"
 
     // test
     const val assertj = "3.19.0"
@@ -63,7 +63,6 @@ object Dependencies {
 
     const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val rxjava = "io.reactivex.rxjava2:rxjava:${Versions.rxjava}"
-    const val three_ten_abp = "com.jakewharton.threetenabp:threetenabp:${Versions.threetenabp}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     const val ktlint = "com.pinterest:ktlint:${Versions.pinterestktlint}"
@@ -71,4 +70,5 @@ object Dependencies {
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     const val conscrypt = "org.conscrypt:conscrypt-android:${Versions.conscrypt}"
+    const val desugar = "com.android.tools:desugar_jdk_libs:${Versions.desugar}"
 }

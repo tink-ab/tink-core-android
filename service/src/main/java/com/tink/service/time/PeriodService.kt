@@ -5,12 +5,18 @@ import com.tink.rest.apis.CalendarApi
 import javax.inject.Inject
 
 interface PeriodService {
-    suspend fun getPeriod(name: String): List<Period>
+    suspend fun getPeriod(
+        name: String,
+        userTimeZoneId: String
+    ): List<Period>
 }
 
 internal class PeriodServiceImpl @Inject constructor(
     private val api: CalendarApi
 ) : PeriodService {
-    override suspend fun getPeriod(name: String): List<Period> =
-        api.listPeriods(name).map { it.toCoreModel() }
+    override suspend fun getPeriod(
+        name: String,
+        userTimeZoneId: String
+    ): List<Period> =
+        api.listPeriods(name).map { it.toCoreModel(userTimeZoneId) }
 }

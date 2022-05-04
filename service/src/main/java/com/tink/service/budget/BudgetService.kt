@@ -12,7 +12,7 @@ import com.tink.rest.models.CreateOneOffBudgetRequest
 import com.tink.rest.models.CreateRecurringBudgetRequest
 import com.tink.rest.models.UpdateBudgetRequest
 import com.tink.service.misc.toDto
-import org.threeten.bp.Instant
+import java.time.Instant
 import javax.inject.Inject
 
 interface BudgetService {

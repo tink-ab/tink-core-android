@@ -5,7 +5,7 @@ import com.tink.model.misc.ExactNumber
 
 data class UpdateAccountDescriptor(
     val id: String,
-    val accountExclusion: Boolean? = null,
+    val accountExclusion: Account.AccountExclusion? = null,
     val favored: Boolean? = null,
     val name: String? = null,
     val ownership: ExactNumber? = null,
