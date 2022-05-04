@@ -29,9 +29,9 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
     }
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -39,7 +39,8 @@ android {
 
 dependencies {
     implementation(Dependencies.kotlin_stdlib)
-    api(Dependencies.three_ten_abp)
+
+    coreLibraryDesugaring(Dependencies.desugar)
 
     testImplementation(Dependencies.Testing.test_assertj)
     testImplementation(Dependencies.Testing.test_junit_api)

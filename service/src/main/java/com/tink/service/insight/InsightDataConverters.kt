@@ -24,7 +24,7 @@ import com.tink.rest.models.insightdata.TransactionSummary
 import com.tink.rest.models.insightdata.Week
 import com.tink.rest.models.insights.actions.BudgetSuggestion
 import com.tink.service.misc.toInstant
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import com.tink.rest.models.InsightData as InsightDataDto
 import com.tink.rest.models.insightdata.AccountWithName as AccountWithNameDto
 import com.tink.rest.models.insightdata.BudgetIdToPeriod as BudgetIdToPeriodDto

@@ -28,6 +28,10 @@ android {
             )
         }
     }
+
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
@@ -35,7 +39,8 @@ dependencies {
     implementation(project(":rest"))
 
     implementation(Dependencies.kotlin_stdlib)
-    api(Dependencies.three_ten_abp)
+
+    coreLibraryDesugaring(Dependencies.desugar)
 
     implementation(Dependencies.Dagger.core)
     implementation(Dependencies.Dagger.dagger_android)

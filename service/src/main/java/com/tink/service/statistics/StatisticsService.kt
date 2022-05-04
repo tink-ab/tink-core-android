@@ -18,7 +18,10 @@ private const val EXPENSES_IDENTIFIER = "expenses-by-category"
 private const val INCOME_IDENTIFIER = "income-by-category"
 
 interface StatisticsService {
-    suspend fun query(queryDescriptor: StatisticsQueryDescriptor): List<Statistics>
+    suspend fun query(
+        queryDescriptor: StatisticsQueryDescriptor,
+        userTimeZoneId: String
+    ): List<Statistics>
 }
 
 data class StatisticsQueryDescriptor(val periodMode: UserProfile.PeriodMode, val currencyCode: String)
@@ -28,7 +31,10 @@ internal class StatisticsServiceImpl @Inject constructor(
     private val periodService: PeriodService
 ) : StatisticsService {
 
-    override suspend fun query(queryDescriptor: StatisticsQueryDescriptor): List<Statistics> {
+    override suspend fun query(
+        queryDescriptor: StatisticsQueryDescriptor,
+        userTimeZoneId: String
+    ): List<Statistics> {
         val resolution =
             when (queryDescriptor.periodMode) {
                 is UserProfile.PeriodMode.Monthly -> StatisticQuery.ResolutionEnum.MONTHLY
@@ -44,10 +50,12 @@ internal class StatisticsServiceImpl @Inject constructor(
             )
         )
 
-        val periodDescriptions = statisticDtos.map { it.period }.toSet()
+        val periodDescriptions = statisticDtos.map {
+            getYearFromPeriodString(it.period)
+        }.toSet()
 
         val periodsAsync = coroutineScope {
-            periodDescriptions.map { async { periodService.getPeriod(it) } }
+            periodDescriptions.map { async { periodService.getPeriod(it, userTimeZoneId) } }
         }
 
         val periods: Map<String, Period> =
@@ -68,6 +76,13 @@ internal class StatisticsServiceImpl @Inject constructor(
             )
         }
     }
+
+    private fun getYearFromPeriodString(period: String): String =
+        if (period.length >= 4) {
+            period.substring(0, 4)
+        } else {
+            period
+        }
 
     private fun StatisticsDto.getType(): Statistics.Type =
         when (type) {

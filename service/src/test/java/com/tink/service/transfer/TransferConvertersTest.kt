@@ -4,7 +4,7 @@ import com.tink.model.transfer.SignableOperation
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.threeten.bp.Instant
+import java.time.Instant
 import com.tink.rest.models.SignableOperation as SignableOperationDto
 
 internal class TransferConvertersTest {

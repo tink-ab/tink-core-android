@@ -13,7 +13,7 @@ import com.tink.model.relations.TransactionSummary
 import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 @Parcelize
 data class Insight(

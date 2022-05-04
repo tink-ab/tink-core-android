@@ -1,16 +1,14 @@
+set -e
 cd ..
 
-# shellcheck disable=SC2162
-read newVersion
-
-if [[ $newVersion =~ ^([0-9]{1,2}\.){2}[0-9]{1,10}$ ]]; then
-echo "Starting to build version: $newVersion"
-else
-  echo "$newVersion is not in the right format."
-  exit
+pathToMavenLocal=/Users/"$USER"/.m2/repository/com/tink
+if [ -e "$pathToMavenLocal" ] ; then
+  rm -r "$pathToMavenLocal"
 fi
 
-rm -r /Users/"$USER"/.m2/repository/com/tink/core/"$newVersion"
+git checkout master
+git fetch
+git pull
 
 ./gradlew clean
 ./gradlew assemble
@@ -19,4 +17,5 @@ rm -r /Users/"$USER"/.m2/repository/com/tink/core/"$newVersion"
 echo Maven Local Files
 echo Check if every file has a signed file with the same filename, \
 including extension, and an additional .asc file extension
-ls -R /Users/"$USER"/.m2/repository/com/tink/core/"$newVersion"
+ls -R /Users/"$USER"/.m2/repository/com/tink
+open /Users/"$USER"/.m2/repository/com/tink
