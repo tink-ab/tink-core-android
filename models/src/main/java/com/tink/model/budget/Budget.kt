@@ -3,7 +3,7 @@ package com.tink.model.budget
 import android.os.Parcelable
 import com.tink.model.misc.Amount
 import kotlinx.android.parcel.Parcelize
-import org.threeten.bp.Instant
+import java.time.Instant
 
 typealias BudgetSummary = Budget.Summary
 typealias BudgetPeriod = Budget.Period

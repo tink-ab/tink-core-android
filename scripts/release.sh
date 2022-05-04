@@ -1,14 +1,21 @@
+set -e
 cd ..
+
 # shellcheck disable=SC2162
 read newVersion
 
-
+# TODO: read version from file
+echo "New version: "
 if [[ $newVersion =~ ^([0-9]{1,2}\.){2}[0-9]{1,10}$ ]]; then
 echo "Publishing to maven central"
 else
   echo "$newVersion is not in the right format."
   exit
 fi
+
+git checkout master
+git fetch
+git pull
 
 echo "Publishing to maven central"
 ./gradlew publish

@@ -47,6 +47,7 @@ internal class NetworkModule {
                     )
                 }
                 addInterceptor(httpLoggingInterceptor)
+
                 addInterceptor(
                     HeaderInterceptor(
                         tinkConfiguration.oAuthClientId,

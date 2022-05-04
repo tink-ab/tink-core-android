@@ -4,7 +4,7 @@ import com.tink.model.user.UserProfile
 import com.tink.rest.tools.GeneratedCodeConverters
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.threeten.bp.Instant
+import java.time.Instant
 import com.tink.rest.models.User as UserDto
 
 internal class UserInfoConvertersTest {
