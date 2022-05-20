@@ -1,6 +1,6 @@
 set -e
 
-echo "-->Enter new version (x.y.z format):"
+echo "--> Enter new version (x.y.z format):"
 # shellcheck disable=SC2162
 read newVersion
 echo "--> Dry-run? (y/n):"
@@ -43,19 +43,19 @@ echo "--> publishing to Maven local"
 ./gradlew publishToMavenLocal
 
 printf "\n\n"
-echo "DONE: Pre release completed!"
-echo "NEXT: 1) Check if every file has a signed file with the same filename, \
+echo "--> DONE: Publishing to Maven local completed!"
+echo "--> NEXT: 1) Check if every file has a signed file with the same filename, \
 including extension, and an additional .asc file extension"
 if [[ $isDryRun = 'y' ]]
 then
-  echo "NEXT: 2) Launch the post-release.sh script - Skip the release.sh script (Don't publish to Maven central!)"
+  echo "--> NEXT: 2) Launch the script to create a release on GitHub - Skip the script for publishing to maven central!"
 else
-  echo "NEXT: 2) Launch the release.sh script to publish to Maven central"
+  echo "--> NEXT: 2) Launch the script to publish to Maven central"
 fi
 
 
-echo "Press enter to review the files... "
+echo "--> Press enter to review the files... "
 read -r
 
-ls -R /Users/"$USER"/.m2/repository/com/tink/"$newVersion"
+ls -R /Users/"$USER"/.m2/repository/com/tink
 open /Users/"$USER"/.m2/repository/com/tink

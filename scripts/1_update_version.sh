@@ -52,7 +52,7 @@ echo "object Version {
     private const val minor = $minor
     private const val patch = $patch
 
-    const val name = \"$major.$minor.$patch\"
+    const val name = \"\$major.\$minor.\$patch\"
 
     private const val minorOffset = 100 //make space for 100 patches per minor version
     private const val majorOffset = 100 * minorOffset //make space for 100 minor versions per major version
@@ -78,9 +78,9 @@ then
   git merge "$branchName" -m "Dry-run merge $branchName into $masterBranch"
   git push --set-upstream origin $masterBranch
   printf "\n\n"
-  echo "--> NEXT: Launch the pre-release.sh script in dry-run mode"
+  echo "--> NEXT: Launch (in dry-run mode!) the script to publish to Maven local"
 else
   echo "--> NEXT: 1) Open Prs to merge $branchName to development and then development to master"
-  echo "--> NEXT: 2) Launch the pre-release.sh script"
+  echo "--> NEXT: 2) Launch the script to publish to Maven local"
 fi
 printf "\n\n"
