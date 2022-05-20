@@ -17,7 +17,7 @@ git fetch
 git pull
 
 echo "--> Publishing to maven central"
-#./gradlew publish
+./gradlew publish
 printf "\n\n"
 echo "--> NEXT: Continue the release on Sonatype web page"
 echo "--> Press enter to open the browser... "
