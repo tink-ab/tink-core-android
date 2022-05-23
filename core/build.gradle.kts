@@ -13,6 +13,8 @@ android {
         minSdk = Versions.minSdk
         targetSdk = Versions.targetSdk
 
+        buildConfigField("String", "libraryVersion", "\"${Version.name}\"")
+        
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
