@@ -2,7 +2,7 @@ object Version {
 
     private const val major = 0
     private const val minor = 8
-    private const val patch = 3
+    private const val patch = 4
 
     const val name = "$major.$minor.$patch"
 
