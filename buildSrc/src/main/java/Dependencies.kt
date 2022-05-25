@@ -4,6 +4,7 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 32
 
+    const val gradle = "7.2.0"
     const val conscrypt = "2.5.2"
     const val coroutines = "1.5.2"
     const val dagger = "2.40.5"
