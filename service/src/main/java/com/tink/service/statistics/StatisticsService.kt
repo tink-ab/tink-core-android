@@ -16,6 +16,8 @@ import com.tink.rest.models.Statistics as StatisticsDto
 
 private const val EXPENSES_IDENTIFIER = "expenses-by-category"
 private const val INCOME_IDENTIFIER = "income-by-category"
+private const val LEFT_TO_SPEND = "left-to-spend"
+private const val LEFT_TO_SPEND_AVERAGE = "left-to-spend-average"
 
 interface StatisticsService {
     suspend fun query(
@@ -45,7 +47,9 @@ internal class StatisticsServiceImpl @Inject constructor(
                 resolution = resolution,
                 types = listOf(
                     Statistics.Type.EXPENSES_BY_CATEGORY.value,
-                    Statistics.Type.INCOME_BY_CATEGORY.value
+                    Statistics.Type.INCOME_BY_CATEGORY.value,
+                    Statistics.Type.LEFT_TO_SPEND.value,
+                    Statistics.Type.LEFT_TO_SPEND_AVERAGE.value
                 )
             )
         )
@@ -88,6 +92,8 @@ internal class StatisticsServiceImpl @Inject constructor(
         when (type) {
             EXPENSES_IDENTIFIER -> Statistics.Type.EXPENSES_BY_CATEGORY
             INCOME_IDENTIFIER -> Statistics.Type.INCOME_BY_CATEGORY
+            LEFT_TO_SPEND -> Statistics.Type.LEFT_TO_SPEND
+            LEFT_TO_SPEND_AVERAGE -> Statistics.Type.LEFT_TO_SPEND_AVERAGE
             else -> Statistics.Type.UNKNOWN
         }
 }
