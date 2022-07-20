@@ -45,7 +45,9 @@ internal class StatisticsServiceImpl @Inject constructor(
                 resolution = resolution,
                 types = listOf(
                     Statistics.Type.EXPENSES_BY_CATEGORY.value,
-                    Statistics.Type.INCOME_BY_CATEGORY.value
+                    Statistics.Type.INCOME_BY_CATEGORY.value,
+                    Statistics.Type.LEFT_TO_SPEND.value,
+                    Statistics.Type.LEFT_TO_SPEND_AVERAGE.value
                 )
             )
         )
