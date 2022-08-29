@@ -17,7 +17,7 @@ import com.squareup.moshi.JsonClass
  * @property description Description of the transaction.
  * @property categoryCode Category code.
  * @property accountId The ID of the account this transaction belongs to.
- * @property pending The ID of the account this transaction belongs to.
+ * @property pending The pending status of this transaction.
  */
 @JsonClass(generateAdapter = true)
 data class BudgetTransaction(
