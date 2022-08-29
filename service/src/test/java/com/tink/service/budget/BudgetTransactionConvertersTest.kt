@@ -24,7 +24,8 @@ internal class BudgetTransactionConvertersTest {
                 "scale": 2,
                 "unscaledValue": 1050
             },
-            "id": "e2b746ed27c542ce846a8d693474df21"
+            "id": "e2b746ed27c542ce846a8d693474df21",
+            "pending":true
         }
         """
 
