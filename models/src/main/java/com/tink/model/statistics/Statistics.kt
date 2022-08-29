@@ -16,6 +16,8 @@ data class Statistics(
     enum class Type(val value: String) {
         EXPENSES_BY_CATEGORY("expenses-by-category"),
         INCOME_BY_CATEGORY("income-by-category"),
+        LEFT_TO_SPEND("left-to-spend"),
+        LEFT_TO_SPEND_AVERAGE("left-to-spend-average"),
         UNKNOWN("")
     }
 }
