@@ -107,5 +107,5 @@ fun BudgetTransactionDto.toCoreModel() =
         categoryCode = categoryCode ?: "",
         description = description ?: "",
         date = date.toInstant(),
-        pending = pending?: true
+        pending = pending ?: true
     )
