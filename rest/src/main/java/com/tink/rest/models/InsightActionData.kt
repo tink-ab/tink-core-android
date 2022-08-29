@@ -9,6 +9,7 @@ package com.tink.rest.models
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
+import com.tink.rest.models.insightdata.Month
 import com.tink.rest.models.insights.actions.BudgetSuggestion
 import com.tink.rest.models.insights.actions.TransactionIdWithType
 import com.tink.rest.models.insights.actions.TransactionIds
@@ -51,7 +52,9 @@ sealed class InsightActionData(
         @Json(name = "VIEW_TRANSACTIONS_BY_CATEGORY")
         VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY"),
         @Json(name = "REFRESH_CREDENTIAL")
-        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL")
+        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL"),
+        @Json(name = "VIEW_LEFT_TO_SPEND")
+        VIEW_LEFT_TO_SPEND("VIEW_LEFT_TO_SPEND")
     }
 
     @JsonClass(generateAdapter = true)
@@ -123,6 +126,12 @@ sealed class InsightActionData(
         @Json(name = "credentialId")
         val credentialId: String
     ) : InsightActionData(TypeEnum.REFRESH_CREDENTIAL)
+
+    @JsonClass(generateAdapter = true)
+    data class ViewLeftToSpendActionData(
+        @Json(name = "month")
+        val month: Month
+    ) : InsightActionData(TypeEnum.VIEW_LEFT_TO_SPEND)
 
     class Acknowledge : InsightActionData(TypeEnum.ACKNOWLEDGE)
     class Dismiss : InsightActionData(TypeEnum.DISMISS)

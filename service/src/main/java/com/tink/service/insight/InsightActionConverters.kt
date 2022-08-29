@@ -73,5 +73,6 @@ private fun InsightActionData.TypeEnum.convertType(): InsightAction.Type =
         InsightActionData.TypeEnum.CATEGORIZE_TRANSACTIONS -> InsightAction.Type.CATEGORIZE_TRANSACTIONS
         InsightActionData.TypeEnum.VIEW_TRANSACTIONS_BY_CATEGORY -> InsightAction.Type.VIEW_TRANSACTIONS_BY_CATEGORY
         InsightActionData.TypeEnum.REFRESH_CREDENTIAL -> InsightAction.Type.REFRESH_CREDENTIAL
+        InsightActionData.TypeEnum.VIEW_LEFT_TO_SPEND -> InsightAction.Type.VIEW_LEFT_TO_SPEND
         InsightActionData.TypeEnum.UNKNOWN -> InsightAction.Type.UNKNOWN
     }
