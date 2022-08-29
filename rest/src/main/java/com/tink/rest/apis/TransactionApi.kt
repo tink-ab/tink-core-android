@@ -14,6 +14,7 @@ import com.tink.rest.models.SimilarTransactionsResponse
 import com.tink.rest.models.SuggestTransactionsResponse
 import com.tink.rest.models.Transaction
 import com.tink.rest.models.TransactionLinkSuggestionResponse
+import com.tink.rest.models.TransactionUpdateObject
 import com.tink.rest.models.UpdateTransactionLinkRequest
 import retrofit2.Response
 import retrofit2.http.DELETE
@@ -122,7 +123,7 @@ interface TransactionApi {
     @PUT("/api/v1/transactions/{id}")
     suspend fun updateTransaction(
         @retrofit2.http.Path("id") id: String,
-        @retrofit2.http.Body body: Transaction
+        @retrofit2.http.Body body: TransactionUpdateObject
     ): Response<Unit>
     /**
      * Update a list of transactions

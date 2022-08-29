@@ -78,3 +78,18 @@ data class Transaction(
         @Json(name = "WITHDRAWAL") WITHDRAWAL("WITHDRAWAL")
     }
 }
+
+/**
+ * An account usually contains multiple transactions (except for certain types of accounts where Tink can't access the underlying transactions, for example, certain `INVESTMENT` accounts). The transaction model represents any operation on an account, and could represent both the actual credit-card purchase on a `CREDIT_CARD` account, but also represent the transaction when you paid your credit-card bill. Most commonly, the transactions in an account should represent what the end-user typically regards as a transaction with its amount, description and date, etc.
+ * @property date The date the transaction was executed. This can be modified by the user.
+ * @property description The description of the transaction. This can be modified by the user.
+ * @property amount The amount of the transaction. This can be modified by the user.
+ * @property notes A free-text field modifiable by the user. Any &#39;word&#39; (whitespace separated), prefixed with a #, is considered a tag. These tags become searchable.
+ */
+@JsonClass(generateAdapter = true)
+data class TransactionUpdateObject(
+    @Json(name = "date") @field:Json(name = "date") var date: Long,
+    @Json(name = "description") @field:Json(name = "description") var description: String,
+    @Json(name = "amount") @field:Json(name = "amount") var amount: Double,
+    @Json(name = "notes") @field:Json(name = "notes") var notes: String?
+)

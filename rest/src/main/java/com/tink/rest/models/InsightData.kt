@@ -14,6 +14,7 @@ import com.tink.rest.models.insightdata.BudgetIdToPeriod
 import com.tink.rest.models.insightdata.BudgetPeriod
 import com.tink.rest.models.insightdata.ExpenseByCategoryCode
 import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
+import com.tink.rest.models.insightdata.LeftToSpendStatistics
 import com.tink.rest.models.insightdata.Month
 import com.tink.rest.models.insightdata.RefreshCredential
 import com.tink.rest.models.insightdata.TransactionSummary
@@ -100,6 +101,27 @@ sealed class InsightData(
 
         @Json(name = "LEFT_TO_SPEND_NEGATIVE")
         LEFT_TO_SPEND_NEGATIVE("LEFT_TO_SPEND_NEGATIVE"),
+
+        @Json(name = "LEFT_TO_SPEND_POSITIVE_MID_MONTH")
+        LEFT_TO_SPEND_POSITIVE_MID_MONTH("LEFT_TO_SPEND_POSITIVE_MID_MONTH"),
+
+        @Json(name = "LEFT_TO_SPEND_NEGATIVE_MID_MONTH")
+        LEFT_TO_SPEND_NEGATIVE_MID_MONTH("LEFT_TO_SPEND_NEGATIVE_MID_MONTH"),
+
+        @Json(name = "LEFT_TO_SPEND_NEGATIVE_SUMMARY")
+        LEFT_TO_SPEND_NEGATIVE_SUMMARY("LEFT_TO_SPEND_NEGATIVE_SUMMARY"),
+
+        @Json(name = "LEFT_TO_SPEND_POSITIVE_BEGINNING_MONTH")
+        LEFT_TO_SPEND_POSITIVE_BEGINNING_MONTH("LEFT_TO_SPEND_POSITIVE_BEGINNING_MONTH"),
+
+        @Json(name = "LEFT_TO_SPEND_NEGATIVE_BEGINNING_MONTH")
+        LEFT_TO_SPEND_NEGATIVE_BEGINNING_MONTH("LEFT_TO_SPEND_NEGATIVE_BEGINNING_MONTH"),
+
+        @Json(name = "LEFT_TO_SPEND_POSITIVE_SUMMARY_SAVINGS_ACCOUNT")
+        LEFT_TO_SPEND_POSITIVE_SUMMARY_SAVINGS_ACCOUNT("LEFT_TO_SPEND_POSITIVE_SUMMARY_SAVINGS_ACCOUNT"),
+
+        @Json(name = "LEFT_TO_SPEND_POSITIVE_FINAL_WEEK")
+        LEFT_TO_SPEND_POSITIVE_FINAL_WEEK("LEFT_TO_SPEND_POSITIVE_FINAL_WEEK"),
 
         @Json(name = "UNKNOWN")
         UNKNOWN("UNKNOWN")
@@ -268,16 +290,6 @@ sealed class InsightData(
     ) : InsightData(TypeEnum.MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY)
 
     @JsonClass(generateAdapter = true)
-    data class LeftToSpendNegativeData(
-        @Json(name = "createdAt")
-        val createdAt: Long,
-        @Json(name = "leftToSpend")
-        val leftToSpend: AmountWithCurrencyCode,
-        @Json(name = "month")
-        val month: Month
-    ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE)
-
-    @JsonClass(generateAdapter = true)
     data class MonthlySummaryExpenseTransactions(
         @Json(name = "month")
         val month: Month,
@@ -292,6 +304,88 @@ sealed class InsightData(
         @Json(name = "transactionSummary")
         val transactionSummary: TransactionSummary
     ) : InsightData(TypeEnum.WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendNegativeData(
+        @Json(name = "createdAt")
+        val createdAt: Long,
+        @Json(name = "leftToSpend")
+        val leftToSpend: AmountWithCurrencyCode,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendPositiveMidMonthData(
+        @Json(name = "amountDifference")
+        val amountDifference: AmountWithCurrencyCode,
+        @Json(name = "leftToSpendStatistics")
+        val leftToSpendStatistics: LeftToSpendStatistics,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_POSITIVE_MID_MONTH)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendNegativeMidMonthData(
+        @Json(name = "amountDifference")
+        val amountDifference: AmountWithCurrencyCode,
+        @Json(name = "leftToSpendStatistics")
+        val leftToSpendStatistics: LeftToSpendStatistics,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE_MID_MONTH)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendNegativeSummaryData(
+        @Json(name = "leftToSpend")
+        val leftToSpend: AmountWithCurrencyCode,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE_SUMMARY)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendPositiveBeginningMonthData(
+        @Json(name = "amountDifference")
+        val amountDifference: AmountWithCurrencyCode,
+        @Json(name = "leftToSpendStatistics")
+        val leftToSpendStatistics: LeftToSpendStatistics,
+        @Json(name = "month")
+        val month: Month,
+        @Json(name = "totalExpense")
+        val totalExpense: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_POSITIVE_BEGINNING_MONTH)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendNegativeBeginningMonthData(
+        @Json(name = "amountDifference")
+        val amountDifference: AmountWithCurrencyCode,
+        @Json(name = "leftToSpendStatistics")
+        val leftToSpendStatistics: LeftToSpendStatistics,
+        @Json(name = "month")
+        val month: Month,
+        @Json(name = "totalExpense")
+        val totalExpense: AmountWithCurrencyCode
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_NEGATIVE_BEGINNING_MONTH)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendPositiveSummarySavingsAccountData(
+        @Json(name = "leftToSpend")
+        val leftAmount: AmountWithCurrencyCode,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_POSITIVE_SUMMARY_SAVINGS_ACCOUNT)
+
+    @JsonClass(generateAdapter = true)
+    data class LeftToSpendPositiveFinalWeekData(
+        @Json(name = "amountDifference")
+        val amountDifference: AmountWithCurrencyCode,
+        @Json(name = "leftToSpendPerDay")
+        val leftToSpendPerDay: AmountWithCurrencyCode,
+        @Json(name = "leftToSpendStatistics")
+        val leftToSpendStatistics: LeftToSpendStatistics,
+        @Json(name = "month")
+        val month: Month
+    ) : InsightData(TypeEnum.LEFT_TO_SPEND_POSITIVE_FINAL_WEEK)
 
     object Unknown : InsightData(TypeEnum.UNKNOWN)
 }

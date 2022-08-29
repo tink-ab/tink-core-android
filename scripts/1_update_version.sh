@@ -1,44 +1,61 @@
 set -e
 
-echo "--> Running ktlintFormat"
-./gradlew ktlintFormat
-
-if [[ $(git status --porcelain) ]]; then
-  echo "--> There are changes to commit/discard before you can continue with the release"
-  exit
-else
- echo "--> No changes to commit/discard, continuing with the release"
-fi
-
-echo "--> Enter new version (x.y.z format):"
+echo "--------> Enter NEW version (x.y.z format):"
 # shellcheck disable=SC2162
 read newVersion
-echo "--> Dry-run? (y/n):"
-# shellcheck disable=SC2162
-read isDryRun
-
 if [[ $newVersion =~ ^([0-9]{1,2}\.){2}[0-9]{1,10}$ ]]; then
-echo "--> Version number: $newVersion is in the correct format"
+   echo ""
 else
-  echo "--> $newVersion is not in the right format."
+  echo "--------> $newVersion is not in the right format."
   exit
 fi
 
-branchName=version-bump-"$newVersion"
-if [[ $isDryRun = 'y' ]]
-then
-  masterBranch=master-dry-run-"$newVersion"
+echo "--------> Enter PREVIOUS version (x.y.z format):"
+# shellcheck disable=SC2162
+read oldVersion
+if [[ $oldVersion =~ ^([0-9]{1,2}\.){2}[0-9]{1,10}$ ]]; then
+  echo ""
 else
-  masterBranch=master
+  echo "--------> $oldVersion is not in the right format."
+  exit
 fi
 
-echo "--> Creating branch $branchName"
+echo "--------> Enter Jira ticket number (xxxx format - skip PFMF):"
+# shellcheck disable=SC2162
+read jiraTicketNumber
+if [[ $jiraTicketNumber =~ ^[0-9]{4}$ ]]; then
+  echo ""
+else
+  echo "--------> jiraTicketNumber is not in the right format."
+  exit
+fi
+
+printf "\n\n"
+echo "--------> new version number: $newVersion"
+echo "--------> previous version number: $oldVersion"
+echo "--------> Jira ticket number: $jiraTicketNumber"
+read -p "--------> Press enter to start the release process"
+
+
 git checkout development
 git fetch
 git pull
+echo "--------> Running ktlintFormat"
+./gradlew ktlintFormat
+
+if [[ $(git status --porcelain) ]]; then
+  echo "--------> There are changes to commit/discard before you can continue with the release"
+  exit
+else
+ echo "--------> No changes to commit/discard, continuing with the release"
+fi
+
+branchName=version-bump-"$newVersion"
+
+echo "--------> Creating branch $branchName"
 git checkout -b "$branchName"
 
-echo "--> Updating Version.kt file"
+echo "--------> Updating Version.kt file"
 major=$(echo "$newVersion" | cut -d. -f1)
 minor=$(echo "$newVersion" | cut -d. -f2)
 patch=$(echo "$newVersion" | cut -d. -f3)
@@ -64,23 +81,24 @@ echo "object Version {
 " >> $versionFilePath
 git add $versionFilePath
 
-echo "--> Creating version bump commit"
+echo "--------> Creating version bump commit"
 git commit -m "Version bump to $newVersion"
 git push --set-upstream origin "$branchName"
 
-printf "\n\n"
-echo "--> DONE: Version bumped to $newVersion!"
-if [[ $isDryRun = 'y' ]]
-then
-  git checkout master
-  git pull
-  git checkout -b $masterBranch
-  git merge "$branchName" -m "Dry-run merge $branchName into $masterBranch"
-  git push --set-upstream origin $masterBranch
-  printf "\n\n"
-  echo "--> NEXT: Launch (in dry-run mode!) the script to publish to Maven local"
-else
-  echo "--> NEXT: 1) Open Prs to merge $branchName to development and then development to master"
-  echo "--> NEXT: 2) Launch the script to publish to Maven local"
-fi
-printf "\n\n"
+gh pr create --repo tink-ab/tink-sdk-core-android --head "$branchName" -t "PFMF-$jiraTicketNumber - Version bump to $newVersion" -b "Version bump to $newVersion" --base development -r tink-ab/android-maintainer
+echo "--------> Created version bump PR from $branchName to development"
+echo "--------> NEXT: Merge version bump PR"
+read -p "--------> Press enter when PR is merged"
+read -p "--------> Press enter to confirm PR is merged"
+
+git checkout development
+git pull
+gh pr create --repo tink-ab/tink-sdk-core-android --head development -t "PFMF-$jiraTicketNumber - Release $newVersion" -b "Release $newVersion" --base master -r tink-ab/android-maintainer
+echo "--------> Created release PR from development to master"
+echo "--------> NEXT: Merge release PR"
+read -p "--------> Press enter when PR is merged"
+read -p "--------> Press enter to confirm PR is merged"
+
+echo "--------> Launching the script #2 to publish to Maven local"
+./scripts/2_publish_to_maven_local.sh "$newVersion" "$oldVersion" "$jiraTicketNumber"
+
