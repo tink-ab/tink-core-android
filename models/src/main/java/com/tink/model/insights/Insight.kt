@@ -6,6 +6,7 @@ import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
 import com.tink.model.budget.BudgetPeriodicity
 import com.tink.model.credentials.RefreshCredential
+import com.tink.model.leftToSpend.LeftToSpendStatisticsMid
 import com.tink.model.misc.Amount
 import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
@@ -94,6 +95,9 @@ data class InsightAction(
         data class ViewTransactionsByCategory(
             val transactionsByCategory: Map<String, List<String>>
         ) : Data()
+
+        @Parcelize
+        data class ViewLeftToSpend(val month: YearMonth) : Data()
     }
 
     enum class Type(val value: String) {
@@ -109,7 +113,8 @@ data class InsightAction(
         VIEW_TRANSACTION("VIEW_TRANSACTION"),
         VIEW_TRANSACTIONS("VIEW_TRANSACTIONS"),
         VIEW_TRANSACTIONS_BY_CATEGORY("VIEW_TRANSACTIONS_BY_CATEGORY"),
-        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL")
+        REFRESH_CREDENTIAL("REFRESH_CREDENTIAL"),
+        VIEW_LEFT_TO_SPEND("VIEW_LEFT_TO_SPEND")
     }
 }
 
@@ -290,4 +295,61 @@ sealed class InsightData : Parcelable {
         val budgetId: String,
         val budgetPeriod: Budget.Period
     ) : Parcelable
+
+    @Parcelize
+    data class LeftToSpendNegative(
+        val createdAt: Long,
+        val leftToSpend: Amount,
+        val month: YearMonth
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendPositiveMidMonth(
+        val amountDifference: Amount,
+        val leftToSpendStatistics: LeftToSpendStatisticsMid,
+        val month: YearMonth
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendNegativeMidMonth(
+        val amountDifference: Amount,
+        val leftToSpendStatistics: LeftToSpendStatisticsMid,
+        val month: YearMonth
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendNegativeSummary(
+        val leftToSpend: Amount,
+        val month: YearMonth
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendPositiveBeginningMonth(
+        val amountDifference: Amount,
+        val leftToSpendStatistics: LeftToSpendStatisticsMid,
+        val month: YearMonth,
+        val totalExpense: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendNegativeBeginningMonth(
+        val amountDifference: Amount,
+        val leftToSpendStatistics: LeftToSpendStatisticsMid,
+        val month: YearMonth,
+        val totalExpense: Amount
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendPositiveSummarySavingsAccount(
+        val leftAmount: Amount,
+        val month: YearMonth
+    ) : InsightData()
+
+    @Parcelize
+    data class LeftToSpendPositiveFinalWeek(
+        val amountDifference: Amount,
+        val leftToSpendPerDay: Amount,
+        val leftToSpendStatistics: LeftToSpendStatisticsMid,
+        val month: YearMonth
+    ) : InsightData()
 }

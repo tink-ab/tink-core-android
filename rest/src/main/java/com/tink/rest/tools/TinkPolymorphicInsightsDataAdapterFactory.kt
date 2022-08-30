@@ -89,16 +89,44 @@ object TinkPolymorphicInsightsDataAdapterFactory {
                 DataType.MONTHLY_SUMMARY_EXPENSES_BY_CATEGORY.value
             )
             .withSubtype(
-                InsightData.LeftToSpendNegativeData::class.java,
-                DataType.LEFT_TO_SPEND_NEGATIVE.value
-            )
-            .withSubtype(
                 InsightData.MonthlySummaryExpenseTransactions::class.java,
                 DataType.MONTHLY_SUMMARY_EXPENSE_TRANSACTIONS.value
             )
             .withSubtype(
                 InsightData.WeeklySummaryExpenseTransactions::class.java,
                 DataType.WEEKLY_SUMMARY_EXPENSE_TRANSACTIONS.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendNegativeData::class.java,
+                DataType.LEFT_TO_SPEND_NEGATIVE.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendPositiveMidMonthData::class.java,
+                DataType.LEFT_TO_SPEND_POSITIVE_MID_MONTH.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendNegativeMidMonthData::class.java,
+                DataType.LEFT_TO_SPEND_NEGATIVE_MID_MONTH.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendNegativeSummaryData::class.java,
+                DataType.LEFT_TO_SPEND_NEGATIVE_SUMMARY.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendPositiveBeginningMonthData::class.java,
+                DataType.LEFT_TO_SPEND_POSITIVE_BEGINNING_MONTH.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendNegativeBeginningMonthData::class.java,
+                DataType.LEFT_TO_SPEND_NEGATIVE_BEGINNING_MONTH.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendPositiveSummarySavingsAccountData::class.java,
+                DataType.LEFT_TO_SPEND_POSITIVE_SUMMARY_SAVINGS_ACCOUNT.value
+            )
+            .withSubtype(
+                InsightData.LeftToSpendPositiveFinalWeekData::class.java,
+                DataType.LEFT_TO_SPEND_POSITIVE_FINAL_WEEK.value
             )
 
     fun createActionDataFactory(): PolymorphicJsonAdapterFactory<InsightActionData> =
@@ -152,5 +180,9 @@ object TinkPolymorphicInsightsDataAdapterFactory {
             .withSubtype(
                 InsightActionData.RefreshCredentialActionData::class.java,
                 ActionType.REFRESH_CREDENTIAL.value
+            )
+            .withSubtype(
+                InsightActionData.ViewLeftToSpendActionData::class.java,
+                ActionType.VIEW_LEFT_TO_SPEND.value
             )
 }

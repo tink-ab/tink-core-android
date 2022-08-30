@@ -36,7 +36,8 @@ class Budget {
         val dispensableAmount: Amount,
         val categoryCode: String,
         val description: String,
-        val date: Instant
+        val date: Instant,
+        val pending: Boolean
     ) : Parcelable
 
     @Parcelize

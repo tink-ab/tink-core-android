@@ -1,33 +1,20 @@
+# shellcheck disable=SC2162
 set -e
 
-echo "--> Enter new version (x.y.z format):"
-# shellcheck disable=SC2162
-read newVersion
-echo "--> Dry-run? (y/n):"
-# shellcheck disable=SC2162
-read isDryRun
+newVersion=$1
+oldVersion=$2
+jiraTicketNumber=$3
+isDryRun=$4
 
 if [[ $isDryRun = 'y' ]]
 then
-  echo "--> Running a dry-run pre-release"
-fi
-
-if [[ $newVersion =~ ^([0-9]{1,2}\.){2}[0-9]{1,10}$ ]]; then
-  echo "--> Version number: $newVersion is in the correct format"
+  masterBranch=master-dry-run
 else
-  echo "--> $newVersion is not in the right format."
-  exit
+  masterBranch=master
 fi
 
-if [[ $isDryRun = 'y' ]]
-then
-  echo "--> Checking out master-dry-run-$newVersion"
-  git checkout master-dry-run-"$newVersion"
-else
-  echo "--> Checking out master"
-  git checkout master
-fi
-
+echo "-------> Checking out master"
+git checkout $masterBranch
 git fetch
 git pull
 
@@ -36,26 +23,21 @@ if [ -e "$pathToMavenLocal" ] ; then
   rm -r "$pathToMavenLocal"
 fi
 
-echo "--> clean & assemble"
+echo "-------> clean & assemble"
 ./gradlew clean
 ./gradlew assemble
-echo "--> publishing to Maven local"
+echo "-------> publishing to Maven local"
 ./gradlew publishToMavenLocal
 
 printf "\n\n"
-echo "--> DONE: Publishing to Maven local completed!"
-echo "--> NEXT: 1) Check if every file has a signed file with the same filename, \
+echo "-------> DONE: Publishing to Maven local completed!"
+echo "-------> NEXT: Check if every file has a signed file with the same filename, \
 including extension, and an additional .asc file extension"
-if [[ $isDryRun = 'y' ]]
-then
-  echo "--> NEXT: 2) Launch the script to create a release on GitHub - Skip the script for publishing to maven central!"
-else
-  echo "--> NEXT: 2) Launch the script to publish to Maven central"
-fi
 
-
-echo "--> Press enter to review the files... "
-read -r
-
+read -p "-------> Press enter to review the files..."
 ls -R /Users/"$USER"/.m2/repository/com/tink
-open /Users/"$USER"/.m2/repository/com/tink
+#open /Users/"$USER"/.m2/repository/com/tink
+
+read -p "-------> Press enter if everything looks good..."
+echo "-------> Press enter to launch the script #3 to publish to Maven Central"
+./scripts/3_publish_to_maven_central.sh "$newVersion" "$oldVersion" "$jiraTicketNumber" "$isDryRun"
