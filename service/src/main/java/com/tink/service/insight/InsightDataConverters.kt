@@ -13,14 +13,6 @@ import com.tink.model.relations.AmountByCategory
 import com.tink.model.relations.ExpensesByDay
 import com.tink.model.time.YearMonth
 import com.tink.model.time.YearWeek
-import com.tink.rest.models.InsightData.LeftToSpendNegativeBeginningMonthData
-import com.tink.rest.models.InsightData.LeftToSpendNegativeData
-import com.tink.rest.models.InsightData.LeftToSpendNegativeMidMonthData
-import com.tink.rest.models.InsightData.LeftToSpendNegativeSummaryData
-import com.tink.rest.models.InsightData.LeftToSpendPositiveBeginningMonthData
-import com.tink.rest.models.InsightData.LeftToSpendPositiveFinalWeekData
-import com.tink.rest.models.InsightData.LeftToSpendPositiveMidMonthData
-import com.tink.rest.models.InsightData.LeftToSpendPositiveSummarySavingsAccountData
 import com.tink.rest.models.RecurringPeriodicity
 import com.tink.rest.models.insightdata.AmountWithCurrencyCode
 import com.tink.rest.models.insightdata.BudgetPeriod
@@ -44,6 +36,47 @@ import com.tink.rest.models.insights.actions.BudgetFilter as BudgetFilterInsight
 
 internal fun InsightDataDto.toCoreModel(): InsightData =
     when (this) {
+        is InsightDataDto.LeftToSpendNegativeData -> InsightData.LeftToSpendNegative(
+            createdAt,
+            leftToSpend.toAmount(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendNegativeBeginningMonthData -> InsightData.LeftToSpendNegativeBeginningMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth(),
+            totalExpense.toAmount()
+        )
+        is InsightDataDto.LeftToSpendPositiveBeginningMonthData -> InsightData.LeftToSpendPositiveBeginningMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth(),
+            totalExpense.toAmount()
+        )
+        is InsightDataDto.LeftToSpendNegativeMidMonthData -> InsightData.LeftToSpendNegativeMidMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendPositiveMidMonthData -> InsightData.LeftToSpendPositiveMidMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendNegativeSummaryData -> InsightData.LeftToSpendNegativeSummary(
+            leftToSpend.toAmount(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendPositiveSummarySavingsAccountData -> InsightData.LeftToSpendPositiveSummarySavingsAccount(
+            leftAmount.toAmount(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendPositiveFinalWeekData -> InsightData.LeftToSpendPositiveFinalWeek(
+            amountDifference.toAmount(),
+            leftToSpendPerDay.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth()
+        )
         is InsightDataDto.AccountBalanceLowData -> InsightData.AccountBalanceLowData(
             accountId,
             balance.toAmount()
@@ -224,55 +257,8 @@ internal fun BudgetFilterInsightData.toBudgetFilter(): BudgetFilter =
         freeTextQuery = ""
     )
 
-internal fun LeftToSpendNegativeData.toCoreModel() =
-    InsightData.LeftToSpendNegative(createdAt, leftToSpend.toAmount(), month.toYearMonth())
-
 internal fun LeftToSpendStatistics.toLeftToSpendStatisticsMid() = LeftToSpendStatisticsMid(
     averageLeftToSpend.toAmount(),
     createdAt,
     currentLeftToSpend.toAmount()
 )
-
-internal fun LeftToSpendPositiveMidMonthData.toCoreModel() =
-    InsightData.LeftToSpendPositiveMidMonth(
-        amountDifference.toAmount(),
-        leftToSpendStatistics.toLeftToSpendStatisticsMid(),
-        month.toYearMonth()
-    )
-
-internal fun LeftToSpendNegativeMidMonthData.toCoreModel() =
-    InsightData.LeftToSpendNegativeMidMonth(
-        amountDifference.toAmount(),
-        leftToSpendStatistics.toLeftToSpendStatisticsMid(),
-        month.toYearMonth()
-    )
-
-internal fun LeftToSpendNegativeSummaryData.toCoreModel() =
-    InsightData.LeftToSpendNegativeSummary(leftToSpend.toAmount(), month.toYearMonth())
-
-internal fun LeftToSpendPositiveBeginningMonthData.toCoreModel() =
-    InsightData.LeftToSpendPositiveBeginningMonth(
-        amountDifference.toAmount(),
-        leftToSpendStatistics.toLeftToSpendStatisticsMid(),
-        month.toYearMonth(),
-        totalExpense.toAmount()
-    )
-
-internal fun LeftToSpendNegativeBeginningMonthData.toCoreModel() =
-    InsightData.LeftToSpendNegativeBeginningMonth(
-        amountDifference.toAmount(),
-        leftToSpendStatistics.toLeftToSpendStatisticsMid(),
-        month.toYearMonth(),
-        totalExpense.toAmount()
-    )
-
-internal fun LeftToSpendPositiveSummarySavingsAccountData.toCoreModel() =
-    InsightData.LeftToSpendPositiveSummarySavingsAccount(leftAmount.toAmount(), month.toYearMonth())
-
-internal fun LeftToSpendPositiveFinalWeekData.toCoreModel() =
-    InsightData.LeftToSpendPositiveFinalWeek(
-        amountDifference.toAmount(),
-        leftToSpendPerDay.toAmount(),
-        leftToSpendStatistics.toLeftToSpendStatisticsMid(),
-        month.toYearMonth()
-    )

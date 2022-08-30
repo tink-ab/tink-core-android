@@ -1,11 +1,20 @@
+# shellcheck disable=SC2162
 set -e
 
 newVersion=$1
 oldVersion=$2
 jiraTicketNumber=$3
+isDryRun=$4
+
+if [[ $isDryRun = 'y' ]]
+then
+  masterBranch=master-dry-run
+else
+  masterBranch=master
+fi
 
 echo "-------> Checking out master"
-git checkout master
+git checkout $masterBranch
 git fetch
 git pull
 
@@ -30,5 +39,5 @@ ls -R /Users/"$USER"/.m2/repository/com/tink
 #open /Users/"$USER"/.m2/repository/com/tink
 
 read -p "-------> Press enter if everything looks good..."
-echo "-------> Launching the script #3 to publish to Maven Central"
-./scripts/3_publish_to_maven_central.sh "$newVersion" "$oldVersion" "$jiraTicketNumber"
+echo "-------> Press enter to launch the script #3 to publish to Maven Central"
+./scripts/3_publish_to_maven_central.sh "$newVersion" "$oldVersion" "$jiraTicketNumber" "$isDryRun"
