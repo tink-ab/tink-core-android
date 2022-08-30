@@ -106,5 +106,6 @@ fun BudgetTransactionDto.toCoreModel() =
         dispensableAmount = dispensableAmount!!.toAmount(),
         categoryCode = categoryCode ?: "",
         description = description ?: "",
-        date = date.toInstant()
+        date = date.toInstant(),
+        pending = pending ?: true
     )

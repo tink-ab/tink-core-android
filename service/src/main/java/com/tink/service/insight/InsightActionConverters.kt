@@ -52,6 +52,9 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.RefreshCredentialActionData -> InsightAction.Data.RefreshCredential(
             credentialId
         )
+        is InsightActionData.ViewLeftToSpendActionData -> InsightAction.Data.ViewLeftToSpend(
+            month.toYearMonth()
+        )
         is InsightActionData.Acknowledge -> InsightAction.Data.Acknowledge
         is InsightActionData.Dismiss -> InsightAction.Data.Dismiss
         InsightActionData.Unknown,
@@ -73,5 +76,6 @@ private fun InsightActionData.TypeEnum.convertType(): InsightAction.Type =
         InsightActionData.TypeEnum.CATEGORIZE_TRANSACTIONS -> InsightAction.Type.CATEGORIZE_TRANSACTIONS
         InsightActionData.TypeEnum.VIEW_TRANSACTIONS_BY_CATEGORY -> InsightAction.Type.VIEW_TRANSACTIONS_BY_CATEGORY
         InsightActionData.TypeEnum.REFRESH_CREDENTIAL -> InsightAction.Type.REFRESH_CREDENTIAL
+        InsightActionData.TypeEnum.VIEW_LEFT_TO_SPEND -> InsightAction.Type.VIEW_LEFT_TO_SPEND
         InsightActionData.TypeEnum.UNKNOWN -> InsightAction.Type.UNKNOWN
     }

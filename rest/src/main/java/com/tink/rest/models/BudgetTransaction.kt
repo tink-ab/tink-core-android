@@ -17,6 +17,7 @@ import com.squareup.moshi.JsonClass
  * @property description Description of the transaction.
  * @property categoryCode Category code.
  * @property accountId The ID of the account this transaction belongs to.
+ * @property pending The pending status of this transaction.
  */
 @JsonClass(generateAdapter = true)
 data class BudgetTransaction(
@@ -26,5 +27,6 @@ data class BudgetTransaction(
     @Json(name = "date") @field:Json(name = "date") var date: Long = 0,
     @Json(name = "description") @field:Json(name = "description") var description: String? = null,
     @Json(name = "categoryCode") @field:Json(name = "categoryCode") var categoryCode: String? = null,
-    @Json(name = "accountId") @field:Json(name = "accountId") var accountId: String? = null
+    @Json(name = "accountId") @field:Json(name = "accountId") var accountId: String? = null,
+    @Json(name = "pending") @field:Json(name = "pending") var pending: Boolean? = true
 )
