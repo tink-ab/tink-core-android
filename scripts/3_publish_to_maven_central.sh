@@ -3,8 +3,17 @@ set -e
 newVersion=$1
 oldVersion=$2
 jiraTicketNumber=$3
+isDryRun=$4
 
-git checkout master
+if [[ $isDryRun = 'y' ]]
+then
+  masterBranch=master-dry-run
+else
+  masterBranch=master
+fi
+
+echo "-------> Checking out master"
+git checkout $masterBranch
 git fetch
 git pull
 
@@ -25,6 +34,7 @@ do
 done
 
 echo "\007"
+clear
 echo "-------> DONE: Publishing to Maven Central!"
-echo "-------> Launching the script #4 to create a Github release on public and private repos"
-./scripts/4_github_release.sh "$newVersion" "$oldVersion" "$jiraTicketNumber"
+echo "-------> Press enter to launch the script #4 to create a Github release on the public repo"
+./scripts/4_github_release.sh "$newVersion" "$oldVersion" "$jiraTicketNumber" "$isDryRun"
