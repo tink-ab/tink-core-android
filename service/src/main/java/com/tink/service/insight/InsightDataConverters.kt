@@ -5,6 +5,7 @@ import com.tink.model.budget.Budget
 import com.tink.model.budget.BudgetFilter
 import com.tink.model.credentials.RefreshCredential
 import com.tink.model.insights.InsightData
+import com.tink.model.leftToSpend.LeftToSpendStatisticsMid
 import com.tink.model.misc.Amount
 import com.tink.model.misc.ExactNumber
 import com.tink.model.provider.RefreshProvider
@@ -19,6 +20,7 @@ import com.tink.rest.models.insightdata.CommonTransactionsOverview
 import com.tink.rest.models.insightdata.ExpenseByCategoryCode
 import com.tink.rest.models.insightdata.ExpenseStatisticsByDay
 import com.tink.rest.models.insightdata.LargestExpense
+import com.tink.rest.models.insightdata.LeftToSpendStatistics
 import com.tink.rest.models.insightdata.Month
 import com.tink.rest.models.insightdata.TransactionSummary
 import com.tink.rest.models.insightdata.Week
@@ -34,6 +36,47 @@ import com.tink.rest.models.insights.actions.BudgetFilter as BudgetFilterInsight
 
 internal fun InsightDataDto.toCoreModel(): InsightData =
     when (this) {
+        is InsightDataDto.LeftToSpendNegativeData -> InsightData.LeftToSpendNegative(
+            createdAt,
+            leftToSpend.toAmount(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendNegativeBeginningMonthData -> InsightData.LeftToSpendNegativeBeginningMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth(),
+            totalExpense.toAmount()
+        )
+        is InsightDataDto.LeftToSpendPositiveBeginningMonthData -> InsightData.LeftToSpendPositiveBeginningMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth(),
+            totalExpense.toAmount()
+        )
+        is InsightDataDto.LeftToSpendNegativeMidMonthData -> InsightData.LeftToSpendNegativeMidMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendPositiveMidMonthData -> InsightData.LeftToSpendPositiveMidMonth(
+            amountDifference.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendNegativeSummaryData -> InsightData.LeftToSpendNegativeSummary(
+            leftToSpend.toAmount(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendPositiveSummarySavingsAccountData -> InsightData.LeftToSpendPositiveSummarySavingsAccount(
+            leftAmount.toAmount(),
+            month.toYearMonth()
+        )
+        is InsightDataDto.LeftToSpendPositiveFinalWeekData -> InsightData.LeftToSpendPositiveFinalWeek(
+            amountDifference.toAmount(),
+            leftToSpendPerDay.toAmount(),
+            leftToSpendStatistics.toLeftToSpendStatisticsMid(),
+            month.toYearMonth()
+        )
         is InsightDataDto.AccountBalanceLowData -> InsightData.AccountBalanceLowData(
             accountId,
             balance.toAmount()
@@ -114,16 +157,24 @@ internal fun InsightDataDto.toCoreModel(): InsightData =
             week.toYearWeek(),
             transactionSummary.toTransactionSummaryDto()
         )
-        is InsightDataDto.LeftToSpendNegativeData,
+
         InsightDataDto.Unknown -> InsightData.NoData
         else -> InsightData.NoData
     }
 
 internal fun TransactionSummary.toTransactionSummaryDto(): com.tink.model.relations.TransactionSummary =
-    com.tink.model.relations.TransactionSummary(commonTransactionsOverview.toCommonTransactionsOverviewDto(), totalExpenses.toAmount(), largestExpense.toLargestExpenseDto())
+    com.tink.model.relations.TransactionSummary(
+        commonTransactionsOverview.toCommonTransactionsOverviewDto(),
+        totalExpenses.toAmount(),
+        largestExpense.toLargestExpenseDto()
+    )
 
 internal fun CommonTransactionsOverview.toCommonTransactionsOverviewDto(): com.tink.model.relations.CommonTransactionsOverview =
-    com.tink.model.relations.CommonTransactionsOverview(mostCommonTransactionDescription, totalNumberOfTransactions, mostCommonTransactionCount)
+    com.tink.model.relations.CommonTransactionsOverview(
+        mostCommonTransactionDescription,
+        totalNumberOfTransactions,
+        mostCommonTransactionCount
+    )
 
 internal fun LargestExpense.toLargestExpenseDto(): com.tink.model.relations.LargestExpense =
     com.tink.model.relations.LargestExpense(date, amount.toAmount(), description, id)
@@ -205,3 +256,9 @@ internal fun BudgetFilterInsightData.toBudgetFilter(): BudgetFilter =
         tags = listOf(),
         freeTextQuery = ""
     )
+
+internal fun LeftToSpendStatistics.toLeftToSpendStatisticsMid() = LeftToSpendStatisticsMid(
+    averageLeftToSpend.toAmount(),
+    createdAt,
+    currentLeftToSpend.toAmount()
+)

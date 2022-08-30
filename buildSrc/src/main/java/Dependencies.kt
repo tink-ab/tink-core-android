@@ -4,11 +4,12 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 32
 
+    const val gradle = "7.2.0"
     const val conscrypt = "2.5.2"
     const val coroutines = "1.5.2"
     const val dagger = "2.40.5"
-    const val kotlin = "1.5.31"
-    const val moshi = "1.12.0"
+    const val kotlin = "1.6.21"
+    const val moshi = "1.13.0"
     const val okhttp = "4.9.2"
     const val pinterestktlint = "0.45.1"
     const val retrofit = "2.9.0"

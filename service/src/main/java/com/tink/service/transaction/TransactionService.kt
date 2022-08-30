@@ -7,6 +7,7 @@ import com.tink.rest.apis.TransactionApi
 import com.tink.rest.models.CategorizeTransactionsListRequest
 import com.tink.rest.models.CategorizeTransactionsRequest
 import com.tink.rest.models.SearchQuery
+import retrofit2.Response
 import javax.inject.Inject
 
 interface TransactionService {
@@ -25,6 +26,8 @@ interface TransactionService {
     ) // TODO: Should return transactions?
 
     suspend fun getSimilarTransactions(transactionId: String): List<Transaction>
+
+    suspend fun updateTransaction(transaction: Transaction): Response<Unit>
 }
 
 internal class TransactionServiceImpl @Inject constructor(
@@ -73,4 +76,7 @@ internal class TransactionServiceImpl @Inject constructor(
 
     override suspend fun getSimilarTransactions(transactionId: String) =
         transactionApi.similar(transactionId).transactions.map { it.toCoreModel() }
+
+    override suspend fun updateTransaction(transaction: Transaction) =
+        transactionApi.updateTransaction(transaction.id, transaction.toTransactionUpdateObject())
 }
