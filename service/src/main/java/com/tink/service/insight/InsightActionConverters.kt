@@ -52,6 +52,9 @@ private fun InsightActionData?.toCoreModel(): InsightAction.Data =
         is InsightActionData.RefreshCredentialActionData -> InsightAction.Data.RefreshCredential(
             credentialId
         )
+        is InsightActionData.ViewLeftToSpendActionData -> InsightAction.Data.ViewLeftToSpend(
+            month.toYearMonth()
+        )
         is InsightActionData.Acknowledge -> InsightAction.Data.Acknowledge
         is InsightActionData.Dismiss -> InsightAction.Data.Dismiss
         InsightActionData.Unknown,
