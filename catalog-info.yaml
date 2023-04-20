@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: tink-core-android
-  description: Tink Link Android Public
+  description: Tink Core Android Public
   tags: []
   annotations:
     github.com/project-slug: tink-ab/tink-core-android
