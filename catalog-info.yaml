@@ -8,6 +8,6 @@ metadata:
     github.com/project-slug: tink-ab/tink-core-android
   links: []
 spec:
-  owner: ios
+  owner: android
   type: library
   lifecycle: production
